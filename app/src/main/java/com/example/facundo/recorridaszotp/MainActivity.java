@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-    //comentario de prueba
+    //comentario de prueba2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
