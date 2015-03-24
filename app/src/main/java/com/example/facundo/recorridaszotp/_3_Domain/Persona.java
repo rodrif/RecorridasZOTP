@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp.Domain;
+package com.example.facundo.recorridaszotp._3_Domain;
 
 import java.math.BigDecimal;
 
@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.example.facundo.recorridaszotp.Utils.Utils;
+import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 import com.google.android.gms.maps.model.LatLng;
 
 
