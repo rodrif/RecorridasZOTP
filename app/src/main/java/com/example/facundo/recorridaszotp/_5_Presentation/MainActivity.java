@@ -1,9 +1,11 @@
-package com.example.facundo.recorridaszotp;
+package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.facundo.recorridaszotp.R;
 
 
 public class MainActivity extends ActionBarActivity {
