@@ -22,7 +22,9 @@
         android:text="@string/Guardar"
         android:id="@+id/buttonGuardar"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="GuardarPersonaClick"
+        android:clickable="true" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,12 +1,6 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
 import java.math.BigDecimal;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
-
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 import com.google.android.gms.maps.model.LatLng;
 import com.orm.SugarRecord;
@@ -19,7 +13,6 @@ public class Persona extends SugarRecord<Persona> {
     private String direccion;
     private String zona;
     private String descripcion;
-    private LatLng ubicacion;
     private String ultMod;
     private String estado;
 
@@ -35,10 +28,8 @@ public class Persona extends SugarRecord<Persona> {
         this.direccion = direccion;
         this.zona = zona;
         this.descripcion = descripcion;
-        this.ubicacion = ubicacion;
         this.ultMod = ultMod;
         this.estado = estado;
-        this.corregirUbicacion();
     }
 
     public Persona(String nombre, String apellido, String direccion,
@@ -48,10 +39,6 @@ public class Persona extends SugarRecord<Persona> {
 
     public Persona(String nombre, String apellido, LatLng latLng) {
         this(-1, nombre, apellido, "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
-    }
-
-    public Persona(LatLng latLng) {
-        this(-1, "", "", "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
     }
 
     public String getNombre() {
@@ -94,23 +81,6 @@ public class Persona extends SugarRecord<Persona> {
         this.descripcion = descripcion;
     }
 
-    public LatLng getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(LatLng ubicacion) {
-        this.ubicacion = ubicacion;
-        this.corregirUbicacion();
-    }
-
-    public double getLatitud() {
-        return ubicacion.latitude;
-    }
-
-    public double getLongitud() {
-        return ubicacion.longitude;
-    }
-
     public String getUltMod() {
         return ultMod;
     }
@@ -131,36 +101,6 @@ public class Persona extends SugarRecord<Persona> {
         this.id = id;
     }
 
-    private void corregirUbicacion() {
-        BigDecimal lat = new BigDecimal(this.getLatitud());
-        BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-        BigDecimal lng = new BigDecimal(this.getLongitud());
-        BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-        LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
-                roundOffLng.doubleValue());
 
-        this.ubicacion = nuevaUbicacion;
-    }
 
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("id", this.id);
-            json.put("nombre", this.nombre);
-            json.put("apellido", this.apellido);
-            json.put("direccion", this.direccion);
-            json.put("zona", this.zona);
-            json.put("descripcion", this.descripcion);
-            json.put("latitud", Double.toString(this.ubicacion.latitude));
-            json.put("longitud", Double.toString(this.ubicacion.longitude));
-            json.put("estado", this.estado);
-            json.put("ultMod", this.ultMod);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e(Utils.APPTAG, "Error al convertir a json");
-        }
-
-        return json;
-    }
 }

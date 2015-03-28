@@ -2,17 +2,30 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._4_Services.PersonaService;
+
+import java.util.logging.Logger;
 
 public class FormPersonaActivity extends ActionBarActivity {
+    private EditText nombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_persona);
+
+        this.nombre = (EditText) findViewById(R.id.editTextNombre);
     }
 
 
@@ -36,5 +49,21 @@ public class FormPersonaActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void GuardarPersonaClick(View view){
+        Log.d(Utils.APPTAG, "GuardarPersonaClick");
+
+        String nombre = this.nombre.getText().toString();
+
+        Persona persona = new Persona();
+        persona.setNombre(nombre);
+
+        new PersonaService().Save(persona);
+
+        PersonaQuery query = new PersonaQuery();
+        query.nombre = "Nombre";
+
+        Persona p = new PersonaService().Find(query);
     }
 }
