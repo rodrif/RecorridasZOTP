@@ -16,8 +16,11 @@ public class PersonaService {
 
     public Persona Find(PersonaQuery query) {
 
-        List<Persona> persona = Persona.find(Persona.class, "nombre = ?", query.nombre);
+        List<Persona> personas = Persona.find(Persona.class, "nombre = ?", query.nombre);
 
-        return persona.get(0);
+        if(personas.isEmpty())
+            return null;
+
+        return personas.get(0);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
-import java.math.BigDecimal;
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 import com.google.android.gms.maps.model.LatLng;
 import com.orm.SugarRecord;
@@ -11,34 +10,15 @@ public class Persona extends SugarRecord<Persona> {
     private String nombre;
     private String apellido;
     private String direccion;
-    private String zona;
     private String descripcion;
     private String ultMod;
-    private String estado;
+    public Zona zona;
 
     public Persona() {
     }
 
-    public Persona(int id, String nombre, String apellido, String direccion,
-                   String zona, String descripcion, LatLng ubicacion, String ultMod,
-                   String estado) {
-        this.id = id;
+    public Persona(String nombre) {
         this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.zona = zona;
-        this.descripcion = descripcion;
-        this.ultMod = ultMod;
-        this.estado = estado;
-    }
-
-    public Persona(String nombre, String apellido, String direccion,
-                   String zona, String descripcion, LatLng ubicacion) {
-        this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, Utils.getDateTime(), Utils.EST_NUEVO);
-    }
-
-    public Persona(String nombre, String apellido, LatLng latLng) {
-        this(-1, nombre, apellido, "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
     }
 
     public String getNombre() {
@@ -65,14 +45,6 @@ public class Persona extends SugarRecord<Persona> {
         this.direccion = direccion;
     }
 
-    public String getZona() {
-        return zona;
-    }
-
-    public void setZona(String zona) {
-        this.zona = zona;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -87,14 +59,6 @@ public class Persona extends SugarRecord<Persona> {
 
     public void setUltMod(String ultMod) {
         this.ultMod = ultMod;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public void setId(int id) {
