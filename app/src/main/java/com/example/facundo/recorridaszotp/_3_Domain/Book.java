@@ -9,10 +9,10 @@ public class Book extends SugarRecord<Book> {
     String title;
     String edition;
 
-    public Book(){
+    public Book() {
     }
 
-    public Book(String title, String edition){
+    public Book(String title, String edition) {
         this.title = title;
         this.edition = edition;
     }

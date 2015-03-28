@@ -13,154 +13,154 @@ import com.orm.SugarRecord;
 
 
 public class Persona extends SugarRecord<Persona> {
-	private int id; // -1 si es una persona no guardada en la BDWeb
-	private String nombre;
-	private String apellido;
-	private String direccion;
-	private String zona;
-	private String descripcion;
-	private LatLng ubicacion;
-	private String ultMod;
-	private String estado;
+    private int id; // -1 si es una persona no guardada en la BDWeb
+    private String nombre;
+    private String apellido;
+    private String direccion;
+    private String zona;
+    private String descripcion;
+    private LatLng ubicacion;
+    private String ultMod;
+    private String estado;
 
-    public Persona(){
+    public Persona() {
     }
 
-	public Persona(int id, String nombre, String apellido, String direccion,
-			String zona, String descripcion, LatLng ubicacion, String ultMod,
-			String estado) {
-		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.direccion = direccion;
-		this.zona = zona;
-		this.descripcion = descripcion;
-		this.ubicacion = ubicacion;
-		this.ultMod = ultMod;
-		this.estado = estado;		
-		this.corregirUbicacion();
-	}
+    public Persona(int id, String nombre, String apellido, String direccion,
+                   String zona, String descripcion, LatLng ubicacion, String ultMod,
+                   String estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.zona = zona;
+        this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.ultMod = ultMod;
+        this.estado = estado;
+        this.corregirUbicacion();
+    }
 
-	public Persona(String nombre, String apellido, String direccion,
-			String zona, String descripcion, LatLng ubicacion) {
-		this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, Utils.getDateTime(), Utils.EST_NUEVO);
-	}
-	
-	public Persona(String nombre, String apellido, LatLng latLng) {
-		this(-1, nombre, apellido, "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
-	}
+    public Persona(String nombre, String apellido, String direccion,
+                   String zona, String descripcion, LatLng ubicacion) {
+        this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, Utils.getDateTime(), Utils.EST_NUEVO);
+    }
 
-	public Persona(LatLng latLng) {
-		this(-1, "", "", "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
-	}
+    public Persona(String nombre, String apellido, LatLng latLng) {
+        this(-1, nombre, apellido, "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
+    }
 
-	public String getNombre() {
-		return this.nombre;
-	}
+    public Persona(LatLng latLng) {
+        this(-1, "", "", "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    public String getNombre() {
+        return this.nombre;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public String getZona() {
-		return zona;
-	}
+    public String getApellido() {
+        return apellido;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	public LatLng getUbicacion() {
-		return ubicacion;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public double getLatitud() {
-		return ubicacion.latitude;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public double getLongitud() {
-		return ubicacion.longitude;
-	}
+    public String getZona() {
+        return zona;
+    }
 
-	public String getUltMod() {
-		return ultMod;
-	}
-	
-	public String getEstado() {
-		return estado;
-	}
+    public void setZona(String zona) {
+        this.zona = zona;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public LatLng getUbicacion() {
+        return ubicacion;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public void setUbicacion(LatLng ubicacion) {
+        this.ubicacion = ubicacion;
+        this.corregirUbicacion();
+    }
 
-	public void setZona(String zona) {
-		this.zona = zona;
-	}
+    public double getLatitud() {
+        return ubicacion.latitude;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public double getLongitud() {
+        return ubicacion.longitude;
+    }
 
-	public void setUbicacion(LatLng ubicacion) {
-		this.ubicacion = ubicacion;
-		this.corregirUbicacion();
-	}
+    public String getUltMod() {
+        return ultMod;
+    }
 
-	public void setUltMod(String ultMod) {
-		this.ultMod = ultMod;
-	}
-	
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
-	private void corregirUbicacion() {
-		BigDecimal lat = new BigDecimal(this.getLatitud());
-		BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-		BigDecimal lng = new BigDecimal(this.getLongitud());
-		BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-		LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
-				roundOffLng.doubleValue());
+    public void setUltMod(String ultMod) {
+        this.ultMod = ultMod;
+    }
 
-		this.ubicacion = nuevaUbicacion;
-	}
+    public String getEstado() {
+        return estado;
+    }
 
-	public JSONObject toJson() {
-		JSONObject json = new JSONObject();
-		try {
-			json.put("id", this.id);
-			json.put("nombre", this.nombre);
-			json.put("apellido", this.apellido);
-			json.put("direccion", this.direccion);
-			json.put("zona", this.zona);
-			json.put("descripcion", this.descripcion);
-			json.put("latitud", Double.toString(this.ubicacion.latitude));
-			json.put("longitud", Double.toString(this.ubicacion.longitude));
-			json.put("estado", this.estado);
-			json.put("ultMod", this.ultMod);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-			Log.e(Utils.APPTAG, "Error al convertir a json");
-		}
-		
-		return json;
-	}
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private void corregirUbicacion() {
+        BigDecimal lat = new BigDecimal(this.getLatitud());
+        BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal lng = new BigDecimal(this.getLongitud());
+        BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+        LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
+                roundOffLng.doubleValue());
+
+        this.ubicacion = nuevaUbicacion;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", this.id);
+            json.put("nombre", this.nombre);
+            json.put("apellido", this.apellido);
+            json.put("direccion", this.direccion);
+            json.put("zona", this.zona);
+            json.put("descripcion", this.descripcion);
+            json.put("latitud", Double.toString(this.ubicacion.latitude));
+            json.put("longitud", Double.toString(this.ubicacion.longitude));
+            json.put("estado", this.estado);
+            json.put("ultMod", this.ultMod);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e(Utils.APPTAG, "Error al convertir a json");
+        }
+
+        return json;
+    }
 }
