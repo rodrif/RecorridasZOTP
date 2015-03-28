@@ -4,8 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._3_Domain.Book;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -37,5 +39,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void PruebaORM(View view) {
+        Book libro = new Book("titulo", "edition");
+
+        libro.save();
+
+        Book book2 = Book.findById(Book.class, (long) 1);
     }
 }

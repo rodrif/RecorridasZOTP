@@ -9,9 +9,10 @@ import android.util.Log;
 
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 import com.google.android.gms.maps.model.LatLng;
+import com.orm.SugarRecord;
 
 
-public class Persona {
+public class Persona extends SugarRecord<Persona> {
 	private int id; // -1 si es una persona no guardada en la BDWeb
 	private String nombre;
 	private String apellido;
@@ -21,6 +22,9 @@ public class Persona {
 	private LatLng ubicacion;
 	private String ultMod;
 	private String estado;
+
+    public Persona(){
+    }
 
 	public Persona(int id, String nombre, String apellido, String direccion,
 			String zona, String descripcion, LatLng ubicacion, String ultMod,
@@ -52,10 +56,6 @@ public class Persona {
 
 	public String getNombre() {
 		return this.nombre;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getApellido() {
