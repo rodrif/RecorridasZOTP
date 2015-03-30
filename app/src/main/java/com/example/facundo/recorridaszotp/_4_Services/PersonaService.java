@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._4_Services;
 
+import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 
@@ -16,11 +17,10 @@ public class PersonaService {
 
     public Persona Find(PersonaQuery query) {
 
-        List<Persona> personas = Persona.find(Persona.class, "nombre = ?", query.nombre);
-
-        if(personas.isEmpty())
-            return null;
-
-        return personas.get(0);
+        return new Select()
+                .from(Persona.class)
+                .where("Nombre = ?", query.nombre)
+                .orderBy("id desc")
+                .executeSingle();
     }
 }

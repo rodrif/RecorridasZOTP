@@ -1,13 +1,18 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
-import com.google.android.gms.maps.model.LatLng;
-import com.orm.SugarRecord;
 
 
-public class Persona extends SugarRecord<Persona> {
+@Table(name = "Personas")
+public class Persona extends Model {
     private int id; // -1 si es una persona no guardada en la BDWeb
+
+    @Column(name = "Nombre")
     private String nombre;
+
     private String apellido;
     private String direccion;
     private String descripcion;
@@ -15,9 +20,12 @@ public class Persona extends SugarRecord<Persona> {
     public Zona zona;
 
     public Persona() {
+        super();
     }
 
     public Persona(String nombre) {
+        super();
+
         this.nombre = nombre;
     }
 
