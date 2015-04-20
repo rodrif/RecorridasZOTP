@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
@@ -62,8 +63,15 @@ public class FormPersonaActivity extends ActionBarActivity {
         new PersonaService().Save(persona);
 
         PersonaQuery query = new PersonaQuery();
-        query.nombre = "Nombre";
+        query.nombre = nombre;
 
         Persona p = new PersonaService().Find(query);
+        Toast unToast = Toast.makeText(this, " ", 3);
+        if(p == null) {
+           unToast.setText("Error al grabar");
+        } else {
+            unToast.setText("Se grabo: " + p.getNombre());
+        }
+        unToast.show();
     }
 }
