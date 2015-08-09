@@ -73,6 +73,12 @@ public class Persona extends Model {
         this.id = id;
     }
 
+    public int getAndroiId() {
+        return this.id;
+    }
+
+
+
 
 
 }
