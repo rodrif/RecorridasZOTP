@@ -16,6 +16,6 @@ public class PersonaDataAccessTest extends AndroidTestCase {
 
         Persona persona2 = PersonaDataAccess.find(query);
 
-        assertEquals(persona1.getNombre(), persona2.getNombre());
+        assertEquals("Nombre de la persona buscada incorrecto", persona1.getNombre(), persona2.getNombre());
     }
 }

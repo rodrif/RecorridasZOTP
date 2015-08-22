@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
+import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 /**
@@ -25,5 +26,11 @@ public class DataBaseTest extends AndroidTestCase {
 
         assertEquals(persona.getNombre(), result.getNombre());
         assertEquals(persona.getApellido(), result.getApellido());
+    }
+
+    public void testLoadDefaultDB() throws Exception {
+        DBUtils.loadDefaultDB();
+
+        assertEquals("Cantidad de personas defaultDB incorrecta", 4, PersonaDataAccess.getAll().size());
     }
 }
