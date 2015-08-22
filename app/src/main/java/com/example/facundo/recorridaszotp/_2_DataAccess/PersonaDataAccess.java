@@ -16,7 +16,7 @@ public class PersonaDataAccess {
         persona.save();
     }
 
-    public int save(List<Persona> personas) {
+    public static int save(List<Persona> personas) {
         int resultado = -1;
         ActiveAndroid.beginTransaction();
         try {
