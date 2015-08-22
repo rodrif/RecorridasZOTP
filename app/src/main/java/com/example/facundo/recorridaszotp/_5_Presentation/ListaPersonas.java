@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
@@ -22,7 +23,8 @@ public class ListaPersonas extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_personas);
 
-        List<Persona> listaPersonas = DBUtils.loadDefaultDB();
+        DBUtils.loadDefaultDB(); //TODO Borrar
+        List<Persona> listaPersonas = PersonaDataAccess.getAll();
 
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getApplicationContext(), listaPersonas);

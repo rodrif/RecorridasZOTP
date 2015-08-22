@@ -32,7 +32,7 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
         lNombre.setText(listaPersonas.get(position).getNombre());
 
         TextView lApellido = (TextView) item.findViewById(R.id.lApellido);
-        lNombre.setText(listaPersonas.get(position).getApellido());
+        lApellido.setText(listaPersonas.get(position).getApellido());
 
         return (item);
     }
