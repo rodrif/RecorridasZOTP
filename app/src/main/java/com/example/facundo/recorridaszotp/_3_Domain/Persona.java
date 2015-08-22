@@ -23,6 +23,11 @@ public class Persona extends Model {
         super();
     }
 
+    public Persona(String nombre, String apellido) {
+        this(nombre);
+        this.apellido = apellido;
+    }
+
     public Persona(String nombre) {
         super();
         this.nombre = nombre;
