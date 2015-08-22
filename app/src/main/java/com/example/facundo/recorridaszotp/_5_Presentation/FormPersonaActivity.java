@@ -57,12 +57,12 @@ public class FormPersonaActivity extends ActionBarActivity {
         Persona persona = new Persona();
         persona.setNombre(nombre);
 
-        new PersonaDataAccess().save(persona);
+        PersonaDataAccess.save(persona);
 
         PersonaQuery query = new PersonaQuery();
         query.nombre = nombre;
 
-        Persona p = new PersonaDataAccess().find(query);
+        Persona p = PersonaDataAccess.find(query);
         Toast unToast = Toast.makeText(this, " ", 3);
         if(p == null) {
            unToast.setText("Error al grabar");

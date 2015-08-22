@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class PersonaDataAccess {
 
-    public void save(Persona persona) {
+    public static void save(Persona persona) {
         persona.save();
     }
 
@@ -31,12 +31,19 @@ public class PersonaDataAccess {
         return resultado;
     }
 
-    public Persona find(PersonaQuery query) {
+    public static Persona find(PersonaQuery query) {
         return new Select()
                 .from(Persona.class)
                 .where("Nombre = ?", query.nombre)
                 .orderBy("id desc")
                 .executeSingle();
+    }
+
+    public static List<Persona> getAll() {
+        return new Select()
+                .from(Persona.class)
+                .orderBy("Nombre ASC")
+                .execute();
     }
 
 }
