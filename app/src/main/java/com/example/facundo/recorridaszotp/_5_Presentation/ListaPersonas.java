@@ -1,25 +1,43 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
+import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+public class ListaPersonas extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_lista_personas);
+
+        DBUtils.loadDefaultDB(); //TODO Borrar
+        List<Persona> listaPersonas = PersonaDataAccess.getAll();
+
+        AdaptadorListaPersonas adaptador =
+                new AdaptadorListaPersonas(getApplicationContext(), listaPersonas);
+
+        ListView lViewPersonas = (ListView)findViewById(R.id.listaPersonas);
+
+        lViewPersonas.setAdapter(adaptador);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_lista_personas, menu);
         return true;
     }
 

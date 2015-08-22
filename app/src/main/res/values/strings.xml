@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_form_persona">Persona</string>
+    <string name="title_activity_lista_personas">Personas</string>
     <string name="Nombre">Nombre</string>
     <string name="Guardar">Guardar</string>
 </resources>
