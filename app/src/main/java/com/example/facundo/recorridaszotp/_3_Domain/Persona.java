@@ -8,11 +8,11 @@ import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 
 @Table(name = "Personas")
 public class Persona extends Model {
-    private int id; // -1 si es una persona no guardada en la BDWeb
-
+    @Column(name = "WebId")
+    private int webId = -1; // -1 si es una persona no guardada en la BDWeb
     @Column(name = "Nombre")
     private String nombre;
-
+    @Column(name = "Apellido")
     private String apellido;
     private String direccion;
     private String descripcion;
@@ -25,7 +25,6 @@ public class Persona extends Model {
 
     public Persona(String nombre) {
         super();
-
         this.nombre = nombre;
     }
 
@@ -69,16 +68,8 @@ public class Persona extends Model {
         this.ultMod = ultMod;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setWebId(int webId) {
+        this.webId = webId;
     }
-
-    public int getAndroiId() {
-        return this.id;
-    }
-
-
-
-
 
 }

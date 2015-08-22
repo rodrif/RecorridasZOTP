@@ -7,16 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
-import com.example.facundo.recorridaszotp._4_Services.PersonaService;
-
-import java.util.logging.Logger;
+import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 
 public class FormPersonaActivity extends ActionBarActivity {
     private EditText nombre;
@@ -60,12 +57,12 @@ public class FormPersonaActivity extends ActionBarActivity {
         Persona persona = new Persona();
         persona.setNombre(nombre);
 
-        new PersonaService().Save(persona);
+        new PersonaDataAccess().save(persona);
 
         PersonaQuery query = new PersonaQuery();
         query.nombre = nombre;
 
-        Persona p = new PersonaService().Find(query);
+        Persona p = new PersonaDataAccess().find(query);
         Toast unToast = Toast.makeText(this, " ", 3);
         if(p == null) {
            unToast.setText("Error al grabar");

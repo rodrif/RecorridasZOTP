@@ -13,7 +13,7 @@ public class JsonUtil {
     public static String toJSon(Persona persona) {
         try {
             JSONObject jsonObj = new JSONObject();
-            jsonObj.put("android_id", persona.getAndroiId());
+            jsonObj.put("android_id", persona.getId());
             jsonObj.put("nombre", persona.getNombre());
 
             return jsonObj.toString();
