@@ -5,7 +5,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaPersonas;
@@ -32,6 +35,14 @@ public class ListaPersonas extends ActionBarActivity {
         ListView lViewPersonas = (ListView)findViewById(R.id.listaPersonas);
 
         lViewPersonas.setAdapter(adaptador);
+        lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> a, View view, int pos, long id) {
+                /* Código a ejecutar */
+                Toast.makeText(getApplicationContext(),
+                        "Long Click", Toast.LENGTH_SHORT).show();
+                return true;
+            }});
     }
 
     @Override

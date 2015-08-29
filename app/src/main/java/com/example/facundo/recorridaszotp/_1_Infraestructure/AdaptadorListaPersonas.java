@@ -25,8 +25,14 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View item = inflater.inflate(R.layout.list_item_persona, null);
+
+        View item = convertView;
+
+        if(item == null)
+        {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            item = inflater.inflate(R.layout.list_item_persona, null);
+        }
 
         TextView lNombre = (TextView) item.findViewById(R.id.lNombre);
         lNombre.setText(listaPersonas.get(position).getNombre());
