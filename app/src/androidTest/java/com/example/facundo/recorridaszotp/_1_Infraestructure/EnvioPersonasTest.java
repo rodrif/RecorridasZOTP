@@ -7,14 +7,17 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Facundo on 08/08/2015.
  */
-public class EnvioPersonasTest extends AndroidTestCase {
+public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate{
+    private CountDownLatch signal;
 
     public void testEnvioPersonas() throws Exception {
-        int intentos = 0;
+        signal = new CountDownLatch(1);
         List<Persona> personas = new ArrayList<Persona>();
         Persona persona1 = new Persona("Juan15");
         persona1.save();
@@ -24,14 +27,11 @@ public class EnvioPersonasTest extends AndroidTestCase {
         personas.add(persona1);
         personas.add(persona2);
 
-        EnvioPersonas enviador = new EnvioPersonas(personas);
+        EnvioPersonas enviador = new EnvioPersonas(personas, this);
         enviador.execute(Utils.WEB_INSERTAR);
 
-        while(!(enviador.getStatus() == AsyncTask.Status.FINISHED) ) {
-            Thread.sleep(1000);
-            intentos++;
-            if(intentos > Utils.MAX_INTENTOS)
-                fail("max intentos fail");
+        if(!this.signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
+            fail("no recibio respuesta del servidor");
         }
 
         JSONObject jsonObject = enviador.getRespuesta();
@@ -40,4 +40,8 @@ public class EnvioPersonasTest extends AndroidTestCase {
         assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona2.getId().toString()) > 0);
     }
 
+    @Override
+    public void executionFinished(String result) {
+        signal.countDown();
+    }
 }

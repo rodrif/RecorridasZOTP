@@ -15,16 +15,21 @@ import java.util.List;
  * Created by Facundo on 08/08/2015.
  */
 public class EnvioPersonas extends EnvioPost {
-
     private List<Persona> personas;
     private JSONObject respuesta;
+    private AsyncDelegate delegate;
 
     public EnvioPersonas(List<Persona> personas) {
         this.personas = personas;
     }
 
+    public EnvioPersonas(List<Persona> personas, AsyncDelegate delegate) {
+        this(personas);
+        this.delegate = delegate;
+    }
+
     @Override
-    public JSONArray cargarJson() {
+    protected JSONArray cargarJson() {
         JSONArray datos = new JSONArray();
         try {
             for (Persona persona : this.personas) {
@@ -54,6 +59,9 @@ public class EnvioPersonas extends EnvioPost {
                 persona.save();
             }
             ActiveAndroid.setTransactionSuccessful();
+            if (this.delegate != null) {
+                delegate.executionFinished(this.respuesta.toString());
+            }
         } finally {
             ActiveAndroid.endTransaction();
         }
