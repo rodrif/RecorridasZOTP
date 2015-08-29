@@ -1,11 +1,8 @@
 package com.example.facundo.recorridaszotp._1_Infraestructure;
 
-import android.content.ClipData;
-
 import com.activeandroid.query.Delete;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,12 @@ public class DBUtils {
 
     public static int loadDefaultDB() {
         DBUtils.deleteDBData();
+        List<Persona> personas = DBUtils.getPersonasTest();
+
+        return PersonaDataAccess.save(personas);
+    }
+
+    public static List<Persona> getPersonasTest() {
         List<Persona> personas = new ArrayList<Persona>();
 
         personas.add(new Persona("Alfredo", "Fernandez"));
@@ -23,10 +26,12 @@ public class DBUtils {
         personas.add(new Persona("Gonzalo", "Rodriguez"));
         personas.add(new Persona("Pepe", "Argento"));
 
-        return PersonaDataAccess.save(personas);
+        return personas;
     }
 
     private static void deleteDBData() {
         new Delete().from(Persona.class).execute();
     }
+
+
 }
