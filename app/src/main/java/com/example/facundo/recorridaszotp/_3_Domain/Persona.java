@@ -3,7 +3,9 @@ package com.example.facundo.recorridaszotp._3_Domain;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.example.facundo.recorridaszotp._1_Infraestructure.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 @Table(name = "Personas")
@@ -14,6 +16,8 @@ public class Persona extends Model {
     private String nombre;
     @Column(name = "Apellido")
     private String apellido;
+    @Column(name = "Estado")
+    private int estado;
     private String direccion;
     private String descripcion;
     private String ultMod;
@@ -21,6 +25,16 @@ public class Persona extends Model {
 
     public Persona() {
         super();
+    }
+
+    public Persona(String nombre, String apellido, int estado, int webId) {
+        this(nombre, apellido, estado);
+        this.webId = webId;
+    }
+
+    public Persona(String nombre, String apellido, int estado) {
+        this(nombre, apellido);
+        this.estado = estado;
     }
 
     public Persona(String nombre, String apellido) {
@@ -31,6 +45,15 @@ public class Persona extends Model {
     public Persona(String nombre) {
         super();
         this.nombre = nombre;
+    }
+
+    public void mergeFromWeb(Persona persona) throws Exception{
+        if (persona.webId != this.getWebId()) {
+            throw new Exception("MergeConDiferenteWebId");
+        }
+        this.nombre = persona.getNombre();
+        this.apellido = persona.getApellido();
+        this.estado = persona.getEstado();
     }
 
     public String getNombre() {
@@ -47,6 +70,20 @@ public class Persona extends Model {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public int getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado (int estado){ this.estado = estado; }
+
+    public int getWebId() {
+        return this.webId;
+    }
+
+    public void setWebId(int webId) {
+        this.webId = webId;
     }
 
     public String getDireccion() {
@@ -73,8 +110,37 @@ public class Persona extends Model {
         this.ultMod = ultMod;
     }
 
-    public void setWebId(int webId) {
-        this.webId = webId;
+    @Override
+    public boolean equals(Object obj) {
+        Persona other = (Persona)obj;
+        return (other.toJSonValue().equals(this.toJSonValue()));
+    }
+
+    public static Persona fromJsonObject(JSONObject personaJson) throws Exception {
+        Persona persona = new Persona();
+        persona.setNombre(personaJson.getString("nombre"));
+        persona.setApellido(personaJson.getString("apelido"));
+        persona.setEstado(personaJson.getInt("estado"));
+        persona.setWebId(personaJson.getInt("webId"));
+        return persona;
+    }
+
+    public String toJSonValue() {
+        try {
+            JSONObject jsonObj = new JSONObject();
+            //jsonObj.put("id", this.getId());
+            jsonObj.put("nombre", this.getNombre());
+            jsonObj.put("apellido", this.getApellido());
+            jsonObj.put("estado", this.getEstado());
+            jsonObj.put("webId", this.getWebId());
+
+            return jsonObj.toString();
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
 }

@@ -1,7 +1,6 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;

@@ -1,16 +1,13 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.text.Layout;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
 
 import java.util.List;
 

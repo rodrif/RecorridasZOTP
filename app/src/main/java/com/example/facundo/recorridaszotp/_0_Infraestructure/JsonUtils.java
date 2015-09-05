@@ -1,0 +1,46 @@
+package com.example.facundo.recorridaszotp._0_Infraestructure;
+
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Facundo on 08/08/2015.
+ */
+public class JsonUtils {
+
+    public static String toJSonAEnviar(Persona persona) {
+        try {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("android_id", persona.getId());
+            jsonObj.put("nombre", persona.getNombre());
+            jsonObj.put("apellido", persona.getApellido());
+            jsonObj.put("estado", persona.getEstado());
+
+            return jsonObj.toString();
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static List<Persona> personasFromJsonString(String jsonString) throws Exception {
+        JSONArray jsonArray = new JSONArray(jsonString);
+        List<Persona> personas = new ArrayList<Persona>();
+
+        for (int i = 0; i < jsonArray.length(); ++i) {
+            Persona persona = Persona.fromJsonObject(jsonArray.getJSONObject(i));
+            personas.add(persona);
+        }
+
+        return personas;
+    }
+
+}

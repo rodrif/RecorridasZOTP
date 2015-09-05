@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,9 +8,13 @@ import java.util.Locale;
 public final class Utils {
     public static final String WEB = "http://stark-island-3497.herokuapp.com";
     public static final String WEB_INSERTAR = Utils.WEB + "/people/mobGuardarNuevasPersonasPost";
-    public static final String WEB_SINCRONIZAR = Utils.WEB + "/people/mobSincronizarPersonas";
+    public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/people/mobRecibirPersonasDesde";
     public static final int MAX_INTENTOS = 3;
     public static final String APPTAG = "recorridaszotp";
+    public static final int EST_ACTUALIZADO = 0;
+    public static final int EST_NUEVO = 1;
+    public static final int EST_MODIFICADO = 2;
+    public static final int EST_BORRADO = 3;
 
     public static final String WEB_BORRAR = Utils.WEB + ".atwebpages.com/borrar.php";
     public static final String WEB_BORRAR_DB = Utils.WEB + ".atwebpages.com/borrartodo.php";
@@ -20,10 +24,6 @@ public final class Utils {
             "apellido", "direccion", "zona", "descripcion", "latitud",
             "longitud", "ultMod", "estado"};
     public static final String TPersonas = "Personas";
-    public static final String EST_ACTUALIZADO = "Actualizado";
-    public static final String EST_BORRADO = "Borrado";
-    public static final String EST_MODIFICADO = "Modificado";
-    public static final String EST_NUEVO = "Nuevo";
     public static final String FECHA_CERO = "0000-00-00T00:00:00-0000";
     public static final int ZOOM_CERCA = 15;
     public static final int ZOOM_LEJOS = 10;

@@ -1,8 +1,10 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._1_Red;
 
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONArray;
@@ -33,7 +35,7 @@ public class EnvioPersonas extends EnvioPost {
         JSONArray datos = new JSONArray();
         try {
             for (Persona persona : this.personas) {
-                datos.put(new JSONObject(JsonUtil.toJSon(persona)));
+                datos.put(new JSONObject(JsonUtils.toJSonAEnviar(persona)));
             }
         } catch (JSONException ex) {
             Log.e("recorridaszotp", "JSONException");
@@ -45,11 +47,10 @@ public class EnvioPersonas extends EnvioPost {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d("recorridaszotp", "onPostExecute");
         try {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
-            Log.e("recorridaszotp", "respuestaJsonInvalida: " + ex.getMessage());
+            Log.e(Utils.APPTAG, "respuestaJsonInvalida: " + ex.getMessage());
         }
 
         ActiveAndroid.beginTransaction();
@@ -62,6 +63,8 @@ public class EnvioPersonas extends EnvioPost {
             if (this.delegate != null) {
                 delegate.executionFinished(this.respuesta.toString());
             }
+        } catch (Exception ex) {
+            Log.e(Utils.APPTAG, "falloEnviarPersonas: " + ex.getMessage());
         } finally {
             ActiveAndroid.endTransaction();
         }

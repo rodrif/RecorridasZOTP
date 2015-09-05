@@ -1,8 +1,9 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._1_Red;
 
-import android.os.AsyncTask;
 import android.test.AndroidTestCase;
 import android.util.Log;
+
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Facundo on 08/08/2015.
  */
-public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate{
+public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate {
     private CountDownLatch signal;
 
     public void testEnvioPersonas() throws Exception {

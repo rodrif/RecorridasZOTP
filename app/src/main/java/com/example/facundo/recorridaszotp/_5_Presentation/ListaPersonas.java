@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,12 +7,11 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaPersonas;
-import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListaPersonas extends ActionBarActivity {

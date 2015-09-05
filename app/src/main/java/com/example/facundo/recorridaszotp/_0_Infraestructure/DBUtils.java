@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import com.activeandroid.query.Delete;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -21,10 +21,10 @@ public class DBUtils {
     public static List<Persona> getPersonasTest() {
         List<Persona> personas = new ArrayList<Persona>();
 
-        personas.add(new Persona("Alfredo", "Fernandez"));
-        personas.add(new Persona("Facundo", "Rodriguez"));
-        personas.add(new Persona("Gonzalo", "Rodriguez"));
-        personas.add(new Persona("Pepe", "Argento"));
+        personas.add(new Persona("Alfredo", "Fernandez", Utils.EST_ACTUALIZADO, 1));
+        personas.add(new Persona("Facundo", "Rodriguez", Utils.EST_MODIFICADO, 2));
+        personas.add(new Persona("Gonzalo", "Rodriguez", Utils.EST_ACTUALIZADO, 3));
+        personas.add(new Persona("Pepe", "Argento", Utils.EST_ACTUALIZADO, 4));
 
         return personas;
     }

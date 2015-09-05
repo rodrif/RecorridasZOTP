@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
