@@ -4,7 +4,7 @@
     android:layout_height="48dp"
     >
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/icono"
         android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -13,13 +13,14 @@
         android:layout_centerVertical="true" />
 
     <TextView
-        android:id="@+id/title_item"
+        android:id="@+id/nombre"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/icon"
-        android:textColor="#2E2E2E"
+        android:layout_toRightOf="@id/icono"
+        android:textColor="#FFFFFF"
         android:gravity="center_vertical"
         android:paddingRight="40dp"
+        android:paddingLeft="5sp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"/>
 </RelativeLayout>

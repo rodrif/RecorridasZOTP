@@ -60,7 +60,7 @@ public class ListaPersonas extends ActionBarActivity {
 
         navItms = new ArrayList<String>();
         ArrayList<String> lista = new ArrayList<String>();
-        lista.add("Primer elemento");
+        lista.add("Mapa");
         lista.add("Segundo elemento");
         navAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
         navList.setAdapter(navAdapter);
