@@ -19,8 +19,9 @@ import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import java.util.ArrayList;
 import java.util.List;
+import android.support.v7.app.AppCompatActivity;
 
-public class ListaPersonas extends ActionBarActivity {
+public class ListaPersonas extends AppCompatActivity {
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private ArrayList<ItemLista> navItms;
@@ -70,7 +71,7 @@ public class ListaPersonas extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
+
         navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
