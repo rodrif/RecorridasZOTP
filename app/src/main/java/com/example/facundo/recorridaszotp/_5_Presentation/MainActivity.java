@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         navList.addHeaderView(header);
 
         navItms = new ArrayList<ItemLista>();
-        navItms.add(new ItemLista("Fragment 1"));
-        navItms.add(new ItemLista("Personas"));
-        navItms.add(new ItemLista("Mapa"));
+        navItms.add(new ItemLista("Fragment 1", R.drawable.abc_ic_menu_cut_mtrl_alpha));
+        navItms.add(new ItemLista("Personas", R.drawable.ic_action_user));
+        navItms.add(new ItemLista("Mapa", R.drawable.ic_action_place));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);

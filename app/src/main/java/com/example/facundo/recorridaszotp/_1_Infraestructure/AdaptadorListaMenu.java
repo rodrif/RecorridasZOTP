@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
@@ -34,6 +35,8 @@ public class AdaptadorListaMenu extends ArrayAdapter<ItemLista> {
         TextView lNombre = (TextView) item.findViewById(R.id.nombre);
         lNombre.setText(listaItems.get(position).getNombre());
 
+        ImageView icono = (ImageView) item.findViewById(R.id.icono);
+        icono.setImageResource(listaItems.get(position).getIcono());
 
         return (item);
     }
