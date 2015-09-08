@@ -26,7 +26,7 @@ public class ListaPersonas extends AppCompatActivity {
     private ListView navList;
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
-    //private ActionBarDrawerToggle mDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
