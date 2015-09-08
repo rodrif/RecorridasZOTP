@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /*
