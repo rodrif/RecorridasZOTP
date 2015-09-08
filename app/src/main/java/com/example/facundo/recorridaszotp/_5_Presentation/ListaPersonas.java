@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaPersonas;
 import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListaPersonas extends Fragment {
