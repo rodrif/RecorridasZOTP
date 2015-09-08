@@ -10,14 +10,20 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
+    <uses-sdk android:minSdkVersion="11" />
+
     <application
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="AA_DB_NAME" android:value="Prueba.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="6" />
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Prueba.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="6" />
         <meta-data
             android:name="AA_MODELS"
             android:value="com.example.facundo.recorridaszotp._3_Domain.Persona" />
@@ -32,16 +38,6 @@
         <activity
             android:name="._5_Presentation.MainActivity"
             android:label="@string/app_name">
-        </activity>
-
-        <activity
-            android:name="._5_Presentation.MapsActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
-
-        <activity
-            android:name="._5_Presentation.ListaPersonas"
-            android:label="@string/title_activity_lista_personas">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,11 +46,17 @@
         </activity>
 
         <activity
+            android:name="._5_Presentation.MapsFragment"
+            android:label="@string/title_activity_maps"></activity>
+
+        <activity
+            android:name="._5_Presentation.ListaPersonas"
+            android:label="@string/title_activity_lista_personas"></activity>
+
+        <activity
             android:name="._5_Presentation.FormPersonaActivity"
-            android:label="@string/title_activity_form_persona">
+            android:label="@string/title_activity_form_persona"></activity>
 
-
-        </activity>
     </application>
 
 </manifest>
