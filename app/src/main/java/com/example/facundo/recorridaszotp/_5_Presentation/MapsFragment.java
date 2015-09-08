@@ -1,27 +1,33 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.facundo.recorridaszotp.R;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity {
+public class MapsFragment extends Fragment {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        View vista = inflater.inflate(R.layout.fragment_map, container, false);
         setUpMapIfNeeded();
+        return  vista;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
     }
@@ -31,7 +37,7 @@ public class MapsActivity extends FragmentActivity {
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
      * call {@link #setUpMap()} once when {@link #mMap} is not null.
      * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
+     * If it isn't installed {@link MapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
      * install/update the Google Play services APK on their device.
      * <p/>
@@ -45,7 +51,7 @@ public class MapsActivity extends FragmentActivity {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
