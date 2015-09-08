@@ -26,7 +26,7 @@ public class ListaPersonas extends AppCompatActivity {
     private ListView navList;
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
+    //private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class ListaPersonas extends AppCompatActivity {
         //Drawer layout
         navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navList = (ListView) findViewById(R.id.lista);
-        //Declaramos el header el caul sera el layout de header.xml
+        //Declaramos el header el cual sera el layout de header.xml
         View header = getLayoutInflater().inflate(R.layout.header, null);
         //Establecemos header
         navList.addHeaderView(header);
@@ -66,7 +66,7 @@ public class ListaPersonas extends AppCompatActivity {
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
 
-        navDrawerLayout.setDrawerListener(mDrawerToggle);
+     //   navDrawerLayout.setDrawerListener(mDrawerToggle);
         toolbar.setTitle("Titulo toolbar");
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
