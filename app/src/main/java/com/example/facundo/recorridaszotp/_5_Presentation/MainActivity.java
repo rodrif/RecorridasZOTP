@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         navList.addHeaderView(header);
 
         navItms = new ArrayList<ItemLista>();
+        navItms.add(new ItemLista("Fragment 1"));
         navItms.add(new ItemLista("Personas"));
-        navItms.add(new ItemLista("Segundo elemento"));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 1:
                         fragment = new Fragment1();
+                        fragmentTransaction = true;
+                        break;
+                    case 2:
+                        fragment = new ListaPersonas();
                         fragmentTransaction = true;
                         break;
                 }
