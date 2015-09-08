@@ -41,8 +41,7 @@ public class ListaPersonas extends Fragment {
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
 
-        ListView lViewPersonas = (ListView) getView().findViewById(R.id.listaPersonas);
-
+        ListView lViewPersonas = (ListView) vista.findViewById(R.id.lista_personas);
         lViewPersonas.setAdapter(adaptador);
         lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

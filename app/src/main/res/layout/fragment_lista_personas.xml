@@ -5,7 +5,7 @@
     tools:context="com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas">
 
     <ListView
-        android:id="@+id/listaPersonas"
+        android:id="@+id/lista_personas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
