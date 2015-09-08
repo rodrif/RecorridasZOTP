@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (fragmentTransaction) {
-                    getSupportFragmentManager().beginTransaction()
+                    getFragmentManager().beginTransaction()
                             .replace(R.id.content_frame, fragment)
                             .commit();
 

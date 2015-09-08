@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.ViewGroup;
 import com.example.facundo.recorridaszotp.R;
 
 
-public class Fragment1 extends android.support.v4.app.Fragment {
+public class Fragment1 extends Fragment {
 
     public Fragment1() {
         // Required empty public constructor
