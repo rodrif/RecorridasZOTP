@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Facundo on 29/08/2015.
  */
-public class ListaPersonasTest extends ActivityInstrumentationTestCase2<ListaPersonas> {
+/*public class ListaPersonasTest extends ActivityInstrumentationTestCase2<ListaPersonas> {
     private ListaPersonas mListaPersonasActivity;
     private ListView mListView;
 
@@ -54,7 +54,7 @@ public class ListaPersonasTest extends ActivityInstrumentationTestCase2<ListaPer
         }
     }
 
-}
+}*/
 
 
 
