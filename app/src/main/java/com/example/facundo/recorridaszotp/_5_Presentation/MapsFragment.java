@@ -58,7 +58,7 @@ public class MapsFragment extends Fragment {
             // mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
             //       .getMap();
             if (fragment == null) {
-                Toast.makeText(getActivity().getApplicationContext(), "Mapa fragment null", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity().getApplicationContext(), "Mapa fragment null", Toast.LENGTH_SHORT).show();
             } else {
                 mMap = ((MapFragment) fragment).getMap();
             }
