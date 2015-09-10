@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,11 +20,11 @@ public class MapsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                  Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_map, container, false);
         setUpMapIfNeeded();
-        return  vista;
+        return vista;
     }
 
     @Override
@@ -49,10 +50,19 @@ public class MapsFragment extends Fragment {
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
+        Fragment fragment;
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
+
+            fragment = getFragmentManager().findFragmentById(R.id.map);
+            // mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+            //       .getMap();
+            if (fragment == null) {
+                Toast.makeText(getActivity().getApplicationContext(), "Mapa fragment null", Toast.LENGTH_SHORT);
+            } else {
+                mMap = ((MapFragment) fragment).getMap();
+            }
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
