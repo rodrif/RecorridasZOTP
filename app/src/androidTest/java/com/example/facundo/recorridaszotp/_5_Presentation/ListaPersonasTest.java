@@ -1,5 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 import android.text.Layout;
 import android.view.View;
@@ -11,29 +13,32 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
+import com.example.facundo.recorridaszotp._6_Test.ActivityTest;
 
 import java.util.List;
 
 /**
  * Created by Facundo on 29/08/2015.
  */
-/*public class ListaPersonasTest extends ActivityInstrumentationTestCase2<ListaPersonas> {
-    private ListaPersonas mListaPersonasActivity;
+public class ListaPersonasTest extends ActivityInstrumentationTestCase2<ActivityTest> { //ListaPersonas
+    private ActivityTest miActivity;
+    private ListaPersonas mListaPersonasFragment;
     private ListView mListView;
 
     public ListaPersonasTest() {
-        super(ListaPersonas.class);
+        super(ActivityTest.class);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mListaPersonasActivity = getActivity();
-        mListView = (ListView) mListaPersonasActivity.findViewById(R.id.listaPersonas);
+        miActivity = getActivity();
+        mListaPersonasFragment = (ListaPersonas)miActivity.frag;
+        mListView = (ListView) mListaPersonasFragment.getView().findViewById(R.id.lista_personas);
     }
 
     public void testPreconditions() {
-        assertNotNull("mListaPersonasActivity is null", mListaPersonasActivity);
+        assertNotNull("mListaPersonasFragment is null", mListaPersonasFragment);
         assertNotNull("mListView is null", mListView);
     }
 
@@ -53,8 +58,7 @@ import java.util.List;
             assertEquals(personas.get(i).getApellido(), textViewApellido.getText().toString());
         }
     }
-
-}*/
+}
 
 
 
