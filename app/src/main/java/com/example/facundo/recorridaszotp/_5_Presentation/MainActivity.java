@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         navItms.add(new ItemLista("Personas", R.drawable.ic_action_user));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_action_place));
         navItms.add(new ItemLista("Perfil", R.drawable.abc_ic_menu_share_mtrl_alpha));
+        navItms.add(new ItemLista("Formulario", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
@@ -98,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4:
                         fragment = new ProfileFragment();
+                        fragmentTransaction = true;
+                        break;
+                    case 5:
+                        fragment = new FormularioFragment();
                         fragmentTransaction = true;
                         break;
                 }
