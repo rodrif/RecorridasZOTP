@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
 
-        if (nombre != "") {
+        if (!nombre.equals("")) {
             Persona persona = new Persona();
             persona.setNombre(nombre);
             persona.setApellido(apellido);
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
             unToast.show();
         } else {
-            Toast.makeText(getApplicationContext(), "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
     }
 }
