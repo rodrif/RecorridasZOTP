@@ -16,8 +16,8 @@ import java.util.List;
  * Created by Facundo on 05/09/2015.
  */
 public class RecepcionPersonas extends EnvioPost {
-    private String respuesta;
-    private AsyncDelegate delegate;
+    protected String respuesta;
+    protected AsyncDelegate delegate;
 
     public RecepcionPersonas() {
     }
@@ -34,6 +34,7 @@ public class RecepcionPersonas extends EnvioPost {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(Utils.APPTAG, "onPostExecute: " + result);
         try {
             this.respuesta = result;
         } catch (Exception ex) {
