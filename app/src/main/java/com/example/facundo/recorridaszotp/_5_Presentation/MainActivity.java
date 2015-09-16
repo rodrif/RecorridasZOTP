@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
             }
             unToast.show();
         } else {
-            Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
+            ETnombre.setError("El nombre es obligatorio");
+            //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
     }
 }
