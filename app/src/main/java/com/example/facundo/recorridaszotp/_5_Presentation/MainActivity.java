@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -179,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
             }
             unToast.show();
         } else {
+            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+            ETnombre.requestFocus();
+            ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
             //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
