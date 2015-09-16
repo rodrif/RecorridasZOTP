@@ -7,7 +7,6 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
@@ -25,10 +24,7 @@ public class FormularioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_formulario, container, false);
-        EditText nombre = (EditText) v.findViewById(R.id.ETNombre);
-        nombre.clearFocus();
-        return v;
+        return inflater.inflate(R.layout.fragment_formulario, container, false);
     }
 
 
