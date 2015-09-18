@@ -118,14 +118,14 @@ public class Persona extends Model {
 
     public static Persona fromJsonObject(JSONObject personaJson) throws Exception {
         Persona persona = new Persona();
-        persona.setNombre(personaJson.getString("nombre"));
-        persona.setApellido(personaJson.getString("apelido"));
-        persona.setEstado(personaJson.getInt("estado"));
-        persona.setWebId(personaJson.getInt("webId"));
+        persona.setNombre(personaJson.optString("nombre"));
+        persona.setApellido(personaJson.optString("apellido"));
+        persona.setEstado(personaJson.optInt("estado"));
+        persona.setWebId(personaJson.optInt("webId"));
         return persona;
     }
 
-    public String toJSonValue() {
+    public JSONObject toJsonObject() {
         try {
             JSONObject jsonObj = new JSONObject();
             //jsonObj.put("id", this.getId());
@@ -134,12 +134,20 @@ public class Persona extends Model {
             jsonObj.put("estado", this.getEstado());
             jsonObj.put("webId", this.getWebId());
 
-            return jsonObj.toString();
+            return jsonObj;
 
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
 
+        return null;
+    }
+
+    public String toJSonValue() {
+        JSONObject jsonObj = this.toJsonObject();
+
+        if (jsonObj != null)
+            return jsonObj.toString();
         return null;
     }
 

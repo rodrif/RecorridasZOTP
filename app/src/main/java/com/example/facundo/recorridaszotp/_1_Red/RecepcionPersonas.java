@@ -3,7 +3,7 @@ package com.example.facundo.recorridaszotp._1_Red;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
-import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -16,8 +16,8 @@ import java.util.List;
  * Created by Facundo on 05/09/2015.
  */
 public class RecepcionPersonas extends EnvioPost {
-    private String respuesta;
-    private AsyncDelegate delegate;
+    protected String respuesta;
+    protected AsyncDelegate delegate;
 
     public RecepcionPersonas() {
     }
@@ -34,22 +34,22 @@ public class RecepcionPersonas extends EnvioPost {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(Utils.APPTAG, "onPostExecute: " + result);
         try {
             this.respuesta = result;
         } catch (Exception ex) {
             Log.e("recorridaszotp", "respuestaJsonInvalida: " + ex.getMessage());
         }
-
         ActiveAndroid.beginTransaction();
         try {
-            List<Persona> personas = JsonUtils.personasFromJsonString(result);
+            List<Persona> personas = PersonaJsonUtils.personasFromJsonString(result);
 
             if (PersonaDataAccess.acualizarDB(personas) != 0) {
                 throw new Exception("FalloActualizarDB");
             } else {
                 ActiveAndroid.setTransactionSuccessful();
                 if (this.delegate != null) {
-                    delegate.executionFinished(this.respuesta.toString());
+                    delegate.executionFinished(this.respuesta);
                 }
             }
         } catch (Exception ex) {

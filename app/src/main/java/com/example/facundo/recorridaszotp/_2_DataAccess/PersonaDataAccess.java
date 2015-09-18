@@ -90,7 +90,6 @@ public class PersonaDataAccess {
         return resultado;
     }
 
-    //TODO hacer test
     public static void sincronizar(AsyncDelegate delegate) {
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
         RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas);
