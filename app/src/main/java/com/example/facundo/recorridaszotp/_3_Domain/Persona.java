@@ -119,7 +119,7 @@ public class Persona extends Model {
     public static Persona fromJsonObject(JSONObject personaJson) throws Exception {
         Persona persona = new Persona();
         persona.setNombre(personaJson.optString("nombre"));
-        persona.setApellido(personaJson.optString("apelido"));
+        persona.setApellido(personaJson.optString("apellido"));
         persona.setEstado(personaJson.optInt("estado"));
         persona.setWebId(personaJson.optInt("webId"));
         return persona;

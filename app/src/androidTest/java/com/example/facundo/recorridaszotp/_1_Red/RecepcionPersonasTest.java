@@ -4,8 +4,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.DataBaseTest;
-import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Mocks.RecepcionPersonasMock;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -23,7 +22,7 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
     private CountDownLatch signal;
 
     public void testRecepcionPersonas() throws Exception {
-        CountDownLatch signal = new CountDownLatch(1);
+        this.signal = new CountDownLatch(1);
         DBUtils.loadDefaultDB();
 
         List<Persona> personas = new ArrayList<Persona>();
@@ -32,15 +31,15 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         personas.add(persona1);
         personas.add(persona2);
 
-        String respuestaWeb = JsonUtils.personasToJsonString(personas);
-
+        String respuestaWeb = PersonaJsonUtils.personasToJsonString(personas);
         RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(this, respuestaWeb);
         recepcionPersonas.execute("Juan2");
 
-        if(!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
+        if (!signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
             fail("fallo en recepcionPersonas");
         }
 
+        assertEquals(DBUtils.getPersonasTest().size() + 1, PersonaDataAccess.getAll().size());
         assertTrue(persona1.equals(PersonaDataAccess.findByWebId(1)));
     }
 

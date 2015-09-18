@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Facundo on 08/08/2015.
  */
-public class JsonUtils { //TODO renombrar a JsonUtilsPersona
+public class PersonaJsonUtils {
 
     public static String toJSonAEnviar(Persona persona) {
         try {
