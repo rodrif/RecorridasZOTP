@@ -4,5 +4,6 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.facundo.recorridaszotp._5_Presentation.MapsActivity"
-    tools:layout="@layout/activity_maps" />
+    tools:context="com.example.facundo.recorridaszotp._5_Presentation.PruebaMapa"
+    tools:layout="@layout/activity_prueba_mapa" />
+
