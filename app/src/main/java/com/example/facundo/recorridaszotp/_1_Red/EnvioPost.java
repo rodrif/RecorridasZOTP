@@ -3,6 +3,8 @@ package com.example.facundo.recorridaszotp._1_Red;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,16 +25,16 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        // *************************************************************
         String charset = "UTF-8";
         URL url = null;
         HttpURLConnection conn = null;
-        InputStream respuesta = null;
+        InputStream inputStream = null;
+        String respuesta = null;
 
         try {
             url = new URL(params[0]);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST"); // Sacar si no anda
+            conn.setRequestMethod("POST");
             conn.setDoOutput(true); // Triggers POST.
             conn.setRequestProperty("Accept-Charset", charset);
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
@@ -42,7 +44,6 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             String responseText = null;
 
             datos = this.cargarJson();
-            Log.d("recorridaszotp", "cargarJson fin");
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
 
             //Envio datos
@@ -50,39 +51,15 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             output.write(query.getBytes(charset));
 
             //Leo respuesta
-            System.out.println("Response Code: " + conn.getResponseCode());
-            respuesta = new BufferedInputStream(conn.getInputStream());
-            System.out.println("Respuesta: " + respuesta.toString());
-            //String response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-            //System.out.println(response);
+            Log.d(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
+            inputStream = new BufferedInputStream(conn.getInputStream());
+
+            respuesta = Utils.toString(inputStream);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // **************************************************************
-    /*    HttpClient httpClient = new DefaultHttpClient();
-
-        HttpPost post = new HttpPost(params[0]);
-        post.setHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        //Construimos el objeto cliente en formato JSON
-        JSONArray datos = null;
-        String responseText = null;
-
-        try {
-            datos = this.cargarJson();
-            Log.d("recorridaszotp", "cargarJson fin");
-            nameValuePairs.add(new BasicNameValuePair("datos", datos.toString()));
-            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse resp = httpClient.execute(post);
-            responseText = EntityUtils.toString(resp.getEntity());
-            Log.d("recorridaszotp", "responseText: " + responseText);
-        } catch (Exception ex) {
-            Log.e("recorridaszotp", "Fallo al envia post a: " + params[0], ex);
-        }
-
-        return responseText;*/
-        return respuesta.toString();
+        return respuesta;
     }
 
     @Override

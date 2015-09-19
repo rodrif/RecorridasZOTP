@@ -1,5 +1,8 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -16,6 +19,17 @@ public final class Utils {
     public static final int EST_MODIFICADO = 2;
     public static final int EST_BORRADO = 3;
 
+    public static String toString(InputStream inputStream) throws Exception {
+        BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder total = new StringBuilder();
+        String line;
+        while ((line = r.readLine()) != null) {
+            total.append(line);
+        }
+        return total.toString();
+    }
+
+    //No usadas hasta el momento
     public static final String WEB_BORRAR = Utils.WEB + ".atwebpages.com/borrar.php";
     public static final String WEB_BORRAR_DB = Utils.WEB + ".atwebpages.com/borrartodo.php";
     public static final String WEB_ACTUALIZAR = Utils.WEB + ".atwebpages.com/actualizar.php";
@@ -36,6 +50,7 @@ public final class Utils {
     public final static int REQ_CODE_FORMULARIO = 9000;
     public static final double PRECISION = 0.0000000000002;
     public static final int CANTIDAD_INTENTOS_UBICACION = 5;
+
     public static String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
