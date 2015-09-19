@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp._1_Infraestructure;
+package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaMenu;
+import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;

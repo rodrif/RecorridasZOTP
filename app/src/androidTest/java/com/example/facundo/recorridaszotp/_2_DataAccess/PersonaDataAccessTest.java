@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -34,7 +35,7 @@ public class PersonaDataAccessTest extends AndroidTestCase {
         List<Persona> personas = PersonaDataAccess.findPersonasASincronizar();
 
         assertEquals(1, personas.size());
-        assertEquals(personasTest.get(1).toJSonValue(), personas.get(0).toJSonValue());
+        assertTrue(personasTest.get(1).equals(personas.get(0)));
     }
 
     public void testAcualizarDB() throws Exception{

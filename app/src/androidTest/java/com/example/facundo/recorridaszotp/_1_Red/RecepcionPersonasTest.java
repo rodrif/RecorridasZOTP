@@ -27,13 +27,15 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
 
         List<Persona> personas = new ArrayList<Persona>();
         Persona persona1 = new Persona("Persona1Merged", "Persona1MergedAp", Utils.EST_ACTUALIZADO, 1);
-        Persona persona2 = new Persona("Juan2", "nuevaPersona2");
+        Persona persona2 = new Persona("Juan2", "nuevaPersona2", Utils.EST_ACTUALIZADO, 2);
+        Persona persona3 = new Persona("personaWeb3", "personaWeb3Ap", Utils.EST_ACTUALIZADO, 300);
         personas.add(persona1);
         personas.add(persona2);
+        personas.add(persona3);
 
         String respuestaWeb = PersonaJsonUtils.personasToJsonString(personas);
         RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(this, respuestaWeb);
-        recepcionPersonas.execute("Juan2");
+        recepcionPersonas.execute("cualquiera");
 
         if (!signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
             fail("fallo en recepcionPersonas");
