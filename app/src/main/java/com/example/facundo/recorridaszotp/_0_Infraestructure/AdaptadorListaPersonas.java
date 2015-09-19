@@ -39,6 +39,9 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
         TextView lApellido = (TextView) item.findViewById(R.id.lApellido);
         lApellido.setText(listaPersonas.get(position).getApellido());
 
+        //TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWeb);
+        //lIdWeb.setText(listaPersonas.get(position).getWebId());
+
         return (item);
     }
 }
