@@ -28,6 +28,7 @@ public class ListaPersonasTest extends ActivityInstrumentationTestCase2<Activity
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        DBUtils.loadDefaultDB();
         miActivity = getActivity();
         mListaPersonasFragment = (ListaPersonas)miActivity.frag;
         mListView = (ListView) mListaPersonasFragment.getView().findViewById(R.id.lista_personas);

@@ -34,7 +34,7 @@ public class RecepcionPersonas extends EnvioPost {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d(Utils.APPTAG, "onPostExecute: " + result);
+        Log.d(Utils.APPTAG, "RecepcionPersonas onPostExecute: " + result);
         try {
             this.respuesta = result;
         } catch (Exception ex) {

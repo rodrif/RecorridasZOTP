@@ -24,7 +24,6 @@ public class ListaPersonas extends Fragment {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_lista_personas, container, false);
 
-        DBUtils.loadDefaultDB(); //TODO Borrar
         List<Persona> listaPersonas = PersonaDataAccess.getAll();
 
         AdaptadorListaPersonas adaptador =

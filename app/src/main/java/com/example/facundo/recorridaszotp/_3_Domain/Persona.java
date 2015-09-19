@@ -3,6 +3,7 @@ package com.example.facundo.recorridaszotp._3_Domain;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,42 +114,7 @@ public class Persona extends Model {
     @Override
     public boolean equals(Object obj) {
         Persona other = (Persona)obj;
-        return (other.toJSonValue().equals(this.toJSonValue()));
-    }
-
-    public static Persona fromJsonObject(JSONObject personaJson) throws Exception {
-        Persona persona = new Persona();
-        persona.setNombre(personaJson.optString("nombre"));
-        persona.setApellido(personaJson.optString("apellido"));
-        persona.setEstado(personaJson.optInt("estado"));
-        persona.setWebId(personaJson.optInt("webId"));
-        return persona;
-    }
-
-    public JSONObject toJsonObject() {
-        try {
-            JSONObject jsonObj = new JSONObject();
-            //jsonObj.put("id", this.getId());
-            jsonObj.put("nombre", this.getNombre());
-            jsonObj.put("apellido", this.getApellido());
-            jsonObj.put("estado", this.getEstado());
-            jsonObj.put("webId", this.getWebId());
-
-            return jsonObj;
-
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public String toJSonValue() {
-        JSONObject jsonObj = this.toJsonObject();
-
-        if (jsonObj != null)
-            return jsonObj.toString();
-        return null;
+        return (PersonaJsonUtils.toJSonValue(other).equals(PersonaJsonUtils.toJSonValue(this)));
     }
 
 }
