@@ -15,7 +15,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 
-public class FormPersonaActivity extends ActionBarActivity {
+public class FormPersonaActivity extends ActionBarActivity { //Borrar clase no util
     private EditText nombre;
 
     @Override

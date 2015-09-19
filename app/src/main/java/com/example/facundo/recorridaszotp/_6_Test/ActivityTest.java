@@ -25,4 +25,11 @@ public class ActivityTest extends AppCompatActivity {
                 .replace(R.id.content_frame_test, frag)
                 .commit();
     }
+
+    public void cambiarFragment(Fragment unFragment) {
+        frag = unFragment;
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame_test, unFragment)
+                .commit();
+    }
 }
