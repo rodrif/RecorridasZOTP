@@ -20,4 +20,11 @@
         android:textSize="12sp"
         android:textColor="@android:color/black" />
 
+    <TextView android:id="@+id/lIdWeb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="@android:color/black" />
+
 </LinearLayout>
