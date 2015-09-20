@@ -9,7 +9,11 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +33,17 @@ public class RecepcionPersonas extends EnvioPost {
     @Override
     protected JSONArray cargarJson() {
         JSONArray datos = new JSONArray();
+////TODO guardar ultSincronizacion android db
+//        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+//        try {
+//            JSONObject jsonObj = new JSONObject();
+//            jsonObj.put("fecha", currentDateTimeString);
+//            datos.put(jsonObj);
+//        } catch (JSONException ex) {
+//            Log.e(Utils.APPTAG, "JSONException");
+//            ex.printStackTrace();
+//        }
+
         return datos;
     }
 
@@ -38,7 +53,7 @@ public class RecepcionPersonas extends EnvioPost {
         try {
             this.respuesta = result;
         } catch (Exception ex) {
-            Log.e("recorridaszotp", "respuestaJsonInvalida: " + ex.getMessage());
+            Log.e(Utils.APPTAG, "respuestaJsonInvalida: " + ex.getMessage());
         }
         ActiveAndroid.beginTransaction();
         try {

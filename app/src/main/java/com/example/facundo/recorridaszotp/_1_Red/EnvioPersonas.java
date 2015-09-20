@@ -38,7 +38,7 @@ public class EnvioPersonas extends EnvioPost {
                 datos.put(new JSONObject(PersonaJsonUtils.toJSonAEnviar(persona)));
             }
         } catch (JSONException ex) {
-            Log.e("recorridaszotp", "JSONException");
+            Log.e(Utils.APPTAG, "JSONException");
             ex.printStackTrace();
         }
 
