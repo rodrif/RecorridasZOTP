@@ -24,9 +24,12 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
         persona1.save();
         Persona persona2 = new Persona("Juan16");
         persona2.save();
+        Persona persona3 = new Persona("Juan3", "ap3", Utils.EST_MODIFICADO, 1);
+        persona3.save();
 
         personas.add(persona1);
         personas.add(persona2);
+        personas.add(persona3);
 
         EnvioPersonas enviador = new EnvioPersonas(personas, this);
         enviador.execute(Utils.WEB_INSERTAR);
@@ -39,6 +42,8 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
 
         assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona1.getId().toString()) > 0);
         assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona2.getId().toString()) > 0);
+        assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona3.getId().toString()) == 1);
+
     }
 
     @Override
