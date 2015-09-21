@@ -167,10 +167,7 @@ public class MainActivity extends AppCompatActivity {
         String apellido = ETapellido.getText().toString();
 
         if (!nombre.equals("")) {
-            Persona persona = new Persona();
-            persona.setNombre(nombre);
-            persona.setApellido(apellido);
-
+            Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
             PersonaDataAccess.save(persona);
 
             //Chequea creacion correcta
