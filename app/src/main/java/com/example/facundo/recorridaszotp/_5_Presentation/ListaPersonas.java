@@ -1,6 +1,8 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,15 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import java.util.List;
 
 public class ListaPersonas extends Fragment {
+    private onSelectedItemListener listener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,12 +40,29 @@ public class ListaPersonas extends Fragment {
         lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> a, View view, int pos, long id) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Long Click", Toast.LENGTH_SHORT).show();
+                if (listener == null){
+                    Toast.makeText(getActivity().getApplicationContext(),
+                        "Listener null", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    listener.mostrarPersona("Prueba", "Prueba2");
+                }
                 return true;
             }
         });
 
         return vista;
+    }
+
+    @Override
+    public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
+        super.onAttach(activity);
+        listener = (onSelectedItemListener) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 }

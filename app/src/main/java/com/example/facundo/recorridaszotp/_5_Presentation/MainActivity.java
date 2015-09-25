@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._1_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
@@ -28,7 +29,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements onSelectedItemListener {
 
     private DrawerLayout navDrawerLayout;
     private ListView navList;
@@ -187,5 +188,27 @@ public class MainActivity extends AppCompatActivity {
             ETnombre.setError("El nombre es obligatorio");
             //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void mostrarPersona(String nombre, String Apellido) {
+        FormularioFragment frag =  new FormularioFragment();
+
+        Bundle args = new Bundle();
+        args.putString("nombre", nombre);
+        frag.setArguments(args);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, frag)
+                .commit();
+
+//        EditText et = (EditText) getFragmentManager()
+//                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETNombre);
+
+//        et.setText(nombre);
+
+
+        //frag.setNombre(nombre);
+
     }
 }
