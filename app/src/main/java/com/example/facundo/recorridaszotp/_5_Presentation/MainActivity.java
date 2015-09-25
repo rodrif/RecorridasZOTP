@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navItms.add(new ItemLista("Mapa", R.drawable.ic_action_place));
         navItms.add(new ItemLista("Perfil", R.drawable.abc_ic_menu_share_mtrl_alpha));
         navItms.add(new ItemLista("Formulario", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+        navItms.add(new ItemLista("Sincronizar", R.drawable.cast_ic_notification_connecting));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
@@ -114,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     case 5:
                         fragment = new FormularioFragment();
                         fragmentTransaction = true;
+                        break;
+                    case 6:
+                        PersonaDataAccess.sincronizar(null);
+                        Toast.makeText(getApplicationContext(),
+                                "Sincronizando...", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
