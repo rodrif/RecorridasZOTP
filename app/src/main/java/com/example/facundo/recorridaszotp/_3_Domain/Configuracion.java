@@ -26,11 +26,13 @@ public class Configuracion extends Model {
     }
 
     public static String get(String nombre) {
-        return getConfByNombre(nombre).valor;
+        Configuracion configuracion = getConfByNombre(nombre);
+        return configuracion != null ? configuracion.valor : null;
     }
 
     public static void guardar(String nombre, String valor) {
         Configuracion configuracion = getConfByNombre(nombre);
+
         if (configuracion != null) {
             configuracion.valor = valor;
         } else {

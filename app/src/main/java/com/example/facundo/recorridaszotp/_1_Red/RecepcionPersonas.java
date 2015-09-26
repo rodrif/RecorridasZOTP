@@ -43,7 +43,7 @@ public class RecepcionPersonas extends EnvioPost {
         try {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
-            Log.e(Utils.APPTAG, "respuestaJsonInvalida: " + ex.getMessage());
+            Log.e(Utils.APPTAG, "RecepcionPersonas respuestaJsonInvalida: " + ex.getMessage());
         }
         ActiveAndroid.beginTransaction();
 

@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import com.activeandroid.query.Delete;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class DBUtils {
 
     public static void deleteDBData() {
         new Delete().from(Persona.class).execute();
+        new Delete().from(Configuracion.class).execute();
     }
 
 
