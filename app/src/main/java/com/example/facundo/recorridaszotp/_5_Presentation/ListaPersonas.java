@@ -30,7 +30,7 @@ public class ListaPersonas extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_lista_personas, container, false);
 
         DBUtils.loadDefaultDB(); //TODO Borrar
-        List<Persona> listaPersonas = PersonaDataAccess.getAll();
+        final List<Persona> listaPersonas = PersonaDataAccess.getAll();
 
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
@@ -45,7 +45,7 @@ public class ListaPersonas extends Fragment {
                         "Listener null", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    listener.mostrarPersona("Prueba", "Prueba2");
+                    listener.mostrarPersona(listaPersonas.get(pos));
                 }
                 return true;
             }

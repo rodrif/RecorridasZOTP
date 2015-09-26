@@ -14,15 +14,16 @@ import com.example.facundo.recorridaszotp.R;
 
 
 public class FormularioFragment extends Fragment {
-    private int num = -1;
     private String nombre = null;
+    private String apellido = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getArguments();
         if (b != null) {
-            String nom = getArguments().getString("nombre");
+            nombre = b.getString("nombre");
+            apellido = b.getString("apellido");
         }
     }
 
@@ -37,20 +38,12 @@ public class FormularioFragment extends Fragment {
             et.setText(nombre);
         }
 
+        if (apellido != null) {
+            EditText et = (EditText) v.findViewById(R.id.ETApellido);
+            et.setText(apellido);
+        }
+
         return v;
     }
 
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public void setNombre(String nombre) {
-        EditText et = (EditText) this.getActivity().findViewById(R.id.ETNombre);
-        et.setText(nombre);
-    }
 }

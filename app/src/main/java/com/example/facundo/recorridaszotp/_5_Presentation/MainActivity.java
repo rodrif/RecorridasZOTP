@@ -30,12 +30,12 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements onSelectedItemListener {
-
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
+    private Persona personaSeleccionada = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,24 +169,18 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String apellido = ETapellido.getText().toString();
 
         if (!nombre.equals("")) {
-            Persona persona = new Persona();
-            persona.setNombre(nombre);
-            persona.setApellido(apellido);
 
-            PersonaDataAccess.save(persona);
+            if (personaSeleccionada != null) {// si habia persona seleccionada
+                personaSeleccionada.setNombre(nombre);
+                personaSeleccionada.setApellido(apellido);
+                PersonaDataAccess.save(personaSeleccionada);
+            } else { // persona nueva
+                Persona persona = new Persona();
+                persona.setNombre(nombre);
+                persona.setApellido(apellido);
 
-            //Chequea creacion correcta
-            PersonaQuery query = new PersonaQuery();
-            query.nombre = nombre;
-
-            Persona p = PersonaDataAccess.find(query);
-            Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
-            if (p == null) {
-                unToast.setText("Error al grabar");
-            } else {
-                unToast.setText("Se grabo: " + p.getNombre());
+                PersonaDataAccess.save(persona);
             }
-            unToast.show();
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
             ETnombre.requestFocus();
@@ -194,27 +188,35 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.setError("El nombre es obligatorio");
             //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
+
+        //Chequea creacion correcta
+        PersonaQuery query = new PersonaQuery();
+        query.nombre = nombre;
+
+        Persona p = PersonaDataAccess.find(query);
+        Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
+        if (p == null) {
+            unToast.setText("Error al grabar");
+        } else {
+            unToast.setText("Se grabo: " + p.getNombre());
+        }
+        unToast.show();
+
     }
 
     @Override
-    public void mostrarPersona(String nombre, String Apellido) {
-        FormularioFragment frag =  new FormularioFragment();
+    public void mostrarPersona(Persona persona) {
+        personaSeleccionada = persona;
+        FormularioFragment frag = new FormularioFragment();
 
         Bundle args = new Bundle();
-        args.putString("nombre", nombre);
+        args.putString("nombre", persona.getNombre());
+        args.putString("apellido", persona.getApellido());
         frag.setArguments(args);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, frag)
                 .commit();
-
-//        EditText et = (EditText) getFragmentManager()
-//                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETNombre);
-
-//        et.setText(nombre);
-
-
-        //frag.setNombre(nombre);
 
     }
 }
