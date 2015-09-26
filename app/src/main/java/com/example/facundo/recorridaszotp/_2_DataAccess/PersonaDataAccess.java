@@ -42,6 +42,13 @@ public class PersonaDataAccess {
                 .executeSingle();
     }
 
+    public static Persona findById(Long id) {
+        return new Select()
+                .from(Persona.class)
+                .where("Id = ?", id)
+                .executeSingle();
+    }
+
     public static Persona find(PersonaQuery query) {
         return new Select()
                 .from(Persona.class)

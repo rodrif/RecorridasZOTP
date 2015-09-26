@@ -2,12 +2,14 @@
   <dictionary name="Facundo">
     <words>
       <w>apellido</w>
+      <w>configuracion</w>
       <w>descripcion</w>
       <w>direccion</w>
       <w>enviador</w>
       <w>envio</w>
       <w>estado</w>
       <w>facundo</w>
+      <w>guardar</w>
       <w>nombre</w>
       <w>personas</w>
       <w>recorridaszotp</w>

@@ -29,7 +29,7 @@ public class DBUtils {
         return personas;
     }
 
-    private static void deleteDBData() {
+    public static void deleteDBData() {
         new Delete().from(Persona.class).execute();
     }
 

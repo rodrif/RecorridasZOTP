@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,11 +45,12 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
             //Construimos el objeto cliente en formato JSON
             JSONArray datos = this.cargarJson();
-            String currentDateTimeString = "2015-09-26T08:28:41.368-03:00";//TODO
+            String ultFechaSincronizacion = Configuracion.get(Utils.UltFechaSincr);
 
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
-            query += String.format("&fecha=%s", URLEncoder.encode(currentDateTimeString, charset));
-
+            if (ultFechaSincronizacion != null) {
+                query += String.format("&fecha=%s", URLEncoder.encode(ultFechaSincronizacion, charset));
+            }
             //Envio datos
             OutputStream output = conn.getOutputStream();
             output.write(query.getBytes(charset));

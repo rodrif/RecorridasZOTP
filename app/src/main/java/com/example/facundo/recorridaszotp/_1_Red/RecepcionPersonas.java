@@ -6,6 +6,7 @@ import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ public class RecepcionPersonas extends EnvioPost {
             if (PersonaDataAccess.acualizarDB(personas) != 0) {
                 throw new Exception("FalloActualizarDB");
             } else {
+                Configuracion.guardar(Utils.UltFechaSincr, this.respuesta.getString("fecha").toString());
                 ActiveAndroid.setTransactionSuccessful();
                 if (this.delegate != null) {
                     delegate.executionFinished(this.respuesta.toString());
