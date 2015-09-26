@@ -21,10 +21,10 @@ public class DBUtils {
     public static List<Persona> getPersonasTest() {
         List<Persona> personas = new ArrayList<Persona>();
 
-        personas.add(new Persona("Alfredo", "Fernandez", Utils.EST_ACTUALIZADO, 1));
+        personas.add(new Persona("Alfredo", "Fernandez", Utils.EST_ACTUALIZADO, 1000));
         personas.add(new Persona("Facundo", "Rodriguez", Utils.EST_MODIFICADO, 2));
-        personas.add(new Persona("Gonzalo", "Rodriguez", Utils.EST_ACTUALIZADO, 3));
-        personas.add(new Persona("Pepe", "Argento", Utils.EST_ACTUALIZADO, 4));
+        personas.add(new Persona("Gonzalo", "Rodriguez", Utils.EST_ACTUALIZADO, 1003));
+        personas.add(new Persona("Pepe", "Argento", Utils.EST_ACTUALIZADO, 1004));
 
         return personas;
     }
