@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -14,6 +15,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.util.Date;
 
 
 /**
@@ -40,11 +43,11 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
 
             //Construimos el objeto cliente en formato JSON
-            JSONArray datos = null;
-            String responseText = null;
+            JSONArray datos = this.cargarJson();
+            String currentDateTimeString = "2015-09-26T08:28:41.368-03:00";//TODO
 
-            datos = this.cargarJson();
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
+            query += String.format("&fecha=%s", URLEncoder.encode(currentDateTimeString, charset));
 
             //Envio datos
             OutputStream output = conn.getOutputStream();

@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Facundo on 05/09/2015.
  */
 public class RecepcionPersonas extends EnvioPost {
-    protected String respuesta;
+    protected JSONObject respuesta;
     protected AsyncDelegate delegate;
 
     public RecepcionPersonas() {
@@ -33,17 +33,6 @@ public class RecepcionPersonas extends EnvioPost {
     @Override
     protected JSONArray cargarJson() {
         JSONArray datos = new JSONArray();
-////TODO guardar ultSincronizacion android db
-//        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-//        try {
-//            JSONObject jsonObj = new JSONObject();
-//            jsonObj.put("fecha", currentDateTimeString);
-//            datos.put(jsonObj);
-//        } catch (JSONException ex) {
-//            Log.e(Utils.APPTAG, "JSONException");
-//            ex.printStackTrace();
-//        }
-
         return datos;
     }
 
@@ -51,20 +40,21 @@ public class RecepcionPersonas extends EnvioPost {
     protected void onPostExecute(String result) {
         Log.d(Utils.APPTAG, "RecepcionPersonas onPostExecute: " + result);
         try {
-            this.respuesta = result;
+            this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, "respuestaJsonInvalida: " + ex.getMessage());
         }
         ActiveAndroid.beginTransaction();
+
         try {
-            List<Persona> personas = PersonaJsonUtils.personasFromJsonString(result);
+            List<Persona> personas = PersonaJsonUtils.personasFromJsonString(this.respuesta.getJSONArray("datos").toString());
 
             if (PersonaDataAccess.acualizarDB(personas) != 0) {
                 throw new Exception("FalloActualizarDB");
             } else {
                 ActiveAndroid.setTransactionSuccessful();
                 if (this.delegate != null) {
-                    delegate.executionFinished(this.respuesta);
+                    delegate.executionFinished(this.respuesta.toString());
                 }
             }
         } catch (Exception ex) {
@@ -74,7 +64,7 @@ public class RecepcionPersonas extends EnvioPost {
         }
     }
 
-    public String getRespuesta() {
+    public JSONObject getRespuesta() {
         return this.respuesta;
     }
 }
