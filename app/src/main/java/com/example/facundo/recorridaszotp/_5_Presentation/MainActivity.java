@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
+import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -27,13 +28,13 @@ import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements onSelectedItemListener {
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
+    private Persona personaSeleccionada = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,21 +168,14 @@ public class MainActivity extends AppCompatActivity {
         String apellido = ETapellido.getText().toString();
 
         if (!nombre.equals("")) {
-            Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
-            PersonaDataAccess.save(persona);
-
-            //Chequea creacion correcta
-            PersonaQuery query = new PersonaQuery();
-            query.nombre = nombre;
-
-            Persona p = PersonaDataAccess.find(query);
-            Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
-            if (p == null) {
-                unToast.setText("Error al grabar");
-            } else {
-                unToast.setText("Se grabo: " + p.getNombre());
+            if (personaSeleccionada != null) {// si habia persona seleccionada
+                personaSeleccionada.setNombre(nombre);
+                personaSeleccionada.setApellido(apellido);
+                PersonaDataAccess.save(personaSeleccionada);
+            } else { // persona nueva
+                Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
+                PersonaDataAccess.save(persona);
             }
-            unToast.show();
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
             ETnombre.requestFocus();
@@ -189,5 +183,35 @@ public class MainActivity extends AppCompatActivity {
             ETnombre.setError("El nombre es obligatorio");
             //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
+
+        //Chequea creacion correcta
+        PersonaQuery query = new PersonaQuery();
+        query.nombre = nombre;
+
+        Persona p = PersonaDataAccess.find(query);
+        Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
+        if (p == null) {
+            unToast.setText("Error al grabar");
+        } else {
+            unToast.setText("Se grabo: " + p.getNombre());
+        }
+        unToast.show();
+
+    }
+
+    @Override
+    public void mostrarPersona(Persona persona) {
+        personaSeleccionada = persona;
+        FormularioFragment frag = new FormularioFragment();
+
+        Bundle args = new Bundle();
+        args.putString("nombre", persona.getNombre());
+        args.putString("apellido", persona.getApellido());
+        frag.setArguments(args);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, frag)
+                .commit();
+
     }
 }

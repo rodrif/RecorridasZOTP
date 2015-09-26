@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'recorridaZO'
+            keyPassword 'fyg123fyg123'
+            storePassword 'fyg123fyg123'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
     defaultConfig {
