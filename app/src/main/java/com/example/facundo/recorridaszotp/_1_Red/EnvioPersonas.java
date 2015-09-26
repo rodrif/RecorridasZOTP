@@ -56,7 +56,7 @@ public class EnvioPersonas extends EnvioPost {
         ActiveAndroid.beginTransaction();
         try {
             for (Persona persona : this.personas) {
-                persona.setWebId(this.respuesta.optInt(persona.getId().toString()));
+                persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
                 persona.save();
             }
             ActiveAndroid.setTransactionSuccessful();

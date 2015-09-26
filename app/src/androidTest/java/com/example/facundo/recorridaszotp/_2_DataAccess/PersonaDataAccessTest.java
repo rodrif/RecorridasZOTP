@@ -41,16 +41,16 @@ public class PersonaDataAccessTest extends AndroidTestCase {
     public void testAcualizarDB() throws Exception{
         DBUtils.loadDefaultDB();
         List<Persona> personasTest = new ArrayList<Persona>();
-        personasTest.add(new Persona("NuevaPersona1", "apellido", Utils.EST_ACTUALIZADO, 1000));
-        personasTest.add(new Persona("NuevaPersona2", "apellido", Utils.EST_ACTUALIZADO, 1001));
+        personasTest.add(new Persona("NuevaPersona1", "apellido", Utils.EST_ACTUALIZADO, 2000));
+        personasTest.add(new Persona("NuevaPersona2", "apellido", Utils.EST_ACTUALIZADO, 2001));
         personasTest.add(new Persona("PersonaModif3", "apellido", Utils.EST_ACTUALIZADO, 2));
-        personasTest.add(new Persona("PersonaBorrada4", "apellido", Utils.EST_BORRADO, 4));
+        personasTest.add(new Persona("PersonaBorrada4", "apellido", Utils.EST_BORRADO, 1004));
         PersonaDataAccess.acualizarDB(personasTest);
 
-        Persona persona1 = PersonaDataAccess.findByWebId(1000);
-        Persona persona2 = PersonaDataAccess.findByWebId(1001);
+        Persona persona1 = PersonaDataAccess.findByWebId(2000);
+        Persona persona2 = PersonaDataAccess.findByWebId(2001);
         Persona persona3 = PersonaDataAccess.findByWebId(2);
-        Persona persona4 = PersonaDataAccess.findByWebId(4);
+        Persona persona4 = PersonaDataAccess.findByWebId(1004);
 
         assertEquals(DBUtils.getPersonasTest().size() + 1, PersonaDataAccess.getAll().size());
         assertNull(persona4);

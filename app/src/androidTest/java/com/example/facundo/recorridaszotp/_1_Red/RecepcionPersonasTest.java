@@ -10,6 +10,9 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -21,22 +24,31 @@ import java.util.concurrent.TimeUnit;
 public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDelegate {
     private CountDownLatch signal;
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        DBUtils.loadDefaultDB();
+    }
+
     public void testRecepcionPersonas() throws Exception {
         this.signal = new CountDownLatch(1);
-        DBUtils.loadDefaultDB();
 
         List<Persona> personas = new ArrayList<Persona>();
-        Persona persona1 = new Persona("Persona1Merged", "Persona1MergedAp", Utils.EST_ACTUALIZADO, 1);
-        Persona persona2 = new Persona("Juan2", "nuevaPersona2", Utils.EST_ACTUALIZADO, 2);
-        Persona persona3 = new Persona("personaWeb3", "personaWeb3Ap", Utils.EST_ACTUALIZADO, 300);
-        Persona persona4 = new Persona("nom", "ap", Utils.EST_BORRADO, 3);
+        Persona persona1 = new Persona("Persona1Merged", "Persona1MergedAp", Utils.EST_ACTUALIZADO, 1000);
+        Persona persona2 = new Persona("Juan2", "nuevaPersona2", Utils.EST_ACTUALIZADO, 2002);
+        Persona persona3 = new Persona("personaWeb3Merge", "personaWeb3Ap", Utils.EST_ACTUALIZADO, 1004);
+        Persona persona4 = new Persona("nom", "ap", Utils.EST_BORRADO, 1003);
         personas.add(persona1);
         personas.add(persona2);
         personas.add(persona3);
         personas.add(persona4);
 
-        String respuestaWeb = PersonaJsonUtils.personasToJsonString(personas);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(this, respuestaWeb);
+        JSONObject respuestaJsonObject = new JSONObject();
+        String personasJsonString = PersonaJsonUtils.personasToJsonString(personas);
+        respuestaJsonObject.put("datos", new JSONArray(personasJsonString));
+        respuestaJsonObject.put("fecha", "2015-09-26T08:28:41.368-03:00");
+
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(this, respuestaJsonObject);
         recepcionPersonas.execute("cualquiera");
 
         if (!signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
@@ -44,8 +56,8 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         }
 
         assertEquals(DBUtils.getPersonasTest().size(), PersonaDataAccess.getAll().size());
-        assertTrue(persona1.equals(PersonaDataAccess.findByWebId(1)));
-        assertNull(PersonaDataAccess.findByWebId(3));
+        assertTrue(persona1.equals(PersonaDataAccess.findByWebId(1000)));
+        assertNull(PersonaDataAccess.findByWebId(1003));
     }
 
     @Override

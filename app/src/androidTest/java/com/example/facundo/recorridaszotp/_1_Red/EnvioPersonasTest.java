@@ -2,9 +2,15 @@ package com.example.facundo.recorridaszotp._1_Red;
 
 import android.test.AndroidTestCase;
 import android.util.Log;
+import android.widget.ListView;
 
+import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
+
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +23,20 @@ import java.util.concurrent.TimeUnit;
 public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate {
     private CountDownLatch signal;
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        DBUtils.loadDefaultDB();
+    }
+
     public void testEnvioPersonas() throws Exception {
         signal = new CountDownLatch(1);
         List<Persona> personas = new ArrayList<Persona>();
-        Persona persona1 = new Persona("Juan15");
+        Persona persona1 = new Persona("envioPersonas1");
         persona1.save();
-        Persona persona2 = new Persona("Juan16");
+        Persona persona2 = new Persona("envioPersonas2");
         persona2.save();
-        Persona persona3 = new Persona("Juan3", "ap3", Utils.EST_MODIFICADO, 1);
+        Persona persona3 = new Persona("envioPersonas3", "ap3", Utils.EST_MODIFICADO, 1);
         persona3.save();
 
         personas.add(persona1);
@@ -38,12 +50,14 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
             fail("no recibio respuesta del servidor");
         }
 
-        JSONObject jsonObject = enviador.getRespuesta();
+        JSONObject datos = enviador.getRespuesta().getJSONObject("datos");
 
-        assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona1.getId().toString()) > 0);
-        assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona2.getId().toString()) > 0);
-        assertTrue("fallo en la respuesta del servidor", jsonObject.optInt(persona3.getId().toString()) == 1);
-
+        assertTrue("fallo en la respuesta del servidor", datos.optInt(persona1.getId().toString()) > 0);
+        assertTrue("fallo en la respuesta del servidor", datos.optInt(persona2.getId().toString()) > 0);
+        assertTrue("fallo en la respuesta del servidor", datos.optInt(persona3.getId().toString()) == 1);
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
     }
 
     @Override
