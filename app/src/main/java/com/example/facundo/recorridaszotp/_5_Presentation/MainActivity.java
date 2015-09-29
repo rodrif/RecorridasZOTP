@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             if (personaSeleccionada != null) {// si habia persona seleccionada
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
-                personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.save(personaSeleccionada);
             } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
