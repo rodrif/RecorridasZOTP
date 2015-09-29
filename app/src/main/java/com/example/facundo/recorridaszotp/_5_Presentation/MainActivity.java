@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(R.id.content_frame, frag);
         ft.commit();
     }
@@ -208,5 +209,26 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void EditarPersonaClickFormulario(View v) {
+        EditText ETnombre = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMNombre);
+        EditText ETapellido = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMApellido);
+
+        String nombre = ETnombre.getText().toString();
+        String apellido = ETapellido.getText().toString();
+
+        Fragment frag = new FormularioFragment();
+        Bundle args = new Bundle();
+        args.putString("nombre", nombre);
+        args.putString("apellido", apellido);
+        frag.setArguments(args);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //ft.addToBackStack(null);
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
     }
 }
