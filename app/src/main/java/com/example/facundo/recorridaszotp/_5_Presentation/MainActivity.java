@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         Fragment fragmentHome = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
         ft.replace(R.id.content_frame, fragmentHome);
         ft.commit();
     }
