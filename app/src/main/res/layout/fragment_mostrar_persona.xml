@@ -7,28 +7,40 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.facundo.recorridaszotp._5_Presentation.FormPersonaActivity">
+    tools:context="com.example.facundo.recorridaszotp._5_Presentation.MostrarPersonaFragment">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false">
 
         <EditText
-            android:id="@+id/ETNombre"
+            android:id="@+id/ETMNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:cursorVisible="false"
+            android:hint="Nombre"
+            android:clickable="false"
+            android:editable="false"
+            android:focusable="false" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false">
 
         <EditText
-            android:id="@+id/ETApellido"
+            android:id="@+id/ETMApellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido" />
+            android:cursorVisible="false"
+            android:hint="Apellido"
+            android:focusable="false"
+            android:editable="false"
+            android:clickable="false" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -38,8 +50,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:clickable="true"
-        android:text="@string/Guardar"
-        android:onClick="GuardarPersonaClickFormulario"
+        android:text="Editar"
+        android:onClick="EditarPersonaClickFormulario"
         android:textColor="@android:color/white"
         android:background="@color/color_primary"/>
 

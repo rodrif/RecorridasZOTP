@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -62,29 +63,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navItms.add(new ItemLista("Perfil", R.drawable.abc_ic_menu_share_mtrl_alpha));
         navItms.add(new ItemLista("Formulario", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
         navItms.add(new ItemLista("Sincronizar", R.drawable.cast_ic_notification_connecting));
+        navItms.add(new ItemLista("Mostrar Persona", R.drawable.ic_action_user));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        /*
-        //Eventos del Drawer Layout
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-            }
-            @Override
-            public void onDrawerOpened(View drawerView) {
-            }
-            @Override
-            public void onDrawerClosed(View drawerView) {
-            }
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
-        */
 
         navList = (ListView) findViewById(R.id.nav_list);
         navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,25 +104,29 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                         Toast.makeText(getApplicationContext(),
                                 "Sincronizando...", Toast.LENGTH_SHORT).show();
                         break;
+                    case 7:
+                        fragment = new MostrarPersonaFragment();
+                        fragmentTransaction = true;
+                        break;
                 }
 
                 if (fragmentTransaction) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, fragment)
-                            .commit();
-
-                    //menuItem.setChecked(true);
-                    //getSupportActionBar().setTitle(menuItem.getTitle());
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
                 }
 
                 navDrawerLayout.closeDrawers();
 
             }
         });
+
         Fragment fragmentHome = new HomeFragment();
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, fragmentHome)
-                .commit();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(R.id.content_frame, fragmentHome);
+        ft.commit();
     }
 
     @Override
@@ -197,22 +185,29 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             unToast.setText("Se grabo: " + p.getNombre());
         }
         unToast.show();
-
     }
 
     @Override
     public void mostrarPersona(Persona persona) {
         personaSeleccionada = persona;
-        FormularioFragment frag = new FormularioFragment();
+        Fragment frag = new MostrarPersonaFragment();
 
         Bundle args = new Bundle();
         args.putString("nombre", persona.getNombre());
         args.putString("apellido", persona.getApellido());
         frag.setArguments(args);
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, frag)
-                .commit();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
