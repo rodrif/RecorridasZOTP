@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //ft.addToBackStack(null);
+        ft.addToBackStack(null);
         ft.replace(R.id.content_frame, frag);
         ft.commit();
     }
