@@ -63,7 +63,7 @@ public class PersonaDataAccessTest extends AndroidTestCase {
         CountDownLatch signal = new CountDownLatch(1);
         DBUtils.loadDefaultDB();
         SincronizarDelegate delegate = new SincronizarDelegate(signal);
-        PersonaDataAccess.sincronizar(delegate);
+        PersonaDataAccess.sincronizar(delegate, null);
 
         if(!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
             fail("no recibio respuesta del servidor");
