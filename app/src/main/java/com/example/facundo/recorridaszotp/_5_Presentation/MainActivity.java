@@ -170,8 +170,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.requestFocus();
             ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
-            //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
-        }
+         }
 
         //Chequea creacion correcta
         PersonaQuery query = new PersonaQuery();
@@ -185,6 +184,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             unToast.setText("Se grabo: " + p.getNombre());
         }
         unToast.show();
+
+        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
+        getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack("editar", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
@@ -206,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0 ){
-            getFragmentManager().popBackStack("editar", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
