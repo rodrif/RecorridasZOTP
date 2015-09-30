@@ -27,8 +27,7 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
 
         View item = convertView;
 
-        if(item == null)
-        {
+        if (item == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             item = inflater.inflate(R.layout.list_item_persona, null);
         }

@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -72,56 +73,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navList = (ListView) findViewById(R.id.nav_list);
-        navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-                //  MostrarFragment(position);
-                boolean fragmentTransaction = false;
-                Fragment fragment = null;
-
-                switch (position) {
-                    case 1:
-                        fragment = new Fragment1();
-                        fragmentTransaction = true;
-                        break;
-                    case 2:
-                        fragment = new ListaPersonas();
-                        fragmentTransaction = true;
-                        break;
-                    case 3:
-                        fragment = new MapsFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 4:
-                        fragment = new ProfileFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 5:
-                        fragment = new FormularioFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 6:
-                        PersonaDataAccess.sincronizar(null);
-                        Toast.makeText(getApplicationContext(),
-                                "Sincronizando...", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 7:
-                        fragment = new MostrarPersonaFragment();
-                        fragmentTransaction = true;
-                        break;
-                }
-
-                if (fragmentTransaction) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.addToBackStack(null);
-                    ft.replace(R.id.content_frame, fragment);
-                    ft.commit();
-                }
-
-                navDrawerLayout.closeDrawers();
-
-            }
-        });
+        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
         Fragment fragmentHome = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -234,5 +186,64 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         ft.addToBackStack("editar");
         ft.replace(R.id.content_frame, frag);
         ft.commit();
+    }
+
+    private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
+        private Activity activity = null;
+
+        public AdaptadorOnItemClickListener(Activity activity){
+            this.activity = activity;
+        }
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+            //  MostrarFragment(position);
+            boolean fragmentTransaction = false;
+            Fragment fragment = null;
+
+            switch (position) {
+                case 1:
+                    fragment = new Fragment1();
+                    fragmentTransaction = true;
+                    break;
+                case 2:
+                    //fragment = new ListaPersonas();
+                    //fragmentTransaction = true;
+                    PersonaDataAccess.sincronizar(null, activity);
+                    Toast.makeText(getApplicationContext(),
+                            "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    fragment = new MapsFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 4:
+                    fragment = new ProfileFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 5:
+                    fragment = new FormularioFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 6:
+                    PersonaDataAccess.sincronizar(null, null);
+                    Toast.makeText(getApplicationContext(),
+                            "Sincronizando...", Toast.LENGTH_SHORT).show();
+                    break;
+                case 7:
+                    fragment = new MostrarPersonaFragment();
+                    fragmentTransaction = true;
+                    break;
+            }
+
+            if (fragmentTransaction) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+            }
+
+            navDrawerLayout.closeDrawers();
+
+        }
     }
 }

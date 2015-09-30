@@ -39,11 +39,10 @@ public class ListaPersonas extends Fragment {
         lViewPersonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listener == null){
+                if (listener == null) {
                     Toast.makeText(getActivity().getApplicationContext(),
-                        "Listener null", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                            "Listener null", Toast.LENGTH_SHORT).show();
+                } else {
                     listener.mostrarPersona(listaPersonas.get(position));
                 }
 

@@ -1,5 +1,9 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
@@ -97,9 +101,15 @@ public class PersonaDataAccess {
         return resultado;
     }
 
-    public static void sincronizar(AsyncDelegate delegate) {
+/*    public static void sincronizar(AsyncDelegate delegate) {
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
         RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas);
+        recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
+    }*/
+
+    public static void sincronizar(AsyncDelegate delegate, Activity activity) {
+        AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, activity);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
