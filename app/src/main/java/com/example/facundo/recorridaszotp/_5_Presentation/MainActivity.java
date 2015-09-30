@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -205,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack("editar", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
@@ -227,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
+        ft.addToBackStack("editar");
         ft.replace(R.id.content_frame, frag);
         ft.commit();
     }
