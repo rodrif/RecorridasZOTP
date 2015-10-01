@@ -30,6 +30,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private static final int RC_SIGN_IN = 0;
 
     /* Client used to interact with Google APIs. */
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
 
     /* Is there a ConnectionResult resolution in progress? */
     private boolean mIsResolving = false;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = true;
 
-
+    private SignInButton signInButton;
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -221,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Toast.makeText(this,
                 "Click en Sign in", Toast.LENGTH_SHORT).show();
         mGoogleApiClient.connect();
+        Log.d("RZO", "Apretó SignIn");
     }
 
     @Override
@@ -321,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        //mGoogleApiClient.connect();
     }
 
     @Override
