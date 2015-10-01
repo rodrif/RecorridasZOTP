@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.IntentSender;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -44,6 +45,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     /* Client used to interact with Google APIs. */
     private GoogleApiClient mGoogleApiClient;
+
+    /* Is there a ConnectionResult resolution in progress? */
+    private boolean mIsResolving = false;
+
+    /* Should we automatically resolve ConnectionResults when possible? */
+    private boolean mShouldResolve = true;
+
 
     private DrawerLayout navDrawerLayout;
     private ListView navList;
@@ -212,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void signInClick(View v) {
         Toast.makeText(this,
                 "Click en Sign in", Toast.LENGTH_SHORT).show();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -229,7 +238,23 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Toast.makeText(this,
-                "onConnectionFailed", Toast.LENGTH_SHORT).show();
+                "onConnectionFailed" + connectionResult, Toast.LENGTH_SHORT).show();
+        Log.d("RZO", "onConnectionFailed:" + connectionResult);
+
+        if (!mIsResolving && mShouldResolve) {
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                    mIsResolving = true;
+                } catch (IntentSender.SendIntentException e) {
+                    Toast.makeText(this,
+                            "Could not resolve ConnectionResult" + e, Toast.LENGTH_SHORT).show();
+                    Log.e("RZO", "Could not resolve ConnectionResult.", e);
+                    mIsResolving = false;
+                    mGoogleApiClient.connect();
+                }
+            }
+        }
     }
 
 
