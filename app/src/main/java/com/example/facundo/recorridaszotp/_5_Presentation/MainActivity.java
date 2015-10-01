@@ -27,11 +27,24 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements onSelectedItemListener {
+public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+    /* Request code used to invoke sign in user interactions. */
+    private static final int RC_SIGN_IN = 0;
+
+    /* Client used to interact with Google APIs. */
+    private GoogleApiClient mGoogleApiClient;
+
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -79,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragmentHome);
         ft.commit();
+
+        // Build GoogleApiClient with access to basic profile
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(new Scope(Scopes.PROFILE))
+                .build();
     }
 
     @Override
@@ -122,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.requestFocus();
             ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
-         }
+        }
 
         //Chequea creacion correcta
         PersonaQuery query = new PersonaQuery();
@@ -160,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
@@ -188,12 +209,37 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         ft.commit();
     }
 
+    public void signInClick(View v) {
+        Toast.makeText(this,
+                "Click en Sign in", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(this,
+                "onConnected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this,
+                "onConnectedSuspended", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "onConnectionFailed", Toast.LENGTH_SHORT).show();
+    }
+
+
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
 
-        public AdaptadorOnItemClickListener(Activity activity){
+        public AdaptadorOnItemClickListener(Activity activity) {
             this.activity = activity;
         }
+
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
             //  MostrarFragment(position);
@@ -245,5 +291,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             navDrawerLayout.closeDrawers();
 
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 }
