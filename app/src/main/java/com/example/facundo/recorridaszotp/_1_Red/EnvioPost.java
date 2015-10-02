@@ -53,28 +53,28 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Conexion segura TODO Crear certificado de pagina web.
-        // Load CAs from an InputStream
-        // (could be from a resource or ByteArrayInputStream or ...) // TODO Hacer por resource
         CertificateFactory cf = null;
-        InputStream caInput = null;
-        Certificate ca = null;
+        InputStream certificateInput = null;
+        Certificate certificate = null;
         KeyStore keyStore = null;
         TrustManagerFactory tmf = null;
         String keyStoreType;
         SSLContext context = null;
 
+        // Load CAs from an InputStream
+        // (could be from a resource or ByteArrayInputStream or ...) // TODO Hacer por resource
         try {
             cf = CertificateFactory.getInstance("X.509");
-            caInput = new BufferedInputStream(new FileInputStream("load-der.crt"));
-            ca = cf.generateCertificate(caInput);
-            System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
-            caInput.close();
+            certificateInput = new BufferedInputStream(new FileInputStream("load-der.crt"));
+            certificate = cf.generateCertificate(certificateInput);
+            System.out.println("Certificate=" + ((X509Certificate) certificate).getSubjectDN());
+            certificateInput.close();
 
             // Create a KeyStore containing our trusted CAs
             keyStoreType = KeyStore.getDefaultType();
             keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null, null);
-            keyStore.setCertificateEntry("ca", ca);
+            keyStore.setCertificateEntry("ca", certificate);
 
             // Create a TrustManager that trusts the CAs in our KeyStore
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
