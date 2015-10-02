@@ -24,6 +24,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -290,17 +291,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void onConnected(Bundle bundle) {
+        ObtenerToken obtenerToken;
         Toast.makeText(this,
                 "onConnected", Toast.LENGTH_SHORT).show();
-
         this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-        try {
-            this.token = GoogleAuthUtil.getToken(this, this.email, Utils.SCOPE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GoogleAuthException e) {
-            e.printStackTrace();
-        }
+
+obtenerToken = new ObtenerToken(this, )
+
     }
 
     @Override
@@ -334,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     protected void onStart() {
         super.onStart();
-        //mGoogleApiClient.connect();
     }
 
     @Override
