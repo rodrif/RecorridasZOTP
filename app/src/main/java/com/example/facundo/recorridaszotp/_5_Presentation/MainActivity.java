@@ -28,6 +28,8 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
@@ -35,6 +37,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -53,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = true;
 
-    private SignInButton signInButton;
+    private String token;
+    private String email;
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -169,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
-        //getFragmentManager().popBackStack("editar", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
@@ -224,41 +227,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         mGoogleApiClient.connect();
         Log.d("RZO", "Apretó SignIn");
     }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Toast.makeText(this,
-                "onConnected", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Toast.makeText(this,
-                "onConnectedSuspended", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Toast.makeText(this,
-                "onConnectionFailed" + connectionResult, Toast.LENGTH_SHORT).show();
-        Log.d("RZO", "onConnectionFailed:" + connectionResult);
-
-        if (!mIsResolving && mShouldResolve) {
-            if (connectionResult.hasResolution()) {
-                try {
-                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
-                    mIsResolving = true;
-                } catch (IntentSender.SendIntentException e) {
-                    Toast.makeText(this,
-                            "Could not resolve ConnectionResult" + e, Toast.LENGTH_SHORT).show();
-                    Log.e("RZO", "Could not resolve ConnectionResult.", e);
-                    mIsResolving = false;
-                    mGoogleApiClient.connect();
-                }
-            }
-        }
-    }
-
 
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
@@ -317,6 +285,49 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
             navDrawerLayout.closeDrawers();
 
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(this,
+                "onConnected", Toast.LENGTH_SHORT).show();
+
+        this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+        try {
+            this.token = GoogleAuthUtil.getToken(this, this.email, Utils.SCOPE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GoogleAuthException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this,
+                "onConnectedSuspended", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "onConnectionFailed" + connectionResult, Toast.LENGTH_SHORT).show();
+        Log.d("RZO", "onConnectionFailed:" + connectionResult);
+
+        if (!mIsResolving && mShouldResolve) {
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                    mIsResolving = true;
+                } catch (IntentSender.SendIntentException e) {
+                    Toast.makeText(this,
+                            "Could not resolve ConnectionResult" + e, Toast.LENGTH_SHORT).show();
+                    Log.e("RZO", "Could not resolve ConnectionResult.", e);
+                    mIsResolving = false;
+                    mGoogleApiClient.connect();
+                }
+            }
         }
     }
 
