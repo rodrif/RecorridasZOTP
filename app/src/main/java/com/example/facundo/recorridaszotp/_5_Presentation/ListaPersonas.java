@@ -36,17 +36,16 @@ public class ListaPersonas extends Fragment {
 
         ListView lViewPersonas = (ListView) vista.findViewById(R.id.lista_personas);
         lViewPersonas.setAdapter(adaptador);
-        lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lViewPersonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> a, View view, int pos, long id) {
-                if (listener == null){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listener == null) {
                     Toast.makeText(getActivity().getApplicationContext(),
-                        "Listener null", Toast.LENGTH_SHORT).show();
+                            "Listener null", Toast.LENGTH_SHORT).show();
+                } else {
+                    listener.mostrarPersona(listaPersonas.get(position));
                 }
-                else {
-                    listener.mostrarPersona(listaPersonas.get(pos));
-                }
-                return true;
+
             }
         });
 

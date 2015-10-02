@@ -1,6 +1,10 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.IntentSender;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -24,11 +28,32 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements onSelectedItemListener {
+public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+    /* Request code used to invoke sign in user interactions. */
+    private static final int RC_SIGN_IN = 0;
+
+    /* Client used to interact with Google APIs. */
+    public static GoogleApiClient mGoogleApiClient;
+
+    /* Is there a ConnectionResult resolution in progress? */
+    private boolean mIsResolving = false;
+
+    /* Should we automatically resolve ConnectionResults when possible? */
+    private boolean mShouldResolve = true;
+
+    private SignInButton signInButton;
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -62,83 +87,28 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navItms.add(new ItemLista("Perfil", R.drawable.abc_ic_menu_share_mtrl_alpha));
         navItms.add(new ItemLista("Formulario", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
         navItms.add(new ItemLista("Sincronizar", R.drawable.cast_ic_notification_connecting));
+        navItms.add(new ItemLista("Mostrar Persona", R.drawable.ic_action_user));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*
-        //Eventos del Drawer Layout
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-            }
-            @Override
-            public void onDrawerOpened(View drawerView) {
-            }
-            @Override
-            public void onDrawerClosed(View drawerView) {
-            }
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
-        */
-
         navList = (ListView) findViewById(R.id.nav_list);
-        navList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-                //  MostrarFragment(position);
-                boolean fragmentTransaction = false;
-                Fragment fragment = null;
+        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
-                switch (position) {
-                    case 1:
-                        fragment = new Fragment1();
-                        fragmentTransaction = true;
-                        break;
-                    case 2:
-                        fragment = new ListaPersonas();
-                        fragmentTransaction = true;
-                        break;
-                    case 3:
-                        fragment = new MapsFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 4:
-                        fragment = new ProfileFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 5:
-                        fragment = new FormularioFragment();
-                        fragmentTransaction = true;
-                        break;
-                    case 6:
-                        PersonaDataAccess.sincronizar(null);
-                        Toast.makeText(getApplicationContext(),
-                                "Sincronizando...", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                if (fragmentTransaction) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, fragment)
-                            .commit();
-
-                    //menuItem.setChecked(true);
-                    //getSupportActionBar().setTitle(menuItem.getTitle());
-                }
-
-                navDrawerLayout.closeDrawers();
-
-            }
-        });
         Fragment fragmentHome = new HomeFragment();
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, fragmentHome)
-                .commit();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragmentHome);
+        ft.commit();
+
+        // Build GoogleApiClient with access to basic profile
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(new Scope(Scopes.PROFILE))
+                .build();
     }
 
     @Override
@@ -182,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.requestFocus();
             ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
-            //Toast.makeText(this, "Nombre es obligatorio", Toast.LENGTH_SHORT).show();
         }
 
         //Chequea creacion correcta
@@ -198,21 +167,168 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
         unToast.show();
 
+        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
+        getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack("editar", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
     public void mostrarPersona(Persona persona) {
         personaSeleccionada = persona;
-        FormularioFragment frag = new FormularioFragment();
+        Fragment frag = new MostrarPersonaFragment();
 
         Bundle args = new Bundle();
         args.putString("nombre", persona.getNombre());
         args.putString("apellido", persona.getApellido());
         frag.setArguments(args);
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, frag)
-                .commit();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void EditarPersonaClickFormulario(View v) {
+        EditText ETnombre = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMNombre);
+        EditText ETapellido = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMApellido);
+
+        String nombre = ETnombre.getText().toString();
+        String apellido = ETapellido.getText().toString();
+
+        Fragment frag = new FormularioFragment();
+        Bundle args = new Bundle();
+        args.putString("nombre", nombre);
+        args.putString("apellido", apellido);
+        frag.setArguments(args);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack("editar");
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
+    }
+
+    public void signInClick(View v) {
+        Toast.makeText(this,
+                "Click en Sign in", Toast.LENGTH_SHORT).show();
+        mGoogleApiClient.connect();
+        Log.d("RZO", "Apretó SignIn");
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(this,
+                "onConnected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this,
+                "onConnectedSuspended", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "onConnectionFailed" + connectionResult, Toast.LENGTH_SHORT).show();
+        Log.d("RZO", "onConnectionFailed:" + connectionResult);
+
+        if (!mIsResolving && mShouldResolve) {
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                    mIsResolving = true;
+                } catch (IntentSender.SendIntentException e) {
+                    Toast.makeText(this,
+                            "Could not resolve ConnectionResult" + e, Toast.LENGTH_SHORT).show();
+                    Log.e("RZO", "Could not resolve ConnectionResult.", e);
+                    mIsResolving = false;
+                    mGoogleApiClient.connect();
+                }
+            }
+        }
+    }
+
+
+    private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
+        private Activity activity = null;
+
+        public AdaptadorOnItemClickListener(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+            //  MostrarFragment(position);
+            boolean fragmentTransaction = false;
+            Fragment fragment = null;
+
+            switch (position) {
+                case 1:
+                    fragment = new Fragment1();
+                    fragmentTransaction = true;
+                    break;
+                case 2:
+                    //fragment = new ListaPersonas();
+                    //fragmentTransaction = true;
+                    PersonaDataAccess.sincronizar(null, activity);
+                    Toast.makeText(getApplicationContext(),
+                            "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    fragment = new MapsFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 4:
+                    fragment = new ProfileFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 5:
+                    fragment = new FormularioFragment();
+                    fragmentTransaction = true;
+                    break;
+                case 6:
+                    PersonaDataAccess.sincronizar(null, null);
+                    Toast.makeText(getApplicationContext(),
+                            "Sincronizando...", Toast.LENGTH_SHORT).show();
+                    break;
+                case 7:
+                    fragment = new MostrarPersonaFragment();
+                    fragmentTransaction = true;
+                    break;
+            }
+
+            if (fragmentTransaction) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+            }
+
+            navDrawerLayout.closeDrawers();
+
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 }

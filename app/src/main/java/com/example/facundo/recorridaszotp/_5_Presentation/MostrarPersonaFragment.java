@@ -8,14 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 
-
-public class FormularioFragment extends Fragment {
+public class MostrarPersonaFragment extends Fragment {
     private String nombre = null;
     private String apellido = null;
+
+    public MostrarPersonaFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,18 +32,18 @@ public class FormularioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.fragment_formulario, container, false);
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_mostrar_persona, container, false);
         if (nombre != null) {
-            EditText et = (EditText) v.findViewById(R.id.ETNombre);
+            EditText et = (EditText) v.findViewById(R.id.ETMNombre);
             et.setText(nombre);
         }
 
         if (apellido != null) {
-            EditText et = (EditText) v.findViewById(R.id.ETApellido);
+            EditText et = (EditText) v.findViewById(R.id.ETMApellido);
             et.setText(apellido);
         }
-       return v;
+        return v;
     }
 
 }
