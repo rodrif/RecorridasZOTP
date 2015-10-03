@@ -15,8 +15,8 @@ public final class Utils {
     public static final String APPTAG = "recorridaszotp";
     public static final String UltFechaSincr = "UltFechaSincr";
     public static final int MAX_INTENTOS = 3;
-    public static final int EST_ACTUALIZADO = 0;
-    public static final int EST_NUEVO = 1;
+    public static final int EST_NUEVO = 0;
+    public static final int EST_ACTUALIZADO = 1;
     public static final int EST_MODIFICADO = 2;
     public static final int EST_BORRADO = 3;
 

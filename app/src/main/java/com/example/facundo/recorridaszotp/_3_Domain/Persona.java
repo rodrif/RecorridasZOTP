@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,11 +44,13 @@ public class Persona extends Model {
     public Persona(String nombre, String apellido) {
         this(nombre);
         this.apellido = apellido;
+        this.estado = Utils.EST_ACTUALIZADO;
     }
 
     public Persona(String nombre) {
         super();
         this.nombre = nombre;
+        this.estado = Utils.EST_ACTUALIZADO;
     }
 
     public void mergeFromWeb(Persona persona) throws Exception{
