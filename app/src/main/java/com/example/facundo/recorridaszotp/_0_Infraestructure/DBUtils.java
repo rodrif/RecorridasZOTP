@@ -2,8 +2,11 @@ package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import com.activeandroid.query.Delete;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +18,21 @@ public class DBUtils {
     public static int loadDefaultDB() {
         DBUtils.deleteDBData();
         List<Persona> personas = DBUtils.getPersonasTest();
+        List<Visita> visitas = DBUtils.getVisitasTest(personas);
 
-        return PersonaDataAccess.save(personas);
+        PersonaDataAccess.save(personas);
+
+        return VisitaDataAccess.save(visitas);
+    }
+
+    private static List<Visita> getVisitasTest(List<Persona> personas) {
+        List<Visita> visitas = new ArrayList<Visita>();
+
+        visitas.add(new Visita(personas.get(0), 1425990960000L));
+        visitas.add(new Visita(personas.get(0), 1425992960000L));
+        visitas.add(new Visita(personas.get(1), 1425990950000L));
+
+        return visitas;
     }
 
     public static List<Persona> getPersonasTest() {
@@ -32,8 +48,8 @@ public class DBUtils {
 
     public static void deleteDBData() {
         new Delete().from(Persona.class).execute();
+        new Delete().from(Visita.class).execute();
         new Delete().from(Configuracion.class).execute();
     }
-
 
 }

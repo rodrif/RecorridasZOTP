@@ -8,6 +8,8 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 
 @Table(name = "Personas")
 public class Persona extends Model {
@@ -55,6 +57,10 @@ public class Persona extends Model {
         this.nombre = persona.getNombre();
         this.apellido = persona.getApellido();
         this.estado = persona.getEstado();
+    }
+
+    public List<Visita> visitas() {
+        return getMany(Visita.class, "Persona");
     }
 
     public String getNombre() {
