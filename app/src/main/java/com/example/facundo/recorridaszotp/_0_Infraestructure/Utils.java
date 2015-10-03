@@ -19,7 +19,6 @@ public final class Utils {
     public static final int EST_NUEVO = 1;
     public static final int EST_MODIFICADO = 2;
     public static final int EST_BORRADO = 3;
-    public static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

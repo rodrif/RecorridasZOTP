@@ -9,9 +9,12 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 public class DelegateEnviarPersonas implements AsyncDelegate {
     AsyncDelegate delegate;
 
-    public DelegateEnviarPersonas() {}
+    public DelegateEnviarPersonas() {
+    }
 
-    public DelegateEnviarPersonas(AsyncDelegate delegate) { this.delegate = delegate; }
+    public DelegateEnviarPersonas(AsyncDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public void executionFinished(String result) throws Exception {

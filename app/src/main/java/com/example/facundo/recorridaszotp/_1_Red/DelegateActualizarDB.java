@@ -9,12 +9,15 @@ import java.util.List;
 /**
  * Created by Facundo on 05/09/2015.
  */
-public class DelegateActualizarDB implements AsyncDelegate{
+public class DelegateActualizarDB implements AsyncDelegate {
     AsyncDelegate delegate;
 
-    public DelegateActualizarDB() {}
+    public DelegateActualizarDB() {
+    }
 
-    public DelegateActualizarDB(AsyncDelegate delegate) { this.delegate = delegate; }
+    public DelegateActualizarDB(AsyncDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public void executionFinished(String result) throws Exception {

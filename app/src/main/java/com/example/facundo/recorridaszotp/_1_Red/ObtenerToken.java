@@ -2,26 +2,25 @@ package com.example.facundo.recorridaszotp._1_Red;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.Scopes;
 
 import java.io.IOException;
 
 /**
  * Created by GoRodriguez on 02/10/2015.
  */
-public class ObtenerToken extends AsyncTask<String, Void, String> {
-    private Activity activity;
-    private String token;
-    private String email;
+public class ObtenerToken extends AsyncTask<Void, Void, Void> {
+    private MainActivity activity;
 
-    public ObtenerToken(Activity activity, String email, String token) {
+
+    public ObtenerToken(MainActivity activity) {
         this.activity = activity;
-        this.email = email;
-        this.token = token;
     }
 
     @Override
@@ -30,21 +29,22 @@ public class ObtenerToken extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        String email = params[0];
+    protected Void doInBackground(Void... params) {
         String token = "";
         try {
-            token = GoogleAuthUtil.getToken(this.activity, email, Utils.SCOPE);
+            token = GoogleAuthUtil.getToken(this.activity, this.activity.getEmail(), Scopes.EMAIL);
+            this.activity.setToken(token);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GoogleAuthException e) {
             e.printStackTrace();
         }
-        return token;
+        return null;
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        this.token = result;
+    protected void onPostExecute(Void result) {
+        Toast.makeText(this.activity,
+                "Token: " + this.activity.getToken(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -131,6 +131,22 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         return super.onOptionsItemSelected(item);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public void GuardarPersonaClickFormulario(View v) {
         Log.d(Utils.APPTAG, "GuardarPersonaClickFormulario");
 
@@ -296,8 +312,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 "onConnected", Toast.LENGTH_SHORT).show();
         this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-obtenerToken = new ObtenerToken(this, )
-
+        obtenerToken = new ObtenerToken(this);
+        obtenerToken.execute();
     }
 
     @Override
