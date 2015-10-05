@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:/Users/gorodriguez/Documents/GitHub/TPFundacionSi/RecorridasZOTP/firma/debug.keystore')
+            storePassword 'android'
+        }
     }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'

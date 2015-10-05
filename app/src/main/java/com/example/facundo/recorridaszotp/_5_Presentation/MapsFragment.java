@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -9,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
-
+    private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
@@ -61,6 +63,17 @@ public class MapsFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Mapa fragment null", Toast.LENGTH_SHORT).show();
             } else {
                 mMap = ((MapFragment) fragment).getMap();
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    public void onMapLongClick(LatLng point) {
+                        Toast.makeText(
+                                getActivity(),
+                                "Click Largo\n" +
+                                        "Lat: " + point.latitude + "\n" +
+                                        "Lng: " + point.longitude,
+                                Toast.LENGTH_SHORT).show();
+                        interfaceMapa.guardarPersona(point);
+                    }
+                });
             }
 
             // Check if we were successful in obtaining the map.
@@ -78,5 +91,22 @@ public class MapsFragment extends Fragment {
      */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
+        super.onAttach(activity);
+        interfaceMapa = (InterfaceMapa) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        interfaceMapa = null;
+    }
+
+    public interface InterfaceMapa {
+        public void guardarPersona(LatLng latLng);
     }
 }
