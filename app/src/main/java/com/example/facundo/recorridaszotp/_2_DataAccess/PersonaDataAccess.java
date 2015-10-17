@@ -107,10 +107,13 @@ public class PersonaDataAccess {
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }*/
 
+    //TODO sacar activity, pasar con otro delegate, o lista de delegates. Activity pertenece a la UI
     public static void sincronizar(AsyncDelegate delegate, Activity activity) {
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
         RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, activity);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
+
+
 
 }

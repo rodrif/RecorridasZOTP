@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Facundo on 03/10/2015.
  */
-public class VisitaJsonUtils { //TODO create BasicJsonUtils
+public class VisitaJsonUtils {
 
     public static List<Visita> personasFromJsonString(String jsonString) throws Exception {
         JSONArray jsonArray = new JSONArray(jsonString);
