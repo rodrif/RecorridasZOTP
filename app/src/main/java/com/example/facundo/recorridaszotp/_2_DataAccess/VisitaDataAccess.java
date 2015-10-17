@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Facundo on 03/10/2015.
  */
-public class VisitaDataAccess { //TODO create BasicDataAccess Class
+public class VisitaDataAccess {
     public static void save(Visita visita) {
         visita.save();
     }
