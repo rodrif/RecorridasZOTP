@@ -1,6 +1,9 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure;
 
+import com.activeandroid.Cache;
+import com.activeandroid.TableInfo;
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.From;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
@@ -47,9 +50,9 @@ public class DBUtils {
     }
 
     public static void deleteDBData() {
-        new Delete().from(Persona.class).execute();
-        new Delete().from(Visita.class).execute();
         new Delete().from(Configuracion.class).execute();
+        new Delete().from(Visita.class).execute();
+        new Delete().from(Persona.class).execute();
     }
 
 }

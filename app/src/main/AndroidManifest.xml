@@ -29,7 +29,7 @@
             android:value="6" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.example.facundo.recorridaszotp._3_Domain.Persona" />
+            android:value="com.example.facundo.recorridaszotp._3_Domain.Persona, com.example.facundo.recorridaszotp._3_Domain.Visita, com.example.facundo.recorridaszotp._3_Domain.Configuracion" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
