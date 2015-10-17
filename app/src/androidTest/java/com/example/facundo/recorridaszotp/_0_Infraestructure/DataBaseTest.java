@@ -55,8 +55,8 @@ public class DataBaseTest extends AndroidTestCase {
 
         List<Visita> visitas = persona.visitas();
 
-        assertEquals("fallo cantidad de visitas", visitas.size(), 2);
-        assertEquals(visitas.get(0).getFecha(), (Long)1425990960000L);
-        assertEquals(visitas.get(1).getFecha(), (Long)1425992960000L);
+        assertEquals("fallo cantidad de visitas", 2, visitas.size());
+        assertEquals((Long)1425990960000L, visitas.get(0).getFecha());
+        assertEquals((Long)1425992960000L, visitas.get(1).getFecha());
     }
 }

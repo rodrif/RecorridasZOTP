@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Facundo on 03/10/2015.
  */
 @Table(name = "Visitas")
+
 public class Visita extends Model {
     @Column(name = "WebId")
     private int webId = -1;
@@ -16,9 +17,10 @@ public class Visita extends Model {
     public Persona persona;
     @Column(name = "Fecha")
     private Long fecha;
-
-    @Column(name = "Comentario")
-    private String comentario;
+    @Column(name = "Descripcion")
+    private String descripcion;
+    @Column(name = "Estado")
+    private int estado;
     //TODO
     private LatLng ubicacion;
 
@@ -26,9 +28,9 @@ public class Visita extends Model {
         super();
     }
 
-    public Visita(Persona persona, Long fecha, String comentario) {
+    public Visita(Persona persona, Long fecha, String descripcion) {
         this(persona, fecha);
-        this.comentario = comentario;
+        this.descripcion = descripcion;
     }
 
     public Visita(Persona persona, Long fecha) {
@@ -65,12 +67,12 @@ public class Visita extends Model {
         this.fecha = fecha;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public LatLng getUbicacion() {
@@ -81,4 +83,11 @@ public class Visita extends Model {
         this.ubicacion = ubicacion;
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 }
