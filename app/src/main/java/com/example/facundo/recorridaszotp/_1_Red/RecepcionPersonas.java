@@ -73,7 +73,7 @@ public class RecepcionPersonas extends EnvioPost {
                     delegate.executionFinished(this.respuesta.toString());
                 }
                 //Si fue llamado desde lista Personas
-                if (activity != null) {
+                if (activity != null) { //TODO esto no deberia estar aca, llamar con otro delegate extra!!!!!
                     Fragment fragment = new ListaPersonas();
                     FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
