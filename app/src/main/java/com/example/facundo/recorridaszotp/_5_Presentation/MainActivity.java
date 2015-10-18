@@ -24,6 +24,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._1_Red.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 2:
-                    PersonaDataAccess.sincronizar(null, activity);
+                    PersonaDataAccess.sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
@@ -291,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 6:
-                    PersonaDataAccess.sincronizar(null, null);
+                    PersonaDataAccess.sincronizar(null);
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando...", Toast.LENGTH_SHORT).show();
                     break;

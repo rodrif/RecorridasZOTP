@@ -31,6 +31,7 @@ import java.util.List;
 public class RecepcionPersonas extends EnvioPost {
     protected JSONObject respuesta;
     protected AsyncDelegate delegate;
+    protected AsyncDelegate segundoDelegate;
     private Activity activity = null;
 
     public RecepcionPersonas() {
@@ -40,9 +41,10 @@ public class RecepcionPersonas extends EnvioPost {
         this.delegate = delegate;
     }
 
-    public RecepcionPersonas(AsyncDelegate delegate, Activity activity) {
+    //TODO refactor a list<delegate>
+    public RecepcionPersonas(AsyncDelegate delegate, AsyncDelegate segundoDelegate) {
         this(delegate);
-        this.activity = activity;
+        this.segundoDelegate = segundoDelegate;
     }
 
     @Override
@@ -72,13 +74,8 @@ public class RecepcionPersonas extends EnvioPost {
                 if (this.delegate != null) {
                     delegate.executionFinished(this.respuesta.toString());
                 }
-                //Si fue llamado desde lista Personas
-                if (activity != null) { //TODO esto no deberia estar aca, llamar con otro delegate extra!!!!!
-                    Fragment fragment = new ListaPersonas();
-                    FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
-                    ft.addToBackStack(null);
-                    ft.replace(R.id.content_frame, fragment);
-                    ft.commit();
+                if (this.segundoDelegate != null) {
+                    segundoDelegate.executionFinished(this.respuesta.toString());
                 }
             }
         } catch (Exception ex) {

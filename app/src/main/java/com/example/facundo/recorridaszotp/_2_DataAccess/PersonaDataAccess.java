@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.DelegateEnviarPersonas;
@@ -101,16 +102,13 @@ public class PersonaDataAccess {
         return resultado;
     }
 
-/*    public static void sincronizar(AsyncDelegate delegate) {
-        AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas);
-        recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
-    }*/
+    public static void sincronizar(AsyncDelegate delegate) {
+        sincronizar(delegate, null);
+    }
 
-    //TODO sacar activity, pasar con otro delegate, o lista de delegates. Activity pertenece a la UI
-    public static void sincronizar(AsyncDelegate delegate, Activity activity) {
+    public static void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, activity);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, delegateRecepcionPersonas);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
