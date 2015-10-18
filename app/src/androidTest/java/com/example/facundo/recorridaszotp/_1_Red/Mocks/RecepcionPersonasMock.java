@@ -1,8 +1,5 @@
-package com.example.facundo.recorridaszotp._0_Infraestructure.Mocks;
+package com.example.facundo.recorridaszotp._1_Red.Mocks;
 
-import android.util.Log;
-
-import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 
