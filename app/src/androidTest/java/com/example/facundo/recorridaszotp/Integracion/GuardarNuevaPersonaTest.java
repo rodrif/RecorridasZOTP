@@ -30,7 +30,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
         Persona persona = new Persona("personaTest", "apelido", Utils.EST_NUEVO);
         persona.save();
 
-        PersonaDataAccess.sincronizar(delegate, null);
+        PersonaDataAccess.sincronizar(delegate);
 
         if (!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
             fail("fallo en GuardarNuevaPersonaTest");
