@@ -14,6 +14,7 @@ import com.example.facundo.recorridaszotp._1_Red.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,11 +108,13 @@ public class PersonaDataAccess {
     }
 
     public static void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
+        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
+        miLista.add(delegateRecepcionPersonas);
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, delegateRecepcionPersonas);
+        miLista.add(delegateEnviarPersonas);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(miLista);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
-
 
 
 }

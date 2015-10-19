@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,22 +31,22 @@ import java.util.List;
  */
 public class RecepcionPersonas extends EnvioPost {
     protected JSONObject respuesta;
-    protected AsyncDelegate delegate;
-    protected AsyncDelegate segundoDelegate;
-    private Activity activity = null;
+    protected List<AsyncDelegate> delegate;
+    //  protected AsyncDelegate segundoDelegate;
+    //   private Activity activity = null;
 
     public RecepcionPersonas() {
     }
 
-    public RecepcionPersonas(AsyncDelegate delegate) {
+    public RecepcionPersonas(List<AsyncDelegate> delegate) {
         this.delegate = delegate;
     }
 
-    //TODO refactor a list<delegate>
-    public RecepcionPersonas(AsyncDelegate delegate, AsyncDelegate segundoDelegate) {
+ /*    //TODO refactor a list<delegate>
+   public RecepcionPersonas(AsyncDelegate delegate, AsyncDelegate segundoDelegate) {
         this(delegate);
         this.segundoDelegate = segundoDelegate;
-    }
+    }*/
 
     @Override
     protected JSONArray cargarJson() {
@@ -71,12 +72,18 @@ public class RecepcionPersonas extends EnvioPost {
             } else {
                 Configuracion.guardar(Utils.UltFechaSincr, this.respuesta.getString("fecha").toString());
                 ActiveAndroid.setTransactionSuccessful();
-                if (this.delegate != null) {
+
+                AsyncDelegate unAsyncDelegate = null;
+                for (Iterator<AsyncDelegate> it = this.delegate.iterator(); it.hasNext(); ) {
+                    unAsyncDelegate = it.next();
+                    unAsyncDelegate.executionFinished(this.respuesta.toString());
+                }
+      /*          if (this.delegate != null) {
                     delegate.executionFinished(this.respuesta.toString());
                 }
                 if (this.segundoDelegate != null) {
                     segundoDelegate.executionFinished(this.respuesta.toString());
-                }
+                }*/
             }
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, "ErrorRecibirPersonas: " + ex.getMessage());
