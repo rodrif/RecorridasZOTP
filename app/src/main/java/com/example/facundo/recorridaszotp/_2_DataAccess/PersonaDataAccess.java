@@ -1,16 +1,11 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
-import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.DelegateActivity;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.DelegateEnviarPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 

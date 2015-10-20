@@ -1,15 +1,12 @@
 package com.example.facundo.recorridaszotp._1_Red;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
-import android.widget.ListView;
 
-import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
 
 import org.json.JSONObject;
 import java.util.ArrayList;

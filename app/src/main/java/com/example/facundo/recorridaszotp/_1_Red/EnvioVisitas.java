@@ -5,6 +5,7 @@ import android.util.Log;
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.VisitaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import org.json.JSONArray;

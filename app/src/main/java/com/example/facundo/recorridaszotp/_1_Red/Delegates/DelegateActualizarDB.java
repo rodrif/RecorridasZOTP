@@ -1,6 +1,7 @@
-package com.example.facundo.recorridaszotp._1_Red;
+package com.example.facundo.recorridaszotp._1_Red.Delegates;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
