@@ -31,9 +31,9 @@ public class DBUtils {
     private static List<Visita> getVisitasTest(List<Persona> personas) {
         List<Visita> visitas = new ArrayList<Visita>();
 
-        visitas.add(new Visita(personas.get(0), 1425990960000L));
+        visitas.add(new Visita(personas.get(0), 1425990960000L, "desc1"));
         visitas.add(new Visita(personas.get(0), 1425992960000L));
-        visitas.add(new Visita(personas.get(1), 1425990950000L));
+        visitas.add(new Visita(personas.get(1), 1425990950000L, "desc3"));
 
         return visitas;
     }

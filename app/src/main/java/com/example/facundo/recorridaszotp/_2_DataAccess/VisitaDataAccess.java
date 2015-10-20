@@ -2,6 +2,8 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import java.util.List;
 
@@ -26,6 +28,14 @@ public class VisitaDataAccess {
             ActiveAndroid.endTransaction();
         }
         return resultado;
+    }
+
+    public static List<Visita> findVisitasASincronizar() {
+        return new Select()
+                .from(Visita.class)
+                .where("Estado = ? OR Estado = ? OR Estado = ?", Utils.EST_NUEVO, Utils.EST_MODIFICADO, Utils.EST_BORRADO)
+                .orderBy("Id desc")
+                .execute();
     }
 
     public static Visita findByWebId(int id) {
