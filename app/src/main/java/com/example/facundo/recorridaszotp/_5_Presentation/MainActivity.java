@@ -161,10 +161,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
-                PersonaDataAccess.save(personaSeleccionada);
+                PersonaDataAccess.get().save(personaSeleccionada);
             } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
-                PersonaDataAccess.save(persona);
+                PersonaDataAccess.get().save(persona);
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         PersonaQuery query = new PersonaQuery();
         query.nombre = nombre;
 
-        Persona p = PersonaDataAccess.find(query);
+        Persona p = PersonaDataAccess.get().find(query);
         Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
         if (p == null) {
             unToast.setText("Error al grabar");
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 2:
-                    PersonaDataAccess.sincronizar(null, new DelegateActivity(activity));
+                    PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 6:
-                    PersonaDataAccess.sincronizar(null);
+                    PersonaDataAccess.get().sincronizar(null);
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando...", Toast.LENGTH_SHORT).show();
                     break;

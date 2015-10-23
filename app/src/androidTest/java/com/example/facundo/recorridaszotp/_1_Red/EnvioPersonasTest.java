@@ -52,9 +52,9 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona1.getId().toString()) > 0);
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona2.getId().toString()) > 0);
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona3.getId().toString()) == 1);
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
     }
 
     @Override

@@ -57,7 +57,7 @@ public class RecepcionPersonas extends EnvioPost {
         try {
             List<Persona> personas = PersonaJsonUtils.personasFromJsonString(this.respuesta.getJSONArray("datos").toString());
 
-            if (PersonaDataAccess.acualizarDB(personas) != 0) {
+            if (PersonaDataAccess.get().acualizarDB(personas) != 0) {
                 throw new Exception("FalloActualizarDB");
             } else {
                 Configuracion.guardar(Utils.UltFechaSincr, this.respuesta.getString("fecha").toString());

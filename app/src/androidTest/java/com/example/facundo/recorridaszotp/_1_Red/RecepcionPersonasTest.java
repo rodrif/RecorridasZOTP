@@ -56,9 +56,9 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
             fail("fallo en recepcionPersonas");
         }
 
-        assertEquals(DBUtils.getPersonasTest().size(), PersonaDataAccess.getAll().size());
-        assertTrue(persona1.equals(PersonaDataAccess.findByWebId(1000)));
-        assertNull(PersonaDataAccess.findByWebId(1003));
+        assertEquals(DBUtils.getPersonasTest().size(), PersonaDataAccess.get().getAll().size());
+        assertTrue(persona1.equals(PersonaDataAccess.get().findByWebId(1000)));
+        assertNull(PersonaDataAccess.get().findByWebId(1003));
     }
 
     @Override

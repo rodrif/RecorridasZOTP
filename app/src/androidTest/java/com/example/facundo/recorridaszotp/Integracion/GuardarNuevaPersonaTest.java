@@ -27,7 +27,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
         Persona persona = new Persona("personaTest", "apelido", Utils.EST_NUEVO);
         persona.save();
 
-        PersonaDataAccess.sincronizar(delegate);
+        PersonaDataAccess.get().sincronizar(delegate);
 
         if (!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
             fail("fallo en GuardarNuevaPersonaTest");
@@ -45,7 +45,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
         List<Persona> respuestaPersonas = PersonaJsonUtils.personasFromJsonString(recepcion.getRespuesta().getJSONArray("datos").toString());
 
         assertEquals("testGuardarNuevaPersona fallo cantidad personas", 1, respuestaPersonas.size());
-        assertTrue(PersonaDataAccess.findById(persona.getId()).equals(respuestaPersonas.get(0)));
+        assertTrue(PersonaDataAccess.get().findById(persona.getId()).equals(respuestaPersonas.get(0)));
     }
 
     private class SincronizarDelegate implements AsyncDelegate {

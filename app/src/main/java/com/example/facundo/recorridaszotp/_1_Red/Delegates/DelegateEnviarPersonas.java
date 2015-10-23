@@ -20,7 +20,7 @@ public class DelegateEnviarPersonas implements AsyncDelegate {
 
     @Override
     public void executionFinished(String result) throws Exception {
-        EnvioPersonas envioPersonas = new EnvioPersonas(PersonaDataAccess.findPersonasASincronizar(), this.delegate);
+        EnvioPersonas envioPersonas = new EnvioPersonas(PersonaDataAccess.get().findASincronizar(), this.delegate);
         envioPersonas.execute(Utils.WEB_INSERTAR);
     }
 }

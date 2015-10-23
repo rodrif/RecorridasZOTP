@@ -50,7 +50,7 @@ public class VisitaJsonUtils { //TODO falta test
     public static Visita fromJsonObject(JSONObject visitaJson) throws Exception {
         Visita visita = new Visita();
         visita.setWebId(visitaJson.optInt("web_id"));
-        visita.setPersona(PersonaDataAccess.findById(visitaJson.getLong("web_persona_id")));
+        visita.setPersona(PersonaDataAccess.get().findById(visitaJson.getLong("web_persona_id")));
         visita.setEstado(visitaJson.optInt("estado"));
         visita.setFecha(visitaJson.getLong("fecha"));
         visita.setDescripcion(visitaJson.optString("descripcion"));

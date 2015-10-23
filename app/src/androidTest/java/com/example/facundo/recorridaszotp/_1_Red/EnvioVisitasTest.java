@@ -20,7 +20,7 @@ public class EnvioVisitasTest extends AndroidTestCase {
     }
 
     public void testEnvioVisitas() throws Exception {
-        EnvioVisitas envioVisitas = new EnvioVisitasMock(VisitaDataAccess.findVisitasASincronizar());
+        EnvioVisitas envioVisitas = new EnvioVisitasMock(VisitaDataAccess.get().findASincronizar());
 
         String datosAEnviar = envioVisitas.cargarJson().toString();
         String expected = "[{\"android_id\":510,\"descripcion\":\"desc3\",\"fecha\":1425990950000,\"estado\":0,\"web_id\":-1,\"persona_web_id\":2},{\"android_id\":509,\"fecha\":1425992960000,\"estado\":0,\"web_id\":-1,\"persona_web_id\":1000},{\"android_id\":508,\"descripcion\":\"desc1\",\"fecha\":1425990960000,\"estado\":0,\"web_id\":-1,\"persona_web_id\":1000}]";

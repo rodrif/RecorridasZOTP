@@ -23,9 +23,9 @@ public class DBUtils {
         List<Persona> personas = DBUtils.getPersonasTest();
         List<Visita> visitas = DBUtils.getVisitasTest(personas);
 
-        PersonaDataAccess.save(personas);
+        PersonaDataAccess.get().save(personas);
 
-        return VisitaDataAccess.save(visitas);
+        return VisitaDataAccess.get().save(visitas);
     }
 
     private static List<Visita> getVisitasTest(List<Persona> personas) {
