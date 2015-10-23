@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp._1_Red;
+package com.example.facundo.recorridaszotp._1_Red.Delegates;
 
 /**
  * Created by Facundo on 29/08/2015.

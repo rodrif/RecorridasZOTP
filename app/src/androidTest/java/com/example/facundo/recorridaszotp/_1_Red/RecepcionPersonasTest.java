@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Mocks.RecepcionPersonasMock;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -57,9 +58,9 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
             fail("fallo en recepcionPersonas");
         }
 
-        assertEquals(DBUtils.getPersonasTest().size(), PersonaDataAccess.getAll().size());
-        assertTrue(persona1.equals(PersonaDataAccess.findByWebId(1000)));
-        assertNull(PersonaDataAccess.findByWebId(1003));
+        assertEquals(DBUtils.getPersonasTest().size(), PersonaDataAccess.get().getAll().size());
+        assertTrue(persona1.equals(PersonaDataAccess.get().findByWebId(1000)));
+        assertNull(PersonaDataAccess.get().findByWebId(1003));
     }
 
     @Override

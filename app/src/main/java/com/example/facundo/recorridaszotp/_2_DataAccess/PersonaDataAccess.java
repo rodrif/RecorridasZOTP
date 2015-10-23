@@ -1,18 +1,14 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
-import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.DelegateActivity;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.DelegateEnviarPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,64 +16,29 @@ import java.util.List;
 /**
  * Created by Facundo on 28/03/2015.
  */
-public class PersonaDataAccess {
+public class PersonaDataAccess extends BasicDataAccess<Persona> {
 
-    public static void save(Persona persona) {
-        persona.save();
+    private static PersonaDataAccess ourInstance = new PersonaDataAccess();
+
+    public static PersonaDataAccess get() {
+        return ourInstance;
     }
 
-    public static int save(List<Persona> personas) {
-        int resultado = -1;
-        ActiveAndroid.beginTransaction();
-        try {
-            for (Persona persona : personas) {
-                persona.save();
-            }
-            ActiveAndroid.setTransactionSuccessful();
-            resultado = 0;
-        } finally {
-            ActiveAndroid.endTransaction();
-        }
-        return resultado;
+    private PersonaDataAccess() {
     }
 
-    public static Persona findByWebId(int id) {
-        return new Select()
-                .from(Persona.class)
-                .where("WebId = ?", id)
-                .executeSingle();
+    public Class getClase() {
+        return Persona.class;
     }
 
-    public static Persona findById(Long id) {
-        return new Select()
-                .from(Persona.class)
-                .where("Id = ?", id)
-                .executeSingle();
-    }
-
-    public static Persona find(PersonaQuery query) {
+    public Persona find(PersonaQuery query) {
         return new Select()
                 .from(Persona.class)
                 .where("Nombre = ?", query.nombre)
                 .executeSingle();
     }
 
-    public static List<Persona> getAll() {
-        return new Select()
-                .from(Persona.class)
-                .orderBy("Nombre ASC")
-                .execute();
-    }
-
-    public static List<Persona> findPersonasASincronizar() {
-        return new Select()
-                .from(Persona.class)
-                .where("Estado = ? OR Estado = ? OR Estado = ?", Utils.EST_NUEVO, Utils.EST_MODIFICADO, Utils.EST_BORRADO)
-                .orderBy("Id desc")
-                .execute();
-    }
-
-    public static int acualizarDB(List<Persona> personas) throws Exception {
+    public int acualizarDB(List<Persona> personas) throws Exception {
         int resultado = -1;
         ActiveAndroid.beginTransaction();
         try {
@@ -103,18 +64,19 @@ public class PersonaDataAccess {
         return resultado;
     }
 
-    public static void sincronizar(AsyncDelegate delegate) {
+    public void sincronizar(AsyncDelegate delegate) {
         sincronizar(delegate, null);
     }
 
-    public static void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
-        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
-        miLista.add(delegateRecepcionPersonas);
+    public void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
+        List<AsyncDelegate> delegatesRecepcionList = new ArrayList<AsyncDelegate>();
+        if (delegateRecepcionPersonas != null) {
+            delegatesRecepcionList.add(delegateRecepcionPersonas);
+        }
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        miLista.add(delegateEnviarPersonas);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(miLista);
+        delegatesRecepcionList.add(delegateEnviarPersonas);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegatesRecepcionList);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
-
 
 }

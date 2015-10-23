@@ -1,19 +1,13 @@
-package com.example.facundo.recorridaszotp._1_Red;
+package com.example.facundo.recorridaszotp._1_Red.Delegates;
 
 import android.app.Activity;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
-import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-
-import java.util.List;
 
 /**
  * Created by Facundo on 18/10/2015.

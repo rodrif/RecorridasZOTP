@@ -33,7 +33,7 @@ public class DataBaseTest extends AndroidTestCase {
     public void testLoadDefaultDB() throws Exception {
         DBUtils.loadDefaultDB();
 
-        assertEquals("Cantidad de personas defaultDB incorrecta", 4, PersonaDataAccess.getAll().size());
+        assertEquals("Cantidad de personas defaultDB incorrecta", 4, PersonaDataAccess.get().getAll().size());
     }
 
     public void testGuardarVisita() {
@@ -51,7 +51,7 @@ public class DataBaseTest extends AndroidTestCase {
     public void testVisitasGuardadas() throws Exception {
         DBUtils.loadDefaultDB();
 
-        Persona persona = PersonaDataAccess.findByWebId(DBUtils.getPersonasTest().get(0).getWebId());
+        Persona persona = PersonaDataAccess.get().findByWebId(DBUtils.getPersonasTest().get(0).getWebId());
 
         List<Visita> visitas = persona.visitas();
 

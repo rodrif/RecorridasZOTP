@@ -1,15 +1,12 @@
 package com.example.facundo.recorridaszotp._1_Red;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
-import android.widget.ListView;
 
-import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas;
 
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -55,9 +52,9 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona1.getId().toString()) > 0);
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona2.getId().toString()) > 0);
         assertTrue("fallo en la respuesta del servidor", datos.optInt(persona3.getId().toString()) == 1);
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
-        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
+        assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
     }
 
     @Override

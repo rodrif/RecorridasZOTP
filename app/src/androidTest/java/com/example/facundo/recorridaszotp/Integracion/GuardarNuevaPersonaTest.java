@@ -1,17 +1,14 @@
 package com.example.facundo.recorridaszotp.Integracion;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-
-import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
         Persona persona = new Persona("personaTest", "apelido", Utils.EST_NUEVO);
         persona.save();
 
-        PersonaDataAccess.sincronizar(delegate);
+        PersonaDataAccess.get().sincronizar(delegate);
 
         if (!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
             fail("fallo en GuardarNuevaPersonaTest");
@@ -51,7 +48,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
         List<Persona> respuestaPersonas = PersonaJsonUtils.personasFromJsonString(recepcion.getRespuesta().getJSONArray("datos").toString());
 
         assertEquals("testGuardarNuevaPersona fallo cantidad personas", 1, respuestaPersonas.size());
-        assertTrue(PersonaDataAccess.findById(persona.getId()).equals(respuestaPersonas.get(0)));
+        assertTrue(PersonaDataAccess.get().findById(persona.getId()).equals(respuestaPersonas.get(0)));
     }
 
     private class SincronizarDelegate implements AsyncDelegate {

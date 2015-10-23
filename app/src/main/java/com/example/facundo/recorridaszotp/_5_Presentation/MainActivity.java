@@ -2,7 +2,6 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.IntentSender;
 import android.support.v4.view.GravityCompat;
@@ -24,23 +23,19 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
-import com.example.facundo.recorridaszotp._1_Red.DelegateActivity;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.plus.Plus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -166,10 +161,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
-                PersonaDataAccess.save(personaSeleccionada);
+                PersonaDataAccess.get().save(personaSeleccionada);
             } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
-                PersonaDataAccess.save(persona);
+                PersonaDataAccess.get().save(persona);
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -182,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         PersonaQuery query = new PersonaQuery();
         query.nombre = nombre;
 
-        Persona p = PersonaDataAccess.find(query);
+        Persona p = PersonaDataAccess.get().find(query);
         Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
         if (p == null) {
             unToast.setText("Error al grabar");
@@ -275,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 2:
-                    PersonaDataAccess.sincronizar(null, new DelegateActivity(activity));
+                    PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
@@ -292,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     break;
                 case 6:
-                    PersonaDataAccess.sincronizar(null);
+                    PersonaDataAccess.get().sincronizar(null);
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando...", Toast.LENGTH_SHORT).show();
                     break;
