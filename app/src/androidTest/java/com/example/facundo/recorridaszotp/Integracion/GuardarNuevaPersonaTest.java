@@ -10,6 +10,7 @@ import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +36,9 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
 
         signal = new CountDownLatch(1);
         delegate = new SincronizarDelegate(signal);
-        RecepcionPersonas recepcion = new RecepcionPersonas(delegate);
+        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
+        miLista.add(delegate);
+        RecepcionPersonas recepcion = new RecepcionPersonas(miLista);
         recepcion.execute(Utils.WEB_RECIBIR_PERSONAS);
 
         if (!signal.await(Utils.MAX_INTENTOS + 500, TimeUnit.SECONDS)) {

@@ -49,7 +49,9 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         respuestaJsonObject.put("datos", new JSONArray(personasJsonString));
         respuestaJsonObject.put("fecha", "2015-09-26T08:28:41.368-03:00");
 
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(this, respuestaJsonObject);
+        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
+        miLista.add(this);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(miLista, respuestaJsonObject);
         recepcionPersonas.execute("cualquiera");
 
         if (!signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {

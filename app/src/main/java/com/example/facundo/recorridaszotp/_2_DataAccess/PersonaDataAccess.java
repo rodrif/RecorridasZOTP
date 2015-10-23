@@ -10,6 +10,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,8 +69,13 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
     }
 
     public void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
+        List<AsyncDelegate> delegatesRecepcionList = new ArrayList<AsyncDelegate>();
+        if (delegateRecepcionPersonas != null) {
+            delegatesRecepcionList.add(delegateRecepcionPersonas);
+        }
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas, delegateRecepcionPersonas);
+        delegatesRecepcionList.add(delegateEnviarPersonas);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegatesRecepcionList);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
