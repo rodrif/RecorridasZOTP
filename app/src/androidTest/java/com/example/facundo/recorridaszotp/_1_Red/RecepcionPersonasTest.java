@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -50,9 +51,9 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         respuestaJsonObject.put("datos", new JSONArray(personasJsonString));
         respuestaJsonObject.put("fecha", "2015-09-26T08:28:41.368-03:00");
 
-        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
-        miLista.add(this);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(miLista, respuestaJsonObject);
+        List<AsyncDelegate> delegates = new ArrayList<AsyncDelegate>();
+        delegates.add(this);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonasMock(delegates, respuestaJsonObject);
         recepcionPersonas.execute("cualquiera");
 
         if (!signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
