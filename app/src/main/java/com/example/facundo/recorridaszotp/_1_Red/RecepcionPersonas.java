@@ -2,13 +2,12 @@ package com.example.facundo.recorridaszotp._1_Red;
 
 import android.util.Log;
 import com.activeandroid.ActiveAndroid;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.Iterator;
@@ -45,7 +44,7 @@ public class RecepcionPersonas extends EnvioPost {
         ActiveAndroid.beginTransaction();
 
         try {
-            List<Persona> personas = PersonaJsonUtils.personasFromJsonString(this.respuesta.getJSONArray("datos").toString());
+            List<Persona> personas = PersonaJsonUtils.get().fromJsonString(this.respuesta.getJSONArray("datos").toString());
 
             if (PersonaDataAccess.get().acualizarDB(personas) != 0) {
                 throw new Exception("FalloActualizarDB");

@@ -3,7 +3,7 @@ package com.example.facundo.recorridaszotp._1_Red;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -36,7 +36,7 @@ public class EnvioPersonas extends EnvioPost {
         JSONArray datos = new JSONArray();
         try {
             for (Persona persona : this.personas) {
-                datos.put(new JSONObject(PersonaJsonUtils.toJSonAEnviar(persona)));
+                datos.put(new JSONObject(PersonaJsonUtils.get().toJSonAEnviar(persona)));
             }
         } catch (JSONException ex) {
             Log.e(Utils.APPTAG, "JSONException");
