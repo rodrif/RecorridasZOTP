@@ -4,7 +4,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Mocks.RecepcionPersonasMock;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -45,7 +45,7 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         personas.add(persona4);
 
         JSONObject respuestaJsonObject = new JSONObject();
-        String personasJsonString = PersonaJsonUtils.personasToJsonString(personas);
+        String personasJsonString = PersonaJsonUtils.get().toJsonString(personas);
         respuestaJsonObject.put("datos", new JSONArray(personasJsonString));
         respuestaJsonObject.put("fecha", "2015-09-26T08:28:41.368-03:00");
 

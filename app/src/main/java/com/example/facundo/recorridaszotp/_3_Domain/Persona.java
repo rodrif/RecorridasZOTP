@@ -3,12 +3,8 @@ package com.example.facundo.recorridaszotp._3_Domain;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
 
 
@@ -123,7 +119,7 @@ public class Persona extends Model {
     @Override
     public boolean equals(Object obj) {
         Persona other = (Persona)obj;
-        return (PersonaJsonUtils.toJSonValue(other).equals(PersonaJsonUtils.toJSonValue(this)));
+        return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
     }
 
 }

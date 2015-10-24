@@ -3,7 +3,7 @@ package com.example.facundo.recorridaszotp.Integracion;
 import android.test.AndroidTestCase;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
@@ -45,7 +45,7 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
             fail("fallo en GuardarNuevaPersonaTest2");
         }
 
-        List<Persona> respuestaPersonas = PersonaJsonUtils.personasFromJsonString(recepcion.getRespuesta().getJSONArray("datos").toString());
+        List<Persona> respuestaPersonas = PersonaJsonUtils.get().fromJsonString(recepcion.getRespuesta().getJSONArray("datos").toString());
 
         assertEquals("testGuardarNuevaPersona fallo cantidad personas", 1, respuestaPersonas.size());
         assertTrue(PersonaDataAccess.get().findById(persona.getId()).equals(respuestaPersonas.get(0)));

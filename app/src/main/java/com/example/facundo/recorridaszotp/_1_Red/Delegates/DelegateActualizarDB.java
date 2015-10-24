@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._1_Red.Delegates;
 
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaJsonUtils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
@@ -22,7 +21,7 @@ public class DelegateActualizarDB implements AsyncDelegate {
 
     @Override
     public void executionFinished(String result) throws Exception {
-        List<Persona> personas = PersonaJsonUtils.personasFromJsonString(result);
+        List<Persona> personas = PersonaJsonUtils.get().fromJsonString(result);
 
         if (PersonaDataAccess.get().acualizarDB(personas) != 0) {
             throw new Exception("FalloActualizarDB");
