@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class RecepcionPersonasMock extends RecepcionPersonas {
 
-    public RecepcionPersonasMock(List<AsyncDelegate> delegate, JSONObject respuesta) {
-        this.delegate = delegate;
+    public RecepcionPersonasMock(List<AsyncDelegate> delegates, JSONObject respuesta) {
+        this.delegates = delegates;
         this.respuesta = respuesta;
     }
 

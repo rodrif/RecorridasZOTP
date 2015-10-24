@@ -4,6 +4,8 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
+
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
 public abstract class BasicDataAccess<T extends Model> {
 
     public abstract Class getClase();
+
+    public abstract int acualizarDB(List<T> ts) throws Exception;
 
     public void save(T t) {
         t.save();
