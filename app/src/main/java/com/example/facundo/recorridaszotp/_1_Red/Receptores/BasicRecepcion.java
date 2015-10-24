@@ -53,7 +53,7 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
                 throw new Exception(this.getClass().getSimpleName() + " FalloActualizarDB");
             }
 
-            Configuracion.guardar(Utils.UltFechaSincr + this.getClass().getSimpleName(), this.respuesta.getString("fecha").toString());
+            Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
 
             if (delegates != null) {
@@ -69,6 +69,11 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
         } finally {
             ActiveAndroid.endTransaction();
         }
+    }
+
+    @Override
+    protected String getUltimaFechaMod() {
+        return Utils.UltFechaSincr + basicJsonUtil.getClase().getSimpleName();
     }
 
     public JSONObject getRespuesta() {
