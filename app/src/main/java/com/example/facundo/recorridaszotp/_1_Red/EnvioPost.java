@@ -42,6 +42,7 @@ import javax.net.ssl.TrustManagerFactory;
 public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
     protected abstract JSONArray cargarJson();
+    protected abstract String getUltimaFechaMod();
 
     @Override
     protected String doInBackground(String... params) {
@@ -101,7 +102,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
             //Construimos el objeto cliente en formato JSON
             JSONArray datos = this.cargarJson();
-            String ultFechaSincronizacion = Configuracion.get(Utils.UltFechaSincr);
+            String ultFechaSincronizacion = Configuracion.get(getUltimaFechaMod());
 
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
             if (ultFechaSincronizacion != null) {

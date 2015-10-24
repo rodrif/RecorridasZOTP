@@ -49,7 +49,7 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
         JSONObject respuestaJsonObject = new JSONObject();
         String personasJsonString = PersonaJsonUtils.get().toJsonString(personas);
         respuestaJsonObject.put("datos", new JSONArray(personasJsonString));
-        respuestaJsonObject.put("fecha", "2015-09-26T08:28:41.368-03:00");
+        respuestaJsonObject.put("fecha", "2015-09-26 08:28:41.368");
 
         List<AsyncDelegate> delegates = new ArrayList<AsyncDelegate>();
         delegates.add(this);

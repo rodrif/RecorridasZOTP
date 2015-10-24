@@ -30,11 +30,11 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
     public void testEnvioPersonas() throws Exception {
         signal = new CountDownLatch(1);
         List<Persona> personas = new ArrayList<Persona>();
-        Persona persona1 = new Persona("envioPersonas1");
+        Persona persona1 = new Persona("EnvioPersonasTest1", "ap1", Utils.EST_NUEVO);
         persona1.save();
-        Persona persona2 = new Persona("envioPersonas2");
+        Persona persona2 = new Persona("EnvioPersonasTest2", "ap2", Utils.EST_NUEVO);
         persona2.save();
-        Persona persona3 = new Persona("envioPersonas3", "ap3", Utils.EST_MODIFICADO, 1);
+        Persona persona3 = new Persona("EnvioPersonasTest3", "ap3", Utils.EST_MODIFICADO, 1);
         persona3.save();
 
         personas.add(persona1);

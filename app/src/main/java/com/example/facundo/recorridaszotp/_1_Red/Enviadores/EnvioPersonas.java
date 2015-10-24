@@ -1,12 +1,10 @@
 package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 
 import android.util.Log;
-
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.Enviadores.BasicEnvio;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONObject;

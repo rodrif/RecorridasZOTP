@@ -21,7 +21,7 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
 
     @Override
     public Class getClase() {
-        return PersonaJsonUtils.class;
+        return Persona.class;
     }
 
     @Override

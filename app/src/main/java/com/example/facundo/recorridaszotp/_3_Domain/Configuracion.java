@@ -5,6 +5,8 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.util.List;
+
 /**
  * Created by Facundo on 26/09/2015.
  */
@@ -49,4 +51,12 @@ public class Configuracion extends Model {
 
         return configuracion;
     }
+
+    public static List<Configuracion> getAll() {
+        return new Select()
+                .from(Configuracion.class)
+                .orderBy("Id ASC")
+                .execute();
+    }
+
 }
