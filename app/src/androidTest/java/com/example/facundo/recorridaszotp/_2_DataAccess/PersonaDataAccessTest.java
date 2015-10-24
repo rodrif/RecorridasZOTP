@@ -57,26 +57,4 @@ public class PersonaDataAccessTest extends AndroidTestCase {
         assertTrue(personasTest.get(2).equals(persona3));
     }
 
-    public void testSincronizar() throws Exception {
-        CountDownLatch signal = new CountDownLatch(1);
-        DBUtils.loadDefaultDB();
-        SincronizarDelegate delegate = new SincronizarDelegate(signal);
-        PersonaDataAccess.get().sincronizar(delegate);
-
-        if(!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
-            fail("no recibio respuesta del servidor");
-        }
-    }
-
-    public class SincronizarDelegate implements AsyncDelegate {
-        private CountDownLatch signal;
-
-        public SincronizarDelegate(CountDownLatch signal) {
-            this.signal = signal;
-        }
-        @Override
-        public void executionFinished(String result) throws Exception {
-            this.signal.countDown();
-        }
-    }
 }

@@ -3,12 +3,11 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
-import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.ArrayList;
 import java.util.List;
