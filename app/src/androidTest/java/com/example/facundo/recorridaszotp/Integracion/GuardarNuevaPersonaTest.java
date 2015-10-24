@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Facundo on 26/09/2015.
  */
-public class GuardarNuevaPersonaTest extends AndroidTestCase {
+public class GuardarNuevaPersonaTest extends AndroidTestCase { //TODO test esporadico, problemas server >=?
 
     public void testGuardarNuevaPersona() throws Exception {
         DBUtils.deleteDBData();
@@ -36,12 +36,10 @@ public class GuardarNuevaPersonaTest extends AndroidTestCase {
 
         signal = new CountDownLatch(1);
         delegate = new SincronizarDelegate(signal);
-        List<AsyncDelegate> miLista = new ArrayList<AsyncDelegate>();
-        miLista.add(delegate);
-        RecepcionPersonas recepcion = new RecepcionPersonas(miLista);
+        RecepcionPersonas recepcion = new RecepcionPersonas(delegate);
         recepcion.execute(Utils.WEB_RECIBIR_PERSONAS);
 
-        if (!signal.await(Utils.MAX_INTENTOS + 500, TimeUnit.SECONDS)) {
+        if (!signal.await(Utils.MAX_INTENTOS + 5, TimeUnit.SECONDS)) {
             fail("fallo en GuardarNuevaPersonaTest2");
         }
 

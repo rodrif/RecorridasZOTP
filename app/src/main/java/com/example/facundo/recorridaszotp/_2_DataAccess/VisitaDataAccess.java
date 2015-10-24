@@ -26,4 +26,9 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
         return Visita.class;
     }
 
+    @Override
+    public int acualizarDB(List<Visita> visitas) throws Exception { //TODO
+        return 0;
+    }
+
 }
