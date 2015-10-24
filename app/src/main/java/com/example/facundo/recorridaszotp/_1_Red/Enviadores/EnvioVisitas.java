@@ -1,11 +1,14 @@
-package com.example.facundo.recorridaszotp._1_Red;
+package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
+import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.VisitaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import org.json.JSONArray;
@@ -17,33 +20,16 @@ import java.util.List;
 /**
  * Created by Facundo on 17/10/2015.
  */
-public class EnvioVisitas extends EnvioPost { // TODO falta unit test, ver si se puede hacer BasicEnvioPost
-    private List<Visita> visitas;
-    private JSONObject respuesta;
+public class EnvioVisitas extends BasicEnvio<Visita> {
     private AsyncDelegate delegate;
 
     public EnvioVisitas(List<Visita> visitas) {
-        this.visitas = visitas;
+        this(visitas, null);
     }
 
     public EnvioVisitas(List<Visita> visitas, AsyncDelegate delegate) {
-        this(visitas);
+        super(VisitaJsonUtils.get(), visitas);
         this.delegate = delegate;
-    }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        try {
-            for (Visita visita : this.visitas) {
-                datos.put(new JSONObject(VisitaJsonUtils.get().toJSonAEnviar(visita)));
-            }
-        } catch (JSONException ex) {
-            Log.e(Utils.APPTAG, "JSONException");
-            ex.printStackTrace();
-        }
-
-        return datos;
     }
 
     @Override
@@ -56,7 +42,7 @@ public class EnvioVisitas extends EnvioPost { // TODO falta unit test, ver si se
 
         ActiveAndroid.beginTransaction();
         try {
-            for (Visita visita : this.visitas) {
+            for (Visita visita : this.ts) {
                 visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
                 visita.save();
             }
@@ -71,7 +57,4 @@ public class EnvioVisitas extends EnvioPost { // TODO falta unit test, ver si se
         }
     }
 
-    public JSONObject getRespuesta() {
-        return this.respuesta;
-    }
 }

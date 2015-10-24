@@ -1,7 +1,7 @@
 package com.example.facundo.recorridaszotp._1_Red.Mocks;
 
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.RecepcionPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 
 import org.json.JSONObject;
 

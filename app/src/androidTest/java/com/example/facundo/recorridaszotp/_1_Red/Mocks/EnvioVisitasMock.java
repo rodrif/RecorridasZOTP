@@ -1,13 +1,9 @@
 package com.example.facundo.recorridaszotp._1_Red.Mocks;
 
-import android.util.Log;
-
-import com.activeandroid.ActiveAndroid;
-import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.EnvioVisitas;
+import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -18,6 +14,10 @@ public class EnvioVisitasMock extends EnvioVisitas {
 
     public EnvioVisitasMock(List<Visita> visitas) {
         super(visitas);
+    }
+
+    public JSONArray cargarJson() {
+        return super.cargarJson();
     }
 
     @Override
