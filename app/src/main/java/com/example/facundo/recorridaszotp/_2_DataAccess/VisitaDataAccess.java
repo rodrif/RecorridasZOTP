@@ -27,8 +27,30 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     }
 
     @Override
-    public int acualizarDB(List<Visita> visitas) throws Exception { //TODO
-        return 0;
+    public int acualizarDB(List<Visita> visitas) throws Exception {
+        int resultado = -1;
+        ActiveAndroid.beginTransaction();
+        try {
+            for (Visita visita : visitas) {
+                Visita v = new Select()
+                        .from(Persona.class)
+                        .where("WebId = ?", visita.getWebId())
+                        .executeSingle();
+                if (v != null && visita.getEstado() == Utils.EST_BORRADO) {
+                    v.delete();
+                } else if (v != null) {
+                    v.mergeFromWeb(visita);
+                    v.save();
+                } else {
+                    visita.save();
+                }
+            }
+            ActiveAndroid.setTransactionSuccessful();
+            resultado = 0;
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
+        return resultado;
     }
 
 }

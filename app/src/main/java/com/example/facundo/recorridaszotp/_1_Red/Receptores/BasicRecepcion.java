@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._1_Red.Receptores;
 
 import android.util.Log;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.BasicJsonUtil;
@@ -10,9 +9,7 @@ import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
-
 import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
