@@ -43,6 +43,16 @@ public class Visita extends Model {
         this.persona = persona;
     }
 
+    public void mergeFromWeb(Visita visita) throws Exception {
+        if (visita.webId != this.getWebId()) {
+            throw new Exception("VisitaMergeConDiferenteWebId");
+        }
+        this.descripcion = visita.getDescripcion();
+        this.fecha = visita.getFecha();
+        this.estado = visita.getEstado();
+        this.persona = visita.getPersona();
+    }
+
     public int getWebId() {
         return webId;
     }
