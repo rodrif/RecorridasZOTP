@@ -18,10 +18,11 @@ public class Persona extends Model {
     private String apellido;
     @Column(name = "Estado")
     private int estado;
+    @Column(name = "Zona")
+    private Zona zona;
     private String direccion;
     private String descripcion;
     private String ultMod;
-    public Zona zona;
 
     public Persona() {
         super();
@@ -106,6 +107,14 @@ public class Persona extends Model {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
     }
 
     public String getUltMod() {

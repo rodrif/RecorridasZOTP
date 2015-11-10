@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
 
 import java.util.List;
 
@@ -35,8 +36,11 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
         TextView lNombre = (TextView) item.findViewById(R.id.lNombre);
         lNombre.setText(listaPersonas.get(position).getNombre());
 
-        TextView lApellido = (TextView) item.findViewById(R.id.lApellido);
-        lApellido.setText(listaPersonas.get(position).getApellido());
+        TextView lZona = (TextView) item.findViewById(R.id.lZona);
+        Zona unaZona = listaPersonas.get(position).getZona();
+        if (unaZona != null) {
+            lZona.setText(listaPersonas.get(position).getZona().getNombre());
+        }
 
         TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWeb);
         lIdWeb.setText(Integer.toString(listaPersonas.get(position).getWebId()));

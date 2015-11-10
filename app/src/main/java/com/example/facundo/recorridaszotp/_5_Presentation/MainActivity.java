@@ -84,13 +84,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navList.addHeaderView(header);
 
         navItms = new ArrayList<ItemLista>();
-        navItms.add(new ItemLista("Fragment 1", R.drawable.abc_ic_menu_cut_mtrl_alpha));
         navItms.add(new ItemLista("Personas", R.drawable.ic_action_user));
+        navItms.add(new ItemLista("Nueva Persona", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
+        navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_action_user));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_action_place));
-        navItms.add(new ItemLista("Perfil", R.drawable.abc_ic_menu_share_mtrl_alpha));
-        navItms.add(new ItemLista("Formulario", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
-        navItms.add(new ItemLista("Sincronizar", R.drawable.cast_ic_notification_connecting));
-        navItms.add(new ItemLista("Mostrar Persona", R.drawable.ic_action_user));
+        navItms.add(new ItemLista("Cerrar", R.drawable.ic_action_user));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
@@ -265,35 +263,25 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             Fragment fragment = null;
 
             switch (position) {
-                case 1:
-                    fragment = new Fragment1();
-                    fragmentTransaction = true;
-                    break;
-                case 2:
+                case 1: //Personas
                     PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
-                case 3:
-                    fragment = new MapsFragment();
-                    fragmentTransaction = true;
-                    break;
-                case 4:
-                    fragment = new ProfileFragment();
-                    fragmentTransaction = true;
-                    break;
-                case 5:
+                case 2: //Crear Persona
                     fragment = new FormularioFragment();
                     fragmentTransaction = true;
                     break;
-                case 6:
-                    PersonaDataAccess.get().sincronizar(null);
-                    Toast.makeText(getApplicationContext(),
-                            "Sincronizando...", Toast.LENGTH_SHORT).show();
+                case 3: //Ultimas Visitas //TODO Ultimas Visitas
                     break;
-                case 7:
-                    fragment = new MostrarPersonaFragment();
+                case 4: //Mapa
+                    fragment = new MapsFragment();
                     fragmentTransaction = true;
+                    break;
+                case 5: //Cerrar
+                    // PersonaDataAccess.get().sincronizar(null);
+                    // Toast.makeText(getApplicationContext(),
+                    //         "Sincronizando...", Toast.LENGTH_SHORT).show();
                     break;
             }
 

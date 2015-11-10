@@ -25,13 +25,13 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        signInButton = (SignInButton)v.findViewById(R.id.sign_in_button);
+     /*   signInButton = (SignInButton)v.findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.mGoogleApiClient.connect();
             }
-        });
+        });*/
         return v;
     }
 
