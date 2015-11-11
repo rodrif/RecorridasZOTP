@@ -2,17 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.facundo.recorridaszotp._5_Presentation.FormPersonaActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/bar_guardar"
-        android:title="Guardar"
-        android:icon="@drawable/ic_done_white_36dp"
+    <item
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-
-    <item android:id="@+id/bar_cancelar"
-        android:title="Cancelar"
-        android:icon="@drawable/ic_clear_white_36dp"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText" />
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 </menu>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
+    <group android:id="@+id/grupo_guardar_persona">
     <item android:id="@+id/action_guardar"
         android:title="Guardar"
         android:icon="@drawable/ic_done_white_36dp"
@@ -14,4 +15,5 @@
         android:icon="@drawable/ic_clear_white_36dp"
         android:orderInCategory="100"
         app:showAsAction="always" />
+    </group>
 </menu>

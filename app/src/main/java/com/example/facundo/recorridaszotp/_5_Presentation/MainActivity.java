@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
     private Persona personaSeleccionada = null;
+    private Menu menuGuardarPersona = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +115,20 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menuGuardarPersona = menu;
+        menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, false);
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menuGuardarPersona = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        //Ocultar el grupo
+        menuGuardar(false);
+        //menu.setGroupVisible(R.id.grupo_guardar_persona, false);
         return true;
     }
 
@@ -125,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int i;
         switch (item.getItemId()) {
             case android.R.id.home:
                 navDrawerLayout.openDrawer(GravityCompat.START);
@@ -134,8 +145,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 GuardarPersonaClickFormulario();
                 return true;
             case R.id.action_cancelar: //Cancelar
-            default:
-                i = item.getItemId();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -203,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void mostrarPersona(Persona persona) {
+        menuGuardar(true);
         personaSeleccionada = persona;
         Fragment frag = new FormularioFragment();
 
@@ -277,17 +287,22 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
             switch (position) {
                 case 1: //Personas
+                    menuGuardar(false);
+                    //Ocultar todo el grupo
                     PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
                 case 2: //Crear Persona
+                    menuGuardar(true);
                     fragment = new FormularioFragment();
                     fragmentTransaction = true;
                     break;
                 case 3: //Ultimas Visitas //TODO Ultimas Visitas
+                    menuGuardar(false);
                     break;
                 case 4: //Mapa
+                    menuGuardar(false);
                     fragment = new MapsFragment();
                     fragmentTransaction = true;
                     break;
@@ -358,5 +373,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     protected void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
+    }
+
+    private void menuGuardar(boolean bool){
+        if (menuGuardarPersona != null)
+            menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
     }
 }
