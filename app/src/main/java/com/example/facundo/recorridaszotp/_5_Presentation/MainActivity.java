@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navList.addHeaderView(header);
 
         navItms = new ArrayList<ItemLista>();
-        navItms.add(new ItemLista("Personas", R.drawable.ic_action_user));
-        navItms.add(new ItemLista("Nueva Persona", R.drawable.abc_ic_voice_search_api_mtrl_alpha));
-        navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_action_user));
-        navItms.add(new ItemLista("Mapa", R.drawable.ic_action_place));
-        navItms.add(new ItemLista("Cerrar", R.drawable.ic_action_user));
+        navItms.add(new ItemLista("Personas", R.drawable.ic_people_white_36dp));
+        navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
+        navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
+        navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
+        navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
         setSupportActionBar(appbar);
