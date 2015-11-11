@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void onBackPressed() {
+        menuGuardar(false);
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
