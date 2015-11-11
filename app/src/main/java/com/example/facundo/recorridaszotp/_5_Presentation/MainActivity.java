@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -113,17 +114,29 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
+        int i;
         switch (item.getItemId()) {
             case android.R.id.home:
                 navDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.action_guardar: //Guardar
+                GuardarPersonaClickFormulario();
+                return true;
+            case R.id.action_cancelar: //Cancelar
+            default:
+                i = item.getItemId();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -143,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         this.token = token;
     }
 
-    public void GuardarPersonaClickFormulario(View v) {
+    public void GuardarPersonaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarPersonaClickFormulario");
 
         EditText ETnombre = (EditText) getFragmentManager()
@@ -191,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     public void mostrarPersona(Persona persona) {
         personaSeleccionada = persona;
-        Fragment frag = new MostrarPersonaFragment();
+        Fragment frag = new FormularioFragment();
 
         Bundle args = new Bundle();
         args.putString("nombre", persona.getNombre());

@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.example.facundo.recorridaszotp.R;
 
-public class MostrarPersonaFragment extends Fragment {
+public class MostrarPersonaFragment extends Fragment { //FIXME Borrar
     private String nombre = null;
     private String apellido = null;
 

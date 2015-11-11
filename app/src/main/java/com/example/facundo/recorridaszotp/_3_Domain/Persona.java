@@ -18,7 +18,7 @@ public class Persona extends Model {
     private String apellido;
     @Column(name = "Estado")
     private int estado;
-    @Column(name = "Zona")
+    //@Column(name = "Zona") //FIXME crear columna Zona primero en web
     private Zona zona;
     private String direccion;
     private String descripcion;
