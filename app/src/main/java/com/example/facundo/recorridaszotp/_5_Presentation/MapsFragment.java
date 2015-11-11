@@ -14,6 +14,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListe
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
@@ -63,15 +64,14 @@ public class MapsFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Mapa fragment null", Toast.LENGTH_SHORT).show();
             } else {
                 mMap = ((MapFragment) fragment).getMap();
-                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                    public void onMapLongClick(LatLng point) {
-                        Toast.makeText(
-                                getActivity(),
-                                "Click Largo\n" +
-                                        "Lat: " + point.latitude + "\n" +
-                                        "Lng: " + point.longitude,
-                                Toast.LENGTH_SHORT).show();
-                        interfaceMapa.guardarPersona(point);
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    Marker unMarker = null;
+                    public void onMapClick(LatLng point) {
+                        if (unMarker != null)
+                            unMarker.remove();
+                        unMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                                point.latitude, point.longitude)));
+                        //interfaceMapa.guardarPersona(point);
                     }
                 });
             }
@@ -90,7 +90,7 @@ public class MapsFragment extends Fragment {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
 

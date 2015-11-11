@@ -38,7 +38,11 @@ dependencies {
     compile 'com.google.android.gms:play-services-identity:8.1.0'
     compile 'com.google.android.gms:play-services-plus:8.1.0'
     compile project(':ActiveAndroid')
+    compile 'com.android.support:cardview-v7:23.0.+'
 }
+
+
+
 
 
 
