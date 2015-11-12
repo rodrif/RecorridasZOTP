@@ -7,10 +7,15 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FormularioFragment extends Fragment {
@@ -41,6 +46,22 @@ public class FormularioFragment extends Fragment {
             EditText et = (EditText) v.findViewById(R.id.ETApellido);
             et.setText(apellido);
         }
+
+        Spinner sGrupoFamiliar = (Spinner)v.findViewById(R.id.spinner_grupo_familiar);
+        final List<String> datos = new ArrayList<String>();
+        datos.add("Familia 1");
+        datos.add("Familia 2");
+        datos.add("Familia 3");
+        datos.add("Familia 4");
+
+        ArrayAdapter<String> adaptador =
+                new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, datos);
+
+        adaptador.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+
+        sGrupoFamiliar.setAdapter(adaptador);
        return v;
     }
 
