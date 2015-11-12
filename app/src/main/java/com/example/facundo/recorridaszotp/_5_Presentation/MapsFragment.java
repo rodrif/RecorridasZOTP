@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
-    private InterfaceMapa interfaceMapa;
+   // private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
@@ -97,16 +97,16 @@ public class MapsFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        interfaceMapa = (InterfaceMapa) activity;
+       // interfaceMapa = (InterfaceMapa) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        interfaceMapa = null;
+        //interfaceMapa = null;
     }
 
-    public interface InterfaceMapa {
+/*    public interface InterfaceMapa {
         public void guardarPersona(LatLng latLng);
-    }
+    }*/
 }

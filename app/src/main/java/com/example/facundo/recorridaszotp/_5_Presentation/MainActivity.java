@@ -42,8 +42,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        MapsFragment.InterfaceMapa {
+        GoogleApiClient.OnConnectionFailedListener {
+    //  MapsFragment.InterfaceMapa
+
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
 
@@ -244,14 +245,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Log.d("RZO", "Apretó SignIn");
     }
 
-    @Override
+/*    @Override
     public void guardarPersona(LatLng latLng) { //LLamada desde el mapa
         Fragment fragment = new FormularioFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-    }
+    }*/
 
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
