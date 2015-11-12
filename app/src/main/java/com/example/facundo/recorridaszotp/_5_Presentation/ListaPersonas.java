@@ -56,7 +56,7 @@ public class ListaPersonas extends Fragment {
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
                     clicklistener.mostrarVisita();
-                 }
+                }
             }
         });
 

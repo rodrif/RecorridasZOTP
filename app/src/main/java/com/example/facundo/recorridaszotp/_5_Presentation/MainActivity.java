@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void mostrarPersona(Persona persona) {
         menuGuardar(true);
         personaSeleccionada = persona;
-        Fragment frag = new FormularioFragment();
+        Fragment frag = new PersonaFragment();
 
         Bundle args = new Bundle();
         args.putString("nombre", persona.getNombre());
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
 /*    @Override
     public void guardarPersona(LatLng latLng) { //LLamada desde el mapa
-        Fragment fragment = new FormularioFragment();
+        Fragment fragment = new PersonaFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
         ft.replace(R.id.content_frame, fragment);
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     break;
                 case 2: //Crear Persona
                     menuGuardar(true);
-                    fragment = new FormularioFragment();
+                    fragment = new PersonaFragment();
                     fragmentTransaction = true;
                     break;
                 case 3: //Ultimas Visitas //TODO Ultimas Visitas

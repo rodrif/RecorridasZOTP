@@ -1,7 +1,5 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 
@@ -18,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FormularioFragment extends Fragment {
+public class PersonaFragment extends Fragment {
     private String nombre = null;
     private String apellido = null;
 
@@ -36,7 +33,7 @@ public class FormularioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_formulario, container, false);
+        View v = inflater.inflate(R.layout.fragment_persona, container, false);
         if (nombre != null) {
             EditText et = (EditText) v.findViewById(R.id.ETNombre);
             et.setText(nombre);
