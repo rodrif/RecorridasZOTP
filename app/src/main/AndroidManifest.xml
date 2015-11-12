@@ -47,9 +47,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="._5_Presentation.FormPersonaActivity"
-            android:label="@string/title_activity_form_persona" />
-        <activity
             android:name="._6_Test.ActivityTest"
             android:label="@string/title_activity_activity_test" >
         </activity>

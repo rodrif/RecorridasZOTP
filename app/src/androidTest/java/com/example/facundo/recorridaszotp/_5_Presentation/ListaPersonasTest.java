@@ -49,10 +49,10 @@ public class ListaPersonasTest extends ActivityInstrumentationTestCase2<Activity
             LinearLayout layout = (LinearLayout)mListView.getAdapter().getView(i, null, null);
 
             TextView textViewNombre = (TextView)layout.findViewById(R.id.lNombre);
-            TextView textViewApellido = (TextView)layout.findViewById(R.id.lApellido);
+            //TextView textViewApellido = (TextView)layout.findViewById(R.id.lApellido);
 
             assertEquals(personas.get(i).getNombre(), textViewNombre.getText().toString());
-            assertEquals(personas.get(i).getApellido(), textViewApellido.getText().toString());
+            //assertEquals(personas.get(i).getApellido(), textViewApellido.getText().toString());
         }
     }
 }

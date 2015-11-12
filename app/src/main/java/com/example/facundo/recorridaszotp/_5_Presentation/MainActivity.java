@@ -237,27 +237,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
     }
 
-    public void EditarPersonaClickFormulario(View v) {
-        EditText ETnombre = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMNombre);
-        EditText ETapellido = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETMApellido);
-
-        String nombre = ETnombre.getText().toString();
-        String apellido = ETapellido.getText().toString();
-
-        Fragment frag = new FormularioFragment();
-        Bundle args = new Bundle();
-        args.putString("nombre", nombre);
-        args.putString("apellido", apellido);
-        frag.setArguments(args);
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack("editar");
-        ft.replace(R.id.content_frame, frag);
-        ft.commit();
-    }
-
     public void signInClick(View v) {
         Toast.makeText(this,
                 "Click en Sign in", Toast.LENGTH_SHORT).show();
@@ -376,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         mGoogleApiClient.disconnect();
     }
 
-    private void menuGuardar(boolean bool){
+    private void menuGuardar(boolean bool) {
         if (menuGuardarPersona != null)
             menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
     }
