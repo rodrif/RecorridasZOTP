@@ -2,7 +2,6 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;

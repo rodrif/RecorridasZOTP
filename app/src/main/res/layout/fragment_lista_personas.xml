@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:clickable="true"
+        android:longClickable="true"
         android:src="@drawable/fab_ic_add" />
 
 </FrameLayout>

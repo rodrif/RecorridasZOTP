@@ -7,4 +7,5 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
  */
 public interface onSelectedItemListener {
     public void mostrarPersona(Persona persona);
+    public void mostrarVisita();
 }

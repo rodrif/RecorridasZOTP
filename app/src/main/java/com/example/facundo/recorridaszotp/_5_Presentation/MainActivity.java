@@ -34,7 +34,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
@@ -226,6 +225,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         ft.addToBackStack(null);
         ft.replace(R.id.content_frame, frag);
         ft.commit();
+    }
+
+    @Override
+    public void mostrarVisita() { //TODO Completar mostrar visita
+
     }
 
     @Override
