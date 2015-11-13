@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Fragment frag = new VisitaFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
-        ft.replace(R.id.content_frame, frag);
+        ft.replace(R.id.content_frame, frag, "VisitaFragment");
         ft.commit();
     }
 
@@ -254,15 +254,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Log.d("RZO", "Apretó SignIn");
     }
 
-/*    @Override
-    public void guardarPersona(LatLng latLng) { //LLamada desde el mapa
-        Fragment fragment = new PersonaFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
-    }*/
-
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
 
@@ -274,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
             boolean fragmentTransaction = false;
             Fragment fragment = null;
+            String tag = "";
 
             switch (position) {
                 case 1: //Personas
@@ -287,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     menuGuardar(true);
                     fragment = new PersonaFragment();
                     fragmentTransaction = true;
+                    tag = "CrearPersona";
                     break;
                 case 3: //Ultimas Visitas //TODO Ultimas Visitas
                     menuGuardar(false);
@@ -295,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     menuGuardar(false);
                     fragment = new MapsFragment();
                     fragmentTransaction = true;
+                    tag = "Mapa";
                     break;
                 case 5: //Cerrar
                     // PersonaDataAccess.get().sincronizar(null);
@@ -306,12 +300,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             if (fragmentTransaction) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
-                ft.replace(R.id.content_frame, fragment);
+                ft.replace(R.id.content_frame, fragment, tag);
                 ft.commit();
             }
 
             navDrawerLayout.closeDrawers();
-
         }
     }
 

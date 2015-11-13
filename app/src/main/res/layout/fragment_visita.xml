@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Fecha" />
 
-                <ImageButton android:id="@+id/imagenFecha"
+                <ImageButton android:id="@+id/bFecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_event_black_24dp"
