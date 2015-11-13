@@ -229,7 +229,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void mostrarVisita() { //TODO Completar mostrar visita
-
+        menuGuardar(true);
+        Fragment frag = new VisitaFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(R.id.content_frame, frag);
+        ft.commit();
     }
 
     @Override
