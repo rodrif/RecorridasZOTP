@@ -3,6 +3,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsFragment extends Fragment {
    // private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private static View vista;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View vista = inflater.inflate(R.layout.fragment_map, container, false);
+        //View vista = inflater.inflate(R.layout.fragment_map, container, false);
+
+        if (vista != null) {
+            ViewGroup parent = (ViewGroup) vista.getParent();
+            if (parent != null)
+                parent.removeView(vista);
+        }
+        try {
+            vista = inflater.inflate(R.layout.fragment_map, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is  */
+        }
+
+
+
         setUpMapIfNeeded();
         return vista;
     }
@@ -107,4 +123,5 @@ public class MapsFragment extends Fragment {
 /*    public interface InterfaceMapa {
         public void guardarPersona(LatLng latLng);
     }*/
+
 }
