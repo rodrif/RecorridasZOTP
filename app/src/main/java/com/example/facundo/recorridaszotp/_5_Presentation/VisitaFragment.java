@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
 import java.util.Calendar;
 
@@ -45,28 +46,31 @@ public class VisitaFragment extends Fragment {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show2();
+                showDataPicker();
             }
         });
 
+        etFecha = (EditText) v.findViewById(R.id.ETFecha);
+        cargarFechaActual();
+        return v;
+    }
+
+    private void showDataPicker() {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), Utils.DATE_PICKER_VISITA);
+    }
+
+    public void cargarFechaActual() {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        etFecha = (EditText) v.findViewById(R.id.ETFecha);
+        this.cargarFecha(day, month, year);
+    }
 
-        cargarFecha(Integer.toString(day) + "/" +
+    public void cargarFecha(int day, int month, int year) {
+        etFecha.setText(Integer.toString(day) + "/" +
                 Integer.toString(month) + "/" + Integer.toString(year));
-        return v;
-    }
-
-    private void show2() {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "DatePicker");
-    }
-
-    public void cargarFecha(String fecha) {
-        etFecha.setText(fecha);
     }
 }

@@ -21,6 +21,10 @@ public final class Utils {
     public static final int EST_BORRADO = 3;
     public static final String FRAG_PERSONA = "Fragment Persona";
     public static final String FRAG_MAPA = "Fragment Mapa";
+    public static final String FRAG_HOME = "Fragment Home";
+    public static final String FRAG_VISITA = "Fragment Visita";
+    public static final String DATE_PICKER_VISITA = "Date Picker Visita";
+    public static final String DATE_PICKER_PERSONA = "Date Picker Persona";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         Fragment fragmentHome = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragmentHome);
+        ft.replace(R.id.content_frame, fragmentHome, Utils.FRAG_HOME);
         ft.commit();
 
         // Build GoogleApiClient with access to basic profile
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 navDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_guardar: //Guardar
+                //Busco que fragment se esta usando actualmente
                 FragmentManager fm = getFragmentManager();
                 int cant = fm.getBackStackEntryCount();
                 FragmentManager.BackStackEntry bse = fm.getBackStackEntryAt(cant - 1);
@@ -233,18 +234,18 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(Utils.FRAG_PERSONA);
-        ft.replace(R.id.content_frame, frag);
+        ft.addToBackStack(null);
+        ft.replace(R.id.content_frame, frag, Utils.FRAG_PERSONA);
         ft.commit();
     }
 
     @Override
-    public void mostrarVisita() { //TODO Completar mostrar visita
+    public void mostrarVisita() { //TODO Completar Bundle mostrar visita
         menuGuardar(true);
         Fragment frag = new VisitaFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
-        ft.replace(R.id.content_frame, frag, "VisitaFragment");
+        ft.replace(R.id.content_frame, frag, Utils.FRAG_VISITA);
         ft.commit();
     }
 
@@ -277,6 +278,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             boolean fragmentTransaction = false;
             Fragment fragment = null;
             String tag = "";
+
+            //Borra todos los fragments al hacer click en menu lateral
+            FragmentManager fm = getFragmentManager();
+            int cantidad = fm.getBackStackEntryCount();
+            if (cantidad > 0) {
+                fm.popBackStack(fm.getBackStackEntryAt(cantidad - 1).getId(),
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
 
             switch (position) {
                 case 1: //Personas

@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._5_Presentation.PersonaFragment;
 import com.example.facundo.recorridaszotp._5_Presentation.VisitaFragment;
 
 import java.util.Calendar;
@@ -38,10 +39,22 @@ public class DatePickerFragment extends DialogFragment
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         FragmentManager fm = getFragmentManager();
-        VisitaFragment vF = (VisitaFragment)fm.findFragmentByTag("VisitaFragment");
-        if(vF != null){
-            vF.cargarFecha(Integer.toString(dayOfMonth) + "/" +
-            Integer.toString(monthOfYear+1) + "/" + Integer.toString(year));
+        String tag = this.getTag();
+        if (tag != null) {
+            switch (tag) {
+                case Utils.DATE_PICKER_VISITA:
+                    VisitaFragment vF = (VisitaFragment) fm.findFragmentByTag(Utils.FRAG_VISITA);
+                    if (vF != null) {
+                        vF.cargarFecha(dayOfMonth, monthOfYear + 1, year);
+                    }
+                    break;
+                case Utils.DATE_PICKER_PERSONA:
+                    PersonaFragment pF = (PersonaFragment) fm.findFragmentByTag(Utils.FRAG_PERSONA);
+                    if (pF != null) {
+                        pF.cargarFecha(dayOfMonth, monthOfYear + 1, year);
+                    }
+                    break;
+            }
         }
     }
 }
