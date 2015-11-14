@@ -22,22 +22,25 @@
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/ETFecha"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:editable="false"
                     android:hint="Fecha" />
 
-                <ImageButton android:id="@+id/bFecha"
+                <ImageButton
+                    android:id="@+id/bFecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_event_black_24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
-                    android:backgroundTint="@android:color/transparent" />
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_event_black_24dp" />
 
             </RelativeLayout>
 

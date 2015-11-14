@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.IntentSender;
 import android.support.v4.view.GravityCompat;
@@ -142,8 +143,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 navDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_guardar: //Guardar
-                GuardarPersonaClickFormulario();
-                return true;
+                FragmentManager fm = getFragmentManager();
+                int cant = fm.getBackStackEntryCount();
+                FragmentManager.BackStackEntry bse = fm.getBackStackEntryAt(cant - 1);
+                String tag = bse.getName();
+                if (tag != null) {
+                    switch (tag) {
+                        case Utils.FRAG_PERSONA:
+                            GuardarPersonaClickFormulario();
+                            return true;
+                    }
+                }
             case R.id.action_cancelar: //Cancelar
         }
         return super.onOptionsItemSelected(item);
@@ -206,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
         unToast.show();
 
+        menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
     }
@@ -222,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
+        ft.addToBackStack(Utils.FRAG_PERSONA);
         ft.replace(R.id.content_frame, frag);
         ft.commit();
     }
@@ -270,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             switch (position) {
                 case 1: //Personas
                     menuGuardar(false);
-                    //Ocultar todo el grupo
+                    //Ocultar el grupo
                     PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
@@ -279,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     menuGuardar(true);
                     fragment = new PersonaFragment();
                     fragmentTransaction = true;
-                    tag = "CrearPersona";
+                    tag = Utils.FRAG_PERSONA;
                     break;
                 case 3: //Ultimas Visitas //TODO Ultimas Visitas
                     menuGuardar(false);
@@ -288,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     menuGuardar(false);
                     fragment = new MapsFragment();
                     fragmentTransaction = true;
-                    tag = "Mapa";
+                    tag = Utils.FRAG_MAPA;
                     break;
                 case 5: //Cerrar
                     // PersonaDataAccess.get().sincronizar(null);
