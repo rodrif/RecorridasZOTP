@@ -34,10 +34,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_event_black_24dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@android:color/transparent"
-                    android:onClick="onClickFecha"/>
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@android:color/transparent" />
 
             </RelativeLayout>
 
