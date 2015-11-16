@@ -6,34 +6,41 @@ import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
 /**
- * Created by Facundo on 28/03/2015.
+ * Created by GoRodriguez on 16/11/2015.
  */
-
-@Table(name = "Zonas")
-public class Zona extends Model {
+@Table(name = "Ranchadas")
+public class Ranchada extends Model {
     @Column(name = "WebId")
-    private int webId = -1;
+    private int webId = -1; // -1 si es una persona no guardada en la BDWeb
     @Column(name = "Nombre")
-    private String nombre = "";
+    private String nombre;
     @Column(name = "Estado")
     private int estado;
 
-    public String getNombre() {
-        return nombre;
+    public Ranchada() {
+        super();
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Zona(String nombre) {
+    public Ranchada(String nombre) {
         super();
         this.nombre = nombre;
         this.estado = Utils.EST_ACTUALIZADO;
     }
 
-    public Zona() {
-        super();
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void mergeFromWeb(Ranchada ranchada) throws Exception{
+        if (ranchada.webId != this.getWebId()) {
+            throw new Exception("MergeConDiferenteWebId");
+        }
+        this.nombre = ranchada.getNombre();
+        this.estado = ranchada.getEstado();
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getEstado() {
@@ -48,13 +55,5 @@ public class Zona extends Model {
 
     public void setWebId(int webId) {
         this.webId = webId;
-    }
-
-    public void mergeFromWeb(Zona zona) throws Exception{
-        if (zona.webId != this.getWebId()) {
-            throw new Exception("MergeConDiferenteWebId");
-        }
-        this.nombre = zona.getNombre();
-        this.estado = zona.getEstado();
     }
 }
