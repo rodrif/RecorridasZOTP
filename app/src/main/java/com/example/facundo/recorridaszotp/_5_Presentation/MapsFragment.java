@@ -17,9 +17,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
-   // private InterfaceMapa interfaceMapa;
+    // private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static View vista;
+    private Marker marker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +38,6 @@ public class MapsFragment extends Fragment {
         } catch (InflateException e) {
         /* map is already there, just return view as it is  */
         }
-
 
 
         setUpMapIfNeeded();
@@ -79,11 +79,10 @@ public class MapsFragment extends Fragment {
             } else {
                 mMap = ((MapFragment) fragment).getMap();
                 mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    Marker unMarker = null;
                     public void onMapClick(LatLng point) {
-                        if (unMarker != null)
-                            unMarker.remove();
-                        unMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                        if (marker != null)
+                            marker.remove();
+                        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
                                 point.latitude, point.longitude)));
                         //interfaceMapa.guardarPersona(point);
                     }
@@ -111,7 +110,7 @@ public class MapsFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-       // interfaceMapa = (InterfaceMapa) activity;
+        // interfaceMapa = (InterfaceMapa) activity;
     }
 
     @Override
@@ -124,4 +123,7 @@ public class MapsFragment extends Fragment {
         public void guardarPersona(LatLng latLng);
     }*/
 
+    public Marker getMarker() {
+        return this.marker;
+    }
 }

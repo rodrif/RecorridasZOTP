@@ -84,7 +84,7 @@ public class PersonaFragment extends Fragment {
         sGrupoFamiliar.setAdapter(adaptadorFamilia);
 
         //Zona
-        DBUtils.loadDefaultDB();//FIXME borrar, solo para prueba
+        DBUtils.getZonaTest();//FIXME borrar, solo para prueba
         Spinner sZona = (Spinner) v.findViewById(R.id.spinner_zona);
 
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
@@ -98,6 +98,7 @@ public class PersonaFragment extends Fragment {
         sZona.setAdapter(adaptadorZona);
 
         //Ranchada
+        DBUtils.getRanchadaTest();//FIXME borrar, solo para prueba
         Spinner sRanchada = (Spinner) v.findViewById(R.id.spinner_ranchada);
 
         final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet

@@ -31,6 +31,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -196,6 +197,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
                 PersonaDataAccess.get().save(persona);
+
+                //Primera visita
+                MapsFragment fragMapa = (MapsFragment)getFragmentManager().findFragmentById(R.id.map);
+                Visita primeraVisita = new Visita(persona);
+                primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
