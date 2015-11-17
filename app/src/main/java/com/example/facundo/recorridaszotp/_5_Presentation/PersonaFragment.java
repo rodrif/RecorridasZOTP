@@ -103,7 +103,7 @@ public class PersonaFragment extends Fragment {
         final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> ranchadasString = new ArrayList<String>();
         for (Ranchada ranchada : lRanchada) {
-            zonasString.add(ranchada.getNombre());
+            ranchadasString.add(ranchada.getNombre());
         }
         ArrayAdapter<String> adaptadorRanchada =
                 new ArrayAdapter<String>(getActivity(),
