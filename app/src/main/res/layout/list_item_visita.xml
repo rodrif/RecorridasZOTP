@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp">
+    android:padding="10sp"
+    android:orientation="vertical">
 
-    <TextView android:id="@+id/lNombreVisita"
-        android:layout_width="match_parent"
+    <TextView android:id="@+id/lFechaVisita"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@android:color/black"
-        android:hint="Nombre"
+        android:hint="Fecha"
         android:layout_weight="1" />
 
-    <TextView android:id="@+id/lZonaVisita"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal"
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
-        android:hint="Zona"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
 
-    <TextView android:id="@+id/lIdWebVisita"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal"
-        android:textSize="12sp"
-        android:textColor="@android:color/black"
-        android:hint="id Web"
-        android:layout_weight="1" />
+        <TextView android:id="@+id/lNombreVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:hint="Nombre"
+            android:layout_weight="1" />
+
+        <TextView android:id="@+id/lZonaVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:hint="Zona"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- <TextView android:id="@+id/lIdWebVisita"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:textStyle="normal"
+         android:textSize="12sp"
+         android:textColor="@android:color/black"
+         android:hint="id Web"
+         android:layout_weight="2" /> -->
 
 </LinearLayout>

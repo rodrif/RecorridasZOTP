@@ -37,9 +37,11 @@ public class AdaptadorListaVisitas extends ArrayAdapter<Visita> {
 
         TextView lNombre = (TextView) item.findViewById(R.id.lNombreVisita);
         TextView lZona = (TextView) item.findViewById(R.id.lZonaVisita);
+        TextView lFecha = (TextView) item.findViewById(R.id.lFechaVisita);
 
         Persona persona = listaVisitas.get(position).getPersona();
         if (persona != null) {
+            lFecha.setText(listaVisitas.get(position).getFechaString());
             lNombre.setText(persona.getNombre());
 
             Zona unaZona = persona.getZona();
@@ -48,8 +50,8 @@ public class AdaptadorListaVisitas extends ArrayAdapter<Visita> {
             }
         }
 
-        TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWebVisita);
-        lIdWeb.setText(Integer.toString(listaVisitas.get(position).getWebId()));
+       // TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWebVisita);
+      //  lIdWeb.setText(Integer.toString(listaVisitas.get(position).getWebId()));
 
         return (item);
     }

@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
-        //getFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
 
     }
 
