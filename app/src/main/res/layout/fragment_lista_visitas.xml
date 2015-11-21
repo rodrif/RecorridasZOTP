@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/f_lista_visitas"
+    tools:context="com.example.facundo.recorridaszotp._5_Presentation.ListaVisitas">
+
+    <ListView
+        android:id="@+id/lista_visitas"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:clickable="true"
+        android:longClickable="true"
+        android:src="@drawable/fab_ic_add" />
+
+</FrameLayout>

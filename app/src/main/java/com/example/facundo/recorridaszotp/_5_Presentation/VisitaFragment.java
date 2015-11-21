@@ -25,6 +25,7 @@ public class VisitaFragment extends Fragment {
     private String fecha = null;
     private String observaciones = null;
     private EditText etFecha = null;
+    private EditText etObservaciones = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,14 @@ public class VisitaFragment extends Fragment {
         });
 
         etFecha = (EditText) v.findViewById(R.id.ETFecha);
-        cargarFechaActual();
+        etObservaciones = (EditText) v.findViewById(R.id.ETObservacioneVisita);
+        if (fecha != null)
+            etFecha.setText(fecha);
+        else
+            cargarFechaActual();
+        if (observaciones != null)
+            etObservaciones.setText(observaciones);
+
         return v;
     }
 

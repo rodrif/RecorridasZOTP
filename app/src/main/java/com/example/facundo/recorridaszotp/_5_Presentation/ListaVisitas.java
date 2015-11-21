@@ -1,5 +1,12 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaVisitas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,32 +17,28 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
-import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
-import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._3_Domain.Visita;
-
 import java.util.List;
 
-public class ListaPersonas extends Fragment {
+/**
+ * Created by Gonzalo on 20/11/2015.
+ */
+public class ListaVisitas extends Fragment {
     private onSelectedItemListener clicklistener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View vista = inflater.inflate(R.layout.fragment_lista_personas, container, false);
+        View vista = inflater.inflate(R.layout.fragment_lista_visitas, container, false);
 
-        final List<Persona> listaPersonas = PersonaDataAccess.get().getAll();
+        final List<Visita> listaVisitas = VisitaDataAccess.get().getAll();
 
-        AdaptadorListaPersonas adaptador =
-                new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
+        AdaptadorListaVisitas adaptador =
+                new AdaptadorListaVisitas(getActivity().getApplicationContext(), listaVisitas);
 
-        ListView lViewPersonas = (ListView) vista.findViewById(R.id.lista_personas);
-        lViewPersonas.setAdapter(adaptador);
-        lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        ListView lViewVisitas = (ListView) vista.findViewById(R.id.lista_visitas);
+        lViewVisitas.setAdapter(adaptador);
+        lViewVisitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (clicklistener == null) {
@@ -43,20 +46,20 @@ public class ListaPersonas extends Fragment {
                             "Listener null", Toast.LENGTH_SHORT).show();
                     return false;
                 } else {
-                    clicklistener.mostrarPersona(listaPersonas.get(position));
+                    clicklistener.mostrarPersona(listaVisitas.get(position).getPersona());
                     return true;
                 }
             }
         });
 
-        lViewPersonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lViewVisitas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (clicklistener == null) {
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
-                    clicklistener.mostrarVisita(new Visita(listaPersonas.get(position)));
+                    clicklistener.mostrarVisita(listaVisitas.get(position));
                 }
             }
         });

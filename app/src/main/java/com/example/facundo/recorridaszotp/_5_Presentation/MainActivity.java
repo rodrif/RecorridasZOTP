@@ -22,12 +22,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
     private Persona personaSeleccionada = null;
+    private Visita visitaSeleccionada = null;
     private Menu menuGuardarPersona = null;
 
     @Override
@@ -154,6 +157,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                         case Utils.FRAG_PERSONA:
                             GuardarPersonaClickFormulario();
                             return true;
+                        case Utils.FRAG_VISITA:
+                            GuardarVisitaClickFormulario();
+                            return true;
                     }
                 }
             case R.id.action_cancelar: //Cancelar
@@ -177,6 +183,31 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         this.token = token;
     }
 
+    public void GuardarVisitaClickFormulario() {
+        Log.d(Utils.APPTAG, "GuardarVisitaClickFormulario");
+        EditText eTFecha = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
+        EditText eTObservaciones = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETObservacioneVisita);
+
+        if (visitaSeleccionada != null) {
+            visitaSeleccionada.setFecha(eTFecha.getText().toString());
+            visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
+            VisitaDataAccess.get().save(visitaSeleccionada);
+            Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
+                    + " guardada", Toast.LENGTH_SHORT);
+            unToast.show();
+        }else{
+            Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
+            unToast.show();
+        }
+
+        menuGuardar(false);
+        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
+        //getFragmentManager().popBackStack();
+
+    }
+
     public void GuardarPersonaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarPersonaClickFormulario");
 
@@ -198,9 +229,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
                 PersonaDataAccess.get().save(persona);
                 //Primera visita
-                MapsFragment fragMapa = (MapsFragment)getFragmentManager().findFragmentById(R.id.miniMap);
+                MapsFragment fragMapa = (MapsFragment) getFragmentManager().findFragmentById(R.id.miniMap);
                 Visita primeraVisita = new Visita(persona);
+                primeraVisita.setDescripcion("Primera Visita");
                 primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
+                VisitaDataAccess.get().save(primeraVisita);
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -245,9 +278,16 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     @Override
-    public void mostrarVisita() { //TODO Completar Bundle mostrar visita
+    public void mostrarVisita(Visita visita) { //TODO Completar Bundle mostrar visita(Datos del Mapa)
         menuGuardar(true);
+        visitaSeleccionada = visita;
         Fragment frag = new VisitaFragment();
+
+        Bundle args = new Bundle();
+        args.putString("fecha", visita.getFechaString());
+        args.putString("observaciones", visita.getDescripcion());
+        frag.setArguments(args);
+
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(Utils.FRAG_VISITA);
         ft.replace(R.id.content_frame, frag, Utils.FRAG_VISITA);
@@ -306,8 +346,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     tag = Utils.FRAG_PERSONA;
                     break;
-                case 3: //Ultimas Visitas //TODO Ultimas Visitas
+                case 3: //Ultimas Visitas
                     menuGuardar(false);
+                    fragment = new ListaVisitas();
+                    fragmentTransaction = true;
+                    tag = Utils.FRAG_VISITA;
                     break;
                 case 4: //Mapa
                     menuGuardar(false);
@@ -316,9 +359,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     tag = Utils.FRAG_MAPA;
                     break;
                 case 5: //Cerrar
-                    // PersonaDataAccess.get().sincronizar(null);
-                    // Toast.makeText(getApplicationContext(),
-                    //         "Sincronizando...", Toast.LENGTH_SHORT).show();
+                    //PersonaDataAccess.get().sincronizar(null);
+                    //Toast.makeText(getApplicationContext(),
+                    //        "Sincronizando...", Toast.LENGTH_SHORT).show();
                     break;
             }
 

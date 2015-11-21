@@ -1,9 +1,17 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+import android.text.format.DateFormat;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Facundo on 03/10/2015.
@@ -16,7 +24,7 @@ public class Visita extends Model {
     @Column(name = "Persona")
     public Persona persona;
     @Column(name = "Fecha")
-    private Long fecha;
+    private long fecha;
     @Column(name = "Descripcion")
     private String descripcion;
     @Column(name = "Estado")
@@ -28,18 +36,19 @@ public class Visita extends Model {
         super();
     }
 
-    public Visita(Persona persona, Long fecha, String descripcion) {
+    public Visita(Persona persona, long fecha, String descripcion) {
         this(persona, fecha);
         this.descripcion = descripcion;
     }
 
-    public Visita(Persona persona, Long fecha) {
+    public Visita(Persona persona, long fecha) {
         this(persona);
         this.fecha = fecha;
     }
 
     public Visita(Persona persona) {
         super();
+        setFechaActual();
         this.persona = persona;
     }
 
@@ -69,12 +78,24 @@ public class Visita extends Model {
         this.persona = persona;
     }
 
-    public Long getFecha() {
+    public long getFecha() {
         return fecha;
     }
 
-    public void setFecha(Long fecha) {
+    public void setFecha(long fecha) {
         this.fecha = fecha;
+    }
+
+    public void setFecha(String fecha) {
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = dateFormat.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.fecha = date.getTime();
     }
 
     public String getDescripcion() {
@@ -99,5 +120,18 @@ public class Visita extends Model {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getFechaString() {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(getFecha());
+
+        Date date = cal.getTime();
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        return formateador.format(date);
+    }
+
+    private void setFechaActual(){
+        fecha = new Date().getTime();
     }
 }
