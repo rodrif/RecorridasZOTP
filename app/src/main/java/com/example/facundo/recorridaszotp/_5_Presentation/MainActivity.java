@@ -197,9 +197,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
                 PersonaDataAccess.get().save(persona);
-
                 //Primera visita
-                MapsFragment fragMapa = (MapsFragment)getFragmentManager().findFragmentById(R.id.map);
+                MapsFragment fragMapa = (MapsFragment)getFragmentManager().findFragmentById(R.id.miniMap);
                 Visita primeraVisita = new Visita(persona);
                 primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
             }
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
+        ft.addToBackStack(Utils.FRAG_PERSONA);
         ft.replace(R.id.content_frame, frag, Utils.FRAG_PERSONA);
         ft.commit();
     }
@@ -250,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         menuGuardar(true);
         Fragment frag = new VisitaFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
+        ft.addToBackStack(Utils.FRAG_VISITA);
         ft.replace(R.id.content_frame, frag, Utils.FRAG_VISITA);
         ft.commit();
     }
@@ -325,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
             if (fragmentTransaction) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
+                ft.addToBackStack(tag);
                 ft.replace(R.id.content_frame, fragment, tag);
                 ft.commit();
             }
