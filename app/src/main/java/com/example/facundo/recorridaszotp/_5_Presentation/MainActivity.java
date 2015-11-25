@@ -189,15 +189,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
         EditText eTObservaciones = (EditText) getFragmentManager()
                 .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETObservacioneVisita);
+        MapsFragment mapa = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapaFragment);
 
         if (visitaSeleccionada != null) {
             visitaSeleccionada.setFecha(eTFecha.getText().toString());
             visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
+            visitaSeleccionada.setUbicacion(mapa.getMarker().getPosition());
             VisitaDataAccess.get().save(visitaSeleccionada);
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
-        }else{
+        } else {
             Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
             unToast.show();
         }
@@ -286,6 +288,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Bundle args = new Bundle();
         args.putString("fecha", visita.getFechaString());
         args.putString("observaciones", visita.getDescripcion());
+        if (visita.getUbicacion() != null) {
+            args.putDouble("latitud", visita.getUbicacion().latitude);
+            args.putDouble("longitud", visita.getUbicacion().longitude);
+        } else {
+            args.putDouble("latitud", Double.NaN);
+            args.putDouble("longitud", Double.NaN);
+        }
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();

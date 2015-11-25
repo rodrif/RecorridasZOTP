@@ -26,14 +26,20 @@ public class VisitaFragment extends Fragment {
     private String observaciones = null;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
+    private double latitud = Double.NaN;
+    private double longitud = Double.NaN;
+    private boolean editando = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getArguments();
         if (b != null) {
+            editando = true;
             fecha = b.getString("fecha");
             observaciones = b.getString("observaciones");
+            latitud = b.getDouble("latitud");
+            longitud = b.getDouble("longitud");
         }
     }
 
@@ -80,5 +86,25 @@ public class VisitaFragment extends Fragment {
     public void cargarFecha(int day, int month, int year) {
         etFecha.setText(Integer.toString(day) + "/" +
                 Integer.toString(month) + "/" + Integer.toString(year));
+    }
+
+    public boolean estaEditando (){
+        return editando;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
 }

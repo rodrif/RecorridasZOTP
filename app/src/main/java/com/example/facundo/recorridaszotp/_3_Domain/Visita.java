@@ -30,7 +30,7 @@ public class Visita extends Model {
     @Column(name = "Estado")
     private int estado;
     //TODO
-    private LatLng ubicacion;
+    private LatLng ubicacion = null;
 
     public Visita() {
         super();

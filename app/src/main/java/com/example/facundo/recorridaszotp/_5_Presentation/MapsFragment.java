@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -104,6 +107,25 @@ public class MapsFragment extends Fragment {
      */
     private void setUpMap() {
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.clear();
+        FragmentManager fm = getFragmentManager();
+        int cant = fm.getBackStackEntryCount();
+        FragmentManager.BackStackEntry bse = fm.getBackStackEntryAt(cant - 1);
+        String tag = bse.getName();
+        if (tag != null) {
+            switch (tag) {
+                case Utils.FRAG_PERSONA:
+
+                    break;
+                case Utils.FRAG_VISITA:
+                    VisitaFragment vf = (VisitaFragment) fm.findFragmentByTag(Utils.FRAG_VISITA);
+                    if (vf.estaEditando()) {
+                        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                                vf.getLatitud(), vf.getLongitud())));
+                    }
+                    break;
+            }
+        }
     }
 
 
