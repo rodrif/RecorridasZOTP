@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,7 +21,7 @@ public class MapsFragment extends Fragment {
     // private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static View vista;
-    private Marker marker;
+    private Visita visita;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +39,6 @@ public class MapsFragment extends Fragment {
         } catch (InflateException e) {
         /* map is already there, just return view as it is  */
         }
-
 
         setUpMapIfNeeded();
         return vista;
@@ -80,10 +80,11 @@ public class MapsFragment extends Fragment {
                 mMap = ((MapFragment) fragment).getMap();
                 mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     public void onMapClick(LatLng point) {
-                        if (marker != null)
-                            marker.remove();
-                        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                        //if (visita.getUbicacion() != null)
+                        mMap.clear();
+                        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
                                 point.latitude, point.longitude)));
+                        visita.setUbicacion(marker.getPosition());
                         //interfaceMapa.guardarPersona(point);
                     }
                 });
@@ -123,7 +124,11 @@ public class MapsFragment extends Fragment {
         public void guardarPersona(LatLng latLng);
     }*/
 
-    public Marker getMarker() {
-        return this.marker;
+    public Visita getVisita() {
+        return visita;
+    }
+
+    public void setVisita(Visita visita) {
+        this.visita = visita;
     }
 }

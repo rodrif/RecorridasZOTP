@@ -18,22 +18,25 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.Calendar;
 
 public class VisitaFragment extends Fragment {
-    private String fecha = null;
-    private String observaciones = null;
+//    private String fecha = null;
+//    private String observaciones = null;
     private EditText etFecha = null;
+    private MapsFragment mapsFragment = null;
+    private Visita visita = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle b = getArguments();
+/*        Bundle b = getArguments();
         if (b != null) {
             fecha = b.getString("fecha");
             observaciones = b.getString("observaciones");
-        }
+        }*/
     }
 
     @Override
@@ -52,6 +55,16 @@ public class VisitaFragment extends Fragment {
 
         etFecha = (EditText) v.findViewById(R.id.ETFecha);
         cargarFechaActual();
+
+        if (visita.getDescripcion() != null){
+            ((EditText) v.findViewById(R.id.ETObservacioneVisita)).setText(visita.getDescripcion());
+        }
+
+        if (visita.getFecha() != null)
+    //        ((EditText) v.findViewById(R.id.ETFecha)).setText(visita.getFecha());
+
+        mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
+
         return v;
     }
 
