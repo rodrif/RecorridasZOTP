@@ -1,15 +1,19 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+
 import java.util.List;
 
 
 @Table(name = "Personas")
-public class Persona extends Model {
+public class Persona extends Model implements Parcelable {
     @Column(name = "WebId")
     private int webId = -1; // -1 si es una persona no guardada en la BDWeb
     @Column(name = "Nombre")
@@ -50,7 +54,23 @@ public class Persona extends Model {
         this.estado = Utils.EST_ACTUALIZADO;
     }
 
-    public void mergeFromWeb(Persona persona) throws Exception{
+    protected Persona(Parcel in) {
+        readFromParcel(in);
+    }
+
+    public static final Creator<Persona> CREATOR = new Creator<Persona>() {
+        @Override
+        public Persona createFromParcel(Parcel in) {
+            return new Persona(in);
+        }
+
+        @Override
+        public Persona[] newArray(int size) {
+            return new Persona[size];
+        }
+    };
+
+    public void mergeFromWeb(Persona persona) throws Exception {
         if (persona.webId != this.getWebId()) {
             throw new Exception("MergeConDiferenteWebId");
         }
@@ -83,7 +103,9 @@ public class Persona extends Model {
         return this.estado;
     }
 
-    public void setEstado (int estado){ this.estado = estado; }
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 
     public int getWebId() {
         return this.webId;
@@ -127,8 +149,35 @@ public class Persona extends Model {
 
     @Override
     public boolean equals(Object obj) {
-        Persona other = (Persona)obj;
+        Persona other = (Persona) obj;
         return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(webId);
+        dest.writeString(nombre);
+        dest.writeString(apellido);
+        dest.writeInt(estado);
+        dest.writeParcelable(zona, 0);
+        dest.writeString(direccion);
+        dest.writeString(descripcion);
+        dest.writeString(ultMod);
+    }
+
+    private void readFromParcel(Parcel in) {
+        webId = in.readInt();
+        nombre = in.readString();
+        apellido = in.readString();
+        estado = in.readInt();
+        zona = in.readParcelable(Zona.class.getClassLoader());
+        direccion = in.readString();
+        descripcion = in.readString();
+        ultMod = in.readString();
+    }
 }

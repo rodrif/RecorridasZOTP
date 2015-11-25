@@ -1,6 +1,9 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+
 import android.text.format.DateFormat;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -13,12 +16,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
 /**
  * Created by Facundo on 03/10/2015.
  */
 @Table(name = "Visitas")
 
-public class Visita extends Model {
+public class Visita extends Model implements Parcelable {
     @Column(name = "WebId")
     private int webId = -1;
     @Column(name = "Persona")
@@ -51,6 +55,22 @@ public class Visita extends Model {
         setFechaActual();
         this.persona = persona;
     }
+
+    protected Visita(Parcel in) {
+        readFromParcel(in);
+    }
+
+    public static final Creator<Visita> CREATOR = new Creator<Visita>() {
+        @Override
+        public Visita createFromParcel(Parcel in) {
+            return new Visita(in);
+        }
+
+        @Override
+        public Visita[] newArray(int size) {
+            return new Visita[size];
+        }
+    };
 
     public void mergeFromWeb(Visita visita) throws Exception {
         if (visita.webId != this.getWebId()) {
@@ -131,7 +151,34 @@ public class Visita extends Model {
         return formateador.format(date);
     }
 
-    private void setFechaActual(){
+    private void setFechaActual() {
         fecha = new Date().getTime();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        //Cuidado con el orden
+        dest.writeInt(webId);
+        dest.writeParcelable(persona, 0);
+        dest.writeLong(fecha);
+        dest.writeString(descripcion);
+        dest.writeInt(estado);
+        dest.writeDouble(ubicacion.latitude);
+        dest.writeDouble(ubicacion.longitude);
+    }
+
+    private void readFromParcel(Parcel in) {
+        //Cuidado con el orden
+        webId = in.readInt();
+        persona = in.readParcelable(Persona.class.getClassLoader());
+        fecha = in.readLong();
+        descripcion = in.readString();
+        estado = in.readInt();
+        ubicacion = new LatLng(in.readDouble(), in.readDouble());
     }
 }

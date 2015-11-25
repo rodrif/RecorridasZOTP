@@ -18,28 +18,28 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.Calendar;
 
 public class VisitaFragment extends Fragment {
-    private String fecha = null;
-    private String observaciones = null;
+    //    private String fecha = null;
+//    private String observaciones = null;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
-    private boolean editando = false;
+    //private boolean editando = false;
+    private MapsFragment mapsFragment = null;
+    private Visita visita = null;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getArguments();
         if (b != null) {
-            editando = true;
-            fecha = b.getString("fecha");
-            observaciones = b.getString("observaciones");
-            latitud = b.getDouble("latitud");
-            longitud = b.getDouble("longitud");
+            visita = b.getParcelable("visita");
         }
     }
 
@@ -59,12 +59,18 @@ public class VisitaFragment extends Fragment {
 
         etFecha = (EditText) v.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) v.findViewById(R.id.ETObservacioneVisita);
-        if (fecha != null)
-            etFecha.setText(fecha);
+
+        if (visita.getFechaString() != null)
+            etFecha.setText(visita.getFechaString());
         else
             cargarFechaActual();
-        if (observaciones != null)
-            etObservaciones.setText(observaciones);
+
+
+        if (visita.getDescripcion() != null) {
+            ((EditText) v.findViewById(R.id.ETObservacioneVisita)).setText(visita.getDescripcion());
+        }
+
+        mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
 
         return v;
     }
@@ -88,9 +94,9 @@ public class VisitaFragment extends Fragment {
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
-    public boolean estaEditando (){
+ /*   public boolean estaEditando() {
         return editando;
-    }
+    }*/
 
     public double getLatitud() {
         return latitud;

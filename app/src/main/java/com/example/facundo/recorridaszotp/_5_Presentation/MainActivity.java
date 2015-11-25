@@ -192,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         MapsFragment mapa = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapaFragment);
 
         if (visitaSeleccionada != null) {
-            visitaSeleccionada.setFecha(eTFecha.getText().toString());
+       /*     visitaSeleccionada.setFecha(eTFecha.getText().toString());
             visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
-            visitaSeleccionada.setUbicacion(mapa.getMarker().getPosition());
+            visitaSeleccionada.setUbicacion(mapa.getMarker().getPosition());*/
             VisitaDataAccess.get().save(visitaSeleccionada);
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
@@ -233,9 +233,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 //Primera visita
                 MapsFragment fragMapa = (MapsFragment) getFragmentManager().findFragmentById(R.id.miniMap);
                 Visita primeraVisita = new Visita(persona);
+
                 primeraVisita.setDescripcion("Primera Visita");
-                primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
+                //primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
+                fragMapa.setVisita(primeraVisita);
                 VisitaDataAccess.get().save(primeraVisita);
+
+
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -286,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Fragment frag = new VisitaFragment();
 
         Bundle args = new Bundle();
-        args.putString("fecha", visita.getFechaString());
+ /*       args.putString("fecha", visita.getFechaString());
         args.putString("observaciones", visita.getDescripcion());
         if (visita.getUbicacion() != null) {
             args.putDouble("latitud", visita.getUbicacion().latitude);
@@ -294,7 +298,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         } else {
             args.putDouble("latitud", Double.NaN);
             args.putDouble("longitud", Double.NaN);
-        }
+        }*/
+        args.putParcelable("visita", visita);
         frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
