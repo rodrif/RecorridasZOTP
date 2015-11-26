@@ -22,7 +22,7 @@ import java.util.GregorianCalendar;
  */
 @Table(name = "Visitas")
 
-public class Visita extends Model implements Parcelable {
+public class Visita extends Model {
     @Column(name = "WebId")
     private int webId = -1;
     @Column(name = "Persona")
@@ -30,10 +30,10 @@ public class Visita extends Model implements Parcelable {
     @Column(name = "Fecha")
     private long fecha;
     @Column(name = "Descripcion")
-    private String descripcion;
+    private String descripcion = "";
     @Column(name = "Estado")
     private int estado;
-    @Column(name = "Ubicacion")
+    //@Column(name = "Ubicacion")
     private LatLng ubicacion;
 
     public Visita() {
@@ -56,22 +56,6 @@ public class Visita extends Model implements Parcelable {
         this.persona = persona;
     }
 
-    protected Visita(Parcel in) {
-        readFromParcel(in);
-    }
-
-    public static final Creator<Visita> CREATOR = new Creator<Visita>() {
-        @Override
-        public Visita createFromParcel(Parcel in) {
-            return new Visita(in);
-        }
-
-        @Override
-        public Visita[] newArray(int size) {
-            return new Visita[size];
-        }
-    };
-
     public void mergeFromWeb(Visita visita) throws Exception {
         if (visita.webId != this.getWebId()) {
             throw new Exception("VisitaMergeConDiferenteWebId");
@@ -80,6 +64,7 @@ public class Visita extends Model implements Parcelable {
         this.fecha = visita.getFecha();
         this.estado = visita.getEstado();
         this.persona = visita.getPersona();
+        this.ubicacion = visita.getUbicacion();
     }
 
     public int getWebId() {
@@ -153,32 +138,5 @@ public class Visita extends Model implements Parcelable {
 
     private void setFechaActual() {
         fecha = new Date().getTime();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        //Cuidado con el orden
-        dest.writeInt(webId);
-        dest.writeParcelable(persona, 0);
-        dest.writeLong(fecha);
-        dest.writeString(descripcion);
-        dest.writeInt(estado);
-        dest.writeDouble(ubicacion.latitude);
-        dest.writeDouble(ubicacion.longitude);
-    }
-
-    private void readFromParcel(Parcel in) {
-        //Cuidado con el orden
-        webId = in.readInt();
-        persona = in.readParcelable(Persona.class.getClassLoader());
-        fecha = in.readLong();
-        descripcion = in.readString();
-        estado = in.readInt();
-        ubicacion = new LatLng(in.readDouble(), in.readDouble());
     }
 }

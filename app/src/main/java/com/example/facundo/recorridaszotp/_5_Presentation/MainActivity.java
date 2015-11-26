@@ -33,6 +33,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
@@ -67,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private Toolbar appbar;
     private ArrayList<ItemLista> navItms;
     AdaptadorListaMenu navAdapter;
-    private Persona personaSeleccionada = null;
-    private Visita visitaSeleccionada = null;
+    public static Persona personaSeleccionada = null;
+    public static Visita visitaSeleccionada = null;
     private Menu menuGuardarPersona = null;
 
     @Override
@@ -186,15 +187,36 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void GuardarVisitaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarVisitaClickFormulario");
 
+        EditText eTFecha = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
+        EditText eTObservaciones = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETObservacioneVisita);
+
         if (visitaSeleccionada != null) {
+            visitaSeleccionada.setFecha(eTFecha.getText().toString());
+            visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
             VisitaDataAccess.get().save(visitaSeleccionada);
-            Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
-                    + " guardada", Toast.LENGTH_SHORT);
-            unToast.show();
+           // Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
+            //        + " guardada", Toast.LENGTH_SHORT);
+          //  unToast.show();
         } else {
             Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
             unToast.show();
         }
+
+        //Chequea creacion correcta
+        VisitaQuery vQuery = new VisitaQuery();
+        vQuery.observaciones = visitaSeleccionada.getDescripcion();
+
+        Visita vis = VisitaDataAccess.get().find(vQuery);
+        Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
+        if (vis == null) {
+            unToast.setText("Error al grabar");
+        } else {
+            unToast.setText("Se grabo: " + vis.getDescripcion());
+        }
+        unToast.show();
+
 
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
@@ -228,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
                 primeraVisita.setDescripcion("Primera Visita");
                 //primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
-                fragMapa.setVisita(primeraVisita);
+                //fragMapa.actualizarMapa();
                 VisitaDataAccess.get().save(primeraVisita);
             }
         } else {
@@ -277,11 +299,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void mostrarVisita(Visita visita) {
         menuGuardar(true);
         visitaSeleccionada = visita;
-        Fragment frag = new VisitaFragment();
-
-        Bundle args = new Bundle();
-        args.putParcelable("visita", visita);
-        frag.setArguments(args);
+        VisitaFragment frag = new VisitaFragment();
+        frag.actualizar();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(Utils.FRAG_VISITA);

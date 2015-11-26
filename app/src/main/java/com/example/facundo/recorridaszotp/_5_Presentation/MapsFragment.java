@@ -23,7 +23,6 @@ public class MapsFragment extends Fragment {
     // private InterfaceMapa interfaceMapa;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static View vista;
-    private Visita visita;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class MapsFragment extends Fragment {
                         mMap.clear();
                         Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
                                 point.latitude, point.longitude)));
-                        visita.setUbicacion(marker.getPosition());
+                        MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
                         //interfaceMapa.guardarPersona(point);
                     }
                 });
@@ -137,15 +136,18 @@ public class MapsFragment extends Fragment {
         public void guardarPersona(LatLng latLng);
     }*/
 
-    public Visita getVisita() {
-        return visita;
-    }
-
-    public void setVisita(Visita visita) {
+/*    public void setVisita(Visita visita) {
         this.visita = visita;
         mMap.clear();
         if (visita.getUbicacion() != null) {
             mMap.addMarker(new MarkerOptions().position(visita.getUbicacion()));
+        }
+    }*/
+
+    public void actualizarMapa(){
+        mMap.clear();
+        if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
+            mMap.addMarker(new MarkerOptions().position(MainActivity.visitaSeleccionada.getUbicacion()));
         }
     }
 }

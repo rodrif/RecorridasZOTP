@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Table(name = "Personas")
-public class Persona extends Model implements Parcelable {
+public class Persona extends Model {
     @Column(name = "WebId")
     private int webId = -1; // -1 si es una persona no guardada en la BDWeb
     @Column(name = "Nombre")
@@ -53,22 +53,6 @@ public class Persona extends Model implements Parcelable {
         this.nombre = nombre;
         this.estado = Utils.EST_ACTUALIZADO;
     }
-
-    protected Persona(Parcel in) {
-        readFromParcel(in);
-    }
-
-    public static final Creator<Persona> CREATOR = new Creator<Persona>() {
-        @Override
-        public Persona createFromParcel(Parcel in) {
-            return new Persona(in);
-        }
-
-        @Override
-        public Persona[] newArray(int size) {
-            return new Persona[size];
-        }
-    };
 
     public void mergeFromWeb(Persona persona) throws Exception {
         if (persona.webId != this.getWebId()) {
@@ -153,31 +137,4 @@ public class Persona extends Model implements Parcelable {
         return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(webId);
-        dest.writeString(nombre);
-        dest.writeString(apellido);
-        dest.writeInt(estado);
-        dest.writeParcelable(zona, 0);
-        dest.writeString(direccion);
-        dest.writeString(descripcion);
-        dest.writeString(ultMod);
-    }
-
-    private void readFromParcel(Parcel in) {
-        webId = in.readInt();
-        nombre = in.readString();
-        apellido = in.readString();
-        estado = in.readInt();
-        zona = in.readParcelable(Zona.class.getClassLoader());
-        direccion = in.readString();
-        descripcion = in.readString();
-        ultMod = in.readString();
-    }
 }

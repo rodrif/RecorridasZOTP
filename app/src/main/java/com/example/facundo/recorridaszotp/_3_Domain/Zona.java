@@ -13,29 +13,13 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
  */
 
 @Table(name = "Zonas")
-public class Zona extends Model implements Parcelable{
+public class Zona extends Model{
     @Column(name = "WebId")
     private int webId = -1;
     @Column(name = "Nombre")
     private String nombre = "";
     @Column(name = "Estado")
     private int estado;
-
-    protected Zona(Parcel in) {
-        readFromParcel(in);
-    }
-
-    public static final Creator<Zona> CREATOR = new Creator<Zona>() {
-        @Override
-        public Zona createFromParcel(Parcel in) {
-            return new Zona(in);
-        }
-
-        @Override
-        public Zona[] newArray(int size) {
-            return new Zona[size];
-        }
-    };
 
     public String getNombre() {
         return nombre;
@@ -77,21 +61,4 @@ public class Zona extends Model implements Parcelable{
         this.estado = zona.getEstado();
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(webId);
-        dest.writeString(nombre);
-        dest.writeInt(estado);
-    }
-
-    private void readFromParcel(Parcel in) {
-        webId = in.readInt();
-        nombre = in.readString();
-        estado = in.readInt();
-    }
 }

@@ -31,16 +31,10 @@ public class VisitaFragment extends Fragment {
     private double longitud = Double.NaN;
     //private boolean editando = false;
     private MapsFragment mapsFragment = null;
-    private Visita visita = null;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle b = getArguments();
-        if (b != null) {
-            visita = b.getParcelable("visita");
-        }
     }
 
     @Override
@@ -70,17 +64,19 @@ public class VisitaFragment extends Fragment {
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
 
-        if (visita.getFechaString() != null)
-            etFecha.setText(visita.getFechaString());
+/*         if (MainActivity.visitaSeleccionada.getFechaString() != null)
+            etFecha.setText(MainActivity.visitaSeleccionada.getFechaString());
         else
             cargarFechaActual();
 
-        if (visita.getDescripcion() != null) {
-            ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(visita.getDescripcion());
-        }
+        if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
+            ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(MainActivity.visitaSeleccionada.getDescripcion());
+        }*/
+        actualizar();
 
         mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
-        mapsFragment.setVisita(visita);
+        if (mapsFragment != null)
+            mapsFragment.actualizarMapa();
 
         return vista;
     }
@@ -122,5 +118,18 @@ public class VisitaFragment extends Fragment {
 
     public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public void actualizar() {
+        if (etFecha != null) {
+            if (MainActivity.visitaSeleccionada.getFechaString() != null)
+                etFecha.setText(MainActivity.visitaSeleccionada.getFechaString());
+            else
+                cargarFechaActual();
+
+            if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
+                ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(MainActivity.visitaSeleccionada.getDescripcion());
+            }
+        }
     }
 }

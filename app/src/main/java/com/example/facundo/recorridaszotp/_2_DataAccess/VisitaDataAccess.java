@@ -4,6 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
         try {
             for (Visita visita : visitas) {
                 Visita v = new Select()
-                        .from(Persona.class)
+                        .from(Visita.class)
                         .where("WebId = ?", visita.getWebId())
                         .executeSingle();
                 if (v != null && visita.getEstado() == Utils.EST_BORRADO) {
@@ -51,6 +52,17 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
             ActiveAndroid.endTransaction();
         }
         return resultado;
+    }
+
+    public Visita find(VisitaQuery query) {
+        if (query != null)
+            if (query.observaciones != null)
+            return new Select()
+                    .from(Visita.class)
+                    .where("Descripcion = ?", query.observaciones)
+                    .executeSingle();
+
+        return null;
     }
 
 }
