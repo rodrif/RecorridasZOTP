@@ -28,10 +28,6 @@ public class MapsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle b = getArguments();
-        if (b != null) {
-            visita = b.getParcelable("visita");
-        }
     }
 
     @Override

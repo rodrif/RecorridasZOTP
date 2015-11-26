@@ -230,8 +230,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 //primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
                 fragMapa.setVisita(primeraVisita);
                 VisitaDataAccess.get().save(primeraVisita);
-
-
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
