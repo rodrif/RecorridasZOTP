@@ -33,8 +33,8 @@ public class Visita extends Model implements Parcelable {
     private String descripcion;
     @Column(name = "Estado")
     private int estado;
-    //TODO
-    private LatLng ubicacion = null;
+    @Column(name = "Ubicacion")
+    private LatLng ubicacion;
 
     public Visita() {
         super();

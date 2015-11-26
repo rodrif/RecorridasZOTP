@@ -26,6 +26,15 @@ public class MapsFragment extends Fragment {
     private Visita visita;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle b = getArguments();
+        if (b != null) {
+            visita = b.getParcelable("visita");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +103,7 @@ public class MapsFragment extends Fragment {
 
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
+                mMap.clear();
                 setUpMap();
             }
         }
@@ -106,26 +116,12 @@ public class MapsFragment extends Fragment {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+ /*       //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         mMap.clear();
-        FragmentManager fm = getFragmentManager();
-        int cant = fm.getBackStackEntryCount();
-        FragmentManager.BackStackEntry bse = fm.getBackStackEntryAt(cant - 1);
-        String tag = bse.getName();
-        if (tag != null) {
-            switch (tag) {
-                case Utils.FRAG_PERSONA:
-
-                    break;
-                case Utils.FRAG_VISITA:
-                    VisitaFragment vf = (VisitaFragment) fm.findFragmentByTag(Utils.FRAG_VISITA);
- //                   if (vf.estaEditando()) {
-//                        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
-  //                              vf.getLatitud(), vf.getLongitud())));
-  //                  }
-                    break;
-            }
-        }
+        if (visita != null)
+            if (visita.getUbicacion() != null) {
+                Marker marker = mMap.addMarker(new MarkerOptions().position(visita.getUbicacion()));
+            }*/
     }
 
 
@@ -151,5 +147,9 @@ public class MapsFragment extends Fragment {
 
     public void setVisita(Visita visita) {
         this.visita = visita;
+        mMap.clear();
+        if (visita.getUbicacion() != null) {
+            mMap.addMarker(new MarkerOptions().position(visita.getUbicacion()));
+        }
     }
 }

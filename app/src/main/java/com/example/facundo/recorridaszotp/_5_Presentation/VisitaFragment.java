@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import java.util.Calendar;
 
 public class VisitaFragment extends Fragment {
-    //    private String fecha = null;
-//    private String observaciones = null;
+    private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
     private double latitud = Double.NaN;
@@ -47,9 +47,19 @@ public class VisitaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_visita, container, false);
+//        View v = inflater.inflate(R.layout.fragment_visita, container, false);
+        if (vista != null) {
+            ViewGroup parent = (ViewGroup) vista.getParent();
+            if (parent != null)
+                parent.removeView(vista);
+        }
+        try {
+            vista = inflater.inflate(R.layout.fragment_visita, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is  */
+        }
 
-        ImageButton ib = (ImageButton) v.findViewById(R.id.bFecha);
+        ImageButton ib = (ImageButton) vista.findViewById(R.id.bFecha);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,22 +67,22 @@ public class VisitaFragment extends Fragment {
             }
         });
 
-        etFecha = (EditText) v.findViewById(R.id.ETFecha);
-        etObservaciones = (EditText) v.findViewById(R.id.ETObservacioneVisita);
+        etFecha = (EditText) vista.findViewById(R.id.ETFecha);
+        etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
 
         if (visita.getFechaString() != null)
             etFecha.setText(visita.getFechaString());
         else
             cargarFechaActual();
 
-
         if (visita.getDescripcion() != null) {
-            ((EditText) v.findViewById(R.id.ETObservacioneVisita)).setText(visita.getDescripcion());
+            ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(visita.getDescripcion());
         }
 
         mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
+        mapsFragment.setVisita(visita);
 
-        return v;
+        return vista;
     }
 
     private void showDataPicker() {
