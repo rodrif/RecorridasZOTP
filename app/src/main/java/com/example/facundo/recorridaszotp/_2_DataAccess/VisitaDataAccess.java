@@ -57,12 +57,19 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     public Visita find(VisitaQuery query) {
         if (query != null)
             if (query.observaciones != null)
-            return new Select()
-                    .from(Visita.class)
-                    .where("Descripcion = ?", query.observaciones)
-                    .executeSingle();
+                return new Select()
+                        .from(Visita.class)
+                        .where("Descripcion = ?", query.observaciones)
+                        .executeSingle();
 
         return null;
     }
 
+    public Visita findUltimaVisita(Persona persona) {
+        return new Select()
+                .from(Visita.class)
+                .where("Id = ?", persona.getId())
+                .orderBy("Fecha DESC")
+                .executeSingle();
+    }
 }

@@ -24,8 +24,14 @@ public class Persona extends Model {
     private int estado;
     //@Column(name = "Zona") //FIXME crear columna Zona primero en web
     private Zona zona;
-    private String direccion;
-    private String descripcion;
+    @Column(name = "FechaNacimiento")
+    private String fechaNacimiento;
+    @Column(name = "Observaciones")
+    private String observaciones;
+    @Column(name = "DNI")
+    private String DNI ;
+
+
     private String ultMod;
 
     public Persona() {
@@ -99,22 +105,6 @@ public class Persona extends Model {
         this.webId = webId;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public Zona getZona() {
         return zona;
     }
@@ -129,6 +119,30 @@ public class Persona extends Model {
 
     public void setUltMod(String ultMod) {
         this.ultMod = ultMod;
+    }
+
+    public String getDNI() {
+        return DNI;
+    }
+
+    public void setDNI(String DNI) {
+        this.DNI = DNI;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     @Override

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
+    public static boolean editandoPersona = false;
     private Menu menuGuardarPersona = null;
 
     @Override
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Plus.API)
+                .addApiIfAvailable(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
     }
@@ -222,42 +223,40 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
-        visitaSeleccionada = null;
-        personaSeleccionada = null;
+        clean();
     }
 
     public void GuardarPersonaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarPersonaClickFormulario");
 
-        EditText ETnombre = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETNombre);
-        EditText ETapellido = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETApellido);
+        View vista = getFragmentManager().findFragmentById(R.id.content_frame).getView();
+
+        EditText ETnombre = (EditText) vista.findViewById(R.id.ETNombre);
+        EditText ETapellido = (EditText) vista.findViewById(R.id.ETApellido);
+        EditText ETfechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        EditText ETobservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
+        EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
 
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
+        String dni = ETdni.getText().toString();
+        String observaciones = ETobservaciones.getText().toString();
+        String fechaNacimiento = ETfechaNacimiento.getText().toString();
+
 
         if (!nombre.equals("")) {
             if (personaSeleccionada != null) {// si habia persona seleccionada
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
+                personaSeleccionada.setDNI(dni);
+                personaSeleccionada.setObservaciones(observaciones);
+                personaSeleccionada.setFechaNacimiento(fechaNacimiento);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.get().save(personaSeleccionada);
-                if(visitaSeleccionada != null) {
+                if (visitaSeleccionada != null) {
                     visitaSeleccionada.setDescripcion("Primera Visita");
                     VisitaDataAccess.get().save(visitaSeleccionada);
                 }
- /*           } else { // persona nueva
-                Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
-                PersonaDataAccess.get().save(persona);
-                //Primera visita
-                MapsFragment fragMapa = (MapsFragment) getFragmentManager().findFragmentById(R.id.miniMap);
-                Visita primeraVisita = new Visita(persona);
-
-                primeraVisita.setDescripcion("Primera Visita");
-                //primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
-                //fragMapa.actualizarMapa();
-                VisitaDataAccess.get().save(primeraVisita);*/
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -282,8 +281,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
-        visitaSeleccionada = null;
-        personaSeleccionada = null;
+        clean();
     }
 
     @Override
@@ -291,6 +289,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void mostrarPersona(Persona persona) {
         menuGuardar(true);
         personaSeleccionada = persona;
+        editandoPersona = true;
+        visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);
         Fragment frag = new PersonaFragment();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -342,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             Fragment fragment = null;
             String tag = "";
 
+            clean();
             //Borra todos los fragments al hacer click en menu lateral
             FragmentManager fm = getFragmentManager();
             int cantidad = fm.getBackStackEntryCount();
@@ -449,5 +450,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private void menuGuardar(boolean bool) {
         if (menuGuardarPersona != null)
             menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
+    }
+
+    private void clean() {
+        personaSeleccionada = null;
+        visitaSeleccionada = null;
+        editandoPersona = false;
     }
 }

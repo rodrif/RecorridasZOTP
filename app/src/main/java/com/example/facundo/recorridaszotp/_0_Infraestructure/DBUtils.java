@@ -24,6 +24,8 @@ import java.util.List;
 public class DBUtils {
 
     public static int loadDefaultDB() {
+        if (Cache.isInitialized())
+            Cache.clear();
         DBUtils.deleteDBData();
         List<Persona> personas = DBUtils.getPersonasTest();
         List<Visita> visitas = DBUtils.getVisitasTest(personas);

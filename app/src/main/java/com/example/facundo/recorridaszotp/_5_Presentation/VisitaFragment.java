@@ -62,12 +62,8 @@ public class VisitaFragment extends Fragment {
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
-        actualizar();
-
         mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
-        if (mapsFragment != null)
-            mapsFragment.actualizarMapa();
-
+        actualizar();
         return vista;
     }
 

@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:clickable="true"
-        android:longClickable="true"
-        android:src="@drawable/fab_ic_add" />
+    <!--    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:clickable="true"
+            android:longClickable="true"
+            android:src="@drawable/fab_ic_add" />-->
 
-</FrameLayout>
+    </FrameLayout>

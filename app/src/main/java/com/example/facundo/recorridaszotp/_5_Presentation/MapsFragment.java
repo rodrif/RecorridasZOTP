@@ -2,7 +2,6 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -87,11 +84,13 @@ public class MapsFragment extends Fragment {
                 mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     public void onMapClick(LatLng point) {
                         //if (visita.getUbicacion() != null)
-                        mMap.clear();
-                        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
-                                point.latitude, point.longitude)));
-                        MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                        //interfaceMapa.guardarPersona(point);
+                        if (!MainActivity.editandoPersona) {
+                            mMap.clear();
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(
+                                    point.latitude, point.longitude)));
+                            MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                            //interfaceMapa.guardarPersona(point);
+                        }
                     }
                 });
             }
@@ -144,7 +143,7 @@ public class MapsFragment extends Fragment {
         }
     }*/
 
-    public void actualizarMapa(){
+    public void actualizarMapa() {
         mMap.clear();
         if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
             mMap.addMarker(new MarkerOptions().position(MainActivity.visitaSeleccionada.getUbicacion()));

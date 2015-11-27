@@ -3,6 +3,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,9 +29,13 @@ import java.util.List;
 
 
 public class PersonaFragment extends Fragment {
+    private static View vista;
     private EditText etFechaNacimiento = null;
     private EditText etNombre = null;
     private EditText etApellido = null;
+    private EditText etObservaciones = null;
+    private EditText etDNI = null;
+    private MapsFragment mapsFragment = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,9 +46,19 @@ public class PersonaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_persona, container, false);
+//        View v = inflater.inflate(R.layout.fragment_persona, container, false);
+        if (vista != null) {
+            ViewGroup parent = (ViewGroup) vista.getParent();
+            if (parent != null)
+                parent.removeView(vista);
+        }
+        try {
+            vista = inflater.inflate(R.layout.fragment_persona, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is  */
+        }
 
-        ImageButton ib = (ImageButton) v.findViewById(R.id.bFechaNacimiento);
+        ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,12 +66,15 @@ public class PersonaFragment extends Fragment {
             }
         });
 
-        etNombre = (EditText) v.findViewById(R.id.ETNombre);
-        etApellido = (EditText) v.findViewById(R.id.ETApellido);
-        etFechaNacimiento = (EditText) v.findViewById(R.id.ETFechaNacimiento);
+        etNombre = (EditText) vista.findViewById(R.id.ETNombre);
+        etApellido = (EditText) vista.findViewById(R.id.ETApellido);
+        etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
+        etDNI = (EditText) vista.findViewById(R.id.ETDni);
+        mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
 
         //Grupo Familiar
-        Spinner sGrupoFamiliar = (Spinner) v.findViewById(R.id.spinner_grupo_familiar);
+        Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         final List<String> familiasString = new ArrayList<String>();
         familiasString.add("Familia 1");
         familiasString.add("Familia 2");
@@ -72,7 +90,7 @@ public class PersonaFragment extends Fragment {
 
         //Zona
         DBUtils.getZonaTest();//FIXME borrar, solo para prueba
-        Spinner sZona = (Spinner) v.findViewById(R.id.spinner_zona);
+        Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
 
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> zonasString = new ArrayList<String>();
@@ -86,7 +104,7 @@ public class PersonaFragment extends Fragment {
 
         //Ranchada
         DBUtils.getRanchadaTest();//FIXME borrar, solo para prueba
-        Spinner sRanchada = (Spinner) v.findViewById(R.id.spinner_ranchada);
+        Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> ranchadasString = new ArrayList<String>();
@@ -99,7 +117,7 @@ public class PersonaFragment extends Fragment {
         sRanchada.setAdapter(adaptadorRanchada);
 
         actualizar();
-        return v;
+        return vista;
     }
 
     private void showDataPicker() {
@@ -116,9 +134,26 @@ public class PersonaFragment extends Fragment {
         if (etNombre != null) {
             if (MainActivity.personaSeleccionada.getNombre() != null)
                 etNombre.setText(MainActivity.personaSeleccionada.getNombre());
+            else
+                etNombre.setText("");
 
             if (MainActivity.personaSeleccionada.getApellido() != null)
                 etApellido.setText(MainActivity.personaSeleccionada.getApellido());
+            else
+                etApellido.setText("");
+
+            if (MainActivity.personaSeleccionada.getObservaciones() != null)
+                etObservaciones.setText(MainActivity.personaSeleccionada.getObservaciones());
+            else
+                etObservaciones.setText("");
+
+            if (MainActivity.personaSeleccionada.getDNI() != null)
+                etDNI.setText(MainActivity.personaSeleccionada.getDNI());
+            else
+                etDNI.setText("");
+
+            if (mapsFragment != null)
+                mapsFragment.actualizarMapa();
         }
     }
 }
