@@ -44,7 +44,7 @@ public class DataBaseTest extends AndroidTestCase {
                 .where("fecha = ?", 1425990960000L)
                 .executeSingle();
 
-        assertEquals(visita.getFecha(), (Long) 1425990960000L);
+        assertEquals(visita.getFecha(), 1425990960000L);
         assertEquals(Utils.getDateTime(visita.getFecha()), "2015-03-10T09:36:00-0300");
     }
 
@@ -56,7 +56,7 @@ public class DataBaseTest extends AndroidTestCase {
         List<Visita> visitas = persona.visitas();
 
         assertEquals("fallo cantidad de visitas", 2, visitas.size());
-        assertEquals((Long)1425990960000L, visitas.get(0).getFecha());
-        assertEquals((Long)1425992960000L, visitas.get(1).getFecha());
+        assertEquals(1425990960000L, visitas.get(0).getFecha());
+        assertEquals(1425992960000L, visitas.get(1).getFecha());
     }
 }

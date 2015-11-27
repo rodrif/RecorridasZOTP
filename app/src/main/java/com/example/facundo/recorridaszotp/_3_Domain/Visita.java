@@ -33,8 +33,12 @@ public class Visita extends Model {
     private String descripcion = "";
     @Column(name = "Estado")
     private int estado;
-    //@Column(name = "Ubicacion")
-    private LatLng ubicacion;
+    @Column(name = "Latitud")
+    private double latitud;
+    @Column(name = "Longitud")
+    private double longitud;
+
+    //private LatLng ubicacion;
 
     public Visita() {
         super();
@@ -64,7 +68,8 @@ public class Visita extends Model {
         this.fecha = visita.getFecha();
         this.estado = visita.getEstado();
         this.persona = visita.getPersona();
-        this.ubicacion = visita.getUbicacion();
+        this.latitud = visita.getLatitud();
+        this.longitud = visita.getLongitud();
     }
 
     public int getWebId() {
@@ -111,20 +116,37 @@ public class Visita extends Model {
         this.descripcion = descripcion;
     }
 
-    public LatLng getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(LatLng ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
     public int getEstado() {
         return estado;
     }
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setUbicacion(LatLng latLng){
+        setLatitud(latLng.latitude);
+        setLongitud(latLng.longitude);
+    }
+
+    public LatLng getUbicacion() {
+        return new LatLng(getLatitud(),getLongitud());
     }
 
     public String getFechaString() {
