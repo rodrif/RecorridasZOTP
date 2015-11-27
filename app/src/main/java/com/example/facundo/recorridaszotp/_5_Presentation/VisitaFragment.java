@@ -128,8 +128,11 @@ public class VisitaFragment extends Fragment {
                 cargarFechaActual();
 
             if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
-                ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(MainActivity.visitaSeleccionada.getDescripcion());
+                etObservaciones.setText(MainActivity.visitaSeleccionada.getDescripcion());
             }
+
+            if (mapsFragment != null)
+                mapsFragment.actualizarMapa();
         }
     }
 }

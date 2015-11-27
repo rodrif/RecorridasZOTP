@@ -187,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void GuardarVisitaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarVisitaClickFormulario");
 
+        //Obtengo fecha y observaciones de la visita
+        //La ubicacion se carga desde MapsFragment
         EditText eTFecha = (EditText) getFragmentManager()
                 .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
         EditText eTObservaciones = (EditText) getFragmentManager()
@@ -196,16 +198,16 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             visitaSeleccionada.setFecha(eTFecha.getText().toString());
             visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
             VisitaDataAccess.get().save(visitaSeleccionada);
-           // Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
-            //        + " guardada", Toast.LENGTH_SHORT);
-          //  unToast.show();
+            Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
+                    + " guardada", Toast.LENGTH_SHORT);
+            unToast.show();
         } else {
             Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
             unToast.show();
         }
 
         //Chequea creacion correcta
-        VisitaQuery vQuery = new VisitaQuery();
+/*        VisitaQuery vQuery = new VisitaQuery();
         vQuery.observaciones = visitaSeleccionada.getDescripcion();
 
         Visita vis = VisitaDataAccess.get().find(vQuery);
@@ -215,8 +217,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         } else {
             unToast.setText("Se grabo: " + vis.getDescripcion());
         }
-        unToast.show();
-
+        unToast.show();*/
 
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior

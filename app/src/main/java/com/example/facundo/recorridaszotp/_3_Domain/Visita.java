@@ -34,9 +34,9 @@ public class Visita extends Model {
     @Column(name = "Estado")
     private int estado;
     @Column(name = "Latitud")
-    private double latitud;
+    private double latitud = Double.NaN;
     @Column(name = "Longitud")
-    private double longitud;
+    private double longitud = Double.NaN;
 
     //private LatLng ubicacion;
 
@@ -58,6 +58,8 @@ public class Visita extends Model {
         super();
         setFechaActual();
         this.persona = persona;
+        this.latitud = Double.NaN;
+        this.longitud = Double.NaN;
     }
 
     public void mergeFromWeb(Visita visita) throws Exception {
@@ -140,13 +142,16 @@ public class Visita extends Model {
         this.latitud = latitud;
     }
 
-    public void setUbicacion(LatLng latLng){
+    public void setUbicacion(LatLng latLng) {
         setLatitud(latLng.latitude);
         setLongitud(latLng.longitude);
     }
 
     public LatLng getUbicacion() {
-        return new LatLng(getLatitud(),getLongitud());
+        if (!(Double.isNaN(latitud) || Double.isNaN(longitud)))
+            return new LatLng(getLatitud(), getLongitud());
+        else
+            return null;
     }
 
     public String getFechaString() {
