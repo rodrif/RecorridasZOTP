@@ -29,7 +29,6 @@ public class VisitaFragment extends Fragment {
     private EditText etObservaciones = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
-    //private boolean editando = false;
     private MapsFragment mapsFragment = null;
 
     @Override
@@ -63,15 +62,6 @@ public class VisitaFragment extends Fragment {
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
-
-/*         if (MainActivity.visitaSeleccionada.getFechaString() != null)
-            etFecha.setText(MainActivity.visitaSeleccionada.getFechaString());
-        else
-            cargarFechaActual();
-
-        if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
-            ((EditText) vista.findViewById(R.id.ETObservacioneVisita)).setText(MainActivity.visitaSeleccionada.getDescripcion());
-        }*/
         actualizar();
 
         mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);

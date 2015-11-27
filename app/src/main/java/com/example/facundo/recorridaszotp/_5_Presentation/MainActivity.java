@@ -222,7 +222,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
-
+        visitaSeleccionada = null;
+        personaSeleccionada = null;
     }
 
     public void GuardarPersonaClickFormulario() {
@@ -242,7 +243,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setApellido(apellido);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.get().save(personaSeleccionada);
-            } else { // persona nueva
+                if(visitaSeleccionada != null) {
+                    visitaSeleccionada.setDescripcion("Primera Visita");
+                    VisitaDataAccess.get().save(visitaSeleccionada);
+                }
+ /*           } else { // persona nueva
                 Persona persona = new Persona(nombre, apellido, Utils.EST_NUEVO);
                 PersonaDataAccess.get().save(persona);
                 //Primera visita
@@ -252,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 primeraVisita.setDescripcion("Primera Visita");
                 //primeraVisita.setUbicacion(fragMapa.getMarker().getPosition());
                 //fragMapa.actualizarMapa();
-                VisitaDataAccess.get().save(primeraVisita);
+                VisitaDataAccess.get().save(primeraVisita);*/
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -277,18 +282,16 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
+        visitaSeleccionada = null;
+        personaSeleccionada = null;
     }
 
     @Override
+    //Solo para edicion de persona
     public void mostrarPersona(Persona persona) {
         menuGuardar(true);
         personaSeleccionada = persona;
         Fragment frag = new PersonaFragment();
-
-        Bundle args = new Bundle();
-        args.putString("nombre", persona.getNombre());
-        args.putString("apellido", persona.getApellido());
-        frag.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(Utils.FRAG_PERSONA);
@@ -357,6 +360,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     break;
                 case 2: //Crear Persona
                     menuGuardar(true);
+                    personaSeleccionada = new Persona();
+                    visitaSeleccionada = new Visita(personaSeleccionada);
                     fragment = new PersonaFragment();
                     fragmentTransaction = true;
                     tag = Utils.FRAG_PERSONA;

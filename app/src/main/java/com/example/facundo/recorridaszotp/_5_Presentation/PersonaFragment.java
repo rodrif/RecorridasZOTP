@@ -28,18 +28,13 @@ import java.util.List;
 
 
 public class PersonaFragment extends Fragment {
-    private String nombre = null;
-    private String apellido = null;
     private EditText etFechaNacimiento = null;
+    private EditText etNombre = null;
+    private EditText etApellido = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle b = getArguments();
-        if (b != null) {
-            nombre = b.getString("nombre");
-            apellido = b.getString("apellido");
-        }
     }
 
     @Override
@@ -56,17 +51,9 @@ public class PersonaFragment extends Fragment {
             }
         });
 
+        etNombre = (EditText) v.findViewById(R.id.ETNombre);
+        etApellido = (EditText) v.findViewById(R.id.ETApellido);
         etFechaNacimiento = (EditText) v.findViewById(R.id.ETFechaNacimiento);
-
-        if (nombre != null) {
-            EditText et = (EditText) v.findViewById(R.id.ETNombre);
-            et.setText(nombre);
-        }
-
-        if (apellido != null) {
-            EditText et = (EditText) v.findViewById(R.id.ETApellido);
-            et.setText(apellido);
-        }
 
         //Grupo Familiar
         Spinner sGrupoFamiliar = (Spinner) v.findViewById(R.id.spinner_grupo_familiar);
@@ -111,6 +98,7 @@ public class PersonaFragment extends Fragment {
                         android.R.layout.simple_spinner_item, ranchadasString);
         sRanchada.setAdapter(adaptadorRanchada);
 
+        actualizar();
         return v;
     }
 
@@ -124,4 +112,13 @@ public class PersonaFragment extends Fragment {
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
+    public void actualizar() {
+        if (etNombre != null) {
+            if (MainActivity.personaSeleccionada.getNombre() != null)
+                etNombre.setText(MainActivity.personaSeleccionada.getNombre());
+
+            if (MainActivity.personaSeleccionada.getApellido() != null)
+                etApellido.setText(MainActivity.personaSeleccionada.getApellido());
+        }
+    }
 }
