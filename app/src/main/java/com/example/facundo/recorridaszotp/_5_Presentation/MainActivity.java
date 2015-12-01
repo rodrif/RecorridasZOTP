@@ -375,9 +375,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     break;
                 case 4: //Mapa
                     menuGuardar(false);
-                    fragment = new MapsFragment();
+                    /*fragment = new MapsFragment();
                     fragmentTransaction = true;
-                    tag = Utils.FRAG_MAPA;
+                    tag = Utils.FRAG_MAPA;*/
                     break;
                 case 5: //Cerrar
                     //PersonaDataAccess.get().sincronizar(null);

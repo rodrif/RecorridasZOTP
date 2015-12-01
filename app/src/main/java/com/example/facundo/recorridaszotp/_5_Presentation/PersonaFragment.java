@@ -22,20 +22,26 @@ import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
-public class PersonaFragment extends Fragment {
+public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private EditText etFechaNacimiento = null;
     private EditText etNombre = null;
     private EditText etApellido = null;
     private EditText etObservaciones = null;
     private EditText etDNI = null;
-    private MapsFragment mapsFragment = null;
+    private MapFragment mapFragmentPersona = null;
+    private Marker marker = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +61,18 @@ public class PersonaFragment extends Fragment {
         try {
             vista = inflater.inflate(R.layout.fragment_persona, container, false);
         } catch (InflateException e) {
-        /* map is already there, just return view as it is  */
+
         }
+
+        mapFragmentPersona = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.mapPersona);
+        mapFragmentPersona.getMapAsync(this);
+        mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+            }
+        });
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +87,7 @@ public class PersonaFragment extends Fragment {
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
-        mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
+        //mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
 
         //Grupo Familiar
         Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
@@ -151,9 +167,11 @@ public class PersonaFragment extends Fragment {
                 etDNI.setText(MainActivity.personaSeleccionada.getDNI());
             else
                 etDNI.setText("");
-
-            if (mapsFragment != null)
-                mapsFragment.actualizarMapa();
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }

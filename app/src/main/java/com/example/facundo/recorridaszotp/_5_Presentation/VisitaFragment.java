@@ -20,20 +20,26 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
-public class VisitaFragment extends Fragment {
+public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
-    private MapsFragment mapsFragment = null;
+    private MapFragment mapFragmentVisita = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -49,8 +55,18 @@ public class VisitaFragment extends Fragment {
         try {
             vista = inflater.inflate(R.layout.fragment_visita, container, false);
         } catch (InflateException e) {
-        /* map is already there, just return view as it is  */
+
         }
+
+        mapFragmentVisita = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.mapVisita);
+        mapFragmentVisita.getMapAsync(this);
+        mapFragmentVisita.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                
+            }
+        });
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFecha);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +78,7 @@ public class VisitaFragment extends Fragment {
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
-        mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
+        // mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
         actualizar();
         return vista;
     }
@@ -116,9 +132,11 @@ public class VisitaFragment extends Fragment {
             if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
                 etObservaciones.setText(MainActivity.visitaSeleccionada.getDescripcion());
             }
-
-            if (mapsFragment != null)
-                mapsFragment.actualizarMapa();
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }

@@ -151,11 +151,10 @@
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/miniMap"
-                class="com.example.facundo.recorridaszotp._5_Presentation.MapsFragment"
+                android:id="@+id/mapPersona"
+                android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/fragment_map" />
+                android:layout_height="match_parent" />
 
         </android.support.v7.widget.CardView>
 
