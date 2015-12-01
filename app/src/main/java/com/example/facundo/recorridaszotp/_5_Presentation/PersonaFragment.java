@@ -27,6 +27,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -70,7 +71,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
+                if (!MainActivity.editandoPersona) {
+                    mapFragmentPersona.getMap().clear();
+                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                            latLng.latitude, latLng.longitude)));
+                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                }
             }
         });
 
@@ -87,7 +93,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
-        //mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
 
         //Grupo Familiar
         Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
@@ -171,7 +176,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap) { //TODO Agregar marker de ultima visita
+        mapFragmentPersona.getMap().clear();
+      /*  if (MainActivity.visitaSeleccionada != null)
+            if (MainActivity.visitaSeleccionada.getUbicacion() != null)
+                marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                        MainActivity.visitaSeleccionada.getUbicacion().latitude,
+                        MainActivity.visitaSeleccionada.getUbicacion().longitude)));*/
 
     }
 }

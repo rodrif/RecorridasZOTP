@@ -25,6 +25,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 
@@ -35,6 +37,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
     private MapFragment mapFragmentVisita = null;
+    private Marker marker = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        View v = inflater.inflate(R.layout.fragment_visita, container, false);
         if (vista != null) {
             ViewGroup parent = (ViewGroup) vista.getParent();
             if (parent != null)
@@ -64,7 +66,10 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
         mapFragmentVisita.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                
+                mapFragmentVisita.getMap().clear();
+                marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                        latLng.latitude, latLng.longitude)));
+                MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
             }
         });
 
@@ -78,7 +83,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
-        // mapsFragment = (MapsFragment) getFragmentManager().findFragmentById(R.id.mapsFragment);
         actualizar();
         return vista;
     }
@@ -101,10 +105,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
         etFecha.setText(Integer.toString(day) + "/" +
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
-
- /*   public boolean estaEditando() {
-        return editando;
-    }*/
 
     public double getLatitud() {
         return latitud;
@@ -137,6 +137,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        mapFragmentVisita.getMap().clear();
+        if (MainActivity.visitaSeleccionada != null)
+            if (MainActivity.visitaSeleccionada.getUbicacion() != null)
+                marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                        MainActivity.visitaSeleccionada.getUbicacion().latitude,
+                        MainActivity.visitaSeleccionada.getUbicacion().longitude)));
     }
 }
