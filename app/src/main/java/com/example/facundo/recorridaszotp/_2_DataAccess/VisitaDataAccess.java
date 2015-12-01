@@ -66,10 +66,13 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     }
 
     public Visita findUltimaVisita(Persona persona) {
-        return new Select()
-                .from(Visita.class)
-                .where("Id = ?", persona.getId())
-                .orderBy("Fecha DESC")
-                .executeSingle();
+        if (persona.getId() != null)
+            return new Select()
+                    .from(Visita.class)
+                    .where("Persona = ?", persona.getId())
+                    .orderBy("Fecha DESC")
+                    .executeSingle();
+        else
+            return null;
     }
 }

@@ -19,8 +19,10 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -178,11 +180,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) { //TODO Agregar marker de ultima visita
         mapFragmentPersona.getMap().clear();
-      /*  if (MainActivity.visitaSeleccionada != null)
-            if (MainActivity.visitaSeleccionada.getUbicacion() != null)
-                marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
-                        MainActivity.visitaSeleccionada.getUbicacion().latitude,
-                        MainActivity.visitaSeleccionada.getUbicacion().longitude)));*/
-
+        if (MainActivity.personaSeleccionada != null) {
+            Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
+            if (visita != null)
+                if (visita.getUbicacion() != null)
+                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                            visita.getUbicacion().latitude,
+                            visita.getUbicacion().longitude)));
+        }
     }
 }
