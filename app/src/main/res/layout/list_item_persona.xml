@@ -23,13 +23,13 @@
         android:hint="Zona"
         android:layout_weight="1" />
 
-    <TextView android:id="@+id/lIdWeb"
+<!--    <TextView android:id="@+id/lIdWeb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="normal"
         android:textSize="12sp"
         android:textColor="@android:color/black"
         android:hint="id Web"
-        android:layout_weight="1" />
+        android:layout_weight="1" />-->
 
 </LinearLayout>

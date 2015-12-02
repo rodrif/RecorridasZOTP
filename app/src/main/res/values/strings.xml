@@ -9,7 +9,7 @@
     <string name="Nombre">Nombre</string>
     <string name="Guardar">Guardar</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_prueba_mapa">PruebaMapa</string>
     <string name="title_activity_activity_test">ActivityTest</string>

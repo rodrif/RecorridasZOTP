@@ -165,6 +165,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     }
                 }
             case R.id.action_cancelar: //Cancelar
+                this.onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -206,19 +208,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
             unToast.show();
         }
-
-        //Chequea creacion correcta
-/*        VisitaQuery vQuery = new VisitaQuery();
-        vQuery.observaciones = visitaSeleccionada.getDescripcion();
-
-        Visita vis = VisitaDataAccess.get().find(vQuery);
-        Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
-        if (vis == null) {
-            unToast.setText("Error al grabar");
-        } else {
-            unToast.setText("Se grabo: " + vis.getDescripcion());
-        }
-        unToast.show();*/
 
         menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
@@ -375,9 +364,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     break;
                 case 4: //Mapa
                     menuGuardar(false);
-                    /*fragment = new MapsFragment();
+                    fragment = new MapaFragment();
                     fragmentTransaction = true;
-                    tag = Utils.FRAG_MAPA;*/
+                    tag = Utils.FRAG_MAPA;
                     break;
                 case 5: //Cerrar
                     //PersonaDataAccess.get().sincronizar(null);
@@ -392,7 +381,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 ft.replace(R.id.content_frame, fragment, tag);
                 ft.commit();
             }
-
             navDrawerLayout.closeDrawers();
         }
     }

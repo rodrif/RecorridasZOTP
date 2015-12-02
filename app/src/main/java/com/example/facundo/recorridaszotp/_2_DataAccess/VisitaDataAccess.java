@@ -6,6 +6,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.List;
 
@@ -74,5 +75,19 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                     .executeSingle();
         else
             return null;
+    }
+
+    public List<Visita> findUltimasVisita() { //TODO Limitar cantidad de ultimas visitas en el mapa
+        return new Select()
+                .from(Visita.class)
+                .execute();
+    }
+
+    public Visita find(Marker marker){
+        return new Select()
+                .from (Visita.class)
+                .where ("Latitud = ?", marker.getPosition().latitude)
+                .where ("Longitud = ?", marker.getPosition().longitude)
+                .executeSingle();
     }
 }

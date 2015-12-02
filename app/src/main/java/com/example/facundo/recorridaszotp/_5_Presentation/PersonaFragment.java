@@ -178,7 +178,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) { //TODO Agregar marker de ultima visita
+    public void onMapReady(GoogleMap googleMap) {
         mapFragmentPersona.getMap().clear();
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
