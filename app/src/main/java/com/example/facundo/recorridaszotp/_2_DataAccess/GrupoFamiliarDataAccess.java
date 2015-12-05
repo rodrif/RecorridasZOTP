@@ -52,7 +52,7 @@ public class GrupoFamiliarDataAccess extends BasicDataAccess<GrupoFamiliar> {
         if (nombre != null)
             return new Select()
                     .from(GrupoFamiliar.class)
-                    .where("Nombre = ?", nombre)
+                    .where("Nombre = ?", nombre.toCharArray())
                     .executeSingle();
 
         return null;
