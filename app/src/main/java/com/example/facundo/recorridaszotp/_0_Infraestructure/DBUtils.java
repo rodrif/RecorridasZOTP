@@ -47,8 +47,10 @@ public class DBUtils {
     }
 
     public static List<Zona> getZonaTest() {
+        new Delete().from(Zona.class).execute();
         List<Zona> zonas = new ArrayList<Zona>();
 
+        zonas.add(new Zona("Zona"));
         zonas.add(new Zona("Haedo"));
         zonas.add(new Zona("Liniers"));
         zonas.add(new Zona("Ramos Mejia"));
@@ -59,8 +61,10 @@ public class DBUtils {
     }
 
     public static List<Ranchada> getRanchadaTest() {
+        new Delete().from(Ranchada.class).execute();
         List<Ranchada> ranchadas = new ArrayList<Ranchada>();
 
+        ranchadas.add(new Ranchada("Ranchada"));
         ranchadas.add(new Ranchada("Estación Haedo"));
         ranchadas.add(new Ranchada("Estación Liniers"));
 

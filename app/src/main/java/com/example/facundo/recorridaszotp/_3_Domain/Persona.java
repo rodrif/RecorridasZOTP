@@ -8,6 +8,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
 
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class Persona extends Model {
     private String observaciones;
     @Column(name = "DNI")
     private String DNI ;
+    @Column(name = "GrupoFamiliar")
+    private GrupoFamiliar grupoFamiliar;
+    @Column(name = "Ranchada")
+    private Ranchada ranchada;
+
 
     private String ultMod;
 
@@ -144,10 +150,29 @@ public class Persona extends Model {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public GrupoFamiliar getGrupoFamiliar() {
+        return grupoFamiliar;
+    }
+
+    public void setGrupoFamiliar(GrupoFamiliar grupoFamiliar) {
+        this.grupoFamiliar = grupoFamiliar;
+    }
+
+    public Ranchada getRanchada() {
+        return ranchada;
+    }
+
+    public void setRanchada(Ranchada ranchada) {
+        this.ranchada = ranchada;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Persona other = (Persona) obj;
         return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
     }
 
+    public void setGrupoFamiliar(String grupoFamiliar) {
+        this.grupoFamiliar = GrupoFamiliarDataAccess.get().find(grupoFamiliar);
+    }
 }

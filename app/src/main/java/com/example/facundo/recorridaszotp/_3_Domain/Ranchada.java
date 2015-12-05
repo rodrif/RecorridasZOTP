@@ -11,11 +11,19 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 @Table(name = "Ranchadas")
 public class Ranchada extends Model {
     @Column(name = "WebId")
-    private int webId = -1; // -1 si es una persona no guardada en la BDWeb
-    @Column(name = "Nombre")
-    private String nombre;
+    private int webId = -1;
     @Column(name = "Estado")
     private int estado;
+    @Column(name = "Nombre")
+    private String nombre = "";
+    @Column(name = "Area")
+    private Area area = null;
+    @Column(name = "Latitud")
+    private double latitud = Double.NaN;
+    @Column(name = "Longitud")
+    private double longitud = Double.NaN;
+    @Column(name = "Descripcion")
+    private String descripcion = "";
 
     public Ranchada() {
         super();

@@ -16,10 +16,16 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 public class Zona extends Model{
     @Column(name = "WebId")
     private int webId = -1;
-    @Column(name = "Nombre")
-    private String nombre = "";
     @Column(name = "Estado")
     private int estado;
+    @Column(name = "Nombre")
+    private String nombre = "";
+    @Column(name = "Area")
+    private Area area = null;
+    @Column(name = "Latitud")
+    private double latitud = Double.NaN;
+    @Column(name = "Longitud")
+    private double longitud = Double.NaN;
 
     public String getNombre() {
         return nombre;
@@ -53,7 +59,7 @@ public class Zona extends Model{
         this.webId = webId;
     }
 
-    public void mergeFromWeb(Zona zona) throws Exception{
+    public void mergeFromWeb(Zona zona) throws Exception {
         if (zona.webId != this.getWebId()) {
             throw new Exception("MergeConDiferenteWebId");
         }

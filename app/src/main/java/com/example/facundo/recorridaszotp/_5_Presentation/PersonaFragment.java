@@ -43,8 +43,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     private EditText etApellido = null;
     private EditText etObservaciones = null;
     private EditText etDNI = null;
+    private Spinner sGrupoFamiliar = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
+    ArrayAdapter<String> adaptadorFamilia = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,15 +97,17 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
+        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
 
         //Grupo Familiar
-        Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
+        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         final List<String> familiasString = new ArrayList<String>();
-        familiasString.add("Familia 1");
-        familiasString.add("Familia 2");
-        familiasString.add("Familia 3");
-        familiasString.add("Familia 4");
-        ArrayAdapter<String> adaptadorFamilia =
+        familiasString.add("Familia");
+        familiasString.add("Familia A");
+        familiasString.add("Familia B");
+        familiasString.add("Familia C");
+        familiasString.add("Familia D");
+        adaptadorFamilia =
                 new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_spinner_item, familiasString);
 
@@ -174,6 +178,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
                 etDNI.setText(MainActivity.personaSeleccionada.getDNI());
             else
                 etDNI.setText("");
+
+            if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
+                sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
+                        MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
+            }
         }
     }
 

@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
@@ -225,12 +226,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         EditText ETfechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         EditText ETobservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
+        Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
 
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
         String dni = ETdni.getText().toString();
         String observaciones = ETobservaciones.getText().toString();
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
+        String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
 
 
         if (!nombre.equals("")) {
@@ -240,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setDNI(dni);
                 personaSeleccionada.setObservaciones(observaciones);
                 personaSeleccionada.setFechaNacimiento(fechaNacimiento);
+                personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.get().save(personaSeleccionada);
                 if (visitaSeleccionada != null) {
