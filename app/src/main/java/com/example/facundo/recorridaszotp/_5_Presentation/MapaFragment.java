@@ -61,8 +61,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 Visita visita = VisitaDataAccess.get().find(marker);
                 if (visita != null) {
                     marker.setTitle(visita.getPersona().getNombre());
+                    Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
                 } else {
-                    Log.e(Utils.APPTAG, "Error en click marker");
+                    Log.e(Utils.APPTAG, "Error en click marker " + marker.getPosition().toString());
                 }
                 return false;
             }
@@ -77,8 +78,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         GoogleMap gMap = mapFragmentMapa.getMap();
         gMap.clear();
         for (Visita unaVisita : visitas) {
-            if (unaVisita.getUbicacion() != null)
-                gMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
+            if (unaVisita.getUbicacion() != null) {
+                Marker mTest = gMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
+                if(unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
+                        || unaVisita.getUbicacion().longitude != mTest.getPosition().longitude) {
+                    Log.e(Utils.APPTAG, "Markers no coinciden" + mTest.getPosition().toString() +
+                            "distinto " + unaVisita.getUbicacion().toString());
+                }
+            }
         }
     }
 }

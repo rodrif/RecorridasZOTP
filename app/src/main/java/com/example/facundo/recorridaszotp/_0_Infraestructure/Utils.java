@@ -12,7 +12,7 @@ public final class Utils {
     public static final String WEB = "http://stark-island-3497.herokuapp.com";
     public static final String WEB_INSERTAR = Utils.WEB + "/people/mobGuardarPersonasPost";
     public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/people/mobRecibirPersonasDesde";
-    public static final String APPTAG = "recorridaszotp";
+    public static final String APPTAG = "recorridaszotpD";
     public static final String UltFechaSincr = "UltFechaSincr";
     public static final int MAX_INTENTOS = 3;
     public static final int EST_NUEVO = 0;

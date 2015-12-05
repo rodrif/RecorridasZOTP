@@ -22,7 +22,7 @@ public class Persona extends Model {
     private String apellido;
     @Column(name = "Estado")
     private int estado;
-    @Column(name = "Zona") //FIXME crear columna Zona primero en web
+    @Column(name = "Zona")
     private Zona zona;
     @Column(name = "FechaNacimiento")
     private String fechaNacimiento;

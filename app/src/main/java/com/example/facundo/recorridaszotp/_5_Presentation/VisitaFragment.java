@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
                 marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
                         latLng.latitude, latLng.longitude)));
                 MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
             }
         });
 
