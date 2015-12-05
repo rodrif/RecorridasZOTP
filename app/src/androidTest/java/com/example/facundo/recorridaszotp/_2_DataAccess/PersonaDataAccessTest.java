@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import android.test.AndroidTestCase;
 
+import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class PersonaDataAccessTest extends AndroidTestCase {
 
     public void testFind() throws Exception {
+        ActiveAndroid.initialize(getContext());
         DBUtils.loadDefaultDB();
         Persona persona1 = new Persona("Juan2");
         PersonaDataAccess.get().save(persona1);

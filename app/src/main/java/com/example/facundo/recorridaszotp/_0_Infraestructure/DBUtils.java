@@ -1,6 +1,10 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure;
 
+import android.content.Context;
+
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Cache;
+import com.activeandroid.Configuration;
 import com.activeandroid.Model;
 import com.activeandroid.TableInfo;
 import com.activeandroid.query.Delete;
@@ -9,7 +13,9 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
+import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -24,8 +30,6 @@ import java.util.List;
 public class DBUtils {
 
     public static int loadDefaultDB() {
-        if (Cache.isInitialized())
-            Cache.clear();
         DBUtils.deleteDBData();
         List<Persona> personas = DBUtils.getPersonasTest();
         List<Visita> visitas = DBUtils.getVisitasTest(personas);

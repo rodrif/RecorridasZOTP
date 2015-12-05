@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import android.test.AndroidTestCase;
 
+import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
@@ -19,6 +20,7 @@ public class VisitaDataAccessTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        ActiveAndroid.initialize(getContext());
         DBUtils.loadDefaultDB();
         personaTest = new Persona("Juan2");
         PersonaDataAccess.get().save(personaTest);
