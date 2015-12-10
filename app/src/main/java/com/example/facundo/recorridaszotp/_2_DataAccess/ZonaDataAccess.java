@@ -52,4 +52,14 @@ public class ZonaDataAccess extends BasicDataAccess<Zona>{
         return resultado;
     }
 
+    public Zona find(String nombre) {
+        if (nombre != null)
+            return new Select()
+                    .from(Zona.class)
+                    .where("Nombre = ?", nombre)
+                    .executeSingle();
+
+        return null;
+    }
+
 }

@@ -51,16 +51,18 @@ public class DBUtils {
     }
 
     public static List<Zona> getZonaTest() {
-        new Delete().from(Zona.class).execute();
-        List<Zona> zonas = new ArrayList<Zona>();
+        //new Delete().from(Zona.class).execute();
+        List<Zona> zonas = ZonaDataAccess.get().getAll();
+        if (zonas.size() == 0) {
+            zonas = new ArrayList<Zona>();
 
-        zonas.add(new Zona("Zona"));
-        zonas.add(new Zona("Haedo"));
-        zonas.add(new Zona("Liniers"));
-        zonas.add(new Zona("Ramos Mejia"));
+            zonas.add(new Zona("Zona"));
+            zonas.add(new Zona("Haedo"));
+            zonas.add(new Zona("Liniers"));
+            zonas.add(new Zona("Ramos Mejia"));
 
-        ZonaDataAccess.get().save(zonas);
-
+            ZonaDataAccess.get().save(zonas);
+        }
         return zonas;
     }
 

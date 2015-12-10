@@ -7,8 +7,10 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.LocationListenerEx;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 
 import java.util.List;
 
@@ -174,5 +176,9 @@ public class Persona extends Model {
 
     public void setGrupoFamiliar(String grupoFamiliar) {
         this.grupoFamiliar = GrupoFamiliarDataAccess.get().find(grupoFamiliar);
+    }
+
+    public void setZona(String unaZona) {
+        this.zona = ZonaDataAccess.get().find(unaZona);
     }
 }

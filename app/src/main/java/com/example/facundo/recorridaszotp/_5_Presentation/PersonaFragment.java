@@ -44,9 +44,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     private EditText etObservaciones = null;
     private EditText etDNI = null;
     private Spinner sGrupoFamiliar = null;
+    private Spinner sZona = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
     ArrayAdapter<String> adaptadorFamilia = null;
+    ArrayAdapter<String> adaptadorZona = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,8 +100,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
+        sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
 
-        //Grupo Familiar
+        //Grupo Familiar //FIXME no harcodear spinner grupo familiar
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         final List<String> familiasString = new ArrayList<String>();
         familiasString.add("Familia");
@@ -124,9 +127,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         for (Zona zona : lZonas) {
             zonasString.add(zona.getNombre());
         }
-        ArrayAdapter<String> adaptadorZona =
-                new ArrayAdapter<String>(getActivity(),
+        adaptadorZona = new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_spinner_item, zonasString);
+        adaptadorZona.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
 
         //Ranchada
@@ -141,6 +145,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         ArrayAdapter<String> adaptadorRanchada =
                 new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_spinner_item, ranchadasString);
+        adaptadorRanchada.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
         sRanchada.setAdapter(adaptadorRanchada);
 
         actualizar();
@@ -182,6 +188,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
             if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
                 sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
                         MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
+            }
+
+            if (MainActivity.personaSeleccionada.getZona() != null) {
+                sZona.setSelection(adaptadorZona.getPosition(
+                        MainActivity.personaSeleccionada.getZona().getNombre()));
             }
         }
     }

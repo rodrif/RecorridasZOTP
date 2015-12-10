@@ -19,6 +19,6 @@ public class GrupoFamiliarDataAccessTest  extends AndroidTestCase {
         GrupoFamiliarDataAccess.get().save(grupoFamiliar);
         GrupoFamiliar resultado = GrupoFamiliarDataAccess.get().find(stringABuscar);
 
-        assertNull("No se encuentra el Grupo Familiar", resultado);
+        assertNotNull("No se encuentra el Grupo Familiar", resultado);
     }
 }
