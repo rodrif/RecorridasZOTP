@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
         Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
         String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
         String zona  = (String) sZona.getSelectedItem();
+        String ranchada = (String)sRanchada.getSelectedItem();
 
 
         if (!nombre.equals("")) {
@@ -248,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setFechaNacimiento(fechaNacimiento);
                 personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
                 personaSeleccionada.setZona(zona);
+                personaSeleccionada.setRanchada(ranchada);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.get().save(personaSeleccionada);
                 if (visitaSeleccionada != null) {

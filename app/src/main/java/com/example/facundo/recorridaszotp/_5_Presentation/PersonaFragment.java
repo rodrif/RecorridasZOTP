@@ -18,9 +18,11 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
@@ -45,10 +47,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     private EditText etDNI = null;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
+    private Spinner sRanchada = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
     ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
+    ArrayAdapter<String> adaptadorRanchada = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,19 +105,18 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
-        //Grupo Familiar //FIXME no harcodear spinner grupo familiar
+        //Grupo Familiar
+        DBUtils.getGrupoFamiliarTest();//FIXME borrar, solo para prueba
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
+        final List<GrupoFamiliar> lGrupoFamiliar= GrupoFamiliarDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> familiasString = new ArrayList<String>();
-        familiasString.add("Familia");
-        familiasString.add("Familia A");
-        familiasString.add("Familia B");
-        familiasString.add("Familia C");
-        familiasString.add("Familia D");
-        adaptadorFamilia =
-                new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item, familiasString);
-
+        for (GrupoFamiliar grupoFamiliar : lGrupoFamiliar) {
+            familiasString.add(grupoFamiliar.getNombre());
+        }
+        adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, familiasString);
         adaptadorFamilia.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sGrupoFamiliar.setAdapter(adaptadorFamilia);
@@ -121,14 +124,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         //Zona
         DBUtils.getZonaTest();//FIXME borrar, solo para prueba
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
-
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> zonasString = new ArrayList<String>();
         for (Zona zona : lZonas) {
             zonasString.add(zona.getNombre());
         }
         adaptadorZona = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item, zonasString);
+                android.R.layout.simple_spinner_item, zonasString);
         adaptadorZona.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
@@ -142,9 +144,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         for (Ranchada ranchada : lRanchada) {
             ranchadasString.add(ranchada.getNombre());
         }
-        ArrayAdapter<String> adaptadorRanchada =
-                new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item, ranchadasString);
+        adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, ranchadasString);
         adaptadorRanchada.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sRanchada.setAdapter(adaptadorRanchada);
@@ -193,6 +194,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
             if (MainActivity.personaSeleccionada.getZona() != null) {
                 sZona.setSelection(adaptadorZona.getPosition(
                         MainActivity.personaSeleccionada.getZona().getNombre()));
+            }
+
+            if (MainActivity.personaSeleccionada.getRanchada() != null) {
+                sRanchada.setSelection(adaptadorRanchada.getPosition(
+                        MainActivity.personaSeleccionada.getRanchada().getNombre()));
             }
         }
     }

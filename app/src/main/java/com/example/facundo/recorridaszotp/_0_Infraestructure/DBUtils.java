@@ -9,6 +9,7 @@ import com.activeandroid.Model;
 import com.activeandroid.TableInfo;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.From;
+import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
@@ -51,11 +52,8 @@ public class DBUtils {
     }
 
     public static List<Zona> getZonaTest() {
-        //new Delete().from(Zona.class).execute();
         List<Zona> zonas = ZonaDataAccess.get().getAll();
         if (zonas.size() == 0) {
-            zonas = new ArrayList<Zona>();
-
             zonas.add(new Zona("Zona"));
             zonas.add(new Zona("Haedo"));
             zonas.add(new Zona("Liniers"));
@@ -67,15 +65,14 @@ public class DBUtils {
     }
 
     public static List<Ranchada> getRanchadaTest() {
-        new Delete().from(Ranchada.class).execute();
-        List<Ranchada> ranchadas = new ArrayList<Ranchada>();
+        List<Ranchada> ranchadas = RanchadaDataAccess.get().getAll();
+        if (ranchadas.size() == 0) {
+            ranchadas.add(new Ranchada("Ranchada"));
+            ranchadas.add(new Ranchada("Estación Haedo"));
+            ranchadas.add(new Ranchada("Estación Liniers"));
 
-        ranchadas.add(new Ranchada("Ranchada"));
-        ranchadas.add(new Ranchada("Estación Haedo"));
-        ranchadas.add(new Ranchada("Estación Liniers"));
-
-        RanchadaDataAccess.get().save(ranchadas);
-
+            RanchadaDataAccess.get().save(ranchadas);
+        }
         return ranchadas;
     }
 
@@ -90,6 +87,21 @@ public class DBUtils {
         return personas;
     }
 
+    public static List<GrupoFamiliar> getGrupoFamiliarTest() {
+        List<GrupoFamiliar> gruposFamiliares = GrupoFamiliarDataAccess.get().getAll();
+        if (gruposFamiliares.size() == 0 ) {
+            gruposFamiliares.add(new GrupoFamiliar("Grupo Familiar"));
+            gruposFamiliares.add(new GrupoFamiliar("Familia 1"));
+            gruposFamiliares.add(new GrupoFamiliar("Familia 2"));
+            gruposFamiliares.add(new GrupoFamiliar("Familia 3"));
+            gruposFamiliares.add(new GrupoFamiliar("Familia 4"));
+            gruposFamiliares.add(new GrupoFamiliar("Familia 5"));
+
+            GrupoFamiliarDataAccess.get().save(gruposFamiliares);
+        }
+        return gruposFamiliares;
+    }
+
     public static void deleteDBData() {
         new Delete().from(Configuracion.class).execute();
         new Delete().from(Visita.class).execute();
@@ -97,4 +109,6 @@ public class DBUtils {
         new Delete().from(Zona.class).execute();
         new Delete().from(Ranchada.class).execute();
     }
+
+
 }

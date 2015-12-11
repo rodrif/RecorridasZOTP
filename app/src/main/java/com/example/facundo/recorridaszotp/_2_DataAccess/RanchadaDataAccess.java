@@ -51,4 +51,14 @@ public class RanchadaDataAccess extends BasicDataAccess<Ranchada> {
         }
         return resultado;
     }
+
+    public Ranchada find(String nombre) {
+        if (nombre != null)
+            return new Select()
+                    .from(Ranchada.class)
+                    .where("Nombre = ?", nombre)
+                    .executeSingle();
+
+        return null;
+    }
 }

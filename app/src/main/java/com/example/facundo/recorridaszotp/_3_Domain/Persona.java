@@ -10,6 +10,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJs
 import com.example.facundo.recorridaszotp._0_Infraestructure.LocationListenerEx;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 
 import java.util.List;
@@ -180,5 +181,9 @@ public class Persona extends Model {
 
     public void setZona(String unaZona) {
         this.zona = ZonaDataAccess.get().find(unaZona);
+    }
+
+    public void setRanchada(String ranchada) {
+        this.ranchada = RanchadaDataAccess.get().find(ranchada);
     }
 }
