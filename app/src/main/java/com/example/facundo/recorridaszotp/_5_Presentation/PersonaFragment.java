@@ -76,9 +76,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
-        } else {
+        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        if (mapFragmentPersona == null) {
             mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
         }
         mapFragmentPersona.getMapAsync(this);
@@ -114,7 +113,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         //Grupo Familiar
         DBUtils.getGrupoFamiliarTest();//FIXME borrar, solo para prueba
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<GrupoFamiliar> lGrupoFamiliar= GrupoFamiliarDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
+        final List<GrupoFamiliar> lGrupoFamiliar = GrupoFamiliarDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> familiasString = new ArrayList<String>();
         for (GrupoFamiliar grupoFamiliar : lGrupoFamiliar) {
             familiasString.add(grupoFamiliar.getNombre());

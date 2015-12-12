@@ -62,9 +62,10 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mapFragmentVisita = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapVisita));
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        mapFragmentVisita = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapVisita));
+        //       } else {
+        if (mapFragmentVisita == null) {
             mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
         }
         mapFragmentVisita.getMapAsync(this);

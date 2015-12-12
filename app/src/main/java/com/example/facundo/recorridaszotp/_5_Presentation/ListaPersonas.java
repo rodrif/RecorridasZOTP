@@ -14,6 +14,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
@@ -56,7 +57,10 @@ public class ListaPersonas extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
-                    clicklistener.mostrarVisita(new Visita(listaPersonas.get(position)));
+                    Visita nuevaVisita = new Visita(listaPersonas.get(position));
+                    nuevaVisita.setUbicacion(VisitaDataAccess.get()
+                            .findUltimaVisita(listaPersonas.get(position)).getUbicacion());
+                    clicklistener.mostrarVisita(nuevaVisita);
                 }
             }
         });

@@ -47,9 +47,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
-        } else {
+        //       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
+        //       } else {
+        if (mapFragmentMapa == null) {
             mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
         }
         mapFragmentMapa.getMapAsync(this);
@@ -84,7 +85,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         for (Visita unaVisita : visitas) {
             if (unaVisita.getUbicacion() != null) {
                 Marker mTest = gMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
-                if(unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
+                if (unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
                         || unaVisita.getUbicacion().longitude != mTest.getPosition().longitude) {
                     Log.e(Utils.APPTAG, "Markers no coinciden" + mTest.getPosition().toString() +
                             "distinto " + unaVisita.getUbicacion().toString());
