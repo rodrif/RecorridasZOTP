@@ -143,8 +143,10 @@ public class Visita extends Model {
     }
 
     public void setUbicacion(LatLng latLng) {
-        setLatitud(latLng.latitude);
-        setLongitud(latLng.longitude);
+        if (latLng != null) {
+            setLatitud(latLng.latitude);
+            setLongitud(latLng.longitude);
+        }
     }
 
     public LatLng getUbicacion() {
