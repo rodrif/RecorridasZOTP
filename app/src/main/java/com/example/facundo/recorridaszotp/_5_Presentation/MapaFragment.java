@@ -48,9 +48,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mapFragmentMapa = ((MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
+            mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
         } else {
-            mapFragmentMapa = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapMapa));
+            mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
         }
 
     /*    mapFragmentMapa = (MapFragment) getFragmentManager()
