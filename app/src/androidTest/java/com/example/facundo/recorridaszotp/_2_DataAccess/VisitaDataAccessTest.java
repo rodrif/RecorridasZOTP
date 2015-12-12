@@ -45,8 +45,15 @@ public class VisitaDataAccessTest extends AndroidTestCase {
     }
 
     public void testUltimaVisita() throws Exception {
-        Visita visita = VisitaDataAccess.get().findUltimaVisita(personaTest);
-        assertEquals("Ultima visita no encontrada", 9948632701L, visita.getFecha());
+        Visita visita = new Visita(personaTest);
+        visita.setDescripcion("TestObservaciones");
+        visita.setLatitud(0.5);
+        visita.setLongitud(0.88);
+        visita.setFecha(9948632701L);
+        VisitaDataAccess.get().save(visita);
+
+        Visita unaVisita = VisitaDataAccess.get().findUltimaVisita(personaTest);
+        assertEquals("Ultima visita no encontrada", 9948632701L, unaVisita.getFecha());
     }
 
 
