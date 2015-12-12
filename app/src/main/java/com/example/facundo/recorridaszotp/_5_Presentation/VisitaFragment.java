@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -61,8 +62,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-        mapFragmentVisita = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapVisita);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mapFragmentVisita = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapVisita));
+        } else {
+            mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
+        }
         mapFragmentVisita.getMapAsync(this);
         mapFragmentVisita.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

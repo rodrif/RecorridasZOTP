@@ -52,9 +52,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         } else {
             mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
         }
-
-    /*    mapFragmentMapa = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapMapa);*/
         mapFragmentMapa.getMapAsync(this);
         mapFragmentMapa.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

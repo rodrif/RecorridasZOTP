@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.DialogFragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.InflateException;
@@ -75,8 +76,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-        mapFragmentPersona = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapPersona);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        } else {
+            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        }
         mapFragmentPersona.getMapAsync(this);
         mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
