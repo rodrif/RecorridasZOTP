@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -46,8 +47,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
-/*        mapFragmentMapa = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapMapa);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mapFragmentMapa = ((MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
+        } else {
+            mapFragmentMapa = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapMapa));
+        }
+
+    /*    mapFragmentMapa = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.mapMapa);*/
         mapFragmentMapa.getMapAsync(this);
         mapFragmentMapa.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -67,7 +74,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 }
                 return false;
             }
-        });*/
+        });
 
         return vista;
     }
@@ -80,39 +87,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         for (Visita unaVisita : visitas) {
             if (unaVisita.getUbicacion() != null) {
                 Marker mTest = gMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
-                if (unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
+                if(unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
                         || unaVisita.getUbicacion().longitude != mTest.getPosition().longitude) {
                     Log.e(Utils.APPTAG, "Markers no coinciden" + mTest.getPosition().toString() +
                             "distinto " + unaVisita.getUbicacion().toString());
                 }
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapFragmentMapa = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapMapa);
-        mapFragmentMapa.getMapAsync(this);
-        mapFragmentMapa.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-            }
-        });
-        mapFragmentMapa.getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Visita visita = VisitaDataAccess.get().find(marker);
-                if (visita != null) {
-                    marker.setTitle(visita.getPersona().getNombre());
-                    Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
-                } else {
-                    Log.e(Utils.APPTAG, "Error en click marker " + marker.getPosition().toString());
-                }
-                return false;
-            }
-        });
     }
 }
