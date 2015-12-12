@@ -1,28 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/fondohome">
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:src="@drawable/bienvenido" />
-
-        <!--           <com.google.android.gms.common.SignInButton
-                       android:id="@+id/sign_in_button"
-                       android:layout_width="fill_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_marginBottom="30dip" />-->
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.21"
+            android:src="@drawable/logo_si" />
+        <!--   <com.google.android.gms.common.SignInButton
+               android:id="@+id/sign_in_button"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="30dip" />-->
 
     </RelativeLayout>
+
 
 </LinearLayout>

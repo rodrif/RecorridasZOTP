@@ -37,9 +37,9 @@
         android:layout_width="200dp"
         android:layout_height="fill_parent"
         android:layout_gravity="start"
-        android:background="@color/color_primary_dark"
+        android:background="@color/color_primary"
         android:choiceMode="singleChoice"
-        android:divider="@color/color_primary"
+        android:divider="@color/color_amarillo"
         android:dividerHeight="2dp"
         android:gravity="center_vertical" />
 </android.support.v4.widget.DrawerLayout>

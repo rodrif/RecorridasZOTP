@@ -20,7 +20,8 @@
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:icon="@drawable/logosisinfondo">
         <meta-data
             android:name="AA_DB_NAME"
             android:value="Prueba.db" />
@@ -48,10 +49,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="._6_Test.ActivityTest"
-            android:label="@string/title_activity_activity_test" >
         </activity>
     </application>
 
