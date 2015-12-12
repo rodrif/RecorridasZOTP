@@ -58,8 +58,10 @@ public class ListaPersonas extends Fragment {
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
                     Visita nuevaVisita = new Visita(listaPersonas.get(position));
-                    nuevaVisita.setUbicacion(VisitaDataAccess.get()
-                            .findUltimaVisita(listaPersonas.get(position)).getUbicacion());
+                    Visita ultimaVisita = VisitaDataAccess.get()
+                            .findUltimaVisita(listaPersonas.get(position));
+                    if (ultimaVisita != null)
+                        nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
                     clicklistener.mostrarVisita(nuevaVisita);
                 }
             }
