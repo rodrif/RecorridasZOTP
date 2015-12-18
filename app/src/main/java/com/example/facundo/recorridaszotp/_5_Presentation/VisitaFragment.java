@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +42,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     private double longitud = Double.NaN;
     private MapFragment mapFragmentVisita = null;
     private Marker marker = null;
+    private boolean locationCargada = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
         if (mapFragmentVisita == null) {
             mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
         }
+        mapFragmentVisita.getMap().setMyLocationEnabled(true);
         mapFragmentVisita.getMapAsync(this);
         mapFragmentVisita.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -77,6 +81,19 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
                         latLng.latitude, latLng.longitude)));
                 MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
                 Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
+            }
+        });
+
+        mapFragmentVisita.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location myLocation) {
+                if (!locationCargada) {
+                    mapFragmentVisita.getMap().animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+                    locationCargada = true;
+                }
             }
         });
 

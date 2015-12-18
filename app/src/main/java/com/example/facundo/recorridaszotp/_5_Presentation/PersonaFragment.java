@@ -1,9 +1,11 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.DialogFragment;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,6 +29,7 @@ import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,6 +54,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     private Spinner sRanchada = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
+    private boolean locationCargada = false;
     ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     ArrayAdapter<String> adaptadorRanchada = null;
@@ -80,6 +84,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         if (mapFragmentPersona == null) {
             mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
         }
+
+        mapFragmentPersona.getMap().setMyLocationEnabled(true);
         mapFragmentPersona.getMapAsync(this);
         mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -89,6 +95,19 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
                     marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
                             latLng.latitude, latLng.longitude)));
                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                }
+            }
+        });
+
+        mapFragmentPersona.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location myLocation) {
+                if (!locationCargada) {
+                    mapFragmentPersona.getMap().animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+                    locationCargada = true;
                 }
             }
         });

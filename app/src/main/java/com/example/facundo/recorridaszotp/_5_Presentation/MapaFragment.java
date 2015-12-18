@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +29,7 @@ import java.util.List;
 public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private MapFragment mapFragmentMapa = null;
+    private boolean locationCargada = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,16 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         } catch (InflateException e) {
 
         }
-
-        //       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
-        //       } else {
+
         if (mapFragmentMapa == null) {
             mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
         }
+        mapFragmentMapa.getMap().setMyLocationEnabled(true);
         mapFragmentMapa.getMapAsync(this);
         mapFragmentMapa.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-
             }
         });
         mapFragmentMapa.getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -71,6 +72,19 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     Log.e(Utils.APPTAG, "Error en click marker " + marker.getPosition().toString());
                 }
                 return false;
+            }
+        });
+
+        mapFragmentMapa.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location myLocation) {
+                if (!locationCargada) {
+                    mapFragmentMapa.getMap().animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+                    locationCargada = true;
+                }
             }
         });
 
