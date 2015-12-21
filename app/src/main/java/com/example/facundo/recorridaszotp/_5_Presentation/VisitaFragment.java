@@ -88,12 +88,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
 
             @Override
             public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    mapFragmentVisita.getMap().animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
-                }
+                centrarMapa(myLocation);
             }
         });
 
@@ -163,9 +158,28 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mapFragmentVisita.getMap().clear();
         if (MainActivity.visitaSeleccionada != null)
-            if (MainActivity.visitaSeleccionada.getUbicacion() != null)
+            if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
                 marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
                         MainActivity.visitaSeleccionada.getUbicacion().latitude,
                         MainActivity.visitaSeleccionada.getUbicacion().longitude)));
+                centrarMapa(MainActivity.visitaSeleccionada.getUbicacion());
+            }
+    }
+
+    private void centrarMapa(LatLng ubicacion) {
+        if (!locationCargada) {
+            mapFragmentVisita.getMap().animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
+            locationCargada = true;
+        }
+    }
+
+    private void centrarMapa(Location myLocation) {
+        if (!locationCargada) {
+            mapFragmentVisita.getMap().animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                            myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+            locationCargada = true;
+        }
     }
 }

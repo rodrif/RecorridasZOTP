@@ -109,6 +109,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
                                     myLocation.getLongitude()), Utils.ZOOM_STANDAR));
                     locationCargada = true;
                 }
+                centrarMapa(myLocation);
             }
         });
 
@@ -231,10 +232,29 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
             if (visita != null)
-                if (visita.getUbicacion() != null)
+                if (visita.getUbicacion() != null) {
                     marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
                             visita.getUbicacion().latitude,
                             visita.getUbicacion().longitude)));
+                    centrarMapa(visita.getUbicacion());
+                }
+        }
+    }
+
+    private void centrarMapa(LatLng ubicacion) {
+        if (!locationCargada) {
+            mapFragmentPersona.getMap().animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
+            locationCargada = true;
+        }
+    }
+
+    private void centrarMapa(Location myLocation) {
+        if (!locationCargada) {
+            mapFragmentPersona.getMap().animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                            myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+            locationCargada = true;
         }
     }
 }
