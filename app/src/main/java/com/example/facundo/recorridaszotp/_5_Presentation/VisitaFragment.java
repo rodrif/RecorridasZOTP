@@ -182,4 +182,16 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
             locationCargada = true;
         }
     }
+
+    @Override
+    public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
+        super.onAttach(activity);
+        ((MainActivity)activity).getAppbar().setTitle(Utils.VISITA);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
 }

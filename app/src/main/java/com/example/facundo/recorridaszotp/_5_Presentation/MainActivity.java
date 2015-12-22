@@ -237,8 +237,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String observaciones = ETobservaciones.getText().toString();
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
         String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
-        String zona  = (String) sZona.getSelectedItem();
-        String ranchada = (String)sRanchada.getSelectedItem();
+        String zona = (String) sZona.getSelectedItem();
+        String ranchada = (String) sRanchada.getSelectedItem();
 
 
         if (!nombre.equals("")) {
@@ -456,4 +456,9 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         visitaSeleccionada = null;
         editandoPersona = false;
     }
+
+    public Toolbar getAppbar() {
+        return appbar;
+    }
+
 }

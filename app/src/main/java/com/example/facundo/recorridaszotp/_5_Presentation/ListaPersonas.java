@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
@@ -74,11 +75,13 @@ public class ListaPersonas extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         clicklistener = (onSelectedItemListener) activity;
+        ((MainActivity)activity).getAppbar().setTitle(Utils.LISTA_PERSONAS);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         clicklistener = null;
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 }

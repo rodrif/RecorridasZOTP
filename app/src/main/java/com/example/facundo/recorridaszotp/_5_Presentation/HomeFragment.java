@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.google.android.gms.common.SignInButton;
 
 public class HomeFragment extends Fragment {
     private SignInButton signInButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +36,4 @@ public class HomeFragment extends Fragment {
         });*/
         return v;
     }
-
-
-
-
-
-
 }

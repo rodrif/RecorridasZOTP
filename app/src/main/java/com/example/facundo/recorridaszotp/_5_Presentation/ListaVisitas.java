@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaVisitas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -71,11 +72,13 @@ public class ListaVisitas extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         clicklistener = (onSelectedItemListener) activity;
+        ((MainActivity)activity).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         clicklistener = null;
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 }

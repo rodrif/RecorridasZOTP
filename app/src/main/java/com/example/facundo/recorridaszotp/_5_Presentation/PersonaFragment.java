@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.location.Location;
 import android.os.Build;
@@ -256,5 +257,17 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
                             myLocation.getLongitude()), Utils.ZOOM_STANDAR));
             locationCargada = true;
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
+        super.onAttach(activity);
+        ((MainActivity)activity).getAppbar().setTitle(Utils.PERSONA);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 }
