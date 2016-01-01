@@ -125,6 +125,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                             "Se elimino la visita a " + MainActivity.visitaSeleccionada.
                                     getPersona().getNombre()
                                     + " exitosamente", Toast.LENGTH_SHORT).show();
+                    MainActivity.clean();
                 }
                 activity.onBackPressed();
                 activity.onBackPressed();

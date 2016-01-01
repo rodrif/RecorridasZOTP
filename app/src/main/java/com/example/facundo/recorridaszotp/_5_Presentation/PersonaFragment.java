@@ -195,6 +195,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
                             + " exitosamente", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.clean();
                 activity.onBackPressed();
                 activity.onBackPressed();
             }

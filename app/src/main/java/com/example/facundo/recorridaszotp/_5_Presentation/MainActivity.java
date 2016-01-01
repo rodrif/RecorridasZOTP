@@ -453,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
     }
 
-    private void clean() {
+    public static void clean() {
         personaSeleccionada = null;
         visitaSeleccionada = null;
         editandoPersona = false;
