@@ -116,4 +116,12 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
         }
     }
 
+    public List<Visita> getAllOKOrderFecha() {
+        return new Select()
+                .from(Visita.class)
+                .orderBy("Fecha DESC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
+
 }

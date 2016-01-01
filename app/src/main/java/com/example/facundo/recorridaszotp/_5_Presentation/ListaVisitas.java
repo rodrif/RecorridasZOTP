@@ -31,12 +31,9 @@ public class ListaVisitas extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_lista_visitas, container, false);
-
-        final List<Visita> listaVisitas = VisitaDataAccess.get().getAllOK();
-
+        final List<Visita> listaVisitas = VisitaDataAccess.get().getAllOKOrderFecha();
         AdaptadorListaVisitas adaptador =
                 new AdaptadorListaVisitas(getActivity().getApplicationContext(), listaVisitas);
-
         ListView lViewVisitas = (ListView) vista.findViewById(R.id.lista_visitas);
         lViewVisitas.setAdapter(adaptador);
         lViewVisitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -52,7 +49,6 @@ public class ListaVisitas extends Fragment {
                 }
             }
         });
-
         lViewVisitas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
