@@ -5,6 +5,7 @@ import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.List;
 
@@ -65,4 +66,11 @@ public abstract class BasicDataAccess<T extends Model> {
                 .execute();
     }
 
+    public List<T> getAllOK() {
+        return new Select()
+                .from(getClase())
+                .orderBy("Id ASC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
 }

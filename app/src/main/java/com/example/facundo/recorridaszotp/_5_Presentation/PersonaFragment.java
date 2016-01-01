@@ -1,7 +1,9 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,13 +18,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
@@ -43,7 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class PersonaFragment extends Fragment implements OnMapReadyCallback {
+public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp {
     private static View vista;
     private EditText etFechaNacimiento = null;
     private EditText etNombre = null;
@@ -59,6 +64,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     ArrayAdapter<String> adaptadorRanchada = null;
+    AlertDialog.Builder dialogoBorrar = null;
+    MainActivity activity= null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,6 +182,28 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
         sRanchada.setAdapter(adaptadorRanchada);
 
         actualizar();
+
+        dialogoBorrar = new AlertDialog.Builder(getActivity());
+        dialogoBorrar.setTitle("Importante");
+        dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
+        dialogoBorrar.setCancelable(false);
+        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
+                if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                    Toast.makeText(getActivity(),
+                            "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
+                            + " exitosamente", Toast.LENGTH_SHORT).show();
+                }
+                activity.onBackPressed();
+                activity.onBackPressed();
+            }
+        });
+        dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                // cancelar();
+            }
+        });
         return vista;
     }
 
@@ -262,12 +291,19 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        ((MainActivity)activity).getAppbar().setTitle(Utils.PERSONA);
+        ((MainActivity) activity).getAppbar().setTitle(Utils.PERSONA);
+        this.activity = (MainActivity)activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+        ((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
+
+    @Override
+    public void popUp() {
+        if (dialogoBorrar != null)
+            dialogoBorrar.show();
     }
 }

@@ -20,3 +20,12 @@ Opcional
 Ranchada<-persona
 Grupo Familiar<-persona
 Ranchada<-Grupo Familiar
+
+Actualizar en orden
+
+Area
+Zona
+Ranchada
+Familia
+Persona
+Visita

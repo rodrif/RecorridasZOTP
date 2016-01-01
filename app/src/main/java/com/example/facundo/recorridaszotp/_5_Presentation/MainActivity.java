@@ -27,6 +27,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -167,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     }
                 }
             case R.id.action_cancelar: //Cancelar
-                this.onBackPressed();
+                ((popUp)(getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
+                //this.onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

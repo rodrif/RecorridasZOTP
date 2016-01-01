@@ -32,7 +32,7 @@ public class ListaVisitas extends Fragment {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_lista_visitas, container, false);
 
-        final List<Visita> listaVisitas = VisitaDataAccess.get().getAll();
+        final List<Visita> listaVisitas = VisitaDataAccess.get().getAllOK();
 
         AdaptadorListaVisitas adaptador =
                 new AdaptadorListaVisitas(getActivity().getApplicationContext(), listaVisitas);
@@ -72,13 +72,13 @@ public class ListaVisitas extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         clicklistener = (onSelectedItemListener) activity;
-        ((MainActivity)activity).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
+        ((MainActivity) activity).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         clicklistener = null;
-        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+        ((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 }

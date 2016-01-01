@@ -33,7 +33,7 @@ public class Persona extends Model {
     @Column(name = "Observaciones")
     private String observaciones;
     @Column(name = "DNI")
-    private String DNI ;
+    private String DNI;
     @Column(name = "GrupoFamiliar")
     private GrupoFamiliar grupoFamiliar;
     @Column(name = "Ranchada")

@@ -8,6 +8,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,4 +79,9 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
+    public void deleteLogico(Persona persona) {
+        VisitaDataAccess.get().deleteLogico(persona);
+        persona.setEstado(Utils.EST_BORRADO);
+        persona.save();
+    }
 }

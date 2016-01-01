@@ -56,5 +56,12 @@ public class VisitaDataAccessTest extends AndroidTestCase {
         assertEquals("Ultima visita no encontrada", 9948632701L, unaVisita.getFecha());
     }
 
+public void testBorradoLogico() throws Exception {
+    /*Se borran todas las visitas de una persona*/
+        Persona unaPersona = PersonaDataAccess.get().findByWebId(1000);
+        VisitaDataAccess.get().deleteLogico(unaPersona);
 
+        List<Visita> visitasCero = VisitaDataAccess.get().findTodasVisitas(unaPersona);
+        assertEquals("No se borraron las visitas en forma logica", 0, visitasCero.size());
+    }
 }

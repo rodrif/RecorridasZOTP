@@ -1,9 +1,11 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
+import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,7 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 
-public class VisitaFragment extends Fragment implements OnMapReadyCallback {
+public class VisitaFragment extends Fragment implements OnMapReadyCallback, popUp {
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
@@ -43,11 +47,12 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     private MapFragment mapFragmentVisita = null;
     private Marker marker = null;
     private boolean locationCargada = false;
+    AlertDialog.Builder dialogoBorrar = null;
+    MainActivity activity= null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -103,6 +108,28 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
         actualizar();
+        dialogoBorrar = new AlertDialog.Builder(getActivity());
+        dialogoBorrar.setTitle("Importante");
+        dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
+        dialogoBorrar.setCancelable(false);
+        dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                // cancelar();
+            }
+        });
+        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                    VisitaDataAccess.get().deleteLogico(MainActivity.visitaSeleccionada);
+                if (MainActivity.visitaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                    Toast.makeText(getActivity(),
+                            "Se elimino la visita a " + MainActivity.visitaSeleccionada.
+                                    getPersona().getNombre()
+                                    + " exitosamente", Toast.LENGTH_SHORT).show();
+                }
+                activity.onBackPressed();
+                activity.onBackPressed();
+            }
+        });
         return vista;
     }
 
@@ -187,11 +214,18 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         ((MainActivity)activity).getAppbar().setTitle(Utils.VISITA);
+        this.activity = (MainActivity)activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
+
+    @Override
+    public void popUp() {
+        if (dialogoBorrar != null)
+            dialogoBorrar.show();
     }
 }

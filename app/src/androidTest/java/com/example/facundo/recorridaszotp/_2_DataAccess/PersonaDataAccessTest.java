@@ -8,6 +8,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,14 @@ import java.util.concurrent.TimeUnit;
 
 public class PersonaDataAccessTest extends AndroidTestCase {
 
-    public void testFind() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         ActiveAndroid.initialize(getContext());
         DBUtils.loadDefaultDB();
+    }
+
+    public void testFind() throws Exception {
         Persona persona1 = new Persona("Juan2");
         PersonaDataAccess.get().save(persona1);
         PersonaQuery query = new PersonaQuery();
@@ -30,8 +36,6 @@ public class PersonaDataAccessTest extends AndroidTestCase {
 
     public void testFindPersonasASincronizar() throws Exception {
         List<Persona> personasTest = DBUtils.getPersonasTest();
-        DBUtils.loadDefaultDB();
-
         List<Persona> personas = PersonaDataAccess.get().findASincronizar();
 
         assertEquals(1, personas.size());
@@ -39,7 +43,6 @@ public class PersonaDataAccessTest extends AndroidTestCase {
     }
 
     public void testAcualizarDB() throws Exception{
-        DBUtils.loadDefaultDB();
         List<Persona> personasTest = new ArrayList<Persona>();
         personasTest.add(new Persona("NuevaPersona1", "apellido", Utils.EST_ACTUALIZADO, 2000));
         personasTest.add(new Persona("NuevaPersona2", "apellido", Utils.EST_ACTUALIZADO, 2001));
@@ -59,4 +62,11 @@ public class PersonaDataAccessTest extends AndroidTestCase {
         assertTrue(personasTest.get(2).equals(persona3));
     }
 
+    public void testBorradoLogico() throws Exception {
+    /*Se borran todas las visitas de una persona y la persona*/
+        Persona unaPersona = PersonaDataAccess.get().findByWebId(1000);
+        PersonaDataAccess.get().deleteLogico(unaPersona);
+
+        assertEquals("No se borro la persona en forma logica", Utils.EST_BORRADO, unaPersona.getEstado());
+    }
 }

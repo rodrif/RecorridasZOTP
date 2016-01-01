@@ -41,6 +41,17 @@ public class DBUtils {
         return VisitaDataAccess.get().save(visitas);
     }
 
+    public static List<Persona> getPersonasTest() {
+        List<Persona> personas = new ArrayList<Persona>();
+
+        personas.add(new Persona("Alfredo", "Fernandez", Utils.EST_ACTUALIZADO, 1000));
+        personas.add(new Persona("Facundo", "Rodriguez", Utils.EST_MODIFICADO, 2));
+        personas.add(new Persona("Gonzalo", "Rodriguez", Utils.EST_ACTUALIZADO, 1003));
+        personas.add(new Persona("Pepe", "Argento", Utils.EST_ACTUALIZADO, 1004));
+
+        return personas;
+    }
+
     private static List<Visita> getVisitasTest(List<Persona> personas) {
         List<Visita> visitas = new ArrayList<Visita>();
 
@@ -76,20 +87,9 @@ public class DBUtils {
         return ranchadas;
     }
 
-    public static List<Persona> getPersonasTest() {
-        List<Persona> personas = new ArrayList<Persona>();
-
-        personas.add(new Persona("Alfredo", "Fernandez", Utils.EST_ACTUALIZADO, 1000));
-        personas.add(new Persona("Facundo", "Rodriguez", Utils.EST_MODIFICADO, 2));
-        personas.add(new Persona("Gonzalo", "Rodriguez", Utils.EST_ACTUALIZADO, 1003));
-        personas.add(new Persona("Pepe", "Argento", Utils.EST_ACTUALIZADO, 1004));
-
-        return personas;
-    }
-
     public static List<GrupoFamiliar> getGrupoFamiliarTest() {
         List<GrupoFamiliar> gruposFamiliares = GrupoFamiliarDataAccess.get().getAll();
-        if (gruposFamiliares.size() == 0 ) {
+        if (gruposFamiliares.size() == 0) {
             gruposFamiliares.add(new GrupoFamiliar("Grupo Familiar"));
             gruposFamiliares.add(new GrupoFamiliar("Familia 1"));
             gruposFamiliares.add(new GrupoFamiliar("Familia 2"));

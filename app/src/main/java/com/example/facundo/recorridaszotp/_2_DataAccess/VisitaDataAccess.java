@@ -1,7 +1,9 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
@@ -83,11 +85,35 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .execute();
     }
 
-    public Visita find(Marker marker){
+    public Visita find(Marker marker) {
         return new Select()
-                .from (Visita.class)
-                .where ("Latitud = ?", marker.getPosition().latitude)
-                .where ("Longitud = ?", marker.getPosition().longitude)
+                .from(Visita.class)
+                .where("Latitud = ?", marker.getPosition().latitude)
+                .where("Longitud = ?", marker.getPosition().longitude)
                 .executeSingle();
     }
+
+    public void deleteLogico(Visita visita) {
+        visita.setEstado(Utils.EST_BORRADO);
+        visita.save();
+    }
+
+    public List<Visita> findTodasVisitas(Persona persona) {
+        if (persona.getId() != null)
+            return new Select()
+                    .from(Visita.class)
+                    .where("Persona = ?", persona.getId())
+                    .where("Estado != ?", Utils.EST_BORRADO)
+                    .execute();
+        else
+            return null;
+    }
+
+    public void deleteLogico(Persona persona) {
+        List<Visita> listaVisita = VisitaDataAccess.get().findTodasVisitas(persona);
+        for (Visita unaVisita : listaVisita) {
+            VisitaDataAccess.get().deleteLogico(unaVisita);
+        }
+    }
+
 }
