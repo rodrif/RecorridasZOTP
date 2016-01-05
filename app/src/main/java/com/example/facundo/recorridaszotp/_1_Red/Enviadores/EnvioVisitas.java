@@ -3,16 +3,11 @@ package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
-import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.VisitaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
-import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -48,7 +43,7 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
             }
             ActiveAndroid.setTransactionSuccessful();
             if (this.delegate != null) {
-                delegate.executionFinished(this.respuesta.toString());
+                delegate.ejecutar(this.respuesta.toString());
             }
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, "falloEnviarVisitas: " + ex.getMessage());

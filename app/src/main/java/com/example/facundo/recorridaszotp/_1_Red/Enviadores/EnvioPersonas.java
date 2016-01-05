@@ -42,7 +42,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             }
             ActiveAndroid.setTransactionSuccessful();
             if (this.delegate != null) {
-                delegate.executionFinished(this.respuesta.toString());
+                delegate.ejecutar(this.respuesta.toString());
             }
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " falloEnviarPersonas: " + ex.getMessage());

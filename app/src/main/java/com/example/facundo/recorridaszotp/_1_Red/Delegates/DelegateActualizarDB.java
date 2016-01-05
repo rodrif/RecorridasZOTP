@@ -20,14 +20,14 @@ public class DelegateActualizarDB implements AsyncDelegate {
     }
 
     @Override
-    public void executionFinished(String result) throws Exception {
+    public void ejecutar(String result) throws Exception {
         List<Persona> personas = PersonaJsonUtils.get().fromJsonString(result);
 
         if (PersonaDataAccess.get().acualizarDB(personas) != 0) {
             throw new Exception("FalloActualizarDB");
         }
         if (this.delegate != null) {
-            delegate.executionFinished("");
+            delegate.ejecutar("");
         }
     }
 }

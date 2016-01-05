@@ -34,7 +34,7 @@ public class PersonaDataAccessIntegrationTest extends AndroidTestCase {
         }
 
         @Override
-        public void executionFinished(String result) throws Exception {
+        public void ejecutar(String result) throws Exception {
             this.signal.countDown();
         }
     }

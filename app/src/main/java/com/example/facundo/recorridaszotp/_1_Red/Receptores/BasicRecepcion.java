@@ -57,7 +57,7 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
                 AsyncDelegate unAsyncDelegate = null;
                 for (Iterator<AsyncDelegate> it = this.delegates.iterator(); it.hasNext(); ) {
                     unAsyncDelegate = it.next();
-                    unAsyncDelegate.executionFinished(this.respuesta.toString());
+                    unAsyncDelegate.ejecutar(this.respuesta.toString());
                 }
             }
 

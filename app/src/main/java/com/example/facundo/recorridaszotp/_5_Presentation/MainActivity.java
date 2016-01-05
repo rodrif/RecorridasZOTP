@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     }
                 }
             case R.id.action_cancelar: //Cancelar
-                ((popUp)(getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
+                ((popUp) (getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
                 //this.onBackPressed();
                 return true;
         }
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    PersonaDataAccess.get().sincronizar(null, new DelegateActivity(activity));
+                    PersonaDataAccess.get().sincronizar(new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;

@@ -66,8 +66,8 @@ public class RecepcionPersonasTest extends AndroidTestCase implements AsyncDeleg
     }
 
     @Override
-    public void executionFinished(String result) throws Exception {
-        Log.d(Utils.APPTAG, "executionFinished: " + result);
+    public void ejecutar(String result) throws Exception {
+        Log.d(Utils.APPTAG, "ejecutar: " + result);
         this.signal.countDown();
     }
 }

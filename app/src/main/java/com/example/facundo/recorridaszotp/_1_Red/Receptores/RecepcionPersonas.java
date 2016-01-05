@@ -24,8 +24,8 @@ public class RecepcionPersonas extends BasicRecepcion<Persona> {
         this(delegate != null ? Arrays.asList(delegate): null);
     }
 
-    public RecepcionPersonas(List<AsyncDelegate> delegate) {
-        super(PersonaDataAccess.get(), PersonaJsonUtils.get(), delegate);
+    public RecepcionPersonas(List<AsyncDelegate> listaDelegates) {
+        super(PersonaDataAccess.get(), PersonaJsonUtils.get(), listaDelegates);
     }
 
     @Override

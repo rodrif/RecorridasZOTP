@@ -59,7 +59,7 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
     }
 
     @Override
-    public void executionFinished(String result) {
+    public void ejecutar(String result) {
         signal.countDown();
     }
 }

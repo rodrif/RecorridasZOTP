@@ -65,17 +65,8 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
     }
 
     public void sincronizar(AsyncDelegate delegate) {
-        sincronizar(delegate, null);
-    }
-
-    public void sincronizar(AsyncDelegate delegate, AsyncDelegate delegateRecepcionPersonas) {
-        List<AsyncDelegate> delegatesRecepcionList = new ArrayList<AsyncDelegate>();
-        if (delegateRecepcionPersonas != null) {
-            delegatesRecepcionList.add(delegateRecepcionPersonas);
-        }
         AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        delegatesRecepcionList.add(delegateEnviarPersonas);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegatesRecepcionList);
+        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas);
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
