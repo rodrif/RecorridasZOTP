@@ -5,6 +5,7 @@ import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.BasicRecepcion;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
+
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class RecepcionPersonas extends BasicRecepcion<Persona> {
     }
 
     public RecepcionPersonas(AsyncDelegate delegate) {
-        this(delegate != null ? Arrays.asList(delegate): null);
+        this(delegate != null ? Arrays.asList(delegate) : null);
     }
 
     public RecepcionPersonas(List<AsyncDelegate> listaDelegates) {

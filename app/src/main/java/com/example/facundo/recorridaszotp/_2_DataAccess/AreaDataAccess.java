@@ -3,6 +3,11 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarAreas;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionAreas;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
 
 import java.util.List;
@@ -49,5 +54,11 @@ public class AreaDataAccess extends BasicDataAccess<Area> {
             ActiveAndroid.endTransaction();
         }
         return resultado;
+    }
+
+    public void sincronizar(AsyncDelegate delegate) {
+        AsyncDelegate delegateEnviarAreas = new DelegateEnviarAreas(delegate);
+        RecepcionAreas recepcionAreas = new RecepcionAreas(delegateEnviarAreas);
+        recepcionAreas.execute(Utils.WEB_RECIBIR_AREAS);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Facundo on 23/10/2015.
  */
-public abstract class BasicJsonUtil<T> {
+public abstract class   BasicJsonUtil<T> {
 
     public abstract Class getClase();
 
