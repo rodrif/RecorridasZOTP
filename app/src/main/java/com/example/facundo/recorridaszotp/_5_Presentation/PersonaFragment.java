@@ -5,13 +5,10 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,18 +17,17 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
-import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
+import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
@@ -44,7 +40,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -139,12 +134,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         //Grupo Familiar
-        DBUtils.getGrupoFamiliarTest();//FIXME borrar, solo para prueba
+        DBUtils.getFamiliaTest();//FIXME borrar, solo para prueba
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<GrupoFamiliar> lGrupoFamiliar = GrupoFamiliarDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
+        final List<Familia> lFamilias = FamiliaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> familiasString = new ArrayList<String>();
-        for (GrupoFamiliar grupoFamiliar : lGrupoFamiliar) {
-            familiasString.add(grupoFamiliar.getNombre());
+        for (Familia familia : lFamilias) {
+            familiasString.add(familia.getNombre());
         }
         adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, familiasString);

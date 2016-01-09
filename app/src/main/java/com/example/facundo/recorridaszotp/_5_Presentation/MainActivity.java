@@ -30,6 +30,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListe
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
+import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
@@ -357,7 +358,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    PersonaDataAccess.get().sincronizar(new DelegateActivity(activity));
+                    AreaDataAccess.get().sincronizar(new DelegateActivity(activity));
+                    //PersonaDataAccess.get().sincronizar(new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;

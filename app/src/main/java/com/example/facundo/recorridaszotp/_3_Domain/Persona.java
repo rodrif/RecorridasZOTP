@@ -1,15 +1,11 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.LocationListenerEx;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 
@@ -35,9 +31,9 @@ public class Persona extends Model {
     @Column(name = "DNI")
     private String DNI;
     @Column(name = "GrupoFamiliar")
-    private GrupoFamiliar grupoFamiliar;
+    private Familia familia = null;
     @Column(name = "Ranchada")
-    private Ranchada ranchada;
+    private Ranchada ranchada = null;
 
 
     private String ultMod;
@@ -153,12 +149,12 @@ public class Persona extends Model {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public GrupoFamiliar getGrupoFamiliar() {
-        return grupoFamiliar;
+    public Familia getGrupoFamiliar() {
+        return familia;
     }
 
-    public void setGrupoFamiliar(GrupoFamiliar grupoFamiliar) {
-        this.grupoFamiliar = grupoFamiliar;
+    public void setGrupoFamiliar(Familia familia) {
+        this.familia = familia;
     }
 
     public Ranchada getRanchada() {
@@ -176,7 +172,7 @@ public class Persona extends Model {
     }
 
     public void setGrupoFamiliar(String grupoFamiliar) {
-        this.grupoFamiliar = GrupoFamiliarDataAccess.get().find(grupoFamiliar);
+        this.familia = FamiliaDataAccess.get().find(grupoFamiliar);
     }
 
     public void setZona(String unaZona) {

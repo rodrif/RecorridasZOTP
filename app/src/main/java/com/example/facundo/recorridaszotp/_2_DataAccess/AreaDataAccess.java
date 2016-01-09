@@ -56,9 +56,10 @@ public class AreaDataAccess extends BasicDataAccess<Area> {
         return resultado;
     }
 
-    public void sincronizar(AsyncDelegate delegate) {
-        AsyncDelegate delegateEnviarAreas = new DelegateEnviarAreas(delegate);
-        RecepcionAreas recepcionAreas = new RecepcionAreas(delegateEnviarAreas);
+    public void sincronizar(AsyncDelegate delegate) {//TODO sincronizar desde area hasta visita
+        //AsyncDelegate delegateEnviarAreas = new DelegateEnviarAreas(delegate);
+        //AsyncDelegate delegateRecibirZonas = new DelegateRecibirZonas(delegate);
+        RecepcionAreas recepcionAreas = new RecepcionAreas(delegate);
         recepcionAreas.execute(Utils.WEB_RECIBIR_AREAS);
     }
 }

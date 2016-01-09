@@ -16,8 +16,8 @@ public class Ranchada extends Model {
     private int estado;
     @Column(name = "Nombre")
     private String nombre = "";
-    @Column(name = "Area")
-    private Area area = null;
+    @Column(name = "Zona")
+    private Zona zona = null;
     @Column(name = "Latitud")
     private double latitud = Double.NaN;
     @Column(name = "Longitud")
@@ -39,12 +39,17 @@ public class Ranchada extends Model {
         return nombre;
     }
 
-    public void mergeFromWeb(Ranchada ranchada) throws Exception{
+    public void mergeFromWeb(Ranchada ranchada) throws Exception {
         if (ranchada.webId != this.getWebId()) {
             throw new Exception("MergeConDiferenteWebId");
         }
-        this.nombre = ranchada.getNombre();
+        this.webId = ranchada.getWebId();
         this.estado = ranchada.getEstado();
+        this.nombre = ranchada.getNombre();
+        this.zona = ranchada.getZona();
+        this.latitud = ranchada.getLatitud();
+        this.longitud = ranchada.getLongitud();
+        this.descripcion = ranchada.getDescripcion();
     }
 
     public void setNombre(String nombre) {
@@ -55,7 +60,9 @@ public class Ranchada extends Model {
         return this.estado;
     }
 
-    public void setEstado (int estado){ this.estado = estado; }
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 
     public int getWebId() {
         return this.webId;
@@ -63,5 +70,37 @@ public class Ranchada extends Model {
 
     public void setWebId(int webId) {
         this.webId = webId;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

@@ -3,41 +3,41 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
+import com.example.facundo.recorridaszotp._3_Domain.Familia;
 
 import java.util.List;
 
 /**
  * Created by Gonzalo on 05/12/2015.
  */
-public class GrupoFamiliarDataAccess extends BasicDataAccess<GrupoFamiliar> {
-    private static GrupoFamiliarDataAccess ourInstance = new GrupoFamiliarDataAccess();
+public class FamiliaDataAccess extends BasicDataAccess<Familia> {
+    private static FamiliaDataAccess ourInstance = new FamiliaDataAccess();
 
-    public static GrupoFamiliarDataAccess get() {
+    public static FamiliaDataAccess get() {
         return ourInstance;
     }
 
     public Class getClase() {
-        return GrupoFamiliar.class;
+        return Familia.class;
     }
 
     @Override
-    public int acualizarDB(List<GrupoFamiliar> grupoFamiliars) throws Exception {
+    public int acualizarDB(List<Familia> grupoFamiliars) throws Exception {
         int resultado = -1;
         ActiveAndroid.beginTransaction();
         try {
-            for (GrupoFamiliar grupoFamiliar : grupoFamiliars) {
-                GrupoFamiliar v = new Select()
-                        .from(GrupoFamiliar.class)
-                        .where("WebId = ?", grupoFamiliar.getWebId())
+            for (Familia familia : grupoFamiliars) {
+                Familia v = new Select()
+                        .from(Familia.class)
+                        .where("WebId = ?", familia.getWebId())
                         .executeSingle();
-                if (v != null && grupoFamiliar.getEstado() == Utils.EST_BORRADO) {
+                if (v != null && familia.getEstado() == Utils.EST_BORRADO) {
                     v.delete();
                 } else if (v != null) {
-                    v.mergeFromWeb(grupoFamiliar);
+                    v.mergeFromWeb(familia);
                     v.save();
                 } else {
-                    grupoFamiliar.save();
+                    familia.save();
                 }
             }
             ActiveAndroid.setTransactionSuccessful();
@@ -48,10 +48,10 @@ public class GrupoFamiliarDataAccess extends BasicDataAccess<GrupoFamiliar> {
         return resultado;
     }
 
-    public GrupoFamiliar find(String nombre) {
+    public Familia find(String nombre) {
         if (nombre != null)
             return new Select()
-                    .from(GrupoFamiliar.class)
+                    .from(Familia.class)
                     .where("Nombre = ?", nombre)
                     .executeSingle();
 

@@ -33,8 +33,9 @@ public class Area extends Model {
         if (area.webId != this.getWebId()) {
             throw new Exception("MergeConDiferenteWebId");
         }
-        this.nombre = area.getNombre();
+        this.webId = area.getWebId();
         this.estado = area.getEstado();
+        this.nombre = area.getNombre();
     }
 
     public void setWebId(int webId) {

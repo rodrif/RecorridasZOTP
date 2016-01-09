@@ -1,22 +1,13 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure;
 
-import android.content.Context;
-
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Cache;
-import com.activeandroid.Configuration;
-import com.activeandroid.Model;
-import com.activeandroid.TableInfo;
 import com.activeandroid.query.Delete;
-import com.activeandroid.query.From;
-import com.example.facundo.recorridaszotp._2_DataAccess.GrupoFamiliarDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
-import com.example.facundo.recorridaszotp._3_Domain.GrupoFamiliar;
+import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -87,19 +78,19 @@ public class DBUtils {
         return ranchadas;
     }
 
-    public static List<GrupoFamiliar> getGrupoFamiliarTest() {
-        List<GrupoFamiliar> gruposFamiliares = GrupoFamiliarDataAccess.get().getAll();
-        if (gruposFamiliares.size() == 0) {
-            gruposFamiliares.add(new GrupoFamiliar("Grupo Familiar"));
-            gruposFamiliares.add(new GrupoFamiliar("Familia 1"));
-            gruposFamiliares.add(new GrupoFamiliar("Familia 2"));
-            gruposFamiliares.add(new GrupoFamiliar("Familia 3"));
-            gruposFamiliares.add(new GrupoFamiliar("Familia 4"));
-            gruposFamiliares.add(new GrupoFamiliar("Familia 5"));
+    public static List<Familia> getFamiliaTest() {
+        List<Familia> familias = FamiliaDataAccess.get().getAll();
+        if (familias.size() == 0) {
+            familias.add(new Familia("Grupo Familiar"));
+            familias.add(new Familia("Familia 1"));
+            familias.add(new Familia("Familia 2"));
+            familias.add(new Familia("Familia 3"));
+            familias.add(new Familia("Familia 4"));
+            familias.add(new Familia("Familia 5"));
 
-            GrupoFamiliarDataAccess.get().save(gruposFamiliares);
+            FamiliaDataAccess.get().save(familias);
         }
-        return gruposFamiliares;
+        return familias;
     }
 
     public static void deleteDBData() {

@@ -29,3 +29,5 @@ Ranchada
 Familia
 Persona
 Visita
+
+Probable fallo en fecha de visita
