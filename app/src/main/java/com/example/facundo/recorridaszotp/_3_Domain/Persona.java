@@ -30,7 +30,9 @@ public class Persona extends Model {
     private String observaciones;
     @Column(name = "DNI")
     private String DNI;
-    @Column(name = "GrupoFamiliar")
+    @Column(name = "Telefono")
+    private String telefono;
+    @Column(name = "Familia")
     private Familia familia = null;
     @Column(name = "Ranchada")
     private Ranchada ranchada = null;
@@ -79,6 +81,22 @@ public class Persona extends Model {
 
     public String getNombre() {
         return this.nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Familia getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
     }
 
     public void setNombre(String nombre) {
@@ -181,5 +199,17 @@ public class Persona extends Model {
 
     public void setRanchada(String ranchada) {
         this.ranchada = RanchadaDataAccess.get().find(ranchada);
+    }
+
+    public void setZonaByWebId (int zonaWebId) {
+        this.zona = ZonaDataAccess.get().findByWebId(zonaWebId);
+    }
+
+    public void setRanchadaByWebId (int ranchadaWebId) {
+        this.ranchada = RanchadaDataAccess.get().findByWebId(ranchadaWebId);
+    }
+
+    public void setFamiliaByWebId(int familiaWebId) {
+        this.familia = FamiliaDataAccess.get().findByWebId(familiaWebId);
     }
 }

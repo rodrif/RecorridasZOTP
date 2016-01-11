@@ -26,23 +26,8 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     }
 
     @Override
-    public String toJSonAEnviar(Visita visita) { //TODO falta ubicacion
-        try {
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.put("android_id", visita.getId());
-            jsonObj.put("descripcion", visita.getDescripcion());
-            jsonObj.put("fecha", visita.getFecha());
-            jsonObj.put("estado", visita.getEstado());
-            jsonObj.put("web_id", visita.getWebId());
-            jsonObj.put("persona_web_id", visita.getPersona().getWebId());
-
-            return jsonObj.toString();
-
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+    public String toJSonAEnviar(Visita visita) {
+        return toJsonObject(visita).toString();
     }
 
     @Override
@@ -53,6 +38,8 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
         visita.setEstado(visitaJson.optInt("estado"));
         visita.setFecha(visitaJson.getLong("fecha"));
         visita.setDescripcion(visitaJson.optString("descripcion"));
+        visita.setLatitud(visitaJson.optDouble("latitud"));
+        visita.setLongitud(visitaJson.optDouble("longitud"));
 
         return visita;
     }
@@ -61,13 +48,14 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     public JSONObject toJsonObject(Visita visita) {
         try {
             JSONObject jsonObj = new JSONObject();
-            //jsonObj.put("id", this.getId());
-            //jsonObj.put("ubicacion", visita.getUbicacion());
+            jsonObj.put("android_id", visita.getId());
             jsonObj.put("descripcion", visita.getDescripcion());
             jsonObj.put("fecha", visita.getFecha());
-            jsonObj.put("persona_id", visita.getPersona().getId());
             jsonObj.put("estado", visita.getEstado());
             jsonObj.put("web_id", visita.getWebId());
+            jsonObj.put("persona_web_id", visita.getPersona().getWebId());
+            jsonObj.put("latitud", visita.getLatitud());
+            jsonObj.put("longitud", visita.getLongitud());
 
             return jsonObj;
 
