@@ -10,9 +10,10 @@ import java.util.Locale;
 
 public final class Utils {
     public static final String WEB = "http://stark-island-3497.herokuapp.com";
-    public static final String WEB_INSERTAR = Utils.WEB + "/people/mobGuardarPersonasPost";
+    public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
-        public static final String WEB_RECIBIR_AREAS = Utils.WEB + "/api/areas/download";
+    public static final String WEB_ENVIO_VISITAS = Utils.WEB + "/api/visits/upload";
+    public static final String WEB_RECIBIR_AREAS = Utils.WEB + "/api/areas/download";
     public static final String WEB_RECIBIR_ZONAS = Utils.WEB + "/api/zones/download";
     public static final String WEB_RECIBIR_RANCHADAS = Utils.WEB + "/api/ranchadas/download";
     public static final String WEB_RECIBIR_FAMILIAS = Utils.WEB + "/api/familias/download";

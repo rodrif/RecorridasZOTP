@@ -5,6 +5,10 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarVisitas;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -124,4 +128,9 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .execute();
     }
 
+    public void sincronizar(AsyncDelegate delegate) {
+        AsyncDelegate delegateEnviarVisitas = new DelegateEnviarVisitas(delegate);
+        RecepcionVisitas recepcionVisitas = new RecepcionVisitas(delegateEnviarVisitas);
+        recepcionVisitas.execute(Utils.WEB_RECIBIR_VISITAS);
+    }
 }

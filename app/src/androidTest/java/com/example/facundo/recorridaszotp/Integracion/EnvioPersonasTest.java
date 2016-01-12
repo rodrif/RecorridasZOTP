@@ -42,7 +42,7 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
         personas.add(persona3);
 
         EnvioPersonas enviador = new EnvioPersonas(personas, this);
-        enviador.execute(Utils.WEB_INSERTAR);
+        enviador.execute(Utils.WEB_ENVIO_PERSONAS);
 
         if(!this.signal.await(Utils.MAX_INTENTOS, TimeUnit.SECONDS)) {
             fail("no recibio respuesta del servidor");

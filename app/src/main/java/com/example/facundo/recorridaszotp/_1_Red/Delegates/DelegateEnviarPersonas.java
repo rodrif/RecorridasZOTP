@@ -10,9 +10,6 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 public class DelegateEnviarPersonas implements AsyncDelegate {
     AsyncDelegate delegate;
 
-    public DelegateEnviarPersonas() {
-    }
-
     public DelegateEnviarPersonas(AsyncDelegate delegate) {
         this.delegate = delegate;
     }
@@ -20,6 +17,6 @@ public class DelegateEnviarPersonas implements AsyncDelegate {
     @Override
     public void ejecutar(String result) throws Exception {
         EnvioPersonas envioPersonas = new EnvioPersonas(PersonaDataAccess.get().findASincronizar(), this.delegate);
-        envioPersonas.execute(Utils.WEB_INSERTAR);
+        envioPersonas.execute(Utils.WEB_ENVIO_PERSONAS);
     }
 }

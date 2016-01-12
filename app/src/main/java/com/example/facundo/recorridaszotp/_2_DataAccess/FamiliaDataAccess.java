@@ -3,6 +3,8 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionFamilias;
 import com.example.facundo.recorridaszotp._3_Domain.Familia;
 
 import java.util.List;
@@ -56,5 +58,10 @@ public class FamiliaDataAccess extends BasicDataAccess<Familia> {
                     .executeSingle();
 
         return null;
+    }
+
+    public void sincronizar (AsyncDelegate delegate){
+        RecepcionFamilias recepcionFamilias = new RecepcionFamilias(delegate);
+        recepcionFamilias.execute(Utils.WEB_RECIBIR_FAMILIAS);
     }
 }

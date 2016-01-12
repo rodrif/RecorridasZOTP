@@ -15,6 +15,5 @@ public class DelegateRecibirZonas implements AsyncDelegate {
     @Override
     public void ejecutar(String result) throws Exception {
         ZonaDataAccess.get().sincronizar(delegate);
-
     }
 }

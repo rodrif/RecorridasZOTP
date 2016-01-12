@@ -358,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    AreaDataAccess.get().sincronizar(new DelegateActivity(activity));
+                    AreaDataAccess.get().sincronizarTodo(new DelegateActivity(activity));
                     //PersonaDataAccess.get().sincronizar(new DelegateActivity(activity));
                     Toast.makeText(getApplicationContext(),
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
