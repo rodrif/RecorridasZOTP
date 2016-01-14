@@ -34,7 +34,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     public Visita fromJsonObject(JSONObject visitaJson) throws Exception {
         Visita visita = new Visita();
         visita.setWebId(visitaJson.optInt("web_id"));
-        visita.setPersona(PersonaDataAccess.get().findById(visitaJson.getLong("web_person_id")));
+        visita.setPersona(PersonaDataAccess.get().findByWebId(visitaJson.optInt("web_person_id")));
         visita.setEstado(visitaJson.optInt("estado"));
         visita.setFecha(visitaJson.getLong("fecha"));
         visita.setDescripcion(visitaJson.optString("descripcion"));
