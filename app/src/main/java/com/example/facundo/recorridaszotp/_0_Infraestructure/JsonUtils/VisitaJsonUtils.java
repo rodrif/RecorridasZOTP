@@ -27,7 +27,8 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
 
     @Override
     public String toJSonAEnviar(Visita visita) {
-        return toJsonObject(visita).toString();
+        String aEnviar = toJsonObject(visita).toString();
+        return aEnviar;
     }
 
     @Override

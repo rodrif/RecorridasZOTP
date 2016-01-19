@@ -23,6 +23,7 @@
                 android:id="@+id/ETNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="Nombre" />
         </android.support.design.widget.TextInputLayout>
 
@@ -34,6 +35,7 @@
                 android:id="@+id/ETApellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="Apellido" />
         </android.support.design.widget.TextInputLayout>
 

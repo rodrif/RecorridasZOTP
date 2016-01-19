@@ -134,7 +134,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         //Grupo Familiar
-        DBUtils.getFamiliaTest();//FIXME borrar, solo para prueba
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         final List<Familia> lFamilias = FamiliaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> familiasString = new ArrayList<String>();
@@ -148,7 +147,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sGrupoFamiliar.setAdapter(adaptadorFamilia);
 
         //Zona
-        DBUtils.getZonaTest();//FIXME borrar, solo para prueba
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
         final List<String> zonasString = new ArrayList<String>();
@@ -162,7 +160,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sZona.setAdapter(adaptadorZona);
 
         //Ranchada
-        DBUtils.getRanchadaTest();//FIXME borrar, solo para prueba
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet

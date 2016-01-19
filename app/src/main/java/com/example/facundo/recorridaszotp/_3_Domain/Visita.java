@@ -107,7 +107,7 @@ public class Visita extends Model {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        this.fecha = date.getTime();
+        this.fecha = date.getTime() / 1000;
     }
 
     public String getDescripcion() {

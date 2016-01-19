@@ -102,6 +102,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
             //Construimos el objeto cliente en formato JSON
             JSONArray datos = this.cargarJson();
+            Log.d(Utils.APPTAG, "Se envio JSON: " + datos.toString());
             String ultFechaSincronizacion = Configuracion.get(getUltimaFechaMod());
 
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));

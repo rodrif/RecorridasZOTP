@@ -26,7 +26,8 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
 
     @Override
     public String toJSonAEnviar(Persona persona) {
-            return toJsonObject(persona).toString();
+        String aEnviar = toJsonObject(persona).toString();
+        return aEnviar;
     }
 
     @Override

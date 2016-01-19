@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 
 import android.util.Log;
+
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
