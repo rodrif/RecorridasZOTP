@@ -135,8 +135,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         //Grupo Familiar
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<Familia> lFamilias = FamiliaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
+        final List<Familia> lFamilias = FamiliaDataAccess.get().getAll();
         final List<String> familiasString = new ArrayList<String>();
+        familiasString.add("Familia");
         for (Familia familia : lFamilias) {
             familiasString.add(familia.getNombre());
         }
@@ -148,7 +149,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         //Zona
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
-        final List<Zona> lZonas = ZonaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
+        final List<Zona> lZonas = ZonaDataAccess.get().getAll();
         final List<String> zonasString = new ArrayList<String>();
         for (Zona zona : lZonas) {
             zonasString.add(zona.getNombre());
@@ -162,8 +163,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
-        final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();//TODO revisar, puede ser null sin internet
+        final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();
         final List<String> ranchadasString = new ArrayList<String>();
+        ranchadasString.add("Ranchada");
         for (Ranchada ranchada : lRanchada) {
             ranchadasString.add(ranchada.getNombre());
         }
