@@ -35,7 +35,7 @@ public abstract class BasicEnvio<T> extends EnvioPost {
     }
 
     @Override
-    protected JSONArray cargarJson() {
+    protected JSONArray cargarJson() throws Exception {
         JSONArray datos = new JSONArray();
         try {
             for (T t : this.ts) {

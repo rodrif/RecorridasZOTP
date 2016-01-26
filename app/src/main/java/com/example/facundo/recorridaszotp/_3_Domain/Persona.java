@@ -186,7 +186,11 @@ public class Persona extends Model {
     @Override
     public boolean equals(Object obj) {
         Persona other = (Persona) obj;
-        return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
+        try {//TODO Revisar equal Persona
+            return (PersonaJsonUtils.get().toJSonValue(other).equals(PersonaJsonUtils.get().toJSonValue(this)));
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void setGrupoFamiliar(String grupoFamiliar) {
@@ -201,11 +205,11 @@ public class Persona extends Model {
         this.ranchada = RanchadaDataAccess.get().find(ranchada);
     }
 
-    public void setZonaByWebId (int zonaWebId) {
+    public void setZonaByWebId(int zonaWebId) {
         this.zona = ZonaDataAccess.get().findByWebId(zonaWebId);
     }
 
-    public void setRanchadaByWebId (int ranchadaWebId) {
+    public void setRanchadaByWebId(int ranchadaWebId) {
         this.ranchada = RanchadaDataAccess.get().findByWebId(ranchadaWebId);
     }
 
