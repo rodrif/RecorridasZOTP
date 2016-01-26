@@ -1,6 +1,8 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
 
+import com.activeandroid.util.Log;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
@@ -27,7 +29,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     }
 
     @Override
-    public String toJSonAEnviar(Visita visita) {
+    public String toJSonAEnviar(Visita visita) throws JSONException {
         String aEnviar = toJsonObject(visita).toString();
         return aEnviar;
     }
@@ -55,7 +57,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     }
 
     @Override
-    public JSONObject toJsonObject(Visita visita) {
+    public JSONObject toJsonObject(Visita visita) throws JSONException {
         try {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("android_id", visita.getId());
@@ -70,9 +72,8 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
             return jsonObj;
 
         } catch (JSONException ex) {
-            ex.printStackTrace();
+            Log.e(Utils.APPTAG, "Error al crear PersonaJSON");
+            throw ex;
         }
-
-        return null;
     }
 }

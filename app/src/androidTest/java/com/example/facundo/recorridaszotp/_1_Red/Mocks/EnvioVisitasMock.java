@@ -16,7 +16,7 @@ public class EnvioVisitasMock extends EnvioVisitas {
         super(visitas);
     }
 
-    public JSONArray cargarJson() {
+    public JSONArray cargarJson() throws Exception {
         return super.cargarJson();
     }
 
