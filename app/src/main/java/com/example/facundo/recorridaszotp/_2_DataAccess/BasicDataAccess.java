@@ -1,5 +1,7 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
+import android.util.Log;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;

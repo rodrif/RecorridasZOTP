@@ -2,7 +2,6 @@ package com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

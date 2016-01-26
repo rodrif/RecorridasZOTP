@@ -14,6 +14,12 @@ android {
             storeFile file('C:/Users/Gonzalo/Documents/GitHub/RecorridasZOTP/debug.keystore')
             storePassword 'android'
         }
+        configFacu {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:/androidWorkspace/RecorridasZOTP/debug.keystore')
+            storePassword 'android'
+        }
     }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
@@ -28,10 +34,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.configCasa
+            signingConfig signingConfigs.configFacu
         }
         debug {
-            signingConfig signingConfigs.configCasa
+            signingConfig signingConfigs.configFacu
         }
     }
     productFlavors {
@@ -42,14 +48,38 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':ActiveAndroid')
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services:8.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.google.android.gms:play-services-identity:8.3.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
     compile 'com.google.android.gms:play-services-plus:8.1.0'
     compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
