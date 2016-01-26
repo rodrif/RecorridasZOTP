@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
 
+import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONException;
@@ -33,15 +34,29 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
     @Override
     public Persona fromJsonObject(JSONObject personaJson) throws Exception {
         Persona persona = new Persona();
-        persona.setWebId(personaJson.optInt("web_id"));
-        persona.setNombre(personaJson.optString("nombre"));
-        persona.setApellido(personaJson.optString("apellido"));
+        if (personaJson.optInt("web_id") != -1) {
+            persona.setWebId(personaJson.optInt("web_id"));
+        } else {
+            throw new ExcepcionNoActualizoDB();
+        }
+        persona.setNombre(personaJson.getString("nombre"));
+        if (personaJson.optString("apellido") != "null") {
+            persona.setApellido(personaJson.optString("apellido"));
+        }
         persona.setEstado(personaJson.optInt("estado"));
         persona.setZonaByWebId(personaJson.optInt("web_zone_id"));
-        persona.setFechaNacimiento(personaJson.optString("fecha_nacimiento"));
-        persona.setObservaciones(personaJson.optString("descripcion"));
-        persona.setDNI(personaJson.optString("dni"));
-        persona.setTelefono(personaJson.optString("telefono"));
+        if (personaJson.optString("fecha_nacimiento") != "null") {
+            persona.setFechaNacimiento(personaJson.optString("fecha_nacimiento"));
+        }
+        if (personaJson.optString("descripcion") != "null") {
+            persona.setObservaciones(personaJson.optString("descripcion"));
+        }
+        if (personaJson.optString("dni") != "null") {
+            persona.setDNI(personaJson.optString("dni"));
+        }
+        if (personaJson.optString("telefono") != "null") {
+            persona.setTelefono(personaJson.optString("telefono"));
+        }
         persona.setFamiliaByWebId(personaJson.optInt("web_familia_id"));
         persona.setRanchadaByWebId(personaJson.optInt("web_ranchada_id"));
 

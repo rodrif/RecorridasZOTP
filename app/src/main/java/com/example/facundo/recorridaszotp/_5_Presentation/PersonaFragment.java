@@ -48,8 +48,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etFechaNacimiento = null;
     private EditText etNombre = null;
     private EditText etApellido = null;
-    private EditText etObservaciones = null;
-    private EditText etDNI = null;
+    private EditText etObservaciones;
+    private EditText etDNI;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;

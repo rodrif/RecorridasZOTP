@@ -3,6 +3,7 @@ package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
+import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
@@ -45,6 +46,9 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             if (this.delegate != null) {
                 delegate.ejecutar(this.respuesta.toString());
             }
+        } catch (ExcepcionNoActualizoDB excepcionNoActualizoDB) {
+            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB: "
+                    + excepcionNoActualizoDB.getMessage());
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " falloEnviarPersonas: " + ex.getMessage());
         } finally {
