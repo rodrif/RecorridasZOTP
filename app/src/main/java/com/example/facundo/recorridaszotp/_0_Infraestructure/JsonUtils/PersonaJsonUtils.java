@@ -1,6 +1,8 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
 
+import com.activeandroid.util.Log;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONException;
@@ -26,7 +28,7 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
     }
 
     @Override
-    public String toJSonAEnviar(Persona persona) {
+    public String toJSonAEnviar(Persona persona) throws Exception {
         String aEnviar = toJsonObject(persona).toString();
         return aEnviar;
     }
@@ -64,7 +66,7 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
     }
 
     @Override
-    public JSONObject toJsonObject(Persona persona) {
+    public JSONObject toJsonObject(Persona persona) throws Exception {
         try {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("android_id", persona.getId());
@@ -77,16 +79,18 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
             jsonObj.put("descripcion", persona.getObservaciones());
             jsonObj.put("dni", persona.getDNI());
             jsonObj.put("telefono", persona.getTelefono());
-            jsonObj.put("web_familia_id", persona.getFamilia().getWebId());
-            jsonObj.put("web_ranchada_id", persona.getRanchada().getWebId());
+            if (persona.getFamilia() != null) {
+                jsonObj.put("web_familia_id", persona.getFamilia().getWebId());
+            }
+            if (persona.getRanchada() != null) {
+                jsonObj.put("web_ranchada_id", persona.getRanchada().getWebId());
+            }
 
             return jsonObj;
 
         } catch (JSONException ex) {
-            ex.printStackTrace();
+            Log.e(Utils.APPTAG, "Fallo al crear PersonaJSON");
+            throw ex;
         }
-
-        return null;
     }
-
 }

@@ -41,7 +41,7 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
-    protected abstract JSONArray cargarJson();
+    protected abstract JSONArray cargarJson() throws Exception;
     protected abstract String getUltimaFechaMod();
 
     @Override

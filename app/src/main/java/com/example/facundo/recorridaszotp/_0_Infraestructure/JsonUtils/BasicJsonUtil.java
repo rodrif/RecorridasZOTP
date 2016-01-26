@@ -14,11 +14,11 @@ public abstract class   BasicJsonUtil<T> {
 
     public abstract Class getClase();
 
-    public abstract String toJSonAEnviar(T t);
+    public abstract String toJSonAEnviar(T t) throws Exception;
 
     public abstract T fromJsonObject(JSONObject tJson) throws Exception;
 
-    public abstract JSONObject toJsonObject(T t);
+    public abstract JSONObject toJsonObject(T t) throws Exception;
 
     public List<T> fromJsonString(String jsonString) throws Exception {
         JSONArray jsonArray = new JSONArray(jsonString);
@@ -52,7 +52,7 @@ public abstract class   BasicJsonUtil<T> {
         return jsonArray.toString();
     }
 
-    public String toJSonValue(T t) {
+    public String toJSonValue(T t) throws Exception {
         JSONObject jsonObj = toJsonObject(t);
 
         if (jsonObj != null)

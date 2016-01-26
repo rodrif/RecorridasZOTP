@@ -47,7 +47,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
                 delegate.ejecutar(this.respuesta.toString());
             }
         } catch (ExcepcionNoActualizoDB excepcionNoActualizoDB) {
-            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB: "
+            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB Personas: "
                     + excepcionNoActualizoDB.getMessage());
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " falloEnviarPersonas: " + ex.getMessage());

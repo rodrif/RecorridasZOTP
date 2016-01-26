@@ -1,5 +1,6 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils;
 
+import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
@@ -34,11 +35,19 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     @Override
     public Visita fromJsonObject(JSONObject visitaJson) throws Exception {
         Visita visita = new Visita();
-        visita.setWebId(visitaJson.optInt("web_id"));
+        if (visitaJson.optInt("web_id") != -1) {
+            visita.setWebId(visitaJson.optInt("web_id"));
+        } else {
+            throw new ExcepcionNoActualizoDB();
+        }
+
         visita.setPersona(PersonaDataAccess.get().findByWebId(visitaJson.optInt("web_person_id")));
         visita.setEstado(visitaJson.optInt("estado"));
         visita.setFecha(visitaJson.getLong("fecha"));
-        visita.setDescripcion(visitaJson.optString("descripcion"));
+        if (visitaJson.optString("descripcion") != "null"){
+            visita.setDescripcion(visitaJson.optString("descripcion"));
+        }
+
         visita.setLatitud(visitaJson.optDouble("latitud"));
         visita.setLongitud(visitaJson.optDouble("longitud"));
 
