@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.location.Location;
+import android.net.MailTo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.InflateException;
@@ -247,6 +248,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             if (MainActivity.personaSeleccionada.getRanchada() != null) {
                 sRanchada.setSelection(adaptadorRanchada.getPosition(
                         MainActivity.personaSeleccionada.getRanchada().getNombre()));
+            }
+
+            if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
+                etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimiento());
             }
         }
     }
