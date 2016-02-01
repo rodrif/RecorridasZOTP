@@ -167,6 +167,11 @@ public class Persona extends Model {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public void setFechaNacimientoDesdeWeb(String fechaNacimiento) {
+        String[] array = fechaNacimiento.split("-");
+        this.fechaNacimiento = array[2] + "/" + array[1] + "/" + array[0];
+    }
+
     public Familia getGrupoFamiliar() {
         return familia;
     }

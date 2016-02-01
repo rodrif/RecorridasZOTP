@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.location.Location;
+import android.net.MailTo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.InflateException;
@@ -50,6 +51,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etApellido = null;
     private EditText etObservaciones;
     private EditText etDNI;
+    private EditText etTelefono;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
@@ -129,6 +131,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
+        etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
@@ -247,6 +250,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             if (MainActivity.personaSeleccionada.getRanchada() != null) {
                 sRanchada.setSelection(adaptadorRanchada.getPosition(
                         MainActivity.personaSeleccionada.getRanchada().getNombre()));
+            }
+
+            if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
+                etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimiento());
+            }
+
+            if (MainActivity.personaSeleccionada.getTelefono() != null) {
+                etTelefono.setText(MainActivity.personaSeleccionada.getTelefono());
             }
         }
     }

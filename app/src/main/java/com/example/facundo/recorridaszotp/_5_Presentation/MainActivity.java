@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         EditText ETfechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         EditText ETobservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
+        EditText ETTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
         Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
         String dni = ETdni.getText().toString();
+        String telefono = ETTelefono.getText().toString();
         String observaciones = ETobservaciones.getText().toString();
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
         String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
@@ -249,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
                 personaSeleccionada.setDNI(dni);
+                personaSeleccionada.setTelefono(telefono);
                 personaSeleccionada.setObservaciones(observaciones);
                 personaSeleccionada.setFechaNacimiento(fechaNacimiento);
                 personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
