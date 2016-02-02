@@ -73,7 +73,14 @@ public class Persona extends Model {
         this.nombre = persona.getNombre();
         this.apellido = persona.getApellido();
         this.estado = persona.getEstado();
-    }
+        this.zona = persona.getZona();
+        this.fechaNacimiento = persona.getFechaNacimiento();
+        this.observaciones = persona.getObservaciones();
+        this.DNI = persona.getDNI();
+        this.telefono = persona.getTelefono();
+        this.familia = persona.getFamilia();
+        this.ranchada = persona.getRanchada();
+     }
 
     public List<Visita> visitas() {
         return getMany(Visita.class, "Persona");

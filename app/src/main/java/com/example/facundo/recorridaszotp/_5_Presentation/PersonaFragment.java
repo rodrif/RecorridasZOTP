@@ -254,10 +254,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
             if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
                 etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimiento());
+            } else {
+                etFechaNacimiento.setText("");
             }
 
             if (MainActivity.personaSeleccionada.getTelefono() != null) {
                 etTelefono.setText(MainActivity.personaSeleccionada.getTelefono());
+            } else {
+                etTelefono.setText("");
             }
         }
     }
