@@ -170,13 +170,18 @@ public class Persona extends Model {
         return fechaNacimiento;
     }
 
+    public String getFechaNacimientoMostrar() {
+        String[] array = fechaNacimiento.split("-");
+        return array[2] + "/" + array[1] + "/" + array[0];
+    }
+
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public void setFechaNacimientoDesdeWeb(String fechaNacimiento) {
-        String[] array = fechaNacimiento.split("-");
-        this.fechaNacimiento = array[2] + "/" + array[1] + "/" + array[0];
+    public void setFechaNacimientoDesdeMob(String fechaNacimiento) {
+        String[] array = fechaNacimiento.split("/");
+        this.fechaNacimiento = array[2] + "-" + array[1] + "-" + array[0];
     }
 
     public Familia getGrupoFamiliar() {

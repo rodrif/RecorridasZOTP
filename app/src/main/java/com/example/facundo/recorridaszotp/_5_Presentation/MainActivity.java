@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 personaSeleccionada.setDNI(dni);
                 personaSeleccionada.setTelefono(telefono);
                 personaSeleccionada.setObservaciones(observaciones);
-                personaSeleccionada.setFechaNacimiento(fechaNacimiento);
+                personaSeleccionada.setFechaNacimientoDesdeMob(fechaNacimiento);
                 personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
                 personaSeleccionada.setZona(zona);
                 personaSeleccionada.setRanchada(ranchada);
