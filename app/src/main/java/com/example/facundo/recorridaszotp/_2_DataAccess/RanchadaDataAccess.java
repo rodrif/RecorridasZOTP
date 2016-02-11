@@ -5,7 +5,10 @@ import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionRanchadas;
+import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
+
 import java.util.List;
 
 
@@ -62,6 +65,25 @@ public class RanchadaDataAccess extends BasicDataAccess<Ranchada> {
                     .executeSingle();
 
         return null;
+    }
+
+    public List<Ranchada> filtrarPorZona(String sZona) {
+        List<Ranchada> listaRanchadas = null;
+        if(sZona != null) {
+            Zona zona = new Select ()
+                    .from(Zona.class)
+                    .where("Nombre = ?", sZona)
+                    .executeSingle();
+
+            if (zona != null) {
+                listaRanchadas = new Select()
+                        .from(Ranchada.class)
+                        .where("Zona = ?", zona.getId())
+                        .execute();
+            }
+        }
+
+        return listaRanchadas;
     }
 
     public void sincronizar (AsyncDelegate delegate){

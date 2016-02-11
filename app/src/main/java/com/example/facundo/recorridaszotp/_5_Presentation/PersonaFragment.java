@@ -12,6 +12,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -62,7 +63,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     ArrayAdapter<String> adaptadorZona = null;
     ArrayAdapter<String> adaptadorRanchada = null;
     AlertDialog.Builder dialogoBorrar = null;
-    MainActivity activity= null;
+    MainActivity activity = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,7 +152,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sGrupoFamiliar.setAdapter(adaptadorFamilia);
 
         //Zona
-        Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        final Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();
         final List<String> zonasString = new ArrayList<String>();
         for (Zona zona : lZonas) {
@@ -162,17 +163,43 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         adaptadorZona.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
+        sZona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String stringZona = (String) sZona.getItemAtPosition(position);
+                if (adaptadorRanchada != null) {
+                    adaptadorRanchada.clear();
+                    List<Ranchada> ranchadas = RanchadaDataAccess.get().filtrarPorZona(stringZona);
+                    adaptadorRanchada.add("Ranchada");
+                    if (ranchadas != null)
+                        for (Ranchada ranchada : ranchadas) {
+                            adaptadorRanchada.add(ranchada.getNombre());
+                        }
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
-        final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();
+        //        final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();
+        //TODO Filtrar Ranchada por Zona elegida, falta refresh al cambiar de zona
+        final List<Ranchada> lRanchada = RanchadaDataAccess.get().filtrarPorZona(
+                (String) sZona.getSelectedItem());
         final List<String> ranchadasString = new ArrayList<String>();
         ranchadasString.add("Ranchada");
         for (Ranchada ranchada : lRanchada) {
             ranchadasString.add(ranchada.getNombre());
         }
-        adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
+
+        adaptadorRanchada = new ArrayAdapter<String>(
+
+                getActivity(),
+
                 android.R.layout.simple_spinner_item, ranchadasString);
         adaptadorRanchada.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
@@ -180,28 +207,40 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         actualizar();
 
-        dialogoBorrar = new AlertDialog.Builder(getActivity());
+        dialogoBorrar = new AlertDialog.Builder(
+
+                getActivity()
+
+        );
         dialogoBorrar.setTitle("Importante");
         dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
         dialogoBorrar.setCancelable(false);
-        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
-                if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
-                    Toast.makeText(getActivity(),
-                            "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
-                            + " exitosamente", Toast.LENGTH_SHORT).show();
+        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+
+                {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
+                        if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                            Toast.makeText(getActivity(),
+                                    "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
+                                            + " exitosamente", Toast.LENGTH_SHORT).show();
+                        }
+                        MainActivity.clean();
+                        activity.onBackPressed();
+                        activity.onBackPressed();
+                    }
                 }
-                MainActivity.clean();
-                activity.onBackPressed();
-                activity.onBackPressed();
-            }
-        });
-        dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                // cancelar();
-            }
-        });
+
+        );
+        dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
+
+                {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        // cancelar();
+                    }
+                }
+
+        );
         return vista;
     }
 
@@ -302,7 +341,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         ((MainActivity) activity).getAppbar().setTitle(Utils.PERSONA);
-        this.activity = (MainActivity)activity;
+        this.activity = (MainActivity) activity;
     }
 
     @Override
