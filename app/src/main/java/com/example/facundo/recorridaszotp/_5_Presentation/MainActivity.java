@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         if (visitaSeleccionada != null) {
             visitaSeleccionada.setFecha(eTFecha.getText().toString());
             visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
+            visitaSeleccionada.setEstado(Utils.EST_MODIFICADO);
             VisitaDataAccess.get().save(visitaSeleccionada);
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
