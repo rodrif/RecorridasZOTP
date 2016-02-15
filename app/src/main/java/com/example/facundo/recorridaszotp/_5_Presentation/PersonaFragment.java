@@ -176,6 +176,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             adaptadorRanchada.add(ranchada.getNombre());
                         }
                 }
+                actualizar();
             }
 
             @Override
@@ -196,10 +197,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             ranchadasString.add(ranchada.getNombre());
         }
 
-        adaptadorRanchada = new ArrayAdapter<String>(
-
-                getActivity(),
-
+        adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, ranchadasString);
         adaptadorRanchada.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
@@ -287,8 +285,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
 
             if (MainActivity.personaSeleccionada.getRanchada() != null) {
-                sRanchada.setSelection(adaptadorRanchada.getPosition(
-                        MainActivity.personaSeleccionada.getRanchada().getNombre()));
+                String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
+                int pos = adaptadorRanchada.getPosition(nombreRanchada);
+                sRanchada.setSelection(pos);
             }
 
             if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
