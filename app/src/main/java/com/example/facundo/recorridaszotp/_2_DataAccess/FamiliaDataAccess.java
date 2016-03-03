@@ -6,6 +6,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionFamilias;
 import com.example.facundo.recorridaszotp._3_Domain.Familia;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
 
 import java.util.List;
 
@@ -48,6 +49,25 @@ public class FamiliaDataAccess extends BasicDataAccess<Familia> {
             ActiveAndroid.endTransaction();
         }
         return resultado;
+    }
+
+    public List<Familia> filtrarPorZona(String sZona) {
+        List<Familia> listaFamilias = null;
+        if(sZona != null) {
+            Zona zona = new Select ()
+                    .from(Zona.class)
+                    .where("Nombre = ?", sZona)
+                    .executeSingle();
+
+            if (zona != null) {
+                listaFamilias = new Select()
+                        .from(Familia.class)
+                        .where("Zona = ?", zona.getId())
+                        .execute();
+            }
+        }
+
+        return listaFamilias;
     }
 
     public Familia find(String nombre) {

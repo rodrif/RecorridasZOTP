@@ -181,7 +181,8 @@ public class Persona extends Model {
 
     public void setFechaNacimientoDesdeMob(String fechaNacimiento) {
         String[] array = fechaNacimiento.split("/");
-        this.fechaNacimiento = array[2] + "-" + array[1] + "-" + array[0];
+        if (array.length == 3)
+            this.fechaNacimiento = array[2] + "-" + array[1] + "-" + array[0];
     }
 
     public Familia getGrupoFamiliar() {

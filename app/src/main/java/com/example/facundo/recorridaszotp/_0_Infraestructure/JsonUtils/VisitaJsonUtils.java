@@ -4,6 +4,7 @@ import com.activeandroid.util.Log;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import org.json.JSONException;
@@ -65,14 +66,19 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
             jsonObj.put("fecha", visita.getFecha());
             jsonObj.put("estado", visita.getEstado());
             jsonObj.put("web_id", visita.getWebId());
-            jsonObj.put("web_person_id", visita.getPersona().getWebId());
+            Persona persona = visita.getPersona();
+            jsonObj.put("web_person_id", persona.getWebId());
             jsonObj.put("latitud", visita.getLatitud());
             jsonObj.put("longitud", visita.getLongitud());
 
             return jsonObj;
 
         } catch (JSONException ex) {
-            Log.e(Utils.APPTAG, "Error al crear PersonaJSON");
+            Log.e(Utils.APPTAG, "VisitaJsonUtils::toJsonObject Error al crear PersonaJSON" + ex.toString());
+            throw ex;
+        }
+        catch (Exception ex) {
+            Log.e(Utils.APPTAG, "VisitaJsonUtils::toJsonObject Error: " + ex.toString());
             throw ex;
         }
     }

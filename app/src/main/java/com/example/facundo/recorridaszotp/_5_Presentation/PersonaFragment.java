@@ -176,7 +176,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             adaptadorRanchada.add(ranchada.getNombre());
                         }
                 }
-                actualizar();
+                if (adaptadorFamilia != null) {
+                    adaptadorFamilia.clear();
+                    List<Familia> familias = FamiliaDataAccess.get().filtrarPorZona(stringZona);
+                    adaptadorFamilia.add("Familia");
+                    if (familias != null)
+                        for (Familia familia : familias) {
+                            adaptadorFamilia.add(familia.getNombre());
+                        }
+                }
             }
 
             @Override
@@ -187,8 +195,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
-        //        final List<Ranchada> lRanchada = RanchadaDataAccess.get().getAll();
-        //TODO Filtrar Ranchada por Zona elegida, falta refresh al cambiar de zona
         final List<Ranchada> lRanchada = RanchadaDataAccess.get().filtrarPorZona(
                 (String) sZona.getSelectedItem());
         final List<String> ranchadasString = new ArrayList<String>();
