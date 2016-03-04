@@ -39,7 +39,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
         ActiveAndroid.beginTransaction();
         try {
             for (Persona persona : this.ts) {
-                Log.e(Utils.APPTAG, result);
+                Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
                 if (persona.getEstado() == Utils.EST_BORRADO) {
                     persona.delete();
