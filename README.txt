@@ -30,4 +30,5 @@ Familia
 Persona
 Visita
 
-Probable fallo en fecha de visita
+Reseteo de db:
+

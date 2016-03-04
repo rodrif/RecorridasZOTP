@@ -43,7 +43,11 @@ public class EnvioAreas extends BasicEnvio<Area> {
         try {
             for (Area area: ts) {
                 area.setWebId(this.respuesta.getJSONObject("datos").optInt(area.getId().toString()));
-                area.save();
+                if (area.getEstado() == Utils.EST_BORRADO) {
+                    area.delete();
+                } else {
+                    area.save();
+                }
             }
         }catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName()

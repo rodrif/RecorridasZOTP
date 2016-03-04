@@ -40,7 +40,11 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
         try {
             for (Visita visita : this.ts) {
                 visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
-                visita.save();
+                if (visita.getEstado() == Utils.EST_BORRADO) {
+                    visita.delete();
+                } else {
+                    visita.save();
+                }
             }
             ActiveAndroid.setTransactionSuccessful();
             if (this.delegate != null) {

@@ -47,7 +47,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
         visita.setPersona(PersonaDataAccess.get().findByWebId(visitaJson.optInt("web_person_id")));
         visita.setEstado(visitaJson.optInt("estado"));
         visita.setFecha(visitaJson.getLong("fecha"));
-        if (visitaJson.optString("descripcion") != "null"){
+        if (visitaJson.optString("descripcion") != "null") {
             visita.setDescripcion(visitaJson.optString("descripcion"));
         }
 
@@ -67,7 +67,8 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
             jsonObj.put("estado", visita.getEstado());
             jsonObj.put("web_id", visita.getWebId());
             Persona persona = visita.getPersona();
-            jsonObj.put("web_person_id", persona.getWebId());
+            if (persona != null)
+                jsonObj.put("web_person_id", persona.getWebId());
             jsonObj.put("latitud", visita.getLatitud());
             jsonObj.put("longitud", visita.getLongitud());
 
@@ -76,8 +77,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
         } catch (JSONException ex) {
             Log.e(Utils.APPTAG, "VisitaJsonUtils::toJsonObject Error al crear PersonaJSON" + ex.toString());
             throw ex;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Log.e(Utils.APPTAG, "VisitaJsonUtils::toJsonObject Error: " + ex.toString());
             throw ex;
         }
