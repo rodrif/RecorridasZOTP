@@ -65,7 +65,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
         // Load CAs from an InputStream
         // (could be from a resource or ByteArrayInputStream or ...) // TODO Hacer por resource
-        try {
+   /*     try {
             cf = CertificateFactory.getInstance("X.509");
             certificateInput = new BufferedInputStream(new FileInputStream("load-der.crt"));
             certificate = cf.generateCertificate(certificateInput);
@@ -89,7 +89,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 ////////////////////////////////////////////////////////////////////////////////////////////
         try {
             url = new URL(params[0]);
