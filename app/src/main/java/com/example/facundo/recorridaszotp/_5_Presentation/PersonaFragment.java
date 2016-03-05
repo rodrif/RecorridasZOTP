@@ -260,52 +260,54 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     public void actualizar() {
         if (etNombre != null) {
-            if (MainActivity.personaSeleccionada.getNombre() != null)
-                etNombre.setText(MainActivity.personaSeleccionada.getNombre());
-            else
-                etNombre.setText("");
+            if (MainActivity.personaSeleccionada != null) {
+                if (MainActivity.personaSeleccionada.getNombre() != null)
+                    etNombre.setText(MainActivity.personaSeleccionada.getNombre());
+                else
+                    etNombre.setText("");
 
-            if (MainActivity.personaSeleccionada.getApellido() != null)
-                etApellido.setText(MainActivity.personaSeleccionada.getApellido());
-            else
-                etApellido.setText("");
+                if (MainActivity.personaSeleccionada.getApellido() != null)
+                    etApellido.setText(MainActivity.personaSeleccionada.getApellido());
+                else
+                    etApellido.setText("");
 
-            if (MainActivity.personaSeleccionada.getObservaciones() != null)
-                etObservaciones.setText(MainActivity.personaSeleccionada.getObservaciones());
-            else
-                etObservaciones.setText("");
+                if (MainActivity.personaSeleccionada.getObservaciones() != null)
+                    etObservaciones.setText(MainActivity.personaSeleccionada.getObservaciones());
+                else
+                    etObservaciones.setText("");
 
-            if (MainActivity.personaSeleccionada.getDNI() != null)
-                etDNI.setText(MainActivity.personaSeleccionada.getDNI());
-            else
-                etDNI.setText("");
+                if (MainActivity.personaSeleccionada.getDNI() != null)
+                    etDNI.setText(MainActivity.personaSeleccionada.getDNI());
+                else
+                    etDNI.setText("");
 
-            if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
-                sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
-                        MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
-            }
+                if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
+                    sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
+                            MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
+                }
 
-            if (MainActivity.personaSeleccionada.getZona() != null) {
-                sZona.setSelection(adaptadorZona.getPosition(
-                        MainActivity.personaSeleccionada.getZona().getNombre()));
-            }
+                if (MainActivity.personaSeleccionada.getZona() != null) {
+                    sZona.setSelection(adaptadorZona.getPosition(
+                            MainActivity.personaSeleccionada.getZona().getNombre()));
+                }
 
-            if (MainActivity.personaSeleccionada.getRanchada() != null) {
-                String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
-                int pos = adaptadorRanchada.getPosition(nombreRanchada);
-                sRanchada.setSelection(pos);
-            }
+                if (MainActivity.personaSeleccionada.getRanchada() != null) {
+                    String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
+                    int pos = adaptadorRanchada.getPosition(nombreRanchada);
+                    sRanchada.setSelection(pos);
+                }
 
-            if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
-                etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimientoMostrar());
-            } else {
-                etFechaNacimiento.setText("");
-            }
+                if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
+                    etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimientoMostrar());
+                } else {
+                    etFechaNacimiento.setText("");
+                }
 
-            if (MainActivity.personaSeleccionada.getTelefono() != null) {
-                etTelefono.setText(MainActivity.personaSeleccionada.getTelefono());
-            } else {
-                etTelefono.setText("");
+                if (MainActivity.personaSeleccionada.getTelefono() != null) {
+                    etTelefono.setText(MainActivity.personaSeleccionada.getTelefono());
+                } else {
+                    etTelefono.setText("");
+                }
             }
         }
     }

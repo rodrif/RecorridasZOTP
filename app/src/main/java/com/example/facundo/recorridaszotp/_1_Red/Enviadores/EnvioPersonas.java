@@ -41,9 +41,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             for (Persona persona : this.ts) {
                 Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
-                if (persona.getEstado() == Utils.EST_BORRADO) {
-                    persona.delete();
-                } else {
+                if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.save();
                 }
             }

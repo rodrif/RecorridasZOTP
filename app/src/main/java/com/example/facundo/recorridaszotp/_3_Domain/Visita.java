@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
 public class Visita extends Model {
     @Column(name = "WebId")
     private int webId = -1;
-    @Column(name = "Persona")
+    @Column(name = "Persona", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Persona persona;
     @Column(name = "Fecha")
     private long fecha;
