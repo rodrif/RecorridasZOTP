@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
-import java.util.List;
+import java.util.List; 
 
 /**
  * Created by Gonzalo on 05/09/2015.
