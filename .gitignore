@@ -7,5 +7,7 @@
 /app/build.gradle
 /app/app.iml
 /.idea/gradle.xml
-
+app/build.gradle
+app/app.iml
+.idea/gradle.xml
 
