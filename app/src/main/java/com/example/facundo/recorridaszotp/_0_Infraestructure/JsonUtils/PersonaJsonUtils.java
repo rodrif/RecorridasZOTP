@@ -73,7 +73,9 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
             jsonObj.put("nombre", persona.getNombre());
             jsonObj.put("apellido", persona.getApellido());
             jsonObj.put("estado", persona.getEstado());
-            jsonObj.put("web_zone_id", persona.getZona().getWebId());
+            if (persona.getZona() != null) { // por si esta borrado
+                jsonObj.put("web_zone_id", persona.getZona().getWebId());
+            }
             jsonObj.put("fecha_nacimiento", persona.getFechaNacimiento());
             jsonObj.put("descripcion", persona.getObservaciones());
             jsonObj.put("dni", persona.getDNI());
@@ -87,7 +89,7 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
 
             return jsonObj;
 
-        } catch (JSONException ex) {
+        } catch (Exception ex) {
             Log.e(Utils.APPTAG, "Fallo al crear PersonaJSON");
             throw ex;
         }
