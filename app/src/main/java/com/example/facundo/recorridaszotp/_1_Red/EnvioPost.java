@@ -114,14 +114,13 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             output.write(query.getBytes(charset));
 
             //Leo respuesta
-            Log.d(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
+            Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
             inputStream = new BufferedInputStream(conn.getInputStream());
-
             respuesta = Utils.toString(inputStream);
         } catch (Exception e) {
             e.printStackTrace();
+            //TODO deberia lanzar exception
         }
-
         return respuesta;
     }
 

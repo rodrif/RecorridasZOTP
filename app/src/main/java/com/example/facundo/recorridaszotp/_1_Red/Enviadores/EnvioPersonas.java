@@ -1,16 +1,14 @@
 package com.example.facundo.recorridaszotp._1_Red.Enviadores;
 
 import android.util.Log;
-
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-
 import org.json.JSONObject;
-
 import java.util.List;
 
 /**
@@ -30,21 +28,27 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
         try {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " Envio personas respuestaJsonInvalida: " + ex.getMessage());
+            // TODO: relanzar ex
         }
 
         ActiveAndroid.beginTransaction();
         try {
             for (Persona persona : this.ts) {
-                Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
                 if (persona.getEstado() != Utils.EST_BORRADO) {
+                    persona.setEstado(Utils.EST_ACTUALIZADO);
                     persona.save();
+                } else {
+                    persona.delete();
                 }
             }
+            Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
+
             ActiveAndroid.setTransactionSuccessful();
             if (this.delegate != null) {
                 delegate.ejecutar(this.respuesta.toString());

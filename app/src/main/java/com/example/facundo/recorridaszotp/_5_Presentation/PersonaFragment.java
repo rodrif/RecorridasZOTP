@@ -175,6 +175,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                         for (Ranchada ranchada : ranchadas) {
                             adaptadorRanchada.add(ranchada.getNombre());
                         }
+                    actualizarRanchada();
                 }
                 if (adaptadorFamilia != null) {
                     adaptadorFamilia.clear();
@@ -184,6 +185,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                         for (Familia familia : familias) {
                             adaptadorFamilia.add(familia.getNombre());
                         }
+                    actualizarFamilia();
                 }
             }
 
@@ -258,6 +260,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
+    public void actualizarRanchada() {
+        if (MainActivity.personaSeleccionada.getRanchada() != null) {
+            String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
+            int pos = adaptadorRanchada.getPosition(nombreRanchada);
+            sRanchada.setSelection(pos);
+        }
+    }
+
+    public void actualizarFamilia() {
+        if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
+            sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
+                    MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
+        }
+    }
+
     public void actualizar() {
         if (etNombre != null) {
             if (MainActivity.personaSeleccionada != null) {
@@ -281,21 +298,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 else
                     etDNI.setText("");
 
-                if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
-                    sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
-                            MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
-                }
-
                 if (MainActivity.personaSeleccionada.getZona() != null) {
                     sZona.setSelection(adaptadorZona.getPosition(
                             MainActivity.personaSeleccionada.getZona().getNombre()));
                 }
 
-                if (MainActivity.personaSeleccionada.getRanchada() != null) {
-                    String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
-                    int pos = adaptadorRanchada.getPosition(nombreRanchada);
-                    sRanchada.setSelection(pos);
-                }
+                actualizarRanchada();
+                actualizarFamilia();
 
                 if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
                     etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimientoMostrar());

@@ -42,7 +42,7 @@ public abstract class BasicEnvio<T> extends EnvioPost {
                 datos.put(new JSONObject(basicJsonUtil.toJSonAEnviar(t)));
             }
         } catch (JSONException ex) {
-            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " JSONException");
+            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " JSONException: " + ex.getMessage());
             ex.printStackTrace();
         }
 
