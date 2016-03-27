@@ -7,6 +7,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualiz
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import org.json.JSONObject;
@@ -41,6 +42,8 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             for (Persona persona : this.ts) {
                 Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
+                persona.setEstado(Utils.EST_ACTUALIZADO);
+                Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
                 if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.save();
                 }

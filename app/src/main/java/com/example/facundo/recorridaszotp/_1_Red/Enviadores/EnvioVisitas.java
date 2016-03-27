@@ -7,6 +7,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualiz
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.VisitaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
 import org.json.JSONObject;
@@ -39,7 +40,10 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
         ActiveAndroid.beginTransaction();
         try {
             for (Visita visita : this.ts) {
+                Log.d(Utils.APPTAG, "EnvioVisitas::onPostExecute result: " + result);
                 visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
+                visita.setEstado(Utils.EST_ACTUALIZADO);
+                Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
                 if (visita.getEstado() != Utils.EST_BORRADO) {
                     visita.save();
                 }
