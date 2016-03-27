@@ -40,8 +40,6 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
         try {
             for (Persona persona : this.ts) {
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
-                persona.setEstado(Utils.EST_ACTUALIZADO);
-                Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
                 if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.setEstado(Utils.EST_ACTUALIZADO);
                     persona.save();

@@ -42,8 +42,6 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
             for (Visita visita : this.ts) {
                 Log.d(Utils.APPTAG, "EnvioVisitas::onPostExecute result: " + result);
                 visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
-                visita.setEstado(Utils.EST_ACTUALIZADO);
-                Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
                 if (visita.getEstado() != Utils.EST_BORRADO) {
                     visita.setEstado(Utils.EST_ACTUALIZADO);
                     visita.save();
