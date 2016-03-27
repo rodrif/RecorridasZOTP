@@ -45,9 +45,11 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
                 visita.setEstado(Utils.EST_ACTUALIZADO);
                 Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
                 if (visita.getEstado() != Utils.EST_BORRADO) {
+                    visita.setEstado(Utils.EST_ACTUALIZADO);
                     visita.save();
                 }
             }
+            Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
             if (this.delegate != null) {
                 delegate.ejecutar(this.respuesta.toString());
