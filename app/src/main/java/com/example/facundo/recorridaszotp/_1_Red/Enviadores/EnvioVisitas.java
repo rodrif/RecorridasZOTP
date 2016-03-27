@@ -45,6 +45,8 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
                 if (visita.getEstado() != Utils.EST_BORRADO) {
                     visita.setEstado(Utils.EST_ACTUALIZADO);
                     visita.save();
+                } else {
+                    visita.delete();
                 }
             }
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());

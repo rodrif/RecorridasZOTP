@@ -43,6 +43,8 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
                 if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.setEstado(Utils.EST_ACTUALIZADO);
                     persona.save();
+                } else {
+                    persona.delete();
                 }
             }
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
