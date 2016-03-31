@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .addApiIfAvailable(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
+
+        AreaDataAccess.get().sincronizarTodo(null);
     }
 
     @Override
