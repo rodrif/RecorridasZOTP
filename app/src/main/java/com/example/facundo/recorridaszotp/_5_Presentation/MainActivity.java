@@ -266,6 +266,24 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     visitaSeleccionada.setDescripcion("Primera Visita");
                     VisitaDataAccess.get().save(visitaSeleccionada);
                 }
+
+                //Chequea creacion correcta
+                PersonaQuery query = new PersonaQuery();
+                query.nombre = nombre;
+
+                Persona p = PersonaDataAccess.get().find(query);
+                Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
+                if (p == null) {
+                    unToast.setText("Error al grabar");
+                } else {
+                    unToast.setText("Se grabo: " + p.getNombre());
+                }
+                unToast.show();
+
+                menuGuardar(false);
+                getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
+                getFragmentManager().popBackStack();
+                clean();
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
@@ -273,24 +291,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
         }
-
-        //Chequea creacion correcta
-        PersonaQuery query = new PersonaQuery();
-        query.nombre = nombre;
-
-        Persona p = PersonaDataAccess.get().find(query);
-        Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
-        if (p == null) {
-            unToast.setText("Error al grabar");
-        } else {
-            unToast.setText("Se grabo: " + p.getNombre());
-        }
-        unToast.show();
-
-        menuGuardar(false);
-        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
-        getFragmentManager().popBackStack();
-        clean();
     }
 
     @Override
