@@ -39,6 +39,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
         ActiveAndroid.beginTransaction();
         try {
             for (Persona persona : this.ts) {
+               // TODO verificar que el webId sea mayor a 0
                 persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
                 if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.setEstado(Utils.EST_ACTUALIZADO);
