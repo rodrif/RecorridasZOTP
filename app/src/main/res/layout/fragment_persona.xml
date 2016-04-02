@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Telefono"
                 android:inputType="date"
-                android:maxLength="8"/>
+                android:maxLength="20"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
