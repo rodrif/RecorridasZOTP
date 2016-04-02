@@ -39,6 +39,7 @@ public final class Utils {
     public static final String ULTIMAS_VISITAS = "Ultimas Visitas";
     public static final String PERSONA = "Persona";
     public static final String VISITA = "Visita";
+    public static final String MAPA = "Mapa";
     public static final String HOME = "Recorridas ZO";
 
     public static String toString(InputStream inputStream) throws Exception {

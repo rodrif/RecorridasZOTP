@@ -111,7 +111,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        ((MainActivity)activity).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
+        ((MainActivity)activity).getAppbar().setTitle(Utils.MAPA);
     }
 
     @Override
