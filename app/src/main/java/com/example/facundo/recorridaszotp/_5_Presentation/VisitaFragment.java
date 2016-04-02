@@ -119,16 +119,25 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         });
         dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                if (MainActivity.visitaSeleccionada.getId() != null) {
                     VisitaDataAccess.get().deleteLogico(MainActivity.visitaSeleccionada);
-                if (MainActivity.visitaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                    if (MainActivity.visitaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                        Toast.makeText(getActivity(),
+                                "Se elimino la visita a " + MainActivity.visitaSeleccionada.
+                                        getPersona().getNombre()
+                                        + " exitosamente", Toast.LENGTH_SHORT).show();
+                        MainActivity.clean();
+                        activity.onBackPressed();
+                        activity.onBackPressed();
+                    } else {
+                        Log.e(Utils.APPTAG, "Error al hacer borrado logico de visitaId: " +
+                                MainActivity.visitaSeleccionada.getId() +
+                                "en VisitaFragment::PositiveButton::onClick");
+                    }
+                } else {
                     Toast.makeText(getActivity(),
-                            "Se elimino la visita a " + MainActivity.visitaSeleccionada.
-                                    getPersona().getNombre()
-                                    + " exitosamente", Toast.LENGTH_SHORT).show();
-                    MainActivity.clean();
+                            "No se puede borrar una visita no creada", Toast.LENGTH_SHORT).show();
                 }
-                activity.onBackPressed();
-                activity.onBackPressed();
             }
         });
         return vista;
