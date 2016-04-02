@@ -326,14 +326,27 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         mapFragmentPersona.getMap().clear();
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
-            if (visita != null)
+            if (visita != null) {
                 if (visita.getUbicacion() != null) {
                     marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
                             visita.getUbicacion().latitude,
                             visita.getUbicacion().longitude)));
                     centrarMapa(visita.getUbicacion());
                 }
+            } else {
+                if(MainActivity.visitaSeleccionada != null) {
+                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(
+                            getDefaultUbicacion()));
+                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    centrarMapa(getDefaultUbicacion());
+                }
+            }
         }
+    }
+
+    private LatLng getDefaultUbicacion() {
+        //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
+        return new LatLng(-34.6417109,-58.5651438);
     }
 
     private void centrarMapa(LatLng ubicacion) {

@@ -185,13 +185,19 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mapFragmentVisita.getMap().clear();
-        if (MainActivity.visitaSeleccionada != null)
+        if (MainActivity.visitaSeleccionada != null) {
             if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
                 marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
                         MainActivity.visitaSeleccionada.getUbicacion().latitude,
                         MainActivity.visitaSeleccionada.getUbicacion().longitude)));
                 centrarMapa(MainActivity.visitaSeleccionada.getUbicacion());
+            } else {
+                Log.e(Utils.APPTAG, "VisitaFragment::onMapReady con " +
+                        "MainActivity.visitaSeleccionada.getUbicacion() null");
             }
+        } else {
+            Log.e(Utils.APPTAG, "VisitaFragment::onMapReady MainActivity.visitaSeleccionada null");
+        }
     }
 
     private void centrarMapa(LatLng ubicacion) {
