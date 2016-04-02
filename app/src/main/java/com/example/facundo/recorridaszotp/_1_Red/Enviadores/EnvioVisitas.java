@@ -31,6 +31,7 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(Utils.APPTAG, "EnvioVisitas::onPostExecute result: " + result);
         try {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
@@ -40,8 +41,12 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
         ActiveAndroid.beginTransaction();
         try {
             for (Visita visita : this.ts) {
-                Log.d(Utils.APPTAG, "EnvioVisitas::onPostExecute result: " + result);
-                visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
+                if (this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()) > 0 ) {
+                    visita.setWebId(this.respuesta.getJSONObject("datos").optInt(visita.getId().toString()));
+                } else {
+                    Log.e(Utils.APPTAG, "Error: webId negativo en EnvioVisita::onPostExecute");
+                    continue;
+                }
                 if (visita.getEstado() != Utils.EST_BORRADO) {
                     visita.setEstado(Utils.EST_ACTUALIZADO);
                     visita.save();
