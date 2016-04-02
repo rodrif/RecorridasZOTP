@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.MailTo;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -222,21 +223,28 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
         dialogoBorrar.setCancelable(false);
         dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
-
-                {
-                    public void onClick(DialogInterface dialogo1, int id) {
+            {
+                public void onClick(DialogInterface dialogo1, int id) {
+                    if(MainActivity.personaSeleccionada.getId() != null) {
                         PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
                         if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
                             Toast.makeText(getActivity(),
                                     "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
                                             + " exitosamente", Toast.LENGTH_SHORT).show();
+                            MainActivity.clean();
+                            activity.onBackPressed();
+                            activity.onBackPressed();
+                        } else {
+                            Log.e(Utils.APPTAG, "Error al hacer borrado logico de personaId: " +
+                                MainActivity.personaSeleccionada.getId() +
+                                "en PersonaFragment::PositiveButton::onClick");
                         }
-                        MainActivity.clean();
-                        activity.onBackPressed();
-                        activity.onBackPressed();
+                    } else {
+                        Toast.makeText(getActivity(),
+                            "No se puede borrar una persona no creada", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+            }
         );
         dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
 
