@@ -21,6 +21,7 @@ public final class Utils {
     public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/api/people/download";
     public static final String WEB_RECIBIR_VISITAS = Utils.WEB + "/api/visits/download";
     public static final String WEB_RECIBIR_REFERENTES = Utils.WEB + "/api/referentes/download";
+    public static final String EDITAR_PERSONA = "editar_persona"
     public static final String APPTAG = "recorridaszotpD";
     public static final String UltFechaSincr = "UltFechaSincr";
     public static final int MAX_INTENTOS = 3;
