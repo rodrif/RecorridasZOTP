@@ -1,14 +1,19 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by gonzalo on 09/04/16.
  */
 public class Roles {
-    private Roles instance = null;
+    private static Roles instance = null;
     private Map<Integer, String> permisos;
     public Roles() {
         permisos = new HashMap<Integer, String>();
-        permisos.put(1, Utils.EITAR_PERSONA);
+        permisos.put(1, Utils.PUEDE_EDITAR_PERSONA);
     }
     
     static public Roles getInstance() {
