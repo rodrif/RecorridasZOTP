@@ -21,7 +21,15 @@ public final class Utils {
     public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/api/people/download";
     public static final String WEB_RECIBIR_VISITAS = Utils.WEB + "/api/visits/download";
     public static final String WEB_RECIBIR_REFERENTES = Utils.WEB + "/api/referentes/download";
-    public static final String PUEDE_EDITAR_PERSONA = "editarPersona";
+    //Permisos
+    public static final String PUEDE_CREAR_PERSONA = "puedeCrearPersona";
+    public static final String PUEDE_EDITAR_PERSONA = "puedeEditarPersona";
+    public static final String PUEDE_BORRAR_PERSONA = "puedeBorrarPersona";
+    public static final String PUEDE_CREAR_VISITA = "puedeCrearVisita";
+    public static final String PUEDE_EDITAR_VISITA = "puedeEditarVisita";
+    public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
+    public static final String PUEDE_VER_TELEFONO = "puedeVerTelefono";
+    ////////////////////////////////////////////////////////////////////////
     public static final String APPTAG = "recorridaszotpD";
     public static final String UltFechaSincr = "UltFechaSincr";
     public static final int MAX_INTENTOS = 3;
