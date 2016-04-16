@@ -122,6 +122,14 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             //Leo respuesta
             Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
             inputStream = new BufferedInputStream(conn.getInputStream());
+            if(conn.getHeaderField(Utils.ACCESS_TOKEN) != null)
+                Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
+            if(conn.getHeaderField(Utils.CLIENT) != null)
+                Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
+            if(conn.getHeaderField(Utils.EXPIRY) != null)
+                Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
+            if(conn.getHeaderField(Utils.UID) != null)
+                Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
             respuesta = Utils.toString(inputStream);
         } catch (Exception e) {
             e.printStackTrace();
