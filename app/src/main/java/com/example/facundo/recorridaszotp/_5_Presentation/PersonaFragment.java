@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.location.Location;
-import android.net.MailTo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -21,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
@@ -327,7 +325,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etTelefono.setText("");
                 }
 
-                if (Roles.getInstance().hasPermission(1, Utils.PUEDE_VER_TELEFONO)) {
+                if (Roles.getInstance().hasPermission(1, Utils.PUEDE_VER_TELEFONO_PERSONA)) {
                     etTelefono.setVisibility(View.GONE);
                 }
             }

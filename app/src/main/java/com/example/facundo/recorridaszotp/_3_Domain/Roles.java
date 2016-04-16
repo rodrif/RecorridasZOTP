@@ -22,7 +22,7 @@ public class Roles {
         permisos = new HashMap<Integer, String>();
         permisos.put(1, Utils.PUEDE_CREAR_PERSONA);
         permisos.put(1, Utils.PUEDE_EDITAR_PERSONA);
-        permisos.put(1, Utils.PUEDE_VER_TELEFONO);
+        permisos.put(1, Utils.PUEDE_VER_TELEFONO_PERSONA);
     }
     
     static public Roles getInstance() {

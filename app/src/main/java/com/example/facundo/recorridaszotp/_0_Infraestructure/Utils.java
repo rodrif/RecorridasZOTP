@@ -30,7 +30,7 @@ public final class Utils {
     public static final String PUEDE_CREAR_VISITA = "puedeCrearVisita";
     public static final String PUEDE_EDITAR_VISITA = "puedeEditarVisita";
     public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
-    public static final String PUEDE_VER_TELEFONO = "puedeVerTelefono";
+    public static final String PUEDE_VER_TELEFONO_PERSONA = "puedeVerTelefono";
     ////////////////////////////////////////////////////////////////////////
     public static final String APPTAG = "recorridaszotpD";
     public static final String UltFechaSincr = "UltFechaSincr";
