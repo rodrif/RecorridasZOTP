@@ -37,7 +37,7 @@ public class Roles {
     }
 
     public boolean hasPermission(String permiso) {
-        return this.getPermissions(Config.getRol()).matches(permiso);
+        return this.getPermissions(Config.getInstance().getRol()).matches(permiso);
     }
 
     public boolean hasPermission(int rolId, String permiso) {

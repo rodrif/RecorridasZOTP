@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
-        AreaDataAccess.get().sincronizarTodo(null);
         new ObtenerToken(this).execute();
     }
 

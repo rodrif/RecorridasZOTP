@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.google.android.gms.auth.GoogleAuthUtil;
 
@@ -99,6 +100,11 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             conn.setDoOutput(true); // Triggers POST.
             conn.setRequestProperty("Accept-Charset", charset);
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+            conn.setRequestProperty(Utils.ACCESS_TOKEN, Config.getInstance().getAccessToken());
+            conn.setRequestProperty(Utils.CLIENT, Config.getInstance().getClient());
+            conn.setRequestProperty(Utils.UID, Config.getInstance().getUid());
+            conn.setRequestProperty(Utils.TOKEN_TYPE, Config.getInstance().getTokenType());
+            conn.setRequestProperty(Utils.EXPIRY, Config.getInstance().getExpiry());
 
             //Construimos el objeto cliente en formato JSON
             JSONArray datos = this.cargarJson();

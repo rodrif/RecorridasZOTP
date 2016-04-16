@@ -33,6 +33,12 @@ public final class Utils {
     public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
     public static final String PUEDE_VER_TELEFONO_PERSONA = "puedeVerTelefono";
     ////////////////////////////////////////////////////////////////////////
+    public static final String TOKEN_TYPE = "token-type";
+    public static final String ACCESS_TOKEN = "access-token";
+    public static final String CLIENT = "client";
+    public static final String EXPIRY = "expiry";
+    public static final String UID = "uid";
+    public static final String BEARER = "Bearer";
     public static final String APPTAG = "recorridaszotpD";
     public static final String UltFechaSincr = "UltFechaSincr";
     public static final int MAX_INTENTOS = 3;

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -68,7 +70,10 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
             //Leo respuesta
             Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
             inputStream = new BufferedInputStream(conn.getInputStream());
-            String sToken = conn.getHeaderField("Access-Token");
+            Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
+            Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
+            Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
+            Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
             respuesta = Utils.toString(inputStream);
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             //this.activity.setToken(token);
@@ -84,7 +89,6 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        Toast.makeText(this.activity,
-                "Token: " + this.activity.getToken(), Toast.LENGTH_SHORT).show();
+        AreaDataAccess.get().sincronizarTodo(null);
     }
 }
