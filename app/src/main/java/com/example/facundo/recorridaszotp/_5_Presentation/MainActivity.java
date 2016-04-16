@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .build();
 
         AreaDataAccess.get().sincronizarTodo(null);
+        new ObtenerToken(this).execute();
     }
 
     @Override
