@@ -328,7 +328,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
 
                 if (Roles.getInstance().hasPermission(1, Utils.PUEDE_VER_TELEFONO)) {
-                    etTelefono.setVisibility(View.INVISIBLE);
+                    etTelefono.setVisibility(View.GONE);
                 }
             }
         }
