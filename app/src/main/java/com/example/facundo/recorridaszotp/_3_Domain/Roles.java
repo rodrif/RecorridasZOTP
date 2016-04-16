@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class Roles {
         permisos = new HashMap<Integer, String>();
         permisos.put(1, Utils.PUEDE_CREAR_PERSONA);
         permisos.put(1, Utils.PUEDE_EDITAR_PERSONA);
+        permisos.put(1, Utils.PUEDE_VER_TELEFONO);
     }
     
     static public Roles getInstance() {
@@ -32,6 +34,10 @@ public class Roles {
 
     private String getPermissions(int rolId) {
         return permisos.get(rolId);
+    }
+
+    public boolean hasPermission(String permiso) {
+        return this.getPermissions(Config.getRol()).matches(permiso);
     }
 
     public boolean hasPermission(int rolId, String permiso) {

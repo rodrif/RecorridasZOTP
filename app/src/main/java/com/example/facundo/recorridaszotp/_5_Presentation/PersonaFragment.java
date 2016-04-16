@@ -31,6 +31,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
+import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -316,6 +317,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etTelefono.setText(MainActivity.personaSeleccionada.getTelefono());
                 } else {
                     etTelefono.setText("");
+                }
+
+                if (Roles.getInstance().hasPermission(1, Utils.PUEDE_VER_TELEFONO)) {
+                    etTelefono.setVisibility(View.INVISIBLE);
                 }
             }
         }
