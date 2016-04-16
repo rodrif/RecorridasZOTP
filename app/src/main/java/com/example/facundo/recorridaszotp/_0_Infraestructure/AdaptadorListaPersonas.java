@@ -39,7 +39,7 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
         TextView lZona = (TextView) item.findViewById(R.id.lZona);
         Zona unaZona = listaPersonas.get(position).getZona();
         if (unaZona != null) {
-            lZona.setText(Integer.toString(listaPersonas.get(position).getWebId()));
+            lZona.setText(unaZona.getNombre());
         }
 
       /*  TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWeb);

@@ -39,7 +39,13 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
         ActiveAndroid.beginTransaction();
         try {
             for (Persona persona : this.ts) {
-                persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
+                if (this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()) > 0 ) {
+                    persona.setWebId(this.respuesta.getJSONObject("datos").optInt(persona.getId().toString()));
+                } else {
+                    Log.e(Utils.APPTAG, "Error: webId negativo en EnvioPersona::onPostExecute");
+                    continue;
+                }
+
                 if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.setEstado(Utils.EST_ACTUALIZADO);
                     persona.save();
