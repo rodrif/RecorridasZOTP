@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
-        new ObtenerToken(this).execute();
+        new ObtenerToken().execute();
     }
 
     @Override

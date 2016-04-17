@@ -12,6 +12,7 @@ public class Config {
     private static Config instance = null;
     private int rol;
     private Map<String, String> token;
+    private int numIntento;
 
     private Config () {
         this.token = new HashMap<String, String>();
@@ -30,11 +31,19 @@ public class Config {
     }
 
     public int getRol() {
-        return rol;
+        return this.rol;
     }
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+
+    public int getNumIntento() {
+        return this.numIntento;
+    }
+
+    public void setNumIntento(int numIntento) {
+        this.numIntento = numIntento;
     }
 
     public String getExpiry() {

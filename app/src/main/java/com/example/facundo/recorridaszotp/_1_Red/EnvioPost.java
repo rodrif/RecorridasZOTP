@@ -119,6 +119,16 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             OutputStream output = conn.getOutputStream();
             output.write(query.getBytes(charset));
 
+            if(conn.getResponseCode() == 401){
+                Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
+                if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
+                    new ObtenerToken().execute();
+                }
+                return respuesta;
+            } else {
+               Config.getInstance().setNumIntento(0);
+            }
+
             //Leo respuesta
             Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
             inputStream = new BufferedInputStream(conn.getInputStream());

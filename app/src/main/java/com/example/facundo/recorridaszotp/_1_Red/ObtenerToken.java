@@ -30,7 +30,6 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by GoRodriguez on 02/10/2015.
  */
 public class ObtenerToken extends AsyncTask<Void, Void, Void> {
-    private MainActivity activity;
     String charset = "UTF-8";
     URL url = null;
     HttpURLConnection conn = null; // TODO Borrar
@@ -38,8 +37,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
     InputStream inputStream = null;
     String respuesta = null;
 
-    public ObtenerToken(MainActivity activity) {
-        this.activity = activity;
+    public ObtenerToken() {
     }
 
     @Override
@@ -83,6 +81,9 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if(this.asyncDelegate) {
+           this.asyncDelegate.ejecutar("");
         }
         return null;
     }
