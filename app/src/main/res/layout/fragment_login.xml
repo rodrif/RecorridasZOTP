@@ -17,7 +17,7 @@
             android:id="@+id/ETEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textEmailAddress"
             android:hint="Email" />
     </android.support.design.widget.TextInputLayout>
 
@@ -29,7 +29,14 @@
             android:id="@+id/ETPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textPassword"
             android:hint="Password" />
     </android.support.design.widget.TextInputLayout>
+
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:onClick="onClickLogin" />
 </LinearLayout>

@@ -12,8 +12,9 @@ public class Config {
     private static Config instance = null;
     private int rol;
     private int userWebId;
-    private String userMail = "rodrif89@gmail.com";
-    private String userPassword = "123456789";
+ //   private String userMail = "rodrif89@gmail.com"; 123456789
+    private String userMail = "";
+    private String userPassword = "";
     private Map<String, String> token;
     private int numIntento;
 

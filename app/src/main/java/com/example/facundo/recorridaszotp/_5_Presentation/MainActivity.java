@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         } else {
             initFragment = new HomeFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
+            new ObtenerToken().execute();
         }
         ft.commit();
 
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
 
-        new ObtenerToken().execute();
+       // new ObtenerToken().execute();
     }
 
     @Override
@@ -457,6 +458,15 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     public Toolbar getAppbar() {
         return appbar;
+    }
+
+    public void onClickLogin(View view) {
+        View vista = getFragmentManager().findFragmentById(R.id.content_frame).getView();
+        EditText ETEmail = (EditText) vista.findViewById(R.id.ETEmail);
+        EditText ETPassword = (EditText) vista.findViewById(R.id.ETPassword);
+        Config.getInstance().setUserMail(ETEmail.getText().toString());
+        Config.getInstance().setUserPassword(ETPassword.getText().toString());
+        new ObtenerToken().execute();
     }
 
 }

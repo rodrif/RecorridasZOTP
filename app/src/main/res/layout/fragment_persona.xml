@@ -172,6 +172,5 @@
                 android:layout_height="match_parent" />
 
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
 </com.example.facundo.recorridaszotp._0_Infraestructure.ScrollPersona>
