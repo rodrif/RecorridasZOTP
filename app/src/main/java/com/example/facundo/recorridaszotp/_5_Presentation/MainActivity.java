@@ -37,6 +37,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
+import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Config.getInstance().setIsLoginOk(settings.getBoolean(Utils.USER_IS_LOGIN, false));
         Config.getInstance().setUserMail(settings.getString(Utils.USER_EMAIL, ""));
         Config.getInstance().setUserPassword(settings.getString(Utils.USER_PASSWORD, ""));
+        Config.getInstance().setRol(settings.getInt(Utils.USER_ROL_ID, -1));
 
         setContentView(R.layout.activity_main);
 
@@ -101,10 +103,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         navItms = new ArrayList<ItemLista>();
         navItms.add(new ItemLista("Personas", R.drawable.ic_people_white_36dp));
-        navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
+        if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
+            navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
+        }
         navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
-        navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
+ //       navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
 
@@ -454,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         editor.putString(Utils.USER_EMAIL, Config.getInstance().getUserMail());
         editor.putString(Utils.USER_PASSWORD, Config.getInstance().getUserPassword());
         editor.putBoolean(Utils.USER_IS_LOGIN, Config.getInstance().isLoginOk());
+        editor.putInt(Utils.USER_ROL_ID, Config.getInstance().getRol());
 
         // Commit the edits!
         editor.commit();

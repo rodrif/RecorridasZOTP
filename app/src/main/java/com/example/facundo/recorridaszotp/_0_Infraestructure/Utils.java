@@ -68,6 +68,7 @@ public final class Utils {
     public static final String USER_EMAIL = "User Email";
     public static final String USER_PASSWORD = "User Password";
     public static final String USER_IS_LOGIN = "User is login";
+    public static final String USER_ROL_ID = "User Rol Id";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
