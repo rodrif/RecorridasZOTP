@@ -26,6 +26,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -241,7 +242,12 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
 
     @Override
     public void popUp() {
-        if (dialogoBorrar != null)
-            dialogoBorrar.show();
+        if (Roles.getInstance().hasPermission(Utils.PUEDE_BORRAR_VISITA)) {
+            if (dialogoBorrar != null)
+                dialogoBorrar.show();
+        } else {
+            Toast unToast = Toast.makeText(this.activity, "No tiene permisos para borrar a esta visita", Toast.LENGTH_SHORT);
+            unToast.show();
+        }
     }
 }
