@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Config {
     private static Config instance = null;
-    private int rol;
+    private int rol = -1;
     private int userWebId;
  //   private String userMail = "rodrif89@gmail.com"; 123456789
     private String userMail = "";
@@ -31,6 +31,7 @@ public class Config {
     static public Config getInstance() {
         if (instance == null) {
             instance = new Config();
+
         }
         return instance;
     }
@@ -41,6 +42,10 @@ public class Config {
 
     public void setLoginOk() {
         this.isLoginOk = true;
+    }
+
+    public void setIsLoginOk(boolean isLoginOk) {
+        this.isLoginOk = isLoginOk;
     }
 
     public int getRol() {

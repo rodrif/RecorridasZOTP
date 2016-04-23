@@ -1,5 +1,7 @@
 package com.example.facundo.recorridaszotp._3_Domain;
 
+import android.util.Log;
+
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 
@@ -10,7 +12,7 @@ import java.util.Map;
  * Created by gonzalo on 09/04/16.
  */
 /*
-Admin:          1
+Admin:          1 //FIXME
 Coordinador:    2
 Referente:      3
 Voluntario:     4
@@ -20,9 +22,8 @@ public class Roles {
     private Map<Integer, String> permisos;
     public Roles() {
         permisos = new HashMap<Integer, String>();
-        permisos.put(1, Utils.PUEDE_CREAR_PERSONA);
-        permisos.put(1, Utils.PUEDE_EDITAR_PERSONA);
-        permisos.put(1, Utils.PUEDE_VER_TELEFONO_PERSONA);
+        permisos.put(1, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA
+                + Utils.PUEDE_VER_TELEFONO_PERSONA);
     }
     
     static public Roles getInstance() {
@@ -37,7 +38,13 @@ public class Roles {
     }
 
     public boolean hasPermission(String permiso) {
-        return this.getPermissions(Config.getInstance().getRol()).matches(permiso);
+        String permisos = this.getPermissions(Config.getInstance().getRol());
+        if (permisos != null ) {
+            return this.getPermissions(Config.getInstance().getRol()).matches(permiso);
+        } else {
+            Log.e(Utils.APPTAG, "Roles: permisos null");
+        }
+        return false;
     }
 
     public boolean hasPermission(int rolId, String permiso) {

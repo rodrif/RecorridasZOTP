@@ -64,6 +64,10 @@ public final class Utils {
     public static final String VISITA = "Visita";
     public static final String MAPA = "Mapa";
     public static final String HOME = "Recorridas ZO";
+    public static final String PREFS_NAME = "Mis Preferencias";
+    public static final String USER_EMAIL = "User Email";
+    public static final String USER_PASSWORD = "User Password";
+    public static final String USER_IS_LOGIN = "User is login";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

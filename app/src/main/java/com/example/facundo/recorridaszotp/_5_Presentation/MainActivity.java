@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -78,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
+        Config.getInstance().setIsLoginOk(settings.getBoolean(Utils.USER_IS_LOGIN, false));
+        Config.getInstance().setUserMail(settings.getString(Utils.USER_EMAIL, ""));
+        Config.getInstance().setUserPassword(settings.getString(Utils.USER_PASSWORD, ""));
+
         setContentView(R.layout.activity_main);
 
         appbar = (Toolbar) findViewById(R.id.appbar);
@@ -102,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navList.setAdapter(navAdapter);
 
 
-        navList = (ListView) findViewById(R.id.nav_list);
+     //   navList = (ListView) findViewById(R.id.nav_list);
      //   navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
         Fragment initFragment; // = new HomeFragment();
@@ -437,9 +444,19 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop(){
         super.onStop();
-        mGoogleApiClient.disconnect();
+
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(Utils.USER_EMAIL, Config.getInstance().getUserMail());
+        editor.putString(Utils.USER_PASSWORD, Config.getInstance().getUserPassword());
+        editor.putBoolean(Utils.USER_IS_LOGIN, Config.getInstance().isLoginOk());
+
+        // Commit the edits!
+        editor.commit();
     }
 
     private void menuGuardar(boolean bool) {

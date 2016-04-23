@@ -23,6 +23,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
@@ -325,7 +326,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etTelefono.setText("");
                 }
 
-                if (Roles.getInstance().hasPermission(1, Utils.PUEDE_VER_TELEFONO_PERSONA)) {
+                if (!Roles.getInstance().hasPermission(Utils.PUEDE_VER_TELEFONO_PERSONA)) {
                     etTelefono.setVisibility(View.GONE);
                 }
             }
