@@ -11,6 +11,9 @@ import java.util.Map;
 public class Config {
     private static Config instance = null;
     private int rol;
+    private int userWebId;
+    private String userMail = "rodrif89@gmail.com";
+    private String userPassword = "123456789";
     private Map<String, String> token;
     private int numIntento;
 
@@ -80,5 +83,29 @@ public class Config {
 
     public String getTokenType() {
         return this.token.get(Utils.TOKEN_TYPE);
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public int getUserWebId() {
+        return userWebId;
+    }
+
+    public void setUserWebId(int userWebId) {
+        this.userWebId = userWebId;
     }
 }

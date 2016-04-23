@@ -58,8 +58,8 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
 
             String query = String.format("email=%s&password=%s",
-                    URLEncoder.encode("rodrif89@gmail.com", charset),
-                    URLEncoder.encode("123456789", charset));
+                    URLEncoder.encode(Config.getInstance().getUserMail(), charset),
+                    URLEncoder.encode(Config.getInstance().getUserPassword(), charset));
 
             //Envio datos
             OutputStream output = conn.getOutputStream();
@@ -81,9 +81,6 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        if(this.asyncDelegate) {
-           this.asyncDelegate.ejecutar("");
         }
         return null;
     }

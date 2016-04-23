@@ -30,6 +30,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
@@ -62,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = true;
 
-    private String token;
-    private String email;
+    //private String token;
+    //private String email;
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -108,9 +109,15 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navList = (ListView) findViewById(R.id.nav_list);
         navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
-        Fragment fragmentHome = new HomeFragment();
+        Fragment initFragment; // = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragmentHome, Utils.FRAG_HOME);
+        if(Config.getInstance().getUserMail() == "") {
+            initFragment = new LoginFragment();
+            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);
+        } else {
+            initFragment = new HomeFragment();
+            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
+        }
         ft.commit();
 
         // Build GoogleApiClient with access to basic profile
@@ -173,22 +180,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public void GuardarVisitaClickFormulario() {
@@ -405,13 +396,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
     @Override
     public void onConnected(Bundle bundle) {
-        ObtenerToken obtenerToken;
+      //  ObtenerToken obtenerToken;
         Toast.makeText(this,
                 "onConnected", Toast.LENGTH_SHORT).show();
-        this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+    //    this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-        obtenerToken = new ObtenerToken(this);
-        obtenerToken.execute();
+     /*   obtenerToken = new ObtenerToken();
+        obtenerToken.execute();*/
     }
 
     @Override
