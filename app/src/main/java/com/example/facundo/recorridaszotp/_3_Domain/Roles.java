@@ -40,7 +40,7 @@ public class Roles {
     public boolean hasPermission(String permiso) {
         String permisos = this.getPermissions(Config.getInstance().getRol());
         if (permisos != null ) {
-            return this.getPermissions(Config.getInstance().getRol()).matches(permiso);
+            return permisos.matches(".*" + permiso);
         } else {
             Log.e(Utils.APPTAG, "Roles: permisos null");
         }

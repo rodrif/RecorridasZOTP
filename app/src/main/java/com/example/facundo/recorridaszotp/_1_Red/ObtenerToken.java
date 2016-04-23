@@ -16,6 +16,8 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.Scopes;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -74,11 +76,13 @@ public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
             //Leo respuesta
             Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
             inputStream = new BufferedInputStream(conn.getInputStream());
+            respuesta = Utils.toString(inputStream);//FIXME Agregar rol id
             Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
             Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
             Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
             Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
-            respuesta = Utils.toString(inputStream);
+            Config.getInstance().setRol(this.getRolId(respuesta));
+
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             return Integer.toString(conn.getResponseCode());
             //this.activity.setToken(token);
@@ -106,5 +110,17 @@ public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
                Toast.makeText(this.activity,
                     "Login fallido", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int getRolId(String jsonString) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(jsonString);
+            JSONObject data = json.getJSONObject("data");
+            return data.getInt("rol_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
