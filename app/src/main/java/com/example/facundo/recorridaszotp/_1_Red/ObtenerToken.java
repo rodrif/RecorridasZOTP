@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._1_Red;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,13 +30,14 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by GoRodriguez on 02/10/2015.
  */
-public class ObtenerToken extends AsyncTask<Void, Void, Void> {
+public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
     String charset = "UTF-8";
     URL url = null;
     HttpURLConnection conn = null; // TODO Borrar
     HttpsURLConnection conns = null; //Para conexion segura
     InputStream inputStream = null;
     String respuesta = null;
+    private MainActivity activity = null;
 
     public ObtenerToken() {
     }
@@ -46,7 +48,11 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected String doInBackground(MainActivity... params) {
+        if(params.length != 0) {
+            this.activity = params[0];
+        }
+
         String token = "";
         try {
             url = new URL(Utils.WEB_LOGIN);
@@ -74,6 +80,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
             Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
             respuesta = Utils.toString(inputStream);
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
+            return Integer.toString(conn.getResponseCode());
             //this.activity.setToken(token);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,11 +89,22 @@ public class ObtenerToken extends AsyncTask<Void, Void, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     @Override
-    protected void onPostExecute(Void result) {
-        AreaDataAccess.get().sincronizarTodo(null);
+    protected void onPostExecute(String result) {
+        if (result.equalsIgnoreCase(Integer.toString(Utils.LOGIN_OK_CODE))) {
+            if (this.activity != null) {
+                this.activity.loginOk();
+                Toast.makeText(this.activity,
+                        "Login exitoso", Toast.LENGTH_SHORT).show();
+            }
+            AreaDataAccess.get().sincronizarTodo(null);
+        } else {
+            if (this.activity != null)
+               Toast.makeText(this.activity,
+                    "Login fallido", Toast.LENGTH_SHORT).show();
+        }
     }
 }

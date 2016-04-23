@@ -466,7 +466,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         EditText ETPassword = (EditText) vista.findViewById(R.id.ETPassword);
         Config.getInstance().setUserMail(ETEmail.getText().toString());
         Config.getInstance().setUserPassword(ETPassword.getText().toString());
-        new ObtenerToken().execute();
+        new ObtenerToken().execute(this);
+    }
+
+    public void loginOk() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment homeFragment = new HomeFragment();
+        ft.replace(R.id.content_frame, homeFragment, Utils.FRAG_HOME);
+        ft.commit();
     }
 
 }
