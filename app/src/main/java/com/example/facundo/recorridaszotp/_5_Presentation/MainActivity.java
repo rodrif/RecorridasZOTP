@@ -103,9 +103,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         navItms = new ArrayList<ItemLista>();
         navItms.add(new ItemLista("Personas", R.drawable.ic_people_white_36dp));
-        if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
-            navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
-        }
+        navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
         navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
  //       navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
@@ -367,12 +365,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                             "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
                     break;
                 case 2: //Crear Persona
-                    menuGuardar(true);
-                    personaSeleccionada = new Persona();
-                    visitaSeleccionada = new Visita(personaSeleccionada);
-                    fragment = new PersonaFragment();
-                    fragmentTransaction = true;
-                    tag = Utils.FRAG_PERSONA;
+                    if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
+                        menuGuardar(true);
+                        personaSeleccionada = new Persona();
+                        visitaSeleccionada = new Visita(personaSeleccionada);
+                        fragment = new PersonaFragment();
+                        fragmentTransaction = true;
+                        tag = Utils.FRAG_PERSONA;
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                  "No tiene permisos para crear personas", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 3: //Ultimas Visitas
                     menuGuardar(false);
