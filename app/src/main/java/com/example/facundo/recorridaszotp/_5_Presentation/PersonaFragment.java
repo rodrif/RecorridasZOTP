@@ -393,7 +393,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     @Override
     public void popUp() {
-        if (dialogoBorrar != null)
-            dialogoBorrar.show();
+        if (Roles.getInstance().hasPermission(Utils.PUEDE_BORRAR_PERSONA)) {
+            if (dialogoBorrar != null)
+                dialogoBorrar.show();
+        } else {
+            Toast unToast = Toast.makeText(this.activity, "No tiene permisos para borrar a esta persona", Toast.LENGTH_SHORT);
+            unToast.show();
+        }
     }
 }
