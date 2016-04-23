@@ -82,14 +82,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
 
         //Drawer layout
         navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navList = (ListView) findViewById(R.id.nav_list);
-        //Declaramos el header el caul sera el layout de header.xml
+        //Declaramos el header el cual sera el layout de header.xml
         View header = getLayoutInflater().inflate(R.layout.header, null);
         //Establecemos header
         navList.addHeaderView(header);
@@ -102,22 +100,21 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
-        setSupportActionBar(appbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         navList = (ListView) findViewById(R.id.nav_list);
-        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
+     //   navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
         Fragment initFragment; // = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if(Config.getInstance().getUserMail() == "") {
-            initFragment = new LoginFragment();
-            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);
-        } else {
+        if(Config.getInstance().isLoginOk()) {
+            enableSideMenu();
             initFragment = new HomeFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
             new ObtenerToken().execute();
+        } else {
+            initFragment = new LoginFragment();
+            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);
         }
         ft.commit();
 
@@ -470,10 +467,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     public void loginOk() {
+        this.enableSideMenu();
+        Config.getInstance().setLoginOk();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment homeFragment = new HomeFragment();
         ft.replace(R.id.content_frame, homeFragment, Utils.FRAG_HOME);
         ft.commit();
     }
 
+    private void enableSideMenu() {
+        navList = (ListView) findViewById(R.id.nav_list);
+        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 }

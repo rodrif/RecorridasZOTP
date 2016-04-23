@@ -15,6 +15,7 @@ public class Config {
  //   private String userMail = "rodrif89@gmail.com"; 123456789
     private String userMail = "";
     private String userPassword = "";
+    private boolean isLoginOk = false;
     private Map<String, String> token;
     private int numIntento;
 
@@ -32,6 +33,14 @@ public class Config {
             instance = new Config();
         }
         return instance;
+    }
+
+    public boolean isLoginOk() {
+        return isLoginOk;
+    }
+
+    public void setLoginOk() {
+        this.isLoginOk = true;
     }
 
     public int getRol() {
