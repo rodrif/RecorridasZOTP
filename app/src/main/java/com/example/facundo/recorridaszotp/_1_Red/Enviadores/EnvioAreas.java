@@ -33,6 +33,7 @@ public class EnvioAreas extends BasicEnvio<Area> {
 
     @Override
     protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         try {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {

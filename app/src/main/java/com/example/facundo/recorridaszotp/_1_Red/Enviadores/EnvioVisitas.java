@@ -31,6 +31,7 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
 
     @Override
     protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         Log.d(Utils.APPTAG, "EnvioVisitas::onPostExecute result: " + result);
         try {
             this.respuesta = new JSONObject(result);

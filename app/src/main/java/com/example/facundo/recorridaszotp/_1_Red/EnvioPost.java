@@ -6,7 +6,7 @@ import android.util.Log;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
-import com.google.android.gms.auth.GoogleAuthUtil;
+//import com.google.android.gms.auth.GoogleAuthUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,14 +119,8 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             OutputStream output = conn.getOutputStream();
             output.write(query.getBytes(charset));
 
-            if(conn.getResponseCode() == 401){
-                Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
-                if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
-                    new ObtenerToken().execute();
-                }
-                return respuesta;
-            } else {
-               Config.getInstance().setNumIntento(0);
+            if(conn.getResponseCode() == Utils.INVALID_TOKEN){
+                return Integer.toString(Utils.INVALID_TOKEN);
             }
 
             //Leo respuesta
@@ -149,6 +143,14 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected abstract void onPostExecute(String result);
+    protected void onPostExecute(String result) {
+        if(result == Integer.toString(Utils.INVALID_TOKEN)){
+            Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
+            if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
+                new ObtenerToken().execute();
+            }
+            Config.getInstance().setNumIntento(0);
+        }
+    };
 
 }

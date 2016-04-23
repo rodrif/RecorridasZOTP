@@ -28,6 +28,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
 
     @Override
     protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         Log.d(Utils.APPTAG, "EnvioPersonas::onPostExecute result: " + result);
         try {
             this.respuesta = new JSONObject(result);

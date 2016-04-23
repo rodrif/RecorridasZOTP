@@ -33,6 +33,7 @@ public final class Utils {
     public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
     public static final String PUEDE_VER_TELEFONO_PERSONA = "puedeVerTelefono";
     ////////////////////////////////////////////////////////////////////////
+    public static final int INVALID_TOKEN = 401;
     public static final String TOKEN_TYPE = "token-type";
     public static final String ACCESS_TOKEN = "access-token";
     public static final String CLIENT = "client";
