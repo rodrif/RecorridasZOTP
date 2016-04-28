@@ -25,6 +25,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -189,6 +190,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             if (MainActivity.visitaSeleccionada.getDescripcion() != null) {
                 etObservaciones.setText(MainActivity.visitaSeleccionada.getDescripcion());
             }
+            bloquearEdicion();
         }
     }
 
@@ -224,6 +226,17 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                     CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
                             myLocation.getLongitude()), Utils.ZOOM_STANDAR));
             locationCargada = true;
+        }
+    }
+
+    private void bloquearEdicion() {
+        if (Config.getInstance().isEditing()
+                && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA)) {
+            etFecha.setEnabled(false);
+            etObservaciones.setEnabled(false);
+        } else {
+            etFecha.setEnabled(true);
+            etObservaciones.setEnabled(true);
         }
     }
 

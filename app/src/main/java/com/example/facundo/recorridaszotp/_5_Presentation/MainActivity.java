@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
-    public static boolean editandoPersona = false;
     private Menu menuGuardarPersona = null;
 
     @Override
@@ -293,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public void mostrarPersona(Persona persona) {
         menuGuardar(true);
         personaSeleccionada = persona;
-        editandoPersona = true;
+        Config.getInstance().setIsEditing(true);
         visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);
         Fragment frag = new PersonaFragment();
 
@@ -370,6 +369,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                         personaSeleccionada = new Persona();
                         visitaSeleccionada = new Visita(personaSeleccionada);
                         fragment = new PersonaFragment();
+                        Config.getInstance().setIsEditing(false);
                         fragmentTransaction = true;
                         tag = Utils.FRAG_PERSONA;
                     } else {
@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public static void clean() {
         personaSeleccionada = null;
         visitaSeleccionada = null;
-        editandoPersona = false;
+        Config.getInstance().setIsEditing(false);
     }
 
     public Toolbar getAppbar() {

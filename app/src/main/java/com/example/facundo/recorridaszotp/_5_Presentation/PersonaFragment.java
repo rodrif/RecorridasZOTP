@@ -97,7 +97,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (!MainActivity.editandoPersona) {
+                if (!Config.getInstance().isEditing()) {
                     mapFragmentPersona.getMap().clear();
                     marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
                             latLng.latitude, latLng.longitude)));
@@ -329,7 +329,33 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 if (!Roles.getInstance().hasPermission(Utils.PUEDE_VER_TELEFONO_PERSONA)) {
                     etTelefono.setVisibility(View.GONE);
                 }
+                this.bloquearEdicion();
             }
+        }
+    }
+
+    private void bloquearEdicion() {
+        if (Config.getInstance().isEditing()
+                && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_PERSONA)) {
+            etFechaNacimiento.setEnabled(false);
+            etNombre.setEnabled(false);
+            etApellido.setEnabled(false);
+            etObservaciones.setEnabled(false);
+            etDNI.setEnabled(false);
+            etTelefono.setEnabled(false);
+            sGrupoFamiliar.setEnabled(false);
+            sZona.setEnabled(false);
+            sRanchada.setEnabled(false);
+        } else {
+            etFechaNacimiento.setEnabled(true);
+            etNombre.setEnabled(true);
+            etApellido.setEnabled(true);
+            etObservaciones.setEnabled(true);
+            etDNI.setEnabled(true);
+            etTelefono.setEnabled(true);
+            sGrupoFamiliar.setEnabled(true);
+            sZona.setEnabled(true);
+            sRanchada.setEnabled(true);
         }
     }
 

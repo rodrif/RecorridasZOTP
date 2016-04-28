@@ -18,6 +18,7 @@ public class Config {
     private boolean isLoginOk = false;
     private Map<String, String> token;
     private int numIntento;
+    private boolean isEditing = false;
 
     private Config () {
         this.token = new HashMap<String, String>();
@@ -122,5 +123,13 @@ public class Config {
 
     public void setUserWebId(int userWebId) {
         this.userWebId = userWebId;
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setIsEditing(boolean isEditing) {
+        this.isEditing = isEditing;
     }
 }

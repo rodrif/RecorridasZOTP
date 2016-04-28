@@ -41,7 +41,9 @@ public class Roles {
     public boolean hasPermission(String permiso) {
         String permisos = this.getPermissions(Config.getInstance().getRol());
         if (permisos != null ) {
-            return permisos.matches(".*" + permiso);
+            boolean resultado = permisos.matches(".*" + permiso + ".*");
+            Log.v(Utils.APPTAG, "Permiso: " + permiso + " " + resultado);
+            return resultado;
         } else {
             Log.e(Utils.APPTAG, "Roles: permisos null");
         }

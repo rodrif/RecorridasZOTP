@@ -14,6 +14,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -63,6 +64,7 @@ public class ListaPersonas extends Fragment {
                             .findUltimaVisita(listaPersonas.get(position));
                     if (ultimaVisita != null)
                         nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
+                    Config.getInstance().setIsEditing(false);
                     clicklistener.mostrarVisita(nuevaVisita);
                 }
             }

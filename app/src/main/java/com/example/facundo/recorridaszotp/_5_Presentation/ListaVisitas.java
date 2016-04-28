@@ -4,6 +4,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaVisitas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -56,6 +57,7 @@ public class ListaVisitas extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
+                    Config.getInstance().setIsEditing(true);
                     clicklistener.mostrarVisita(listaVisitas.get(position));
                 }
             }
