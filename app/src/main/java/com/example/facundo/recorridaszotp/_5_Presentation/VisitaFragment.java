@@ -44,6 +44,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
+    private ImageButton ibFecha = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
     private MapFragment mapFragmentVisita = null;
@@ -99,8 +100,8 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             }
         });
 
-        ImageButton ib = (ImageButton) vista.findViewById(R.id.bFecha);
-        ib.setOnClickListener(new View.OnClickListener() {
+        ibFecha = (ImageButton) vista.findViewById(R.id.bFecha);
+        ibFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDataPicker();
@@ -234,9 +235,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA)) {
             etFecha.setEnabled(false);
             etObservaciones.setEnabled(false);
+            ibFecha.setEnabled(false);
         } else {
             etFecha.setEnabled(true);
             etObservaciones.setEnabled(true);
+            ibFecha.setEnabled(true);
         }
     }
 

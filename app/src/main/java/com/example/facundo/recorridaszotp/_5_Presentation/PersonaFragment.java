@@ -57,6 +57,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
+    private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
     private boolean locationCargada = false;
@@ -137,6 +138,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
+        bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
 
         //Grupo Familiar
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
@@ -346,6 +348,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             sGrupoFamiliar.setEnabled(false);
             sZona.setEnabled(false);
             sRanchada.setEnabled(false);
+            bFechaNacimiento.setEnabled(false);
         } else {
             etFechaNacimiento.setEnabled(true);
             etNombre.setEnabled(true);
@@ -356,6 +359,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             sGrupoFamiliar.setEnabled(true);
             sZona.setEnabled(true);
             sRanchada.setEnabled(true);
+            bFechaNacimiento.setEnabled(true);
         }
     }
 
