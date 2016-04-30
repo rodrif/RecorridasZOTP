@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             enableSideMenu();
             initFragment = new HomeFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
-            new ObtenerToken().execute();
+            new ObtenerToken(null).execute();
         } else {
             initFragment = new LoginFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);
@@ -487,7 +487,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         EditText ETPassword = (EditText) vista.findViewById(R.id.ETPassword);
         Config.getInstance().setUserMail(ETEmail.getText().toString());
         Config.getInstance().setUserPassword(ETPassword.getText().toString());
-        new ObtenerToken().execute(this);
+        new ObtenerToken(this).execute();
     }
 
     public void loginOk() {

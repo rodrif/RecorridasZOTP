@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._1_Red;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by GoRodriguez on 02/10/2015.
  */
-public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
+public class ObtenerToken extends AsyncTask<Void, Void, String> {
     String charset = "UTF-8";
     URL url = null;
     HttpURLConnection conn = null; // TODO Borrar
@@ -40,21 +41,26 @@ public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
     InputStream inputStream = null;
     String respuesta = null;
     private MainActivity activity = null;
+    private ProgressDialog progressDialog;
 
-    public ObtenerToken() {
+    public ObtenerToken(MainActivity activity) {
+        this.activity = activity;
     }
 
     @Override
     protected void onPreExecute() {
-
+        if (this.activity != null) {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Ingresando al sistema...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
     }
 
     @Override
-    protected String doInBackground(MainActivity... params) {
-        if(params.length != 0) {
-            this.activity = params[0];
-        }
-
+    protected String doInBackground(Void... params) {
         String token = "";
         try {
             url = new URL(Utils.WEB_LOGIN);
@@ -98,6 +104,9 @@ public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        if (this.activity != null) {
+            progressDialog.dismiss();
+        }
         if (result.equalsIgnoreCase(Integer.toString(Utils.LOGIN_OK_CODE))) {
             if (this.activity != null) {
                 this.activity.loginOk();

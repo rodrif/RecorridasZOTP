@@ -147,7 +147,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
         if(result == Integer.toString(Utils.INVALID_TOKEN)){
             Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
             if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
-                new ObtenerToken().execute();
+                new ObtenerToken(null).execute();
             }
             Config.getInstance().setNumIntento(0);
         }
