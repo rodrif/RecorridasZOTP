@@ -30,6 +30,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListe
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
+import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -325,12 +326,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
     }
 
-    public void signInClick(View v) {
+/*    public void signInClick(View v) {
         Toast.makeText(this,
                 "Click en Sign in", Toast.LENGTH_SHORT).show();
         mGoogleApiClient.connect();
         Log.d("RZO", "Apretó SignIn");
-    }
+    }*/
 
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
@@ -358,10 +359,8 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    AreaDataAccess.get().sincronizarTodo(new DelegateActivity(activity));
-                    //PersonaDataAccess.get().sincronizar(new DelegateActivity(activity));
-                    Toast.makeText(getApplicationContext(),
-                            "Sincronizando ListaPersonas...", Toast.LENGTH_SHORT).show();
+                    Sincronizador sinc = new Sincronizador(this.activity, new DelegateActivity(activity));
+                    sinc.execute();
                     break;
                 case 2: //Crear Persona
                     if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {

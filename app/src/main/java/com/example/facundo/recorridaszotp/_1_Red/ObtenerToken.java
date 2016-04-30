@@ -103,8 +103,8 @@ public class ObtenerToken extends AsyncTask<MainActivity, Void, String> {
                 this.activity.loginOk();
                 Toast.makeText(this.activity,
                         "Login exitoso", Toast.LENGTH_SHORT).show();
+                new Sincronizador(activity).execute();
             }
-            AreaDataAccess.get().sincronizarTodo(null);
         } else {
             if (this.activity != null)
                Toast.makeText(this.activity,
