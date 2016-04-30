@@ -31,7 +31,6 @@ public class DelegateActivity implements AsyncDelegate {
         ft.addToBackStack(null);
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-
         if (this.delegate != null) {
             delegate.ejecutar("");
         }

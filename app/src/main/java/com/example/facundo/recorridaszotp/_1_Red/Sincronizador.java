@@ -37,7 +37,7 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(activity);
         progressDialog.setCancelable(true);
-        progressDialog.setMessage("Sincronizando...");
+        progressDialog.setMessage("Obteniendo datos...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
         progressDialog.show();
