@@ -132,4 +132,12 @@ public class Config {
     public void setIsEditing(boolean isEditing) {
         this.isEditing = isEditing;
     }
+
+    public void logOut() {
+        isLoginOk = false;
+        userMail = "";
+        userPassword = "";
+        rol = -1;
+        isEditing = false;
+    }
 }

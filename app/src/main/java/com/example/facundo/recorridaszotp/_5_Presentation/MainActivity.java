@@ -47,6 +47,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
@@ -100,19 +101,16 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         View header = getLayoutInflater().inflate(R.layout.header, null);
         //Establecemos header
         navList.addHeaderView(header);
+        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
         navItms = new ArrayList<ItemLista>();
         navItms.add(new ItemLista("Personas", R.drawable.ic_people_white_36dp));
         navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
         navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
- //       navItms.add(new ItemLista("Cerrar", R.drawable.ic_highlight_off_white_36dp));
+        navItms.add(new ItemLista("Salir", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
-
-
-     //   navList = (ListView) findViewById(R.id.nav_list);
-     //   navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
 
         Fragment initFragment; // = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -388,16 +386,24 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                     fragmentTransaction = true;
                     tag = Utils.FRAG_MAPA;
                     break;
-                case 5: //Cerrar
-                    //PersonaDataAccess.get().sincronizar(null);
-                    //Toast.makeText(getApplicationContext(),
-                    //        "Sincronizando...", Toast.LENGTH_SHORT).show();
+                case 5: //Salir
+                    menuGuardar(false);
+                    fragment = new LoginFragment();
+                    fragmentTransaction = true;
+                    tag = Utils.FRAG_LOGIN; //TODO refactor
+                    Config.getInstance().logOut();
+                    clearAllFragments();
+                    disableSideMenu();
+                    Toast.makeText(getApplicationContext(),
+                            "Saliendo...", Toast.LENGTH_SHORT).show();
                     break;
             }
 
             if (fragmentTransaction) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(tag);
+                if (tag != Utils.FRAG_LOGIN) {
+                    ft.addToBackStack(tag);
+                }
                 ft.replace(R.id.content_frame, fragment, tag);
                 ft.commit();
             }
@@ -412,8 +418,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 "onConnected", Toast.LENGTH_SHORT).show();
     //    this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-     /*   obtenerToken = new ObtenerToken();
-        obtenerToken.execute();*/
     }
 
     @Override
@@ -502,6 +506,18 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     private void enableSideMenu() {
         navList = (ListView) findViewById(R.id.nav_list);
         navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
+        navList.setEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void disableSideMenu() {
+        navList = (ListView) findViewById(R.id.nav_list);
+        navList.setEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    private void clearAllFragments() {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
