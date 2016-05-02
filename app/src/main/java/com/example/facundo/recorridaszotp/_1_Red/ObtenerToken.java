@@ -110,8 +110,6 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         if (result.equalsIgnoreCase(Integer.toString(Utils.LOGIN_OK_CODE))) {
             if (this.activity != null) {
                 this.activity.loginOk();
-                Toast.makeText(this.activity,
-                        "Ingreso correcto", Toast.LENGTH_SHORT).show();
                 new Sincronizador(activity).execute();
             }
         } else {
