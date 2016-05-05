@@ -47,7 +47,6 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
         progressDialog.setProgress(0);
         progressDialog.show();
         new RecepcionAreas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_AREAS);
-        new EnvioAreas(AreaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_AREA);
         new RecepcionZonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_ZONAS);
         new RecepcionRanchadas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_RANCHADAS);
         new RecepcionFamilias().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_FAMILIAS);
