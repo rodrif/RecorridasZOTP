@@ -115,7 +115,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         } else {
             if (this.activity != null)
                Toast.makeText(this.activity,
-                    "Error al Ingresar", Toast.LENGTH_SHORT).show();
+                    "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
         }
     }
 
