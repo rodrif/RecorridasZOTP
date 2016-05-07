@@ -23,8 +23,25 @@ public class Roles {
     private Map<Integer, String> permisos;
     public Roles() {
         permisos = new HashMap<Integer, String>();
+
+        //Admin
         permisos.put(1, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
+                + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
                 + Utils.PUEDE_VER_TELEFONO_PERSONA);
+
+        //Referente:
+        permisos.put(2, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA
+                + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
+                + Utils.PUEDE_VER_TELEFONO_PERSONA);
+
+        //Coordinador:
+        permisos.put(3, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
+                + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
+                + Utils.PUEDE_VER_TELEFONO_PERSONA);
+
+        //Voluntario:
+        permisos.put(4, Utils.PUEDE_CREAR_PERSONA
+                + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA);
     }
     
     static public Roles getInstance() {
