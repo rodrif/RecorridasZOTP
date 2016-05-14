@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.facundo.recorridaszotp._5_Presentation.ListaPersonas">
+    <group android:id="@+id/grupo">
+    <item
+        android:id="@+id/crear_visita"
+        android:title="Crear Visita"/>
+    <item
+        android:id="@+id/ver_visitas"
+        android:title="Ver visitas"/>
+    <item
+        android:id="@+id/editar_persona"
+        android:title="Editar"/>
+    </group>
+</menu>

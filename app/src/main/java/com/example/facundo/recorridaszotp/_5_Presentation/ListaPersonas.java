@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class ListaPersonas extends Fragment {
     private onSelectedItemListener clicklistener;
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,36 +41,49 @@ public class ListaPersonas extends Fragment {
 
         ListView lViewPersonas = (ListView) vista.findViewById(R.id.lista_personas);
         lViewPersonas.setAdapter(adaptador);
-        lViewPersonas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clicklistener == null) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            "Listener null", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else {
-                    clicklistener.mostrarPersona(listaPersonas.get(position));
-                    return true;
-                }
-            }
-        });
-
         lViewPersonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (clicklistener == null) {
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
-                    Visita nuevaVisita = new Visita(listaPersonas.get(position));
-                    Visita ultimaVisita = VisitaDataAccess.get()
-                            .findUltimaVisita(listaPersonas.get(position));
-                    if (ultimaVisita != null)
-                        nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
-                    Config.getInstance().setIsEditing(false);
-                    clicklistener.mostrarVisita(nuevaVisita);
+                    //Creating the instance of PopupMenu
+                    PopupMenu popup = new PopupMenu(activity.getApplicationContext(), view);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.crear_visita:
+                                    Visita nuevaVisita = new Visita(listaPersonas.get(position));
+                                    Visita ultimaVisita = VisitaDataAccess.get()
+                                            .findUltimaVisita(listaPersonas.get(position));
+                                    if (ultimaVisita != null)
+                                        nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
+                                    Config.getInstance().setIsEditing(false);
+                                    clicklistener.mostrarVisita(nuevaVisita);
+                                break;
+                                case R.id.editar_persona:
+                                    if (clicklistener == null) {
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                "Listener null", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        clicklistener.mostrarPersona(listaPersonas.get(position));
+                                    }
+                                break;
+                                case R.id.ver_visitas:
+                                break;
+                            }
+                            return true;
+                        }
+                    });
+
+                    popup.show();//showing popup menu
                 }
-            }
+    }
         });
 
         return vista;
@@ -76,6 +92,7 @@ public class ListaPersonas extends Fragment {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
+        this.activity = activity;
         clicklistener = (onSelectedItemListener) activity;
         ((MainActivity)activity).getAppbar().setTitle(Utils.LISTA_PERSONAS);
     }
