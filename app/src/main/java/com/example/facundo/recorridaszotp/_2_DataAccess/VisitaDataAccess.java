@@ -128,9 +128,19 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .execute();
     }
 
+    public List<Visita> getAllOKOrderFecha(long personaId) {
+        return new Select()
+                .from(Visita.class)
+                .orderBy("Fecha DESC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .where("Persona = ?", personaId)
+                .execute();
+    }
+
     public void sincronizar(AsyncDelegate delegate) {
         AsyncDelegate delegateEnviarVisitas = new DelegateEnviarVisitas(delegate);
         RecepcionVisitas recepcionVisitas = new RecepcionVisitas(delegateEnviarVisitas);
         recepcionVisitas.execute(Utils.WEB_RECIBIR_VISITAS);
     }
+
 }

@@ -2,7 +2,9 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +66,7 @@ public class ListaPersonas extends Fragment {
                                         nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
                                     Config.getInstance().setIsEditing(false);
                                     clicklistener.mostrarVisita(nuevaVisita);
-                                break;
+                                    break;
                                 case R.id.editar_persona:
                                     if (clicklistener == null) {
                                         Toast.makeText(getActivity().getApplicationContext(),
@@ -72,9 +74,18 @@ public class ListaPersonas extends Fragment {
                                     } else {
                                         clicklistener.mostrarPersona(listaPersonas.get(position));
                                     }
-                                break;
+                                    break;
                                 case R.id.ver_visitas:
-                                break;
+                                    long personaId = listaPersonas.get(position).getId();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putLong("personaId", personaId);
+                                    Fragment fragment = new ListaVisitas();
+                                    fragment.setArguments(bundle);
+                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                    ft.addToBackStack(Utils.FRAG_VISITA);
+                                    ft.replace(R.id.content_frame, fragment, Utils.FRAG_VISITA);
+                                    ft.commit();
+                                    break;
                             }
                             return true;
                         }
@@ -82,7 +93,7 @@ public class ListaPersonas extends Fragment {
 
                     popup.show();//showing popup menu
                 }
-    }
+            }
         });
 
         return vista;

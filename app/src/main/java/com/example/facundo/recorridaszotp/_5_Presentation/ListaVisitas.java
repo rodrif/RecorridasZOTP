@@ -12,6 +12,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,22 @@ import java.util.List;
  */
 public class ListaVisitas extends Fragment {
     private onSelectedItemListener clicklistener;
+    private List<Visita> listaVisitas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_lista_visitas, container, false);
-        final List<Visita> listaVisitas = VisitaDataAccess.get().getAllOKOrderFecha();
+        long personaId = -1;
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            personaId = bundle.getLong("personaId", -1);
+        }
+
+        listaVisitas = personaId == -1 ? VisitaDataAccess.get().getAllOKOrderFecha()
+                : VisitaDataAccess.get().getAllOKOrderFecha(personaId);
+
         AdaptadorListaVisitas adaptador =
                 new AdaptadorListaVisitas(getActivity().getApplicationContext(), listaVisitas);
         ListView lViewVisitas = (ListView) vista.findViewById(R.id.lista_visitas);
