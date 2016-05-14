@@ -49,8 +49,8 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         String charset = "UTF-8";
         URL url = null;
-        HttpURLConnection conn = null; // TODO Borrar
-        HttpsURLConnection conns = null; //Para conexion segura
+       // HttpURLConnection conn = null; // TODO Borrar
+        HttpsURLConnection conn = null; //Para conexion segura
         InputStream inputStream = null;
         String respuesta = null;
 
@@ -94,8 +94,8 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
 ////////////////////////////////////////////////////////////////////////////////////////////
         try {
             url = new URL(params[0]);
-            conn = (HttpURLConnection) url.openConnection();        //TODO Borrar
-            //conns = (HttpsURLConnection) url.openConnection();    //TODO Agregar
+            //conn = (HttpURLConnection) url.openConnection();        //TODO Borrar
+            conn = (HttpsURLConnection) url.openConnection();    //TODO Agregar
             conn.setRequestMethod("POST");
             conn.setDoOutput(true); // Triggers POST.
             conn.setRequestProperty("Accept-Charset", charset);
