@@ -26,7 +26,6 @@ import java.util.List;
 
 public class ListaPersonas extends Fragment {
     private onSelectedItemListener clicklistener;
-    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +48,7 @@ public class ListaPersonas extends Fragment {
                             "Listener null", Toast.LENGTH_SHORT).show();
                 } else {
                     //Creating the instance of PopupMenu
-                    PopupMenu popup = new PopupMenu(activity.getApplicationContext(), view);
+                    PopupMenu popup = new PopupMenu(getActivity().getApplicationContext(), view);
                     //Inflating the Popup using xml file
                     popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 
@@ -92,7 +91,6 @@ public class ListaPersonas extends Fragment {
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        this.activity = activity;
         clicklistener = (onSelectedItemListener) activity;
         ((MainActivity)activity).getAppbar().setTitle(Utils.LISTA_PERSONAS);
     }
