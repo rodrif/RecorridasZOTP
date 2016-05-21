@@ -77,6 +77,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
             return new Select()
                     .from(Visita.class)
                     .where("Persona = ?", persona.getId())
+                    .where("Estado != ?", Utils.EST_BORRADO)
                     .orderBy("Fecha DESC")
                     .executeSingle();
         else
@@ -86,6 +87,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     public List<Visita> findUltimasVisita() { //TODO Limitar cantidad de ultimas visitas en el mapa
         return new Select()
                 .from(Visita.class)
+                .where("Estado != ?", Utils.EST_BORRADO)
                 .execute();
     }
 
