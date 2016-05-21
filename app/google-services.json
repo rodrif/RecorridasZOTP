@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "174707693518",
+    "project_id": "recorridaszo-1076"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174707693518:android:d83456feb1f47f38",
+        "android_client_info": {
+          "package_name": "com.example.facundo.recorridaszotp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174707693518-d032bm2fqu842cck4uo5su06uho98hkk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.facundo.recorridaszotp",
+            "certificate_hash": "4637B391550F7798A0E3C9EE96961DC72CD39FE3"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwgiYF0burV9wgQ8Oop44uMfH29CrAF6w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
