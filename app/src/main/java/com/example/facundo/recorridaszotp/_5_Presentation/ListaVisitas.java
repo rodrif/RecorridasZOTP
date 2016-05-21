@@ -47,19 +47,6 @@ public class ListaVisitas extends Fragment {
                 new AdaptadorListaVisitas(getActivity().getApplicationContext(), listaVisitas);
         ListView lViewVisitas = (ListView) vista.findViewById(R.id.lista_visitas);
         lViewVisitas.setAdapter(adaptador);
-        lViewVisitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (clicklistener == null) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            "Listener null", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else {
-                    clicklistener.mostrarPersona(listaVisitas.get(position).getPersona());
-                    return true;
-                }
-            }
-        });
         lViewVisitas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
