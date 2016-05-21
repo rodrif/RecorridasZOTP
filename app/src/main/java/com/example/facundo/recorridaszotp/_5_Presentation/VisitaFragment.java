@@ -208,12 +208,21 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                         MainActivity.visitaSeleccionada.getUbicacion().longitude)));
                 centrarMapa(MainActivity.visitaSeleccionada.getUbicacion());
             } else {
-                Log.e(Utils.APPTAG, "VisitaFragment::onMapReady con " +
-                        "MainActivity.visitaSeleccionada.getUbicacion() null");
+                Log.d(Utils.APPTAG, "VisitaFragment::onMapReady" +
+                        " MainActivity.visitaSeleccionada.getUbicacion() es null");
+                marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(
+                            getDefaultUbicacion()));
+                MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                centrarMapa(getDefaultUbicacion());
             }
         } else {
-            Log.e(Utils.APPTAG, "VisitaFragment::onMapReady MainActivity.visitaSeleccionada null");
+
         }
+    }
+
+    private LatLng getDefaultUbicacion() {
+        //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
+        return new LatLng(-34.6417109,-58.5651438);
     }
 
     private void centrarMapa(LatLng ubicacion) {

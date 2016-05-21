@@ -378,19 +378,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     centrarMapa(visita.getUbicacion());
                 }
             } else {
-                if(MainActivity.visitaSeleccionada != null) {
-                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(
-                            getDefaultUbicacion()));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                    centrarMapa(getDefaultUbicacion());
-                }
+                Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
         }
-    }
-
-    private LatLng getDefaultUbicacion() {
-        //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
-        return new LatLng(-34.6417109,-58.5651438);
     }
 
     private void centrarMapa(LatLng ubicacion) {
