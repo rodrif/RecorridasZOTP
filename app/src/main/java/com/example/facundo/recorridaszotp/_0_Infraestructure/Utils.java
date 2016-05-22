@@ -71,6 +71,7 @@ public final class Utils {
     public static final String USER_ROL_ID = "User Rol Id";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static String SALUDO_INICIAL;
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
