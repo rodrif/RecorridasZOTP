@@ -26,12 +26,13 @@ package com.example.facundo.recorridaszotp;
         import android.support.v4.app.NotificationCompat;
         import android.util.Log;
 
+        import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
         import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
         import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {
 
-    private static final String TAG = "MyGcmListenerService";
+    private static final String TAG = Utils.APPTAG + "MyGcmLis";
 
     /**
      * Called when message is received.

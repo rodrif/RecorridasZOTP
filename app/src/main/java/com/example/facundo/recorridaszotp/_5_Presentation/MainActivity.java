@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
@@ -111,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         navItms.add(new ItemLista("Salir", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
+
+        // Start IntentService to register this application with GCM.
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
 
         Fragment initFragment; // = new HomeFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
