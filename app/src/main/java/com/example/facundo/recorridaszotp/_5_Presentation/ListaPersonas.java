@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +15,12 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
-import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class ListaPersonas extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_lista_personas, container, false);
 
         final List<Persona> listaPersonas = getPersonas();
+        final iVisitaHandler visitaHandler = getVisitaHandler();
 
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
@@ -59,13 +58,7 @@ public class ListaPersonas extends Fragment {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.crear_visita:
-                                    Visita nuevaVisita = new Visita(listaPersonas.get(position));
-                                    Visita ultimaVisita = VisitaDataAccess.get()
-                                            .findUltimaVisita(listaPersonas.get(position));
-                                    if (ultimaVisita != null)
-                                        nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
-                                    Config.getInstance().setIsEditing(false);
-                                    clicklistener.mostrarVisita(nuevaVisita);
+                                    visitaHandler.mostrarVisita(listaPersonas.get(position));
                                     break;
                                 case R.id.editar_persona:
                                     if (clicklistener == null) {
@@ -97,6 +90,10 @@ public class ListaPersonas extends Fragment {
         });
 
         return vista;
+    }
+
+    private iVisitaHandler getVisitaHandler() {
+        return new VisitaHandler();
     }
 
     protected List<Persona> getPersonas() {
