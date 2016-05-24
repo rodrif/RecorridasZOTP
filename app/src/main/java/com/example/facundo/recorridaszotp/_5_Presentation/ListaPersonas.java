@@ -35,7 +35,7 @@ public class ListaPersonas extends Fragment {
         super.onCreate(savedInstanceState);
         View vista = inflater.inflate(R.layout.fragment_lista_personas, container, false);
 
-        final List<Persona> listaPersonas = PersonaDataAccess.get().getAllOK();
+        final List<Persona> listaPersonas = getPersonas();
 
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
@@ -97,6 +97,10 @@ public class ListaPersonas extends Fragment {
         });
 
         return vista;
+    }
+
+    protected List<Persona> getPersonas() {
+        return PersonaDataAccess.get().getAllOK();
     }
 
     @Override
