@@ -57,7 +57,7 @@ public class ListaPersonas extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.crear_visita:
-                                 visitaHandler.crearVisita(listaPersonas.get(position), fragmentChanger);
+                                visitaHandler.crearVisita(listaPersonas.get(position), fragmentChanger);
                                 break;
                             case R.id.editar_persona:
                                 personaHandler.mostrarPersona(listaPersonas.get(position), fragmentChanger);
