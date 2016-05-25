@@ -60,7 +60,7 @@ public class ListaPersonas extends Fragment {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.crear_visita:
-                                    visitaHandler.mostrarVisita(listaPersonas.get(position), fragmentChanger);
+                                    visitaHandler.crearVisita(listaPersonas.get(position), fragmentChanger);
                                     break;
                                 case R.id.editar_persona:
                                     if (clicklistener == null) {
@@ -114,6 +114,7 @@ public class ListaPersonas extends Fragment {
     public void onDetach() {
         super.onDetach();
         clicklistener = null;
+        fragmentChanger = null;
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 }

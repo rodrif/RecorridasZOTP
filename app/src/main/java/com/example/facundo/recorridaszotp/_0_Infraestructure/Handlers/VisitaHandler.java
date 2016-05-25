@@ -22,7 +22,7 @@ import static com.example.facundo.recorridaszotp._5_Presentation.MainActivity.me
 public class VisitaHandler implements iVisitaHandler {
 
     @Override
-    public void mostrarVisita(Persona persona, iFragmentChanger fragmentChanger) {
+    public void crearVisita(Persona persona, iFragmentChanger fragmentChanger) {
        Visita nuevaVisita = new Visita(persona);
        Visita ultimaVisita = VisitaDataAccess.get().findUltimaVisita(persona);
        if (ultimaVisita != null)
