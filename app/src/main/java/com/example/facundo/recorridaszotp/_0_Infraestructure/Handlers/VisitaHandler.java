@@ -38,4 +38,15 @@ public class VisitaHandler implements iVisitaHandler {
 
     }
 
+    @Override
+    public void mostrarVisita(Visita visita, iFragmentChanger fragmentChanger) {
+        Config.getInstance().setIsEditing(true);
+        menuGuardar(true);
+        MainActivity.visitaSeleccionada = visita;
+        VisitaFragment frag = new VisitaFragment();
+        frag.actualizar();
+
+        fragmentChanger.changeFragment(frag, Utils.FRAG_VISITA, true);
+    }
+
 }
