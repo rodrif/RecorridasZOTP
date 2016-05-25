@@ -9,4 +9,5 @@ import com.example.facundo.recorridaszotp._3_Domain.Visita;
 public interface iVisitaHandler {
     void crearVisita(Persona persona, iFragmentChanger fragmentChanger);
     void mostrarVisita(Visita visita, iFragmentChanger fragmentChanger);
+    void listarVisitas(long personaId, iFragmentChanger fragmentChanger);
 }

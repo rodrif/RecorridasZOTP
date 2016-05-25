@@ -64,14 +64,7 @@ public class ListaPersonas extends Fragment {
                                 break;
                             case R.id.ver_visitas:
                                 long personaId = listaPersonas.get(position).getId();
-                                Bundle bundle = new Bundle();
-                                bundle.putLong("personaId", personaId);
-                                Fragment fragment = new ListaVisitas();
-                                fragment.setArguments(bundle);
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.addToBackStack(Utils.FRAG_VISITA);
-                                ft.replace(R.id.content_frame, fragment, Utils.FRAG_VISITA);
-                                ft.commit();
+                                visitaHandler.listarVisitas(personaId, fragmentChanger);
                                 break;
                             }
                             return true;

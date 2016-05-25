@@ -1,7 +1,9 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.Handlers;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -9,6 +11,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._5_Presentation.ListaVisitas;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 import com.example.facundo.recorridaszotp._5_Presentation.VisitaFragment;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
@@ -47,6 +50,16 @@ public class VisitaHandler implements iVisitaHandler {
         frag.actualizar();
 
         fragmentChanger.changeFragment(frag, Utils.FRAG_VISITA, true);
+    }
+
+    @Override
+    public void listarVisitas(long personaId, iFragmentChanger fragmentChanger) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("personaId", personaId);
+        Fragment fragment = new ListaVisitas();
+        fragment.setArguments(bundle);
+
+        fragmentChanger.changeFragment(fragment, Utils.ULTIMAS_VISITAS, true);
     }
 
 }
