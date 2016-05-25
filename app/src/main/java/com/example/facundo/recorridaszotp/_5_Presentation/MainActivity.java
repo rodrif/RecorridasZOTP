@@ -31,7 +31,6 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
-import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
@@ -40,6 +39,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,12 +47,12 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        iFragmentChanger {
     //  MapsFragment.InterfaceMapa
 
     /* Request code used to invoke sign in user interactions. */
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
-    private Menu menuGuardarPersona = null;
+    private static Menu menuGuardarPersona = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,6 +324,15 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
     }
 
+    public void changeFragment(Fragment frag, String fragLabel, boolean addToBackStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (addToBackStack) {
+            ft.addToBackStack(fragLabel);
+        }
+        ft.replace(R.id.content_frame, frag, fragLabel);
+        ft.commit();
+    }
+
 /*    public void signInClick(View v) {
         Toast.makeText(this,
                 "Click en Sign in", Toast.LENGTH_SHORT).show();
@@ -470,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         editor.commit();
     }
 
-    private void menuGuardar(boolean bool) {
+    public static void menuGuardar(boolean bool) {
         if (menuGuardarPersona != null)
             menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
     }
