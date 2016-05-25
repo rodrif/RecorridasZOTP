@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PersonaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
+import com.example.facundo.recorridaszotp._7_Interfaces.iPersonaHandler;
 import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 
 import java.util.List;
@@ -37,6 +39,7 @@ public class ListaPersonas extends Fragment {
 
         final List<Persona> listaPersonas = getPersonas();
         final iVisitaHandler visitaHandler = getVisitaHandler();
+        final iPersonaHandler personaHandler = getPersonaHandler();
 
         AdaptadorListaPersonas adaptador =
                 new AdaptadorListaPersonas(getActivity().getApplicationContext(), listaPersonas);
@@ -63,12 +66,7 @@ public class ListaPersonas extends Fragment {
                                     visitaHandler.crearVisita(listaPersonas.get(position), fragmentChanger);
                                     break;
                                 case R.id.editar_persona:
-                                    if (clicklistener == null) {
-                                        Toast.makeText(getActivity().getApplicationContext(),
-                                                "Listener null", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        clicklistener.mostrarPersona(listaPersonas.get(position));
-                                    }
+                                    personaHandler.mostrarPersona(listaPersonas.get(position), fragmentChanger);
                                     break;
                                 case R.id.ver_visitas:
                                     long personaId = listaPersonas.get(position).getId();
@@ -92,6 +90,10 @@ public class ListaPersonas extends Fragment {
         });
 
         return vista;
+    }
+
+    private iPersonaHandler getPersonaHandler() {
+        return new PersonaHandler();
     }
 
     private iVisitaHandler getVisitaHandler() {
