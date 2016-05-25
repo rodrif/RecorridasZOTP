@@ -4,10 +4,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaVisitas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
-import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
@@ -15,13 +12,11 @@ import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 

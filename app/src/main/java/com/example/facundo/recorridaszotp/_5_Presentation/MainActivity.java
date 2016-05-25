@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
-import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
@@ -49,8 +48,7 @@ import com.google.android.gms.plus.Plus;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
-        GoogleApiClient.ConnectionCallbacks,
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         iFragmentChanger {
     //  MapsFragment.InterfaceMapa
@@ -284,19 +282,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             ETnombre.startAnimation(shake);
             ETnombre.setError("El nombre es obligatorio");
         }
-    }
-
-    @Override
-    public void mostrarVisita(Visita visita) {
-        menuGuardar(true);
-        visitaSeleccionada = visita;
-        VisitaFragment frag = new VisitaFragment();
-        frag.actualizar();
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(Utils.FRAG_VISITA);
-        ft.replace(R.id.content_frame, frag, Utils.FRAG_VISITA);
-        ft.commit();
     }
 
     @Override
