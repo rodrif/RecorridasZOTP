@@ -25,6 +25,6 @@ public class PersonaHandler implements iPersonaHandler {
         MainActivity.visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);
         Fragment frag = new PersonaFragment();
 
-        fragmentChanger.changeFragment(frag, Utils.FRAG_PERSONA, false);
+        fragmentChanger.changeFragment(frag, Utils.FRAG_PERSONA, true);
     }
 }
