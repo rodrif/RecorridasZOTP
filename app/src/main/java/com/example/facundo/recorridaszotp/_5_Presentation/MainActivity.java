@@ -287,21 +287,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     }
 
     @Override
-    //Solo para edicion de persona
-    public void mostrarPersona(Persona persona) {
-        menuGuardar(true);
-        personaSeleccionada = persona;
-        Config.getInstance().setIsEditing(true);
-        visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);
-        Fragment frag = new PersonaFragment();
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(Utils.FRAG_PERSONA);
-        ft.replace(R.id.content_frame, frag, Utils.FRAG_PERSONA);
-        ft.commit();
-    }
-
-    @Override
     public void mostrarVisita(Visita visita) {
         menuGuardar(true);
         visitaSeleccionada = visita;
