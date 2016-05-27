@@ -28,24 +28,36 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
     private Activity activity;
     private ProgressDialog progressDialog;
     private AsyncDelegate delegate = null;
+    private boolean bloquearApp = false;
 
     public Sincronizador(Activity activity) {
         this.activity = activity;
     }
 
-    public Sincronizador(Activity activity, AsyncDelegate delegate) {
+    public Sincronizador(Activity activity, AsyncDelegate delegate, boolean blockApp) {
         this(activity);
         this.delegate = delegate;
+        this.bloquearApp = blockApp;
     }
 
-    @Override
+    public Sincronizador(Activity activity, boolean blockApp) {
+        this(activity, null, blockApp);
+    }
+
+    public Sincronizador(Activity activity, AsyncDelegate delegate) {
+        this(activity, delegate, false);
+    }
+
+        @Override
     protected void onPreExecute() {
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage("Obteniendo datos...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setProgress(0);
-        progressDialog.show();
+        if (this.bloquearApp) {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Obteniendo datos...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
         new RecepcionAreas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_AREAS);
         new RecepcionZonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_ZONAS);
         new RecepcionRanchadas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_RANCHADAS);
@@ -70,6 +82,8 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
                 e.printStackTrace();
             }
         }
-        progressDialog.dismiss();
+        if (this.bloquearApp) {
+            progressDialog.dismiss();
+        }
     }
 }

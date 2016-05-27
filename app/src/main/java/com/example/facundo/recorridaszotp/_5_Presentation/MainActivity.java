@@ -336,8 +336,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    Sincronizador sinc = new Sincronizador(this.activity, new DelegateActivity(activity));
+                    Sincronizador sinc = new Sincronizador(this.activity, false);
                     sinc.execute();
+                    fragment = new ListaPersonas();
+                    fragmentTransaction = true;
+                    tag = Utils.LISTA_PERSONAS;
                     break;
                 case 2: //Crear Persona
                     if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
