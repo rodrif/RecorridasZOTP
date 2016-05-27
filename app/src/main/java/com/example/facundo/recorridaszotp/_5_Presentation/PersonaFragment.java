@@ -205,10 +205,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 (String) sZona.getSelectedItem());
         final List<String> ranchadasString = new ArrayList<String>();
         ranchadasString.add("Ranchada");
-        if (lRanchada != null) {
-            for (Ranchada ranchada : lRanchada) {
-                ranchadasString.add(ranchada.getNombre());
-            }
+        for (Ranchada ranchada : lRanchada) {
+            ranchadasString.add(ranchada.getNombre());
         }
 
         adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
