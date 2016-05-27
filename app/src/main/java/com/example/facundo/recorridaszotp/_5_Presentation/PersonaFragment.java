@@ -158,6 +158,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         final Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();
         final List<String> zonasString = new ArrayList<String>();
+        zonasString.add("Zona");
         for (Zona zona : lZonas) {
             zonasString.add(zona.getNombre());
         }
@@ -204,8 +205,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 (String) sZona.getSelectedItem());
         final List<String> ranchadasString = new ArrayList<String>();
         ranchadasString.add("Ranchada");
-        for (Ranchada ranchada : lRanchada) {
-            ranchadasString.add(ranchada.getNombre());
+        if (lRanchada != null) {
+            for (Ranchada ranchada : lRanchada) {
+                ranchadasString.add(ranchada.getNombre());
+            }
         }
 
         adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
