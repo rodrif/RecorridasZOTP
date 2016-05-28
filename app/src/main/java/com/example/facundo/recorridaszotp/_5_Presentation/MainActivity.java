@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String ranchada = (String) sRanchada.getSelectedItem();
 
 
-        if (!nombre.equals("")) {
+        if (!nombre.equals("") && !zona.equals("Zona")) {
             if (personaSeleccionada != null) {// si habia persona seleccionada
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
@@ -280,9 +280,14 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-            ETnombre.requestFocus();
-            ETnombre.startAnimation(shake);
-            ETnombre.setError("El nombre es obligatorio");
+            if (nombre.equals("")) {
+                ETnombre.requestFocus();
+                ETnombre.startAnimation(shake);
+                ETnombre.setError("El nombre es obligatorio");
+            } else {
+                sZona.requestFocus();
+                sZona.startAnimation(shake);
+            }
         }
     }
 
