@@ -68,9 +68,6 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
 
-        Intent intent = new Intent(this, NotificationHandler.class);
-        startService(intent);
-
         sendNotification(message, title);
         // [END_EXCLUDE]
     }
@@ -84,6 +81,7 @@ public class MyGcmListenerService extends GcmListenerService {
     private void sendNotification(String message, String title) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("message", message);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

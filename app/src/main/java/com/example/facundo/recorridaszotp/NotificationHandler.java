@@ -18,6 +18,5 @@ public class NotificationHandler extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.e(Utils.APPTAG, "Notificacion handler");
-        Utils.SALUDO_INICIAL = "saludo modificado";
     }
 }

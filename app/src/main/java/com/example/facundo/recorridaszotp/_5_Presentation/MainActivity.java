@@ -92,6 +92,13 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         setContentView(R.layout.activity_main);
 
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null) {
+            Log.d(Utils.APPTAG, bundle.getString("message"));
+        }
+
+
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
@@ -153,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     public boolean onCreateOptionsMenu(Menu menu) {
         menuGuardarPersona = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+            getMenuInflater().inflate(R.menu.menu_main, menu);
         //Ocultar el grupo
         menuGuardar(false);
         //menu.setGroupVisible(R.id.grupo_guardar_persona, false);
