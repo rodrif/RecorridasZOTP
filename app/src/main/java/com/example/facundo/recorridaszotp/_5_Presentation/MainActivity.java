@@ -249,9 +249,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 personaSeleccionada.setObservaciones(observaciones);
                 personaSeleccionada.setFechaNacimientoDesdeMob(fechaNacimiento);
                 personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
-                if (zona.equalsIgnoreCase("Zona")) { //FIXME Hack de zona default
-                    zona = "Haedo";
-                }
                 personaSeleccionada.setZona(zona);
                 personaSeleccionada.setRanchada(ranchada);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
