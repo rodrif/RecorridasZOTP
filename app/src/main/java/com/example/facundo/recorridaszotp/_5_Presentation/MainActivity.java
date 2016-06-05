@@ -27,7 +27,6 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
+        getSupportActionBar().setHomeActionContentDescription("toolbarMenu");
 
         //Drawer layout
         navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
