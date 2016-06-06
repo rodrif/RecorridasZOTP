@@ -234,4 +234,8 @@ public class Persona extends Model {
     public void setFamiliaByWebId(int familiaWebId) {
         this.familia = FamiliaDataAccess.get().findByWebId(familiaWebId);
     }
+
+    public String toString() {
+        return this.getNombre();
+    }
 }
