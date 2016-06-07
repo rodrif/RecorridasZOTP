@@ -1,14 +1,12 @@
-package com.example.facundo.recorridaszotp.NewTests;
+package com.example.facundo.recorridaszotp.NewTests.Persona;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.MenuItem;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
 import org.junit.Rule;
@@ -20,34 +18,31 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.test.MoreAsserts.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
 /**
- * Created by gonzalo on 04/06/16.
+ * Created by gonzalo on 06/06/16.
  */
 @RunWith(AndroidJUnit4.class)
-public class PersonTests {
+public class CrearPersona {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<MainActivity>(MainActivity.class);
 
     @Test
-    public void crearPersona() {
-        //Login as Admin
+    public void crearPersonaConDatosMinimos() {
+        //Login
         onView(ViewMatchers.withId(R.id.ETEmail)).perform(typeText("admin@gmail.com"));
         onView(withId(R.id.ETPassword)).perform(typeText("123456789"));
         onView(withId(R.id.bLogin)).perform(click());
@@ -56,7 +51,6 @@ public class PersonTests {
         onView(withContentDescription("toolbarMenu")).perform(click());
         onData(hasToString(startsWith("Nueva Persona"))).perform(click());
         onView(withId(R.id.ETNombre)).perform(typeText("Juanb"));
-        onView(withId(R.id.ETApellido)).perform(typeText("Perezb"));
         onView(withId(R.id.spinner_zona)).perform(scrollTo()).perform(click());
 
         onData(allOf(is(instanceOf(String.class)), is("Haedo"))).perform(click());
@@ -67,23 +61,5 @@ public class PersonTests {
 
         onView(withContentDescription("toolbarMenu")).perform(click());
         assertFalse("Incorrecta actualización de personas2", PersonaDataAccess.get().hayConEstadoModificado());
-
-        //borrar Persona
-        //onView(withContentDescription("toolbarMenu")).perform(click());
-        onData(hasToString(startsWith("Personas"))).perform(click());
-        onData(allOf(instanceOf(Persona.class), hasToString("Juanb")))
-                .inAdapterView(withId(R.id.lista_personas))
-                .perform(click());
-        onData(instanceOf(MenuItem.class)).atPosition(2).perform(click());
-
-        onView(withId(R.id.action_cancelar)).perform(click());
-        onView(withId(16908313)).perform(click());
-
-        assertTrue("Incorrecta borrado de persona1", PersonaDataAccess.get().hayConEstadoBorrado());
-        new Sincronizador(mActivityRule.getActivity()).execute();
-
-        onView(withContentDescription("toolbarMenu")).perform(click());
-        assertFalse("Incorrecta borrado de persona2", PersonaDataAccess.get().hayConEstadoBorrado());
-
     }
 }

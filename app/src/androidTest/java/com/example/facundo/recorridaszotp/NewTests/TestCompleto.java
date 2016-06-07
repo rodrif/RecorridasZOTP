@@ -3,12 +3,17 @@ package com.example.facundo.recorridaszotp.NewTests;
 /**
  * Created by gonzalo on 05/06/16.
  */
+import com.example.facundo.recorridaszotp.NewTests.Persona.BorrarPersona;
+import com.example.facundo.recorridaszotp.NewTests.Persona.CrearPersona;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   PersonTests.class
+   LoginTest.class,
+   CrearPersona.class,
+   BorrarPersona.class
 })
 
 public class TestCompleto {
