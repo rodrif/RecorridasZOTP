@@ -157,4 +157,16 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
         }
         return true;
     }
+
+    public boolean hayConEstadoBorrado() {
+        List<Visita> lista = new Select()
+                .from(Visita.class)
+                .where("Estado = ?", Utils.EST_BORRADO)
+                .execute();
+
+        if (lista.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }
