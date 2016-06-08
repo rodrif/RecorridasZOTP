@@ -6,6 +6,7 @@ package com.example.facundo.recorridaszotp.NewTests;
 import com.example.facundo.recorridaszotp.NewTests.Persona.BorrarPersona;
 import com.example.facundo.recorridaszotp.NewTests.Persona.CrearPersona;
 import com.example.facundo.recorridaszotp.NewTests.Persona.ModificarPersona;
+import com.example.facundo.recorridaszotp.NewTests.Visita.CrearVisita;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -14,6 +15,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    LoginTest.class,
    CrearPersona.class,
+   CrearVisita.class,
    ModificarPersona.class,
    BorrarPersona.class
 })

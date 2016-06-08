@@ -110,6 +110,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                     .from(Visita.class)
                     .where("Persona = ?", persona.getId())
                     .where("Estado != ?", Utils.EST_BORRADO)
+                    .orderBy("Fecha DESC")
                     .execute();
         else
             return null;
@@ -145,4 +146,15 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
         recepcionVisitas.execute(Utils.WEB_RECIBIR_VISITAS);
     }
 
+    public boolean hayConEstadoModificado() {
+        List<Visita> lista = new Select()
+                .from(Visita.class)
+                .where("Estado = ?", Utils.EST_MODIFICADO)
+                .execute();
+
+        if (lista.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }
