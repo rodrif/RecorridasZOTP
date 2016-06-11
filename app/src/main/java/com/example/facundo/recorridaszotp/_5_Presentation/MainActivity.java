@@ -151,6 +151,18 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
        // new ObtenerToken().execute();
     }
 
+    private void replaceFragment(Fragment fragment, boolean addToBackStack, Bundle bundle) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (addToBackStack) {
+            ft.addToBackStack(fragment.toString());
+        }
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        ft.replace(R.id.content_frame, fragment, fragment.toString());
+        ft.commit();
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menuGuardarPersona = menu;
