@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
 
         setContentView(R.layout.activity_main);
 
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundleNotificacion = getIntent().getExtras();
 
-        if(bundle != null) {
-            Log.d(Utils.APPTAG, bundle.getString("message"));
+        if(bundleNotificacion != null) {
+            Log.d(Utils.APPTAG, bundleNotificacion.getString("message"));
         }
 
 
@@ -132,6 +132,16 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             initFragment = new HomeFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
             new ObtenerToken(null).execute();
+            //////////////////////////////////////////////////////////
+            //FIXME create replace fragment private method
+            if(bundleNotificacion != null) {
+                ft.commit();
+                ft = getFragmentManager().beginTransaction();
+                Fragment notificationFragment = new NotificationFragment();
+                ft.addToBackStack(Utils.FRAG_NOTIFICACION);
+                ft.replace(R.id.content_frame, notificationFragment, Utils.FRAG_NOTIFICACION);
+            }
+            //////////////////////////////////////////////////////////
         } else {
             initFragment = new LoginFragment();
             ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);

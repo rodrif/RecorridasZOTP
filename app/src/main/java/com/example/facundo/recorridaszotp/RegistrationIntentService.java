@@ -33,7 +33,7 @@ package com.example.facundo.recorridaszotp;
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = Utils.APPTAG + "RegIntSe";
-    private static final String[] TOPICS = {"global"};
+    private static final String[] TOPICS = {"gonzalo"};
 
     public RegistrationIntentService() {
         super(TAG);

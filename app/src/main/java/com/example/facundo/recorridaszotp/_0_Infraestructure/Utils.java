@@ -54,6 +54,7 @@ public final class Utils {
     public static final String FRAG_HOME = "Fragment Home";
     public static final String FRAG_VISITA = "Fragment Visita";
     public static final String FRAG_LOGIN = "Fragment Login";
+    public static final String FRAG_NOTIFICACION = "Fragment Notificacion";
     public static final String DATE_PICKER_VISITA = "Date Picker Visita";
     public static final String DATE_PICKER_PERSONA = "Date Picker Persona";
     public static final int MAX_VISITAS = 20;
