@@ -44,10 +44,9 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
-        String title = data.getString("title");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        String title = data.getString(Utils.TITULO);
+        String subtitle = data.getString(Utils.SUBTITULO);
+        String description = data.getString(Utils.DESCRIPCION);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -68,7 +67,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
 
-        sendNotification(message, title);
+        sendNotification(title, subtitle, description);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -78,10 +77,12 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message, String title) {
+    private void sendNotification(String title, String subtitle, String description) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("message", message);
+        intent.putExtra(Utils.TITULO, title);
+        intent.putExtra(Utils.SUBTITULO, subtitle);
+        intent.putExtra(Utils.DESCRIPCION, description);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -89,7 +90,7 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logosisinfondo)
                 .setContentTitle(title)
-                .setContentText(message)
+                .setContentText(subtitle)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

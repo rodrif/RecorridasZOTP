@@ -91,14 +91,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Config.getInstance().setRol(settings.getInt(Utils.USER_ROL_ID, -1));
 
         setContentView(R.layout.activity_main);
-
-        Bundle bundleNotificacion = getIntent().getExtras();
-
-        if(bundleNotificacion != null) {
-            Log.d(Utils.APPTAG, bundleNotificacion.getString("message"));
-        }
-
-
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
@@ -134,10 +126,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             new ObtenerToken(null).execute();
             //////////////////////////////////////////////////////////
             //FIXME create replace fragment private method
+            Bundle bundleNotificacion = getIntent().getExtras();
             if(bundleNotificacion != null) {
                 ft.commit();
                 ft = getFragmentManager().beginTransaction();
                 Fragment notificationFragment = new NotificationFragment();
+                notificationFragment.setArguments(bundleNotificacion);
                 ft.addToBackStack(Utils.FRAG_NOTIFICACION);
                 ft.replace(R.id.content_frame, notificationFragment, Utils.FRAG_NOTIFICACION);
             }
