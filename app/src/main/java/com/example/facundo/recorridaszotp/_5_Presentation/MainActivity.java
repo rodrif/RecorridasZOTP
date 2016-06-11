@@ -128,12 +128,12 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         }
 
         // Build GoogleApiClient with access to basic profile
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+      /*  mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApiIfAvailable(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
-                .build();
+                .build();*/
     }
 
     private void replaceFragment(Fragment fragment, boolean addToBackStack, Bundle bundle) {
@@ -364,6 +364,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                         FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
+            //FIXME refactor de replaceFragment
             switch (position) {
                 case 1: //Personas
                     menuGuardar(false);
