@@ -278,4 +278,9 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             unToast.show();
         }
     }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_VISITA;
+    }
 }

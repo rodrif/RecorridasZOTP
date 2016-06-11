@@ -115,30 +115,17 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
 
-        Fragment initFragment; // = new HomeFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
         if(Config.getInstance().isLoginOk()) {
             enableSideMenu();
-            initFragment = new HomeFragment();
-            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_HOME);
+            this.replaceFragment(new HomeFragment(),false, null);
             new ObtenerToken(null).execute();
-            //////////////////////////////////////////////////////////
-            //FIXME create replace fragment private method
             Bundle bundleNotificacion = getIntent().getExtras();
             if(bundleNotificacion != null) {
-                ft.commit();
-                ft = getFragmentManager().beginTransaction();
-                Fragment notificationFragment = new NotificationFragment();
-                notificationFragment.setArguments(bundleNotificacion);
-                ft.addToBackStack(Utils.FRAG_NOTIFICACION);
-                ft.replace(R.id.content_frame, notificationFragment, Utils.FRAG_NOTIFICACION);
+                this.replaceFragment(new NotificationFragment(), true, bundleNotificacion);
             }
-            //////////////////////////////////////////////////////////
         } else {
-            initFragment = new LoginFragment();
-            ft.replace(R.id.content_frame, initFragment, Utils.FRAG_LOGIN);
+            this.replaceFragment(new LoginFragment(),false, null);
         }
-        ft.commit();
 
         // Build GoogleApiClient with access to basic profile
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -147,8 +134,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 .addApiIfAvailable(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .build();
-
-       // new ObtenerToken().execute();
     }
 
     private void replaceFragment(Fragment fragment, boolean addToBackStack, Bundle bundle) {
@@ -177,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             getMenuInflater().inflate(R.menu.menu_main, menu);
         //Ocultar el grupo
         menuGuardar(false);
-        //menu.setGroupVisible(R.id.grupo_guardar_persona, false);
         return true;
     }
 

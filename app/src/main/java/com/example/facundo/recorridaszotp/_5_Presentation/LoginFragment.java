@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
 public class LoginFragment extends Fragment {
     //private SignInButton signInButton;
@@ -31,5 +32,10 @@ public class LoginFragment extends Fragment {
             }
         });*/
         return v;
+    }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_LOGIN;
     }
 }

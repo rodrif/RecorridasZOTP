@@ -37,4 +37,9 @@ public class NotificationFragment extends Fragment {
         TVDescription.setText(descripcion);
         return v;
     }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_NOTIFICACION;
+    }
 }

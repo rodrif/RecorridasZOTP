@@ -37,4 +37,9 @@ public class HomeFragment extends Fragment {
         });*/
         return v;
     }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_HOME;
+    }
 }

@@ -119,4 +119,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         super.onDetach();
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_MAPA;
+    }
 }

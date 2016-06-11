@@ -423,4 +423,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             unToast.show();
         }
     }
+
+    @Override
+    public String toString() {
+        return Utils.FRAG_PERSONA;
+    }
 }
