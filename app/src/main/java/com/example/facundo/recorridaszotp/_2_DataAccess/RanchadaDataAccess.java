@@ -9,6 +9,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,7 +69,7 @@ public class RanchadaDataAccess extends BasicDataAccess<Ranchada> {
     }
 
     public List<Ranchada> filtrarPorZona(String sZona) {
-        List<Ranchada> listaRanchadas = null;
+        List<Ranchada> listaRanchadas = new ArrayList<Ranchada>();
         if(sZona != null) {
             Zona zona = new Select ()
                     .from(Zona.class)

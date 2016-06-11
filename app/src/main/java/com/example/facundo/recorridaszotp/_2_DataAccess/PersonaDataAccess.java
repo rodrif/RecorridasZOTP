@@ -70,6 +70,30 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
         recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
     }
 
+    public boolean hayConEstadoModificado() {
+        List<Persona> lista = new Select()
+                .from(Persona.class)
+                .where("Estado = ?", Utils.EST_MODIFICADO)
+                .execute();
+
+        if (lista.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hayConEstadoBorrado() {
+        List<Persona> lista = new Select()
+                .from(Persona.class)
+                .where("Estado = ?", Utils.EST_BORRADO)
+                .execute();
+
+        if (lista.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
     public void deleteLogico(Persona persona) {
         VisitaDataAccess.get().deleteLogico(persona);
         persona.setEstado(Utils.EST_BORRADO);

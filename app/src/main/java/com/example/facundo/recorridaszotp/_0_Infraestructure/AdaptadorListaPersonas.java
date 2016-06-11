@@ -47,4 +47,9 @@ public class AdaptadorListaPersonas extends ArrayAdapter<Persona> {
 
         return (item);
     }
+
+    @Override
+    public Persona getItem(int position) {
+        return listaPersonas.get(position);
+    }
 }

@@ -31,4 +31,8 @@ public class ItemLista {
     public void setIcono(int icono) {
         this.icono = icono;
     }
+
+    public String toString() {
+        return this.getNombre();
+    }
 }

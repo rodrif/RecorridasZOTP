@@ -168,4 +168,8 @@ public class Visita extends Model {
     private void setFechaActual() {
         fecha = new Date().getTime();
     }
+
+    public String toString() {
+        return this.getPersona().getNombre();
+    }
 }

@@ -28,9 +28,7 @@ import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
-import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
@@ -41,6 +39,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,9 +49,9 @@ import com.google.android.gms.plus.Plus;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        iFragmentChanger {
     //  MapsFragment.InterfaceMapa
 
     /* Request code used to invoke sign in user interactions. */
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
-    private Menu menuGuardarPersona = null;
+    private static Menu menuGuardarPersona = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
+        getSupportActionBar().setHomeActionContentDescription("toolbarMenu");
 
         //Drawer layout
         navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         String ranchada = (String) sRanchada.getSelectedItem();
 
 
-        if (!nombre.equals("")) {
+        if (!nombre.equals("") && !zona.equals("Zona")) {
             if (personaSeleccionada != null) {// si habia persona seleccionada
                 personaSeleccionada.setNombre(nombre);
                 personaSeleccionada.setApellido(apellido);
@@ -291,38 +291,15 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
             }
         } else {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-            ETnombre.requestFocus();
-            ETnombre.startAnimation(shake);
-            ETnombre.setError("El nombre es obligatorio");
+            if (nombre.equals("")) {
+                ETnombre.requestFocus();
+                ETnombre.startAnimation(shake);
+                ETnombre.setError("El nombre es obligatorio");
+            } else {
+                sZona.requestFocus();
+                sZona.startAnimation(shake);
+            }
         }
-    }
-
-    @Override
-    //Solo para edicion de persona
-    public void mostrarPersona(Persona persona) {
-        menuGuardar(true);
-        personaSeleccionada = persona;
-        Config.getInstance().setIsEditing(true);
-        visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);
-        Fragment frag = new PersonaFragment();
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(Utils.FRAG_PERSONA);
-        ft.replace(R.id.content_frame, frag, Utils.FRAG_PERSONA);
-        ft.commit();
-    }
-
-    @Override
-    public void mostrarVisita(Visita visita) {
-        menuGuardar(true);
-        visitaSeleccionada = visita;
-        VisitaFragment frag = new VisitaFragment();
-        frag.actualizar();
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(Utils.FRAG_VISITA);
-        ft.replace(R.id.content_frame, frag, Utils.FRAG_VISITA);
-        ft.commit();
     }
 
     @Override
@@ -333,6 +310,15 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void changeFragment(Fragment frag, String fragLabel, boolean addToBackStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (addToBackStack) {
+            ft.addToBackStack(fragLabel);
+        }
+        ft.replace(R.id.content_frame, frag, fragLabel);
+        ft.commit();
     }
 
 /*    public void signInClick(View v) {
@@ -369,8 +355,11 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
                 case 1: //Personas
                     menuGuardar(false);
                     //Ocultar el grupo
-                    Sincronizador sinc = new Sincronizador(this.activity, new DelegateActivity(activity));
+                    Sincronizador sinc = new Sincronizador(this.activity, false);
                     sinc.execute();
+                    fragment = new ListaPersonas();
+                    fragmentTransaction = true;
+                    tag = Utils.LISTA_PERSONAS;
                     break;
                 case 2: //Crear Persona
                     if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
@@ -482,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements onSelectedItemLis
         editor.commit();
     }
 
-    private void menuGuardar(boolean bool) {
+    public static void menuGuardar(boolean bool) {
         if (menuGuardarPersona != null)
             menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
     }
