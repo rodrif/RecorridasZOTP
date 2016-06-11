@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.facundo.recorridaszotp;
+package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
 
         import android.app.IntentService;
         import android.content.Intent;
@@ -23,6 +23,7 @@ package com.example.facundo.recorridaszotp;
         import android.support.v4.content.LocalBroadcastManager;
         import android.util.Log;
 
+        import com.example.facundo.recorridaszotp.R;
         import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
         import com.google.android.gms.gcm.GcmPubSub;
         import com.google.android.gms.gcm.GoogleCloudMessaging;

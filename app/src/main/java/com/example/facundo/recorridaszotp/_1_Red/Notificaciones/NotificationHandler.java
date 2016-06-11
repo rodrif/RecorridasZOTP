@@ -1,4 +1,4 @@
-package com.example.facundo.recorridaszotp;
+package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
 
 import android.app.IntentService;
 import android.content.Intent;

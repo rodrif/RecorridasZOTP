@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.facundo.recorridaszotp;
+package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
         import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.preference.PreferenceManager;
-        import android.util.Log;
 
-        import com.google.android.gms.iid.InstanceID;
         import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {

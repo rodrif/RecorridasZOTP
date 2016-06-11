@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.facundo.recorridaszotp;
+package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
 
         import android.app.NotificationManager;
         import android.app.PendingIntent;
@@ -26,6 +26,7 @@ package com.example.facundo.recorridaszotp;
         import android.support.v4.app.NotificationCompat;
         import android.util.Log;
 
+        import com.example.facundo.recorridaszotp.R;
         import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
         import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
         import com.google.android.gms.gcm.GcmListenerService;

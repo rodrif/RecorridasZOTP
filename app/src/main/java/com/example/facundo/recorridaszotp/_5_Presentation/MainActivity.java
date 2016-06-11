@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp.RegistrationIntentService;
+import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
 import com.example.facundo.recorridaszotp._0_Infraestructure.onSelectedItemListener;
@@ -33,7 +33,6 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateActivity;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
-import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
@@ -49,7 +48,6 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements onSelectedItemListener,
