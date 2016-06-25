@@ -22,20 +22,18 @@ package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
         import android.preference.PreferenceManager;
         import android.support.v4.content.LocalBroadcastManager;
         import android.util.Log;
-
         import com.example.facundo.recorridaszotp.R;
         import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+        import com.example.facundo.recorridaszotp._2_DataAccess.Config;
+        import com.example.facundo.recorridaszotp._3_Domain.Roles;
         import com.google.android.gms.gcm.GcmPubSub;
         import com.google.android.gms.gcm.GoogleCloudMessaging;
         import com.google.android.gms.iid.InstanceID;
-
         import java.io.IOException;
+        import java.util.ArrayList;
 
 public class RegistrationIntentService extends IntentService {
-
     private static final String TAG = Utils.APPTAG + "RegIntSe";
-    private static final String[] TOPICS = {"gonzalo"};
-
     public RegistrationIntentService() {
         super(TAG);
     }
@@ -100,7 +98,11 @@ public class RegistrationIntentService extends IntentService {
     // [START subscribe_topics]
     private void subscribeTopics(String token) throws IOException {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
+        ArrayList<String> TOPICS = new ArrayList<String>();
+        int rolId = Config.getInstance().getRol();
+        TOPICS.add(Roles.getInstance().getRoleName(rolId));
         for (String topic : TOPICS) {
+            Log.d(Utils.APPTAG, "Suscrito a topic: " + topic);
             pubSub.subscribe(token, "/topics/" + topic, null);
         }
     }

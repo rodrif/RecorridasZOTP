@@ -77,6 +77,16 @@ public final class Utils {
     public static final String USER_ROL_ID = "User Rol Id";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final int ROL_ADMIN = 1;
+    public static final int ROL_REFERENTE = 2;
+    public static final int ROL_COORDINADOR = 3;
+    public static final int ROL_VOLUNTARIO = 4;
+    public static final int ROL_INVITADO = 5;
+    public static final String ROL_ADMIN_STRING = "admin";
+    public static final String ROL_REFERENTE_STRING = "referente";
+    public static final String ROL_COORDINADOR_STRING = "coordinador";
+    public static final String ROL_VOLUNTARIO_STRING = "voluntario";
+    public static final String ROL_INVITADO_STRING = "invitado";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

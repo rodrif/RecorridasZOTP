@@ -21,27 +21,35 @@ Invitado:       5
 public class Roles {
     private static Roles instance = null;
     private Map<Integer, String> permisos;
+    private Map<Integer, String> nombreRoles;
     public Roles() {
         permisos = new HashMap<Integer, String>();
 
         //Admin
-        permisos.put(1, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
+        permisos.put(Utils.ROL_ADMIN, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
                 + Utils.PUEDE_VER_TELEFONO_PERSONA);
 
         //Referente:
-        permisos.put(2, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA
+        permisos.put(Utils.ROL_REFERENTE, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
                 + Utils.PUEDE_VER_TELEFONO_PERSONA);
 
         //Coordinador:
-        permisos.put(3, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
+        permisos.put(Utils.ROL_COORDINADOR, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
                 + Utils.PUEDE_VER_TELEFONO_PERSONA);
 
         //Voluntario:
-        permisos.put(4, Utils.PUEDE_CREAR_PERSONA
+        permisos.put(Utils.ROL_VOLUNTARIO, Utils.PUEDE_CREAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA);
+
+        nombreRoles = new HashMap<Integer, String>();
+        nombreRoles.put(Utils.ROL_ADMIN, Utils.ROL_ADMIN_STRING);
+        nombreRoles.put(Utils.ROL_REFERENTE, Utils.ROL_REFERENTE_STRING);
+        nombreRoles.put(Utils.ROL_COORDINADOR, Utils.ROL_COORDINADOR_STRING);
+        nombreRoles.put(Utils.ROL_VOLUNTARIO, Utils.ROL_VOLUNTARIO_STRING);
+        nombreRoles.put(Utils.ROL_INVITADO, Utils.ROL_INVITADO_STRING);
     }
     
     static public Roles getInstance() {
@@ -69,5 +77,9 @@ public class Roles {
 
     public boolean hasPermission(int rolId, String permiso) {
             return this.getPermissions(rolId).matches(permiso);
+    }
+
+    public String getRoleName(int rolId) {
+        return this.nombreRoles.get(rolId);
     }
 }

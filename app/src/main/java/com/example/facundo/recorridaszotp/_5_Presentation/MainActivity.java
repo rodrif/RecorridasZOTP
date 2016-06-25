@@ -111,10 +111,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
 
-        // Start IntentService to register this application with GCM.
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
-
         if(Config.getInstance().isLoginOk()) {
             enableSideMenu();
             this.replaceFragment(new HomeFragment(),false, null);
@@ -498,6 +494,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void loginOk() {
         this.enableSideMenu();
         Config.getInstance().setLoginOk();
+        // Start IntentService to register this application with GCM.
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment homeFragment = new HomeFragment();
         ft.replace(R.id.content_frame, homeFragment, Utils.FRAG_HOME);
