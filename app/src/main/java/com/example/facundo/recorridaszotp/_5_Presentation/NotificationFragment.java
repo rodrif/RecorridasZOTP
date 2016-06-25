@@ -28,9 +28,9 @@ public class NotificationFragment extends Fragment {
         String descripcion = getArguments().getString(Utils.DESCRIPCION);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notification, container, false);
-        TextView TVTitle = (TextView) v.findViewById(R.id.TVNotificationTitle);
-        TextView TVSubtitle = (TextView) v.findViewById(R.id.TVNotificationSubtitle);
-        TextView TVDescription = (TextView) v.findViewById(R.id.TVNotificationDescription);
+        EditText TVTitle = (EditText) v.findViewById(R.id.TVNotificationTitle);
+        EditText TVSubtitle = (EditText) v.findViewById(R.id.TVNotificationSubtitle);
+        EditText TVDescription = (EditText) v.findViewById(R.id.TVNotificationDescription);
 
         TVTitle.setText(titulo);
         TVSubtitle.setText(subtitulo);

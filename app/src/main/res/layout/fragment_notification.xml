@@ -10,20 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <EditText
             android:id="@+id/TVNotificationTitle"
             android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:padding="20sp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textMultiLine"
+            android:gravity="center"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <EditText
             android:id="@+id/TVNotificationSubtitle"
             android:layout_width="match_parent"
+            android:padding="20sp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textMultiLine"
+            android:gravity="top"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <EditText
             android:id="@+id/TVNotificationDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:padding="20sp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </FrameLayout>
