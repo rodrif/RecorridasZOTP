@@ -36,8 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ObtenerToken extends AsyncTask<Void, Void, String> {
     String charset = "UTF-8";
     URL url = null;
-    HttpURLConnection conn = null; // TODO Borrar
-    HttpsURLConnection conns = null; //Para conexion segura
+    HttpsURLConnection conns = null;
     InputStream inputStream = null;
     String respuesta = null;
     private MainActivity activity = null;
@@ -64,33 +63,32 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         String token = "";
         try {
             url = new URL(Utils.WEB_LOGIN);
-            conn = (HttpURLConnection) url.openConnection();        //TODO Borrar
-            //conns = (HttpsURLConnection) url.openConnection();    //TODO Agregar
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true); // Triggers POST.
-            conn.setRequestProperty("Accept-Charset", charset);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+            conns = (HttpsURLConnection) url.openConnection();
+            conns.setRequestMethod("POST");
+            conns.setDoOutput(true); // Triggers POST.
+            conns.setRequestProperty("Accept-Charset", charset);
+            conns.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
 
             String query = String.format("email=%s&password=%s",
                     URLEncoder.encode(Config.getInstance().getUserMail(), charset),
                     URLEncoder.encode(Config.getInstance().getUserPassword(), charset));
 
             //Envio datos
-            OutputStream output = conn.getOutputStream();
+            OutputStream output = conns.getOutputStream();
             output.write(query.getBytes(charset));
 
             //Leo respuesta
-            Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
-            inputStream = new BufferedInputStream(conn.getInputStream());
+            Log.v(Utils.APPTAG, "Response Code: " + conns.getResponseCode());
+            inputStream = new BufferedInputStream(conns.getInputStream());
             respuesta = Utils.toString(inputStream);//FIXME Agregar rol id
-            Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
-            Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
-            Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
-            Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
+            Config.getInstance().setAccessToken(conns.getHeaderField(Utils.ACCESS_TOKEN));
+            Config.getInstance().setClient(conns.getHeaderField(Utils.CLIENT));
+            Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
+            Config.getInstance().setUid(conns.getHeaderField(Utils.UID));
             Config.getInstance().setRol(this.getRolId(respuesta));
 
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
-            return Integer.toString(conn.getResponseCode());
+            return Integer.toString(conns.getResponseCode());
             //this.activity.setToken(token);
         } catch (IOException e) {
             e.printStackTrace();
