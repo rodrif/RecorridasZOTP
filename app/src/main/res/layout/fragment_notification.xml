@@ -21,6 +21,8 @@
             android:focusableInTouchMode="false"
             android:inputType="textMultiLine"
             android:gravity="center"
+            android:drawableRight="@drawable/cumple"
+            android:drawableLeft="@drawable/cumple"
             android:layout_height="wrap_content" />
 
         <EditText
