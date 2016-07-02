@@ -453,7 +453,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onStop(){
         super.onStop();
+        this.savePreferences();
+    }
 
+    private void savePreferences() {
         // We need an Editor object to make preference changes.
         // All objects are from android.context.Context
         SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
@@ -494,6 +497,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void loginOk() {
         this.enableSideMenu();
         Config.getInstance().setLoginOk();
+        savePreferences();
         // Start IntentService to register this application with GCM.
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
