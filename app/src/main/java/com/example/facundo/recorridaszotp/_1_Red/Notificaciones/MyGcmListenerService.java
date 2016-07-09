@@ -84,8 +84,9 @@ public class MyGcmListenerService extends GcmListenerService {
         intent.putExtra(Utils.TITULO, title);
         intent.putExtra(Utils.SUBTITULO, subtitle);
         intent.putExtra(Utils.DESCRIPCION, description);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        // use System.currentTimeMillis() to have a unique ID for the pending intent
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis()
+                , intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -99,6 +100,6 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify((int) System.currentTimeMillis() /* ID of notification */, notificationBuilder.build());
     }
 }
