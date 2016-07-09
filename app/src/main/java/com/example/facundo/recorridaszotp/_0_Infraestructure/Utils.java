@@ -82,7 +82,7 @@ public final class Utils {
     public static final int ROL_COORDINADOR = 3;
     public static final int ROL_VOLUNTARIO = 4;
     public static final int ROL_INVITADO = 5;
-    public static final String ROL_ADMIN_STRING = "admin";
+    public static final String ROL_ADMIN_STRING = "administrador";
     public static final String ROL_REFERENTE_STRING = "referente";
     public static final String ROL_COORDINADOR_STRING = "coordinador";
     public static final String ROL_VOLUNTARIO_STRING = "voluntario";
