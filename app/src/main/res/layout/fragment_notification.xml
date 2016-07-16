@@ -12,6 +12,7 @@
 
         <EditText
             android:id="@+id/TVNotificationTitle"
+            android:text="Titulo"
             android:layout_width="match_parent"
             android:textStyle="bold"
             android:padding="20sp"
@@ -21,13 +22,14 @@
             android:focusableInTouchMode="false"
             android:inputType="textMultiLine"
             android:gravity="center"
-            android:drawableRight="@drawable/cumple"
-            android:drawableLeft="@drawable/cumple"
+            android:drawableRight="@drawable/peligro"
+            android:drawableLeft="@drawable/peligro"
             android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/TVNotificationSubtitle"
             android:layout_width="match_parent"
+            android:text="Subtitulo"
             android:padding="20sp"
             android:clickable="false"
             android:cursorVisible="false"
@@ -40,6 +42,7 @@
         <EditText
             android:id="@+id/TVNotificationDescription"
             android:layout_width="match_parent"
+            android:text="Descripción"
             android:padding="20sp"
             android:clickable="false"
             android:cursorVisible="false"

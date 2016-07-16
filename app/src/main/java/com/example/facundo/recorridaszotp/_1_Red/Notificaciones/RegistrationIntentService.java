@@ -100,7 +100,8 @@ public class RegistrationIntentService extends IntentService {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
         ArrayList<String> TOPICS = new ArrayList<String>();
         int rolId = Config.getInstance().getRol();
-        TOPICS.add(Roles.getInstance().getRoleName(rolId));
+       // TOPICS.add(Roles.getInstance().getRoleName(rolId));
+        TOPICS.add("gonzalo");
         for (String topic : TOPICS) {
             Log.d(Utils.APPTAG, "Suscrito a topic: " + topic);
             pubSub.subscribe(token, "/topics/" + topic, null);

@@ -48,6 +48,13 @@ public class MyGcmListenerService extends GcmListenerService {
         String title = data.getString(Utils.TITULO);
         String subtitle = data.getString(Utils.SUBTITULO);
         String description = data.getString(Utils.DESCRIPCION);
+        String codigoNotificacion = data.getString(Utils.CODIGO_NOTIFICACION, "");
+        String idPersona = data.getString(Utils.PERSONA_ID, "");
+
+        Log.e(Utils.APPTAG, "Notificacion1: codigo: " + codigoNotificacion +
+                " idPersona: " + idPersona + " titulo: " + title +
+                " subtitulo: " + subtitle + " decripcion: " + description);
+
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -68,8 +75,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
 
-        sendNotification(title, subtitle, description);
-        // [END_EXCLUDE]
+        sendNotification(codigoNotificacion, idPersona, title, subtitle, description);
     }
     // [END receive_message]
 
@@ -78,9 +84,11 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String title, String subtitle, String description) {
+    private void sendNotification(String codigoNotificacion, String idPersona, String title, String subtitle, String description) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Utils.CODIGO_NOTIFICACION, codigoNotificacion);
+        intent.putExtra(Utils.PERSONA_ID, idPersona);
         intent.putExtra(Utils.TITULO, title);
         intent.putExtra(Utils.SUBTITULO, subtitle);
         intent.putExtra(Utils.DESCRIPCION, description);
