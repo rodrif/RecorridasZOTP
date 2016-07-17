@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -38,18 +39,19 @@ public class NotificationFragment extends Fragment {
         EditText TVDescription = (EditText) v.findViewById(R.id.TVNotificationDescription);
 
         TVTitle.setText(titulo);
+        Drawable draw = getResources().getDrawable(R.drawable.peligro);;
         switch (codigoNotificacion) {
             case "1":
-                Log.e(Utils.APPTAG, "llegue");
-                TVTitle.setRight(R.drawable.clock);
+                draw = getResources().getDrawable(R.drawable.clock);
                 break;
             case "2":
-                TVTitle.setRight(R.drawable.peligro);
+                draw = getResources().getDrawable(R.drawable.peligro);
                 break;
             case "3":
-                TVTitle.setRight(R.drawable.cumple);
+                draw = getResources().getDrawable(R.drawable.cumple);
                 break;
         }
+        TVTitle.setCompoundDrawablesWithIntrinsicBounds(draw, null, draw, null);
         TVSubtitle.setText(subtitulo);
         TVDescription.setText(descripcion);
         return v;
