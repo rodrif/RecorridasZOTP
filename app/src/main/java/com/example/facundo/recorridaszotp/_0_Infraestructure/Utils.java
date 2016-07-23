@@ -90,6 +90,7 @@ public final class Utils {
     public static final String ROL_VOLUNTARIO_STRING = "voluntario";
     public static final String ROL_INVITADO_STRING = "invitado";
     public static final String CODIGO_NOTIFICACION = "tipo";
+    public static final String NOTIFICACION = "Notificacion";
     public static final String PERSONA_ID = "persona_id";
 
     public static String toString(InputStream inputStream) throws Exception {

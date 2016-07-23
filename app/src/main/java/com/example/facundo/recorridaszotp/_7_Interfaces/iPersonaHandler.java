@@ -7,4 +7,5 @@ import com.example.facundo.recorridaszotp._3_Domain.Persona;
  */
 public interface iPersonaHandler {
     void mostrarPersona(Persona persona, iFragmentChanger fragmentChanger);
+    void mostrarPersona(int personaId, iFragmentChanger fragmentChanger);
 }
