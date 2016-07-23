@@ -101,13 +101,18 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logosisinfondo);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logosisinfondo)
-                .setLargeIcon(bitmap)
                 .setContentTitle(title)
                 .setContentText(subtitle)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setLargeIcon(bitmap);
+        } else {
+            notificationBuilder.setSmallIcon(R.drawable.logosisinfondo);
+        }
+
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
