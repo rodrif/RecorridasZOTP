@@ -102,6 +102,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logosisinfondo);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
+                .setSmallIcon(R.drawable.logosisinfondowhite)
                 .setContentText(subtitle)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -109,10 +110,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setLargeIcon(bitmap);
-        } else {
-            notificationBuilder.setSmallIcon(R.drawable.logosisinfondo);
         }
-
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
