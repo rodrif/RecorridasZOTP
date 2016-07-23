@@ -46,11 +46,14 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notification, container, false);
         EditText TVTitle = (EditText) v.findViewById(R.id.TVNotificationTitle);
+        TVTitle.setOnClickListener(new onClickListenerNotificacion(
+                this.idPersona, this.fragmentChanger));
         EditText TVSubtitle = (EditText) v.findViewById(R.id.TVNotificationSubtitle);
         TVSubtitle.setOnClickListener(new onClickListenerNotificacion(
                 this.idPersona, this.fragmentChanger));
         EditText TVDescription = (EditText) v.findViewById(R.id.TVNotificationDescription);
-
+        TVDescription.setOnClickListener(new onClickListenerNotificacion(
+                this.idPersona, this.fragmentChanger));
         TVTitle.setText(titulo);
         Drawable draw = getResources().getDrawable(R.drawable.peligro);;
         switch (codigoNotificacion) {
