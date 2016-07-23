@@ -98,10 +98,14 @@ public class RegistrationIntentService extends IntentService {
     // [START subscribe_topics]
     private void subscribeTopics(String token) throws IOException {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
+        pubSub.unsubscribe(token, "/topics/" + Utils.ROL_ADMIN_STRING);
+        pubSub.unsubscribe(token, "/topics/" + Utils.ROL_REFERENTE_STRING);
+        pubSub.unsubscribe(token, "/topics/" + Utils.ROL_COORDINADOR_STRING);
+        pubSub.unsubscribe(token, "/topics/" + Utils.ROL_VOLUNTARIO_STRING);
+        pubSub.unsubscribe(token, "/topics/" + Utils.ROL_INVITADO_STRING);
         ArrayList<String> TOPICS = new ArrayList<String>();
         int rolId = Config.getInstance().getRol();
-       // TOPICS.add(Roles.getInstance().getRoleName(rolId));
-        TOPICS.add("gonzalo");
+        TOPICS.add(Roles.getInstance().getRoleName(rolId));
         for (String topic : TOPICS) {
             Log.d(Utils.APPTAG, "Suscrito a topic: " + topic);
             pubSub.subscribe(token, "/topics/" + topic, null);
