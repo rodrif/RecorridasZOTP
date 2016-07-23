@@ -20,6 +20,8 @@ package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
         import android.app.PendingIntent;
         import android.content.Context;
         import android.content.Intent;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
         import android.media.RingtoneManager;
         import android.net.Uri;
         import android.os.Bundle;
@@ -97,8 +99,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 , intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logosisinfondo);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logosisinfondo)
+                .setLargeIcon(bitmap)
                 .setContentTitle(title)
                 .setContentText(subtitle)
                 .setAutoCancel(true)
