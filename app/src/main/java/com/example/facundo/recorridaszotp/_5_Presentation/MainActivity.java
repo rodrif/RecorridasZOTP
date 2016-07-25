@@ -117,10 +117,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             new ObtenerToken(null).execute();
             Bundle bundleNotificacion = getIntent().getExtras();
             if(bundleNotificacion != null) {
-                this.replaceFragment(new NotificationFragment(), true, bundleNotificacion);
+                String cod = (String) bundleNotificacion.get(Utils.CODIGO_NOTIFICACION);
+                if (!cod.equalsIgnoreCase("") && cod != null) {
+                    this.replaceFragment(new NotificationFragment(), true, bundleNotificacion);
+                }
             }
         } else {
-            this.replaceFragment(new LoginFragment(),false, null);
+            this.replaceFragment(new LoginFragment(), false, null);
         }
 
         // Build GoogleApiClient with access to basic profile
