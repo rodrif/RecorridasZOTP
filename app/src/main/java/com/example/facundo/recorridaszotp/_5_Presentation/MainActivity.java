@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setSupportActionBar(appbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer2);
         getSupportActionBar().setHomeActionContentDescription("toolbarMenu");
+        getSupportActionBar().setTitle(Utils.HOME);
 
         //Drawer layout
         navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Bundle bundleNotificacion = getIntent().getExtras();
             if(bundleNotificacion != null) {
                 String cod = (String) bundleNotificacion.get(Utils.CODIGO_NOTIFICACION);
-                if (!cod.equalsIgnoreCase("") && cod != null) {
+                if (cod != null && !cod.equalsIgnoreCase("")) {
                     this.replaceFragment(new NotificationFragment(), true, bundleNotificacion);
                 }
             }
