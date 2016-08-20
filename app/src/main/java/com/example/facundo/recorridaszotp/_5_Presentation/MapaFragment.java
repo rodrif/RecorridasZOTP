@@ -50,18 +50,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         }
         mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
-
-        if (mapFragmentMapa == null) {
-            mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
-        }
-        mapFragmentMapa.getMap().setMyLocationEnabled(true);
         mapFragmentMapa.getMapAsync(this);
-        mapFragmentMapa.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-            }
-        });
-        mapFragmentMapa.getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        return vista;
+    }
+
+    private void setMapListeners(GoogleMap googleMap) {
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Visita visita = VisitaDataAccess.get().find(marker);
@@ -75,8 +69,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        mapFragmentMapa.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
+        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location myLocation) {
                 if (!locationCargada) {
@@ -87,18 +80,21 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-
-        return vista;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        try {
+            googleMap.setMyLocationEnabled(true);
+        } catch (SecurityException ex) {
+            Log.e(Utils.APPTAG, "My location enabled security exception");
+        }
+        this.setMapListeners(googleMap);
         List<Visita> visitas = VisitaDataAccess.get().findUltimasVisita();
-        GoogleMap gMap = mapFragmentMapa.getMap();
-        gMap.clear();
+        googleMap.clear();
         for (Visita unaVisita : visitas) {
             if (unaVisita.getUbicacion() != null) {
-                Marker mTest = gMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
+                Marker mTest = googleMap.addMarker(new MarkerOptions().position(unaVisita.getUbicacion()));
                 if (unaVisita.getUbicacion().latitude != mTest.getPosition().latitude
                         || unaVisita.getUbicacion().longitude != mTest.getPosition().longitude) {
                     Log.e(Utils.APPTAG, "Markers no coinciden" + mTest.getPosition().toString() +
