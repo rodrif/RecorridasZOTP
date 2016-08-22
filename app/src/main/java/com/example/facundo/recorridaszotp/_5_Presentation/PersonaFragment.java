@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,38 +90,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         }
 
-        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
-        if (mapFragmentPersona == null) {
-            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
-        }
-
-        mapFragmentPersona.getMap().setMyLocationEnabled(true);
+        mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
         mapFragmentPersona.getMapAsync(this);
-        mapFragmentPersona.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (!Config.getInstance().isEditing()) {
-                    mapFragmentPersona.getMap().clear();
-                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
-                            latLng.latitude, latLng.longitude)));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                }
-            }
-        });
-
-        mapFragmentPersona.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-            @Override
-            public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    mapFragmentPersona.getMap().animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
-                }
-                centrarMapa(myLocation);
-            }
-        });
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -368,44 +340,84 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapFragmentPersona.getMap().clear();
+        googleMap.clear();
+        this.setMapListeners(googleMap);
+        googleMap.addPolygon(new PolygonOptions()
+                .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
             if (visita != null) {
                 if (visita.getUbicacion() != null) {
-                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
                             visita.getUbicacion().latitude,
                             visita.getUbicacion().longitude)));
-                    centrarMapa(visita.getUbicacion());
+                    centrarMapa(googleMap, visita.getUbicacion());
                 }
             } else {
                  if(MainActivity.visitaSeleccionada != null) {
-                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(
-                        getDefaultUbicacion()));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                    centrarMapa(getDefaultUbicacion());
+                    marker = googleMap.addMarker(new MarkerOptions().position(
+                            getDefaultUbicacion()));
+                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    centrarMapa(googleMap, getDefaultUbicacion());
                 }
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
         }
     }
 
+    private void setMapListeners(final GoogleMap googleMap) {
+        try {
+            googleMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            Log.e(Utils.APPTAG, "My location enabled security exception");
+        }
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (!Config.getInstance().isEditing()) {
+                    mapFragmentPersona.getMap().clear();
+                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                            latLng.latitude, latLng.longitude)));
+                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                }
+            }
+        });
+
+        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location myLocation) {
+                if (!locationCargada) {
+                    googleMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
+                    locationCargada = true;
+                }
+                centrarMapa(googleMap, myLocation);
+            }
+        });
+    }
+
+
     private LatLng getDefaultUbicacion() {
     //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
         return new LatLng(-34.6417109,-58.5651438);
     }
 
-    private void centrarMapa(LatLng ubicacion) {
+    private void centrarMapa(GoogleMap googleMap, LatLng ubicacion) {
         if (!locationCargada) {
-            mapFragmentPersona.getMap().animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
+            googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
             locationCargada = true;
         }
     }
 
-    private void centrarMapa(Location myLocation) {
+    private void centrarMapa(GoogleMap googleMap,Location myLocation) {
         if (!locationCargada) {
-            mapFragmentPersona.getMap().animateCamera(
+            googleMap.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
                             myLocation.getLongitude()), Utils.ZOOM_STANDAR));
             locationCargada = true;
