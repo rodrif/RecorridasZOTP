@@ -337,14 +337,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         if ("Liniers".equals(this.sZona.getSelectedItem().toString())) {
             googleMap.addPolygon(new PolygonOptions()
                     .add(new LatLng(-34.634780, -58.530340),
-                         new LatLng(-34.633633, -58.519810),
-                         new LatLng(-34.634709, -58.510856),
-                         new LatLng(-34.640103, -58.509872),
-                         new LatLng(-34.645752, -58.502341),
-                         new LatLng(-34.656943, -58.525715),
-                         new LatLng(-34.654349, -58.529300))
-                    .strokeColor(Color.RED)
-                    .fillColor(Color.BLUE));
+                            new LatLng(-34.633633, -58.519810),
+                            new LatLng(-34.634709, -58.510856),
+                            new LatLng(-34.640103, -58.509872),
+                            new LatLng(-34.645752, -58.502341),
+                            new LatLng(-34.656943, -58.525715),
+                            new LatLng(-34.654349, -58.529300))
+                    .strokeColor(Color.parseColor("#FF0000"))
+                    .strokeWidth(2)
+                    .fillColor(0x27FF0000));
         }
     }
 
