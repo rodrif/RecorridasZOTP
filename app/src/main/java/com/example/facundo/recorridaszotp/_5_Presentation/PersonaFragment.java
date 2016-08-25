@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaPersonaListener;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
@@ -63,9 +64,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
     private boolean locationCargada = false;
-    ArrayAdapter<String> adaptadorFamilia = null;
+    private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
-    ArrayAdapter<String> adaptadorRanchada = null;
+    private ArrayAdapter<String> adaptadorRanchada = null;
     AlertDialog.Builder dialogoBorrar = null;
     MainActivity activity = null;
 
@@ -107,8 +108,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
-        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
 
@@ -127,7 +126,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         sGrupoFamiliar.setAdapter(adaptadorFamilia);
 
         //Zona
-        final Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAll();
         final List<String> zonasString = new ArrayList<String>();
         zonasString.add("Zona");
@@ -139,37 +138,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         adaptadorZona.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
-        sZona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String stringZona = (String) sZona.getItemAtPosition(position);
-                if (adaptadorRanchada != null) {
-                    adaptadorRanchada.clear();
-                    List<Ranchada> ranchadas = RanchadaDataAccess.get().filtrarPorZona(stringZona);
-                    adaptadorRanchada.add("Ranchada");
-                    if (ranchadas != null)
-                        for (Ranchada ranchada : ranchadas) {
-                            adaptadorRanchada.add(ranchada.getNombre());
-                        }
-                    actualizarRanchada();
-                }
-                if (adaptadorFamilia != null) {
-                    adaptadorFamilia.clear();
-                    List<Familia> familias = FamiliaDataAccess.get().filtrarPorZona(stringZona);
-                    adaptadorFamilia.add("Familia");
-                    if (familias != null)
-                        for (Familia familia : familias) {
-                            adaptadorFamilia.add(familia.getNombre());
-                        }
-                    actualizarFamilia();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        sZona.setOnItemSelectedListener(new ZonaPersonaListener(this));
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
@@ -342,10 +311,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     public void onMapReady(GoogleMap googleMap) {
         googleMap.clear();
         this.setMapListeners(googleMap);
-        googleMap.addPolygon(new PolygonOptions()
-                .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
-                .strokeColor(Color.RED)
-                .fillColor(Color.BLUE));
+        this.drawZoneLimit(googleMap);
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
             if (visita != null) {
@@ -364,6 +330,18 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
+        }
+    }
+
+    private void drawZoneLimit(GoogleMap googleMap) {
+        if ("Liniers".equals(this.sZona.getSelectedItem().toString())) {
+            googleMap.addPolygon(new PolygonOptions()
+                    .add(new LatLng(-34.634780, -58.530340),
+                         new LatLng(-34.634709, -58.510856),
+                         new LatLng(-34.645752, -58.502341),
+                         new LatLng(-34.656943, -58.525715))
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.BLUE));
         }
     }
 
@@ -451,5 +429,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     @Override
     public String toString() {
         return Utils.FRAG_PERSONA;
+    }
+
+    public ArrayAdapter<String> getAdaptadorRanchada() {
+        return adaptadorRanchada;
+    }
+
+    public ArrayAdapter<String> getAdaptadorFamilia() {
+        return adaptadorFamilia;
+    }
+
+    public MapFragment getMapFragmentPersona() {
+        return mapFragmentPersona;
+    }
+
+    public void setAdaptadorRanchada(ArrayAdapter<String> adaptadorRanchada) {
+        this.adaptadorRanchada = adaptadorRanchada;
     }
 }
