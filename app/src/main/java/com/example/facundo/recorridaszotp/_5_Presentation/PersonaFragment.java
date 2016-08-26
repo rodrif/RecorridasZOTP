@@ -334,18 +334,129 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     private void drawZoneLimit(GoogleMap googleMap) {
-        if ("Liniers".equals(this.sZona.getSelectedItem().toString())) {
-            googleMap.addPolygon(new PolygonOptions()
-                    .add(new LatLng(-34.634780, -58.530340),
-                            new LatLng(-34.633633, -58.519810),
-                            new LatLng(-34.634709, -58.510856),
-                            new LatLng(-34.640103, -58.509872),
-                            new LatLng(-34.645752, -58.502341),
-                            new LatLng(-34.656943, -58.525715),
-                            new LatLng(-34.654349, -58.529300))
-                    .strokeColor(Color.parseColor("#FF0000"))
-                    .strokeWidth(2)
-                    .fillColor(0x27FF0000));
+        PolygonOptions polygon = new PolygonOptions();
+        polygon.strokeColor(Color.parseColor("#FF0000"))
+                .strokeWidth(2)
+                .fillColor(0x27FF0000);
+        switch (this.sZona.getSelectedItem().toString()) {
+            case "Ciudadela":
+                polygon.add(new LatLng(-34.627008, -58.565394),
+                        new LatLng(-34.618014, -58.543605),
+                        new LatLng(-34.621034, -58.541937),
+                        new LatLng(-34.620416, -58.540628),
+                        new LatLng(-34.620010, -58.541122),
+                        new LatLng(-34.619103, -58.538788),
+                        new LatLng(-34.623945, -58.532576),
+                        new LatLng(-34.622607, -58.531062),
+                        new LatLng(-34.654543, -58.529076)
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Haedo":
+                polygon.add(new LatLng(-34.632693, -58.620531),
+                        new LatLng(-34.633480, -58.619137),
+                        new LatLng(-34.636001, -58.602394),
+                        new LatLng(-34.635478, -58.586819),
+                        new LatLng(-34.642322, -58.577665),
+                        new LatLng(-34.642719, -58.577527),
+                        new LatLng(-34.643461, -58.581886),
+                        new LatLng(-34.649336, -58.580723),
+                        new LatLng(-34.650484, -58.583062),
+                        new LatLng(-34.659867, -58.593466),
+                        new LatLng(-34.636811, -58.621079),
+                        new LatLng(-34.634735, -58.621677),
+                        new LatLng(-34.633918, -58.620779)
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Liniers":
+                polygon.add(new LatLng(-34.634780, -58.530340),
+                        new LatLng(-34.633633, -58.519810),
+                        new LatLng(-34.634709, -58.510856),
+                        new LatLng(-34.640103, -58.509872),
+                        new LatLng(-34.645752, -58.502341),
+                        new LatLng(-34.656943, -58.525715),
+                        new LatLng(-34.654349, -58.529300)
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Ramos":
+                polygon.add(new LatLng(-34.634662, -58.556171),
+                        new LatLng(-34.651741, -58.532967),
+                        new LatLng(-34.658220, -58.541853),
+                        new LatLng(-34.666264, -58.550333),
+                        new LatLng(-34.668864, -58.552383),
+                        new LatLng(-34.673064, -58.557039),
+                        new LatLng(-34.667901, -58.562925),
+                        new LatLng(-34.663636, -58.565897),
+                        new LatLng(-34.650680, -58.583256),
+                        new LatLng(-34.649414, -58.580771),
+                        new LatLng(-34.647014, -58.581093),
+                        new LatLng(-34.643426, -58.581886),
+                        new LatLng(-34.641556, -58.570235),
+                        new LatLng(-34.638284, -58.571003),
+                        new LatLng(-34.637873, -58.564352),
+                        new LatLng(-34.637271, -58.561778),
+                        new LatLng(-34.636468, -58.562065)
+                );
+                googleMap.addPolygon(polygon);
+                break;
+    /*        case "San Justo":
+                polygon.add(new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng()
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Tres de Febrero":
+                polygon.add(new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng()
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Villa Luro":
+                polygon.add(new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng()
+                );
+                googleMap.addPolygon(polygon);
+                break;
+            case "Villa Sarmiento":
+                polygon.add(new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng(),
+                        new LatLng()
+                );
+                googleMap.addPolygon(polygon);
+                break;*/
         }
     }
 
