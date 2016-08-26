@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
@@ -73,35 +74,8 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
 
         }
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        mapFragmentVisita = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapVisita));
-        //       } else {
-        if (mapFragmentVisita == null) {
-            mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
-        }
-        mapFragmentVisita.getMap().setMyLocationEnabled(true);
+        mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
         mapFragmentVisita.getMapAsync(this);
-        mapFragmentVisita.getMap().setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (!(Config.getInstance().isEditing()
-                        && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA))) {
-                    mapFragmentVisita.getMap().clear();
-                    marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
-                            latLng.latitude, latLng.longitude)));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                    Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
-                }
-            }
-        });
-
-        mapFragmentVisita.getMap().setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-            @Override
-            public void onMyLocationChange(Location myLocation) {
-                centrarMapa(myLocation);
-            }
-        });
 
         ibFecha = (ImageButton) vista.findViewById(R.id.bFecha);
         ibFecha.setOnClickListener(new View.OnClickListener() {
@@ -198,19 +172,50 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         }
     }
 
+    private void setMapListeners(final GoogleMap googleMap) {
+        try {
+            googleMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            Log.e(Utils.APPTAG, "My location enabled security exception");
+        }
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (!(Config.getInstance().isEditing()
+                        && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA))) {
+                    googleMap.clear();
+                    marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                            latLng.latitude, latLng.longitude)));
+                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
+                }
+            }
+        });
+
+        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+
+            @Override
+            public void onMyLocationChange(Location myLocation) {
+                centrarMapa(myLocation);
+            }
+        });
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapFragmentVisita.getMap().clear();
+        googleMap.clear();
+        this.setMapListeners(googleMap);
         if (MainActivity.visitaSeleccionada != null) {
             if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
-                marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
                         MainActivity.visitaSeleccionada.getUbicacion().latitude,
                         MainActivity.visitaSeleccionada.getUbicacion().longitude)));
                 centrarMapa(MainActivity.visitaSeleccionada.getUbicacion());
             } else {
                 Log.d(Utils.APPTAG, "VisitaFragment::onMapReady" +
                         " MainActivity.visitaSeleccionada.getUbicacion() es null");
-                marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(
+                marker = googleMap.addMarker(new MarkerOptions().position(
                             getDefaultUbicacion()));
                 MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
                 centrarMapa(getDefaultUbicacion());
@@ -218,6 +223,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         } else {
 
         }
+        ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().toString());
     }
 
     private LatLng getDefaultUbicacion() {
