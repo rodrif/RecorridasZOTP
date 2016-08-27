@@ -49,7 +49,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         } catch (InflateException e) {
 
         }
-        mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
+        //Para compatibilidad
+        mapFragmentMapa = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapMapa));
+        if (mapFragmentMapa == null) {
+            mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
+        }
         mapFragmentMapa.getMapAsync(this);
         return vista;
     }

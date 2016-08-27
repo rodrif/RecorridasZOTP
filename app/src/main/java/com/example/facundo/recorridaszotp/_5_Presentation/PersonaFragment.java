@@ -91,8 +91,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         } catch (InflateException e) {
 
         }
-
-        mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        //Para compatibilidad
+        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        if (mapFragmentPersona == null) {
+            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        }
         mapFragmentPersona.getMapAsync(this);
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);

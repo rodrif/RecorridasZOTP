@@ -73,8 +73,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         } catch (InflateException e) {
 
         }
-
-        mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
+        //Para compatibilidad
+        mapFragmentVisita = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapVisita));
+        if (mapFragmentVisita == null) {
+            mapFragmentVisita = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapVisita));
+        }
         mapFragmentVisita.getMapAsync(this);
 
         ibFecha = (ImageButton) vista.findViewById(R.id.bFecha);
