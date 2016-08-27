@@ -185,9 +185,10 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 if (!(Config.getInstance().isEditing()
                         && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA))) {
                     googleMap.clear();
-                    marker = mapFragmentVisita.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
                             latLng.latitude, latLng.longitude)));
                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().getNombre());
                     Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
                 }
             }
@@ -223,7 +224,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         } else {
 
         }
-        ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().toString());
+        ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().getNombre());
     }
 
     private LatLng getDefaultUbicacion() {
