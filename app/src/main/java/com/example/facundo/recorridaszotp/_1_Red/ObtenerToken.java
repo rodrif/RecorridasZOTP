@@ -80,7 +80,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             //Leo respuesta
             Log.v(Utils.APPTAG, "Response Code: " + conns.getResponseCode());
             inputStream = new BufferedInputStream(conns.getInputStream());
-            respuesta = Utils.toString(inputStream);//FIXME Agregar rol id
+            respuesta = Utils.toString(inputStream);
             Config.getInstance().setAccessToken(conns.getHeaderField(Utils.ACCESS_TOKEN));
             Config.getInstance().setClient(conns.getHeaderField(Utils.CLIENT));
             Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
