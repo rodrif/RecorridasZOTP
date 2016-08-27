@@ -66,6 +66,7 @@ public final class Utils {
     public static final String DATE_PICKER_PERSONA = "Date Picker Persona";
     public static final int MAX_VISITAS = 20;
     public static final float ZOOM_STANDAR = 15.0f;
+    public static final float ZOOM_ZONA = 13.0f;
     public static final String LISTA_PERSONAS = "Lista Personas";
     public static final String ULTIMAS_VISITAS = "Ultimas Visitas";
     public static final String PERSONA = "Persona";

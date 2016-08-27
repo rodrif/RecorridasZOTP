@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._0_Infraestructure;
 
 import android.graphics.Color;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -12,9 +13,6 @@ import com.google.android.gms.maps.model.PolygonOptions;
 public class ZonaDrawer {
     public static void draw(GoogleMap googleMap, String name) {
         PolygonOptions polygon = new PolygonOptions();
-        polygon.strokeColor(Color.parseColor("#FF0000"))
-                .strokeWidth(2)
-                .fillColor(0x27FF0000);
         switch (name) {
             case "Ciudadela":
                 polygon.add(new LatLng(-34.627008, -58.565394),
@@ -27,7 +25,6 @@ public class ZonaDrawer {
                         new LatLng(-34.622607, -58.531062),
                         new LatLng(-34.654543, -58.529076)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Haedo":
                 polygon.add(new LatLng(-34.632693, -58.620531),
@@ -44,7 +41,6 @@ public class ZonaDrawer {
                         new LatLng(-34.634735, -58.621677),
                         new LatLng(-34.633918, -58.620779)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Liniers":
                 polygon.add(new LatLng(-34.634780, -58.530340),
@@ -55,7 +51,6 @@ public class ZonaDrawer {
                         new LatLng(-34.656943, -58.525715),
                         new LatLng(-34.654349, -58.529300)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Ramos":
                 polygon.add(new LatLng(-34.634662, -58.556171),
@@ -76,7 +71,6 @@ public class ZonaDrawer {
                         new LatLng(-34.637271, -58.561778),
                         new LatLng(-34.636468, -58.562065)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "San Justo":
                 polygon.add(new LatLng(-34.661794, -58.568635),
@@ -107,7 +101,6 @@ public class ZonaDrawer {
                         new LatLng(-34.672237, -58.578393),
                         new LatLng(-34.671473, -58.579342)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Tres de Febrero":
                 polygon.add(new LatLng(-34.547741, -58.617818),
@@ -125,7 +118,6 @@ public class ZonaDrawer {
                         new LatLng(-34.552201, -58.631084),
                         new LatLng(-34.548141, -58.625526)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Villa Luro":
                 polygon.add(new LatLng(-34.624277, -58.511616),
@@ -141,7 +133,6 @@ public class ZonaDrawer {
                         new LatLng(-34.634587, -58.508344),
                         new LatLng(-34.628447, -58.516348)
                 );
-                googleMap.addPolygon(polygon);
                 break;
             case "Villa Sarmiento":
                 polygon.add(new LatLng(-34.625980, -58.566816),
@@ -162,8 +153,48 @@ public class ZonaDrawer {
                         new LatLng(-34.629760, -58.571553),
                         new LatLng(-34.628803, -58.572239)
                 );
-                googleMap.addPolygon(polygon);
                 break;
+            default:
+                return;
         }
+        polygon.strokeColor(Color.parseColor("#FF0000"))
+                .strokeWidth(2)
+                .fillColor(0x27FF0000);
+        centrarEnZona(googleMap, name);
+        googleMap.addPolygon(polygon);
+    }
+
+    public static void centrarEnZona(GoogleMap googleMap, String zona) {
+        LatLng ubicacion = null;
+        switch (zona) {
+            case "Ciudadela":
+                ubicacion = new LatLng(-34.633990, -58.541851);
+                break;
+            case "Haedo":
+                ubicacion = new LatLng(-34.645314, -58.593969);
+                break;
+            case "Liniers":
+                ubicacion = new LatLng(-34.644772, -58.518225);
+                break;
+            case "Ramos":
+                ubicacion = new LatLng(-34.652899, -58.557034);
+                break;
+            case "San Justo":
+                ubicacion = new LatLng(-34.689364, -58.563382);
+                break;
+            case "Tres de Febrero":
+                ubicacion = new LatLng(-34.599354, -58.575835);
+                break;
+            case "Villa Luro":
+                ubicacion = new LatLng(-34.637727, -58.501150);
+                break;
+            case "Villa Sarmiento":
+                ubicacion = new LatLng(-34.6346318,-58.5695524);
+                break;
+            default:
+                return;
+        }
+        googleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_ZONA));
     }
 }
