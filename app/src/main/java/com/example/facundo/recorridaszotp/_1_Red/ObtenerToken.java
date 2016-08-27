@@ -7,10 +7,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
+import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -86,6 +88,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
             Config.getInstance().setUid(conns.getHeaderField(Utils.UID));
             Config.getInstance().setRol(this.getRolId(respuesta));
+            this.logUserCrashlytics(respuesta);
 
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             return Integer.toString(conns.getResponseCode());
@@ -116,6 +119,22 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
                     "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void logUserCrashlytics(String respuesta) {
+        try {
+            JSONObject json = new JSONObject(respuesta);
+            JSONObject datos = json.getJSONObject("data");
+            Crashlytics.setUserIdentifier(datos.getString("uid"));
+            Crashlytics.setUserName(datos.optString("name", "") + " " +
+                            datos.optString("apellido", "")
+            );
+            Crashlytics.setString("rol", Roles.getInstance()
+                    .getRoleName(Integer.parseInt(datos.getString("rol_id"))));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private int getRolId(String jsonString) {
         JSONObject json = null;
