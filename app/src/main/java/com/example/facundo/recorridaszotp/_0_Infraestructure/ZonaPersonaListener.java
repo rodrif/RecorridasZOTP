@@ -9,8 +9,6 @@ import com.example.facundo.recorridaszotp._2_DataAccess.RanchadaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._5_Presentation.PersonaFragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class ZonaPersonaListener implements AdapterView.OnItemSelectedListener {
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        final String stringZona = (String)parent.getItemAtPosition(position);
+        String stringZona = (String)parent.getItemAtPosition(position);
         if (this.personaFragment.getAdaptadorRanchada() != null) {
             this.personaFragment.getAdaptadorRanchada().clear();
             List<Ranchada> ranchadas = RanchadaDataAccess.get().filtrarPorZona(stringZona);
@@ -47,12 +45,7 @@ public class ZonaPersonaListener implements AdapterView.OnItemSelectedListener {
                 }
             this.personaFragment.actualizarFamilia();
         }
-        this.personaFragment.getMapFragmentPersona().getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                ZonaDrawer.centrarEnZona(googleMap, stringZona);
-            }
-        });
+        this.personaFragment.getMapFragmentPersona().getMapAsync(this.personaFragment);
     }
 
     @Override
