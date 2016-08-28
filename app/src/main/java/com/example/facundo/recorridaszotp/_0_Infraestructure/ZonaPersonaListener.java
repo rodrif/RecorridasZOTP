@@ -45,7 +45,6 @@ public class ZonaPersonaListener implements AdapterView.OnItemSelectedListener {
                 }
             this.personaFragment.actualizarFamilia();
         }
-        this.personaFragment.setCentrarEnZona(true);
         this.personaFragment.getMapFragmentPersona().getMapAsync(this.personaFragment);
     }
 
