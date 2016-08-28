@@ -65,6 +65,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
     private boolean locationCargada = false;
+    private boolean centrarEnZona = false;
     private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     private ArrayAdapter<String> adaptadorRanchada = null;
@@ -91,12 +92,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         } catch (InflateException e) {
 
         }
-        //Para compatibilidad
-        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
-        if (mapFragmentPersona == null) {
-            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
-        }
-        mapFragmentPersona.getMapAsync(this);
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -170,29 +165,28 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         dialogoBorrar.setTitle("Importante");
         dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
         dialogoBorrar.setCancelable(false);
-        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
-            {
-                public void onClick(DialogInterface dialogo1, int id) {
-                    if(MainActivity.personaSeleccionada.getId() != null) {
-                        PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
-                        if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
-                            Toast.makeText(getActivity(),
-                                    "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
-                                            + " exitosamente", Toast.LENGTH_SHORT).show();
-                            MainActivity.clean();
-                            activity.onBackPressed();
-                            activity.onBackPressed();
+        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        if (MainActivity.personaSeleccionada.getId() != null) {
+                            PersonaDataAccess.get().deleteLogico(MainActivity.personaSeleccionada);
+                            if (MainActivity.personaSeleccionada.getEstado() == Utils.EST_BORRADO) {
+                                Toast.makeText(getActivity(),
+                                        "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
+                                                + " exitosamente", Toast.LENGTH_SHORT).show();
+                                MainActivity.clean();
+                                activity.onBackPressed();
+                                activity.onBackPressed();
+                            } else {
+                                Log.e(Utils.APPTAG, "Error al hacer borrado logico de personaId: " +
+                                        MainActivity.personaSeleccionada.getId() +
+                                        "en PersonaFragment::PositiveButton::onClick");
+                            }
                         } else {
-                            Log.e(Utils.APPTAG, "Error al hacer borrado logico de personaId: " +
-                                MainActivity.personaSeleccionada.getId() +
-                                "en PersonaFragment::PositiveButton::onClick");
+                            Toast.makeText(getActivity(),
+                                    "No se puede borrar una persona no creada", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getActivity(),
-                            "No se puede borrar una persona no creada", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
         );
         dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
 
@@ -203,6 +197,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
 
         );
+
+        //Para compatibilidad
+        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        if (mapFragmentPersona == null) {
+            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        }
+        mapFragmentPersona.getMapAsync(this);
         return vista;
     }
 
@@ -335,6 +336,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
         }
+
+        if(this.centrarEnZona) {
+            ZonaDrawer.centrarEnZona(googleMap, sZona.getSelectedItem().toString());
+            this.centrarEnZona = false;
+        }
     }
 
     private void setMapListeners(final GoogleMap googleMap) {
@@ -392,6 +398,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             myLocation.getLongitude()), Utils.ZOOM_STANDAR));
             locationCargada = true;
         }
+    }
+
+    public boolean isCentrarEnZona() {
+        return centrarEnZona;
+    }
+
+    public void setCentrarEnZona(boolean centrarEnZona) {
+        this.centrarEnZona = centrarEnZona;
     }
 
     @Override
