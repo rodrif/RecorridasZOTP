@@ -160,7 +160,6 @@ public class ZonaDrawer {
         polygon.strokeColor(Color.parseColor("#FF0000"))
                 .strokeWidth(2)
                 .fillColor(0x27FF0000);
-        centrarEnZona(googleMap, name);
         googleMap.addPolygon(polygon);
     }
 
