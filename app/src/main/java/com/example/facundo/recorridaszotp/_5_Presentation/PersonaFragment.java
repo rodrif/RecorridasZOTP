@@ -348,8 +348,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             @Override
             public void onMapClick(LatLng latLng) {
                 if (!Config.getInstance().isEditing()) {
-                    mapFragmentPersona.getMap().clear();
-                    marker = mapFragmentPersona.getMap().addMarker(new MarkerOptions().position(new LatLng(
+                    googleMap.clear();
+                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
                             latLng.latitude, latLng.longitude)));
                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
                 }
