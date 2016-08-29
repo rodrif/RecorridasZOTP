@@ -142,7 +142,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         adaptadorZona.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
-        sZona.setOnItemSelectedListener(new ZonaPersonaListener(this));
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
@@ -335,6 +334,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
         }
+
+        if (sZona.getOnItemSelectedListener() != null) {
+            ZonaDrawer.centrarEnZona(googleMap, sZona.getSelectedItem().toString());
+        } else {
+            //Para que no se llame al iniciar el fragment
+            sZona.setOnItemSelectedListener(new ZonaPersonaListener(this));
+        }
     }
 
     private void setMapListeners(final GoogleMap googleMap) {
@@ -403,6 +409,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     @Override
     public void onDetach() {
+        //Para que no se llame al iniciar el fragment
+        sZona.setOnItemSelectedListener(null);
         super.onDetach();
         ((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
     }
