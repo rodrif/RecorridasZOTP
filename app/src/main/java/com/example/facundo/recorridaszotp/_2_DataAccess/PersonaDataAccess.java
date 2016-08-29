@@ -99,4 +99,12 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
         persona.setEstado(Utils.EST_BORRADO);
         persona.save();
     }
+
+    public List<Persona> getAllOK() {
+        return new Select()
+                .from(Persona.class)
+                .orderBy("Zona ASC, Nombre ASC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
 }
