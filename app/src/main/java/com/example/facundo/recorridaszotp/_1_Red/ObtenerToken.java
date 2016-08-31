@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LoginEvent;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
@@ -110,13 +112,20 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         }
         if (result.equalsIgnoreCase(Integer.toString(Utils.LOGIN_OK_CODE))) {
             if (this.activity != null) {
+                Answers.getInstance().logLogin(new LoginEvent()
+                        .putMethod("App Login")
+                        .putSuccess(true));
                 this.activity.loginOk();
                 new Sincronizador(activity).execute();
             }
         } else {
-            if (this.activity != null)
-               Toast.makeText(this.activity,
-                    "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
+            if (this.activity != null) {
+                Answers.getInstance().logLogin(new LoginEvent()
+                        .putMethod("App Login")
+                        .putSuccess(false));
+                Toast.makeText(this.activity,
+                        "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
