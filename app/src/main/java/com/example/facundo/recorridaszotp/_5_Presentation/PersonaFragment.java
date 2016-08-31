@@ -26,6 +26,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaPersonaListener;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
+import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.FamiliaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
@@ -178,6 +179,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             Toast.makeText(getActivity(),
                                     "Se elimino a " + MainActivity.personaSeleccionada.getNombre()
                                             + " exitosamente", Toast.LENGTH_SHORT).show();
+                            Sincronizador sinc = new Sincronizador(getActivity(), false);
+                            sinc.execute();
                             MainActivity.clean();
                             activity.onBackPressed();
                             activity.onBackPressed();

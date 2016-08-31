@@ -26,6 +26,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
+import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
@@ -109,6 +110,8 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                                 "Se elimino la visita a " + MainActivity.visitaSeleccionada.
                                         getPersona().getNombre()
                                         + " exitosamente", Toast.LENGTH_SHORT).show();
+                        Sincronizador sinc = new Sincronizador(getActivity(), false);
+                        sinc.execute();
                         MainActivity.clean();
                         activity.onBackPressed();
                         activity.onBackPressed();

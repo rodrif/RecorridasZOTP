@@ -25,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -224,6 +226,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
+            Answers.getInstance().logCustom(new CustomEvent("Visita Creada")
+                    .putCustomAttribute("Nombre", visitaSeleccionada.getPersona().getNombre())
+                    .putCustomAttribute("Apellido", visitaSeleccionada.getPersona().getApellido())
+                    .putCustomAttribute("Zona", visitaSeleccionada.getPersona().getZona().getNombre())
+                    .putCustomAttribute("Fecha", visitaSeleccionada.getFechaString())
+                    .putCustomAttribute("Descripcion", visitaSeleccionada.getDescripcion()));
+            Sincronizador sinc = new Sincronizador(this, false);
+            sinc.execute();
         } else {
             Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
             unToast.show();
@@ -279,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     VisitaDataAccess.get().save(visitaSeleccionada);
                 }
 
-                //Chequea creacion correcta
+                //Chequea creación correcta
                 PersonaQuery query = new PersonaQuery();
                 query.nombre = nombre;
 
@@ -291,7 +301,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     unToast.setText("Se grabo: " + p.getNombre());
                 }
                 unToast.show();
-
+                Answers.getInstance().logCustom(new CustomEvent("Persona Creada")
+                        .putCustomAttribute("Nombre", personaSeleccionada.getNombre())
+                        .putCustomAttribute("Apellido", personaSeleccionada.getApellido())
+                        .putCustomAttribute("Zona", personaSeleccionada.getZona().getNombre()));
+                Sincronizador sinc = new Sincronizador(this, false);
+                sinc.execute();
                 menuGuardar(false);
                 getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
                 getFragmentManager().popBackStack();
@@ -362,9 +377,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             switch (position) {
                 case 1: //Personas
                     menuGuardar(false);
-                    //Ocultar el grupo
-                    Sincronizador sinc = new Sincronizador(this.activity, false);
-                    sinc.execute();
                     fragment = new ListaPersonas();
                     fragmentTransaction = true;
                     tag = Utils.LISTA_PERSONAS;
