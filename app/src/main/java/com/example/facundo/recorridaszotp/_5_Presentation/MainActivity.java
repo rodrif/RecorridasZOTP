@@ -45,9 +45,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.gcm.GcmPubSub;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.plus.Plus;
 
 import io.fabric.sdk.android.Fabric;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -396,6 +401,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     fragmentTransaction = true;
                     tag = Utils.FRAG_LOGIN; //TODO refactor
                     Config.getInstance().logOut();
+                    // Unsuscribe for notifications
+                    Intent intent = new Intent(this.activity, RegistrationIntentService.class);
+                    startService(intent);
                     clearAllFragments();
                     disableSideMenu();
                     Toast.makeText(getApplicationContext(),

@@ -59,7 +59,7 @@ public class RegistrationIntentService extends IntentService {
             sendRegistrationToServer(token);
 
             // Subscribe to topic channels
-            subscribeTopics(token);
+            subscribeOrUnsuscribeTopics(token);
 
             // You should store a boolean that indicates whether the generated token has been
             // sent to your server. If the boolean is false, send the token to your server,
@@ -96,19 +96,22 @@ public class RegistrationIntentService extends IntentService {
      * @throws IOException if unable to reach the GCM PubSub service
      */
     // [START subscribe_topics]
-    private void subscribeTopics(String token) throws IOException {
+    private void subscribeOrUnsuscribeTopics(String token) throws IOException {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_ADMIN_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_REFERENTE_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_COORDINADOR_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_VOLUNTARIO_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_INVITADO_STRING);
-        ArrayList<String> TOPICS = new ArrayList<String>();
-        int rolId = Config.getInstance().getRol();
-        TOPICS.add(Roles.getInstance().getRoleName(rolId));
-        for (String topic : TOPICS) {
-            Log.d(Utils.APPTAG, "Suscrito a topic: " + topic);
-            pubSub.subscribe(token, "/topics/" + topic, null);
+        pubSub.unsubscribe(token, "/topics/" + "gonzalo");
+        if (Config.getInstance().isLoginOk()) {
+            ArrayList<String> TOPICS = new ArrayList<String>();
+            int rolId = Config.getInstance().getRol();
+            TOPICS.add(Roles.getInstance().getRoleName(rolId));
+            for (String topic : TOPICS) {
+                Log.d(Utils.APPTAG, "Suscrito a topic: " + topic);
+                pubSub.subscribe(token, "/topics/" + topic, null);
+            }
         }
     }
     // [END subscribe_topics]
