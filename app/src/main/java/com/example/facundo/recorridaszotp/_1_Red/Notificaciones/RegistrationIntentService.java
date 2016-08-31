@@ -103,7 +103,6 @@ public class RegistrationIntentService extends IntentService {
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_COORDINADOR_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_VOLUNTARIO_STRING);
         pubSub.unsubscribe(token, "/topics/" + Utils.ROL_INVITADO_STRING);
-        pubSub.unsubscribe(token, "/topics/" + "gonzalo");
         if (Config.getInstance().isLoginOk()) {
             ArrayList<String> TOPICS = new ArrayList<String>();
             int rolId = Config.getInstance().getRol();
