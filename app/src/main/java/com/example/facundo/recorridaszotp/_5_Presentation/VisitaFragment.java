@@ -5,12 +5,15 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -40,18 +43,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class VisitaFragment extends Fragment implements OnMapReadyCallback, popUp {
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
     private ImageButton ibFecha = null;
+    private ImageButton ibSpeak = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
     private MapFragment mapFragmentVisita = null;
     private Marker marker = null;
     private boolean locationCargada = false;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private final int RESULT_OK = -1;
     AlertDialog.Builder dialogoBorrar = null;
     MainActivity activity= null;
 
@@ -91,7 +99,15 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
+        ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeak);
         actualizar();
+        ibSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
         dialogoBorrar = new AlertDialog.Builder(getActivity());
         dialogoBorrar.setTitle("Importante");
         dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
@@ -265,6 +281,45 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             etFecha.setEnabled(true);
             etObservaciones.setEnabled(true);
             ibFecha.setEnabled(true);
+        }
+    }
+
+    /**
+     * Showing google speech input dialog
+     * */
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Escuchando...");
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(this.getActivity(),
+                    "Speech not supported",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK&& null != data) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (this.etObservaciones != null) {
+                        this.etObservaciones.setText(result.get(0));
+                    }
+                }
+                break;
+            }
         }
     }
 
