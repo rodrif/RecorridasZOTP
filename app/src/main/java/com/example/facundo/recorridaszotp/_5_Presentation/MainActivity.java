@@ -423,6 +423,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     break;
             }
 
+            Sincronizador sinc = new Sincronizador(this.activity, false);
+            sinc.execute();
+
             if (fragmentTransaction) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 if (tag != Utils.FRAG_LOGIN) {
