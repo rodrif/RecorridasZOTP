@@ -311,7 +311,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
 
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK&& null != data) {
+                if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     if (this.etObservaciones != null) {

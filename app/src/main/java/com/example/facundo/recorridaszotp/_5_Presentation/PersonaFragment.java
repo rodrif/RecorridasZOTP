@@ -3,11 +3,14 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -49,9 +52,12 @@ import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp {
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+    private final int RESULT_OK = -1;
     private static View vista;
     private EditText etFechaNacimiento = null;
     private EditText etNombre = null;
@@ -59,6 +65,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etObservaciones;
     private EditText etDNI;
     private EditText etTelefono;
+    private ImageButton ibSpeak = null;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
@@ -111,10 +118,19 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etApellido = (EditText) vista.findViewById(R.id.ETApellido);
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
+        ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
+
+        ibSpeak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
 
         //Grupo Familiar
         sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
@@ -426,6 +442,45 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         } else {
             Toast unToast = Toast.makeText(this.activity, "No tiene permisos para borrar a esta persona", Toast.LENGTH_SHORT);
             unToast.show();
+        }
+    }
+
+    /**
+     * Showing google speech input dialog
+     * */
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Escuchando...");
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(this.getActivity(),
+                    "Speech not supported",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (this.etObservaciones != null) {
+                        this.etObservaciones.setText(result.get(0));
+                    }
+                }
+                break;
+            }
         }
     }
 
