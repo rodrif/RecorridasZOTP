@@ -152,23 +152,34 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/ETObservaciones"
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Observaciones" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_weight="1"
+                android:layout_gravity="center">
+                <EditText
+                    android:id="@+id/ETObservaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Observaciones"
+                    android:layout_weight="1" />
+            </android.support.design.widget.TextInputLayout>
 
-        <ImageButton
-            android:id="@+id/buttonSpeakPerson"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
+                <ImageButton
+                android:id="@+id/buttonSpeakPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_gravity="center"
+                android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
+
+        </LinearLayout>
+
 
         <android.support.v7.widget.CardView
             android:id="@+id/card1"
