@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_gravity="center"
-                android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
+                android:src="@drawable/microphone24" />
 
         </LinearLayout>
 
