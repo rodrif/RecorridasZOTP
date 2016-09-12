@@ -52,7 +52,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 } else if (p != null) {
                     p.mergeFromWeb(persona);
                     p.save();
-                } else {
+                } else if (persona.getEstado() != Utils.EST_BORRADO) {
                     persona.save();
                 }
             }

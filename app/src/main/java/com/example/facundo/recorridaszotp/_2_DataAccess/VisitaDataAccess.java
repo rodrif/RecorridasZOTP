@@ -49,7 +49,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 } else if (v != null) {
                     v.mergeFromWeb(visita);
                     v.save();
-                } else {
+                } else if (visita.getEstado() != Utils.EST_BORRADO) {
                     visita.save();
                 }
             }
