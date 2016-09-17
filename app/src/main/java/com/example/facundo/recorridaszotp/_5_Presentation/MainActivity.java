@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
         navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
+        navItms.add(new ItemLista("Calendario", R.drawable.ic_map_white_36dp));
         navItms.add(new ItemLista("Salir", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
@@ -407,7 +408,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     fragmentTransaction = true;
                     tag = Utils.FRAG_MAPA;
                     break;
-                case 5: //Salir
+                case 5: //Calendario
+                    menuGuardar(false);
+                    fragment = new CalendarioFragment();
+                    fragmentTransaction = true;
+                    tag = Utils.FRAG_CALENDARIO;
+                    break;
+                case 6: //Salir
                     menuGuardar(false);
                     fragment = new LoginFragment();
                     fragmentTransaction = true;
