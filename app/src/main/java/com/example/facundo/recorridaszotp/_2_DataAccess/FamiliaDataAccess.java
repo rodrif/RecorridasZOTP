@@ -39,7 +39,7 @@ public class FamiliaDataAccess extends BasicDataAccess<Familia> {
                 } else if (v != null) {
                     v.mergeFromWeb(familia);
                     v.save();
-                } else {
+                } else if (familia.getEstado() != Utils.EST_BORRADO) {
                     familia.save();
                 }
             }

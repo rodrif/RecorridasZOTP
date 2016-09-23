@@ -42,7 +42,7 @@ public class ZonaDataAccess extends BasicDataAccess<Zona>{
                 } else if (v != null) {
                     v.mergeFromWeb(zona);
                     v.save();
-                } else {
+                } else if (zona.getEstado() != Utils.EST_BORRADO) {
                     zona.save();
                 }
             }

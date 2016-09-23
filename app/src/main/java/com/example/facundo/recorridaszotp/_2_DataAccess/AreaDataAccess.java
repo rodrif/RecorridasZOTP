@@ -47,7 +47,7 @@ public class AreaDataAccess extends BasicDataAccess<Area> {
                 } else if (v != null) {
                     v.mergeFromWeb(area);
                     v.save();
-                } else {
+                } else if (area.getEstado() != Utils.EST_BORRADO) {
                     area.save();
                 }
             }

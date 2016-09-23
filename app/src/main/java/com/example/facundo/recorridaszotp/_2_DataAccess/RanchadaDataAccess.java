@@ -46,7 +46,7 @@ public class RanchadaDataAccess extends BasicDataAccess<Ranchada> {
                 } else if (v != null) {
                     v.mergeFromWeb(ranchada);
                     v.save();
-                } else {
+                } else if (ranchada.getEstado() != Utils.EST_BORRADO) {
                     ranchada.save();
                 }
             }
