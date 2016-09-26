@@ -30,8 +30,8 @@ android {
         applicationId "com.example.facundo.recorridaszotp"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.6.8"
+        versionCode 13
+        versionName "1.7.0"
     }
     buildTypes {
         release {
@@ -71,7 +71,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     // Set this dependency to build and run UI Automator tests
     // androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
 }
