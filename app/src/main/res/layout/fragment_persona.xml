@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:hint="DNI"
                 android:inputType="date"
-                android:maxLength="8" />
+                android:maxLength="15" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
