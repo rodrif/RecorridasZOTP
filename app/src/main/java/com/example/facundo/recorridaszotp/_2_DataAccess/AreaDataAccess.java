@@ -66,6 +66,18 @@ public class AreaDataAccess extends BasicDataAccess<Area> {
         recepcionAreas.execute(Utils.WEB_RECIBIR_AREAS);
     }
 
+    public String getName(int webId) {
+        Area area = new Select()
+                .from(Area.class)
+                .where("WebId = ?", webId)
+                .executeSingle();
+
+        if (area != null) {
+            return area.getNombre();
+        }
+        return "";
+    }
+
     public void sincronizarTodo(AsyncDelegate delegate) {
         AsyncDelegate delegateSincronizarVisitas = new DelegateSincronizarVisitas(delegate);
         AsyncDelegate delegateSincronizarPersonas = new DelegateSincronizarPersonas(delegateSincronizarVisitas);
