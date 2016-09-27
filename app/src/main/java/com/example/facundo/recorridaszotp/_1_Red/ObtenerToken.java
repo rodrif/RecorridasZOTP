@@ -90,6 +90,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
             Config.getInstance().setUid(conns.getHeaderField(Utils.UID));
             Config.getInstance().setRol(this.getRolId(respuesta));
+            Config.getInstance().setArea(this.getAreaId(respuesta));
             this.logUserCrashlytics(respuesta);
 
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
@@ -114,7 +115,9 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             if (this.activity != null) {
                 Answers.getInstance().logLogin(new LoginEvent()
                         .putMethod("App Login")
-                        .putSuccess(true));
+                        .putSuccess(true)
+                        .putCustomAttribute("Email", Config.getInstance().getUserMail()));
+
                 this.activity.loginOk();
                 new Sincronizador(activity).execute();
             }
@@ -139,6 +142,8 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             );
             Crashlytics.setString("rol", Roles.getInstance()
                     .getRoleName(Integer.parseInt(datos.getString("rol_id"))));
+            Crashlytics.setString("area", AreaDataAccess.get()
+                    .getName(Integer.parseInt(datos.getString("area_id"))));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -151,6 +156,18 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             json = new JSONObject(jsonString);
             JSONObject data = json.getJSONObject("data");
             return data.getInt("rol_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    private int getAreaId(String jsonString) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(jsonString);
+            JSONObject data = json.getJSONObject("data");
+            return data.getInt("area_id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
