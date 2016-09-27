@@ -11,6 +11,7 @@ import java.util.Map;
 public class Config {
     private static Config instance = null;
     private int rol = -1;
+    private int area = -1;
     private int userWebId;
  //   private String userMail = "rodrif89@gmail.com"; 123456789
     private String userMail = "";
@@ -131,6 +132,14 @@ public class Config {
 
     public void setIsEditing(boolean isEditing) {
         this.isEditing = isEditing;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
     }
 
     public void logOut() {
