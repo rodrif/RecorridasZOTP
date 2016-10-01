@@ -147,6 +147,7 @@ public class Config {
         userMail = "";
         userPassword = "";
         rol = -1;
+        area = -1;
         isEditing = false;
     }
 }

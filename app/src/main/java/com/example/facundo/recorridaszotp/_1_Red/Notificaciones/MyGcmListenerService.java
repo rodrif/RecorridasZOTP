@@ -30,6 +30,7 @@ package com.example.facundo.recorridaszotp._1_Red.Notificaciones;
 
         import com.example.facundo.recorridaszotp.R;
         import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+        import com.example.facundo.recorridaszotp._2_DataAccess.Config;
         import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
         import com.google.android.gms.gcm.GcmListenerService;
 
@@ -52,14 +53,17 @@ public class MyGcmListenerService extends GcmListenerService {
         String description = data.getString(Utils.DESCRIPCION);
         String codigoNotificacion = data.getString(Utils.CODIGO_NOTIFICACION, "");
         String idPersona = data.getString(Utils.PERSONA_ID, "");
+        String idArea = data.getString(Utils.AREA_ID, "");
+
 
         Log.e(Utils.APPTAG, "Notificacion1: codigo: " + codigoNotificacion +
                 " idPersona: " + idPersona + " titulo: " + title +
                 " subtitulo: " + subtitle + " decripcion: " + description);
 
 
-        if (from.startsWith("/topics/")) {
+        if (idArea.equalsIgnoreCase(Integer.toString(Config.getInstance().getArea()))) {
             // message received from some topic.
+            sendNotification(codigoNotificacion, idPersona, title, subtitle, description);
         } else {
             // normal downstream message.
         }
@@ -77,7 +81,6 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
 
-        sendNotification(codigoNotificacion, idPersona, title, subtitle, description);
     }
     // [END receive_message]
 
