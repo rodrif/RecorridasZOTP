@@ -9,6 +9,7 @@ import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersona
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,8 +104,21 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
     public List<Persona> getAllOK() {
         return new Select()
                 .from(Persona.class)
-                .orderBy("Zona ASC, Nombre ASC")
-                .where("Estado != ?", Utils.EST_BORRADO)
+                .innerJoin(Zona.class)
+                .on("Zona = Zonas.Id")
+                .orderBy("Zonas.Nombre ASC, Personas.Nombre ASC")
+                .where("Personas.Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
+
+    public List<Persona> getAllOKPorArea() {
+        return new Select()
+                .from(Persona.class)
+                .innerJoin(Zona.class)
+                .on("Zona = Zonas.Id")
+                .orderBy("Zonas.Nombre ASC, Personas.Nombre ASC")
+                .where("Personas.Estado != ?", Utils.EST_BORRADO)
+                .where("Area = ?", Config.getInstance().getArea())
                 .execute();
     }
 }
