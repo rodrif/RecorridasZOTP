@@ -60,7 +60,7 @@ public class ListaVisitas extends Fragment {
     }
 
     private void getVisitas(long personaId) {
-        listaVisitas = personaId == -1 ? VisitaDataAccess.get().getAllOKOrderFecha()
+        listaVisitas = personaId == -1 ? VisitaDataAccess.get().getAllOKPorAreaOrderFecha()
                 : VisitaDataAccess.get().getAllOKOrderFecha(personaId);
     }
 

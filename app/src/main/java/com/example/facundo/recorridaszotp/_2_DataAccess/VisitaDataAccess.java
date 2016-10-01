@@ -12,6 +12,7 @@ import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.List;
@@ -128,6 +129,19 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .from(Visita.class)
                 .orderBy("Fecha DESC")
                 .where("Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
+
+    public List<Visita> getAllOKPorAreaOrderFecha() {
+        return new Select()
+                .from(Visita.class)
+                .innerJoin(Persona.class)
+                .on("Persona = Personas.Id")
+                .innerJoin(Zona.class)
+                .on("Zona = Zonas.Id")
+                .orderBy("Fecha DESC")
+                .where("Visitas.Estado != ?", Utils.EST_BORRADO)
+                .where("Area = ?", Config.getInstance().getArea())
                 .execute();
     }
 
