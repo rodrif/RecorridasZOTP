@@ -58,6 +58,17 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
         if (personaJson.optString("telefono") != "null") {
             persona.setTelefono(personaJson.optString("telefono"));
         }
+
+        if (personaJson.optString("pantalon") != "null") {
+            persona.setPantalon(personaJson.optString("pantalon"));
+        }
+        if (personaJson.optString("remera") != "null") {
+            persona.setRemera(personaJson.optString("remera"));
+        }
+        if (personaJson.optString("zapatillas") != "null") {
+            persona.setZapatillas(personaJson.optString("zapatillas"));
+        }
+
         persona.setFamiliaByWebId(personaJson.optInt("web_familia_id"));
         persona.setRanchadaByWebId(personaJson.optInt("web_ranchada_id"));
 
@@ -80,6 +91,9 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
             jsonObj.put("descripcion", persona.getObservaciones());
             jsonObj.put("dni", persona.getDNI());
             jsonObj.put("telefono", persona.getTelefono());
+            jsonObj.put("remera", persona.getRemera());
+            jsonObj.put("pantalon", persona.getPantalon());
+            jsonObj.put("zapatillas", persona.getZapatillas());
             if (persona.getFamilia() != null) {
                 jsonObj.put("web_familia_id", persona.getFamilia().getWebId());
             }

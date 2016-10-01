@@ -102,6 +102,45 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ETRemera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remera"
+                android:inputType="text"
+                android:maxLength="50"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ETPantalon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pantalon"
+                android:inputType="text"
+                android:maxLength="50"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ETZapatillas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Zapatillas"
+                android:inputType="text"
+                android:maxLength="50"/>
+        </android.support.design.widget.TextInputLayout>
+
         <android.support.v7.widget.CardView
             android:id="@+id/card55"
             android:layout_width="match_parent"

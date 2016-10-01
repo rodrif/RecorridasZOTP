@@ -69,6 +69,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
+    private EditText etPantalon = null;
+    private EditText etRemera = null;
+    private EditText etZapatillas = null;
     private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
@@ -117,6 +120,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etNombre = (EditText) vista.findViewById(R.id.ETNombre);
         etApellido = (EditText) vista.findViewById(R.id.ETApellido);
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        etPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
+        etRemera = (EditText) vista.findViewById(R.id.ETRemera);
+        etZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
@@ -271,6 +277,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etDNI.setText(MainActivity.personaSeleccionada.getDNI());
                 else
                     etDNI.setText("");
+
+                if (MainActivity.personaSeleccionada.getRemera() != null)
+                    etRemera.setText(MainActivity.personaSeleccionada.getRemera());
+                else
+                    etRemera.setText("");
+
+                if (MainActivity.personaSeleccionada.getPantalon() != null)
+                    etPantalon.setText(MainActivity.personaSeleccionada.getPantalon());
+                else
+                    etPantalon.setText("");
+
+                if (MainActivity.personaSeleccionada.getZapatillas() != null)
+                    etZapatillas.setText(MainActivity.personaSeleccionada.getZapatillas());
+                else
+                    etZapatillas.setText("");
 
                 if (MainActivity.personaSeleccionada.getZona() != null) {
                     sZona.setSelection(adaptadorZona.getPosition(

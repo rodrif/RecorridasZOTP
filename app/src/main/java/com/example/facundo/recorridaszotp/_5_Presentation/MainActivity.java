@@ -256,6 +256,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         EditText ETobservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
         EditText ETTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
+        EditText ETPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
+        EditText ETRemera = (EditText) vista.findViewById(R.id.ETRemera);
+        EditText ETZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
         Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
@@ -264,6 +267,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         String apellido = ETapellido.getText().toString();
         String dni = ETdni.getText().toString();
         String telefono = ETTelefono.getText().toString();
+        String pantalon = ETPantalon.getText().toString();
+        String remera = ETRemera.getText().toString();
+        String zapatillas = ETZapatillas.getText().toString();
         String observaciones = ETobservaciones.getText().toString();
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
         String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
@@ -277,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 personaSeleccionada.setApellido(apellido);
                 personaSeleccionada.setDNI(dni);
                 personaSeleccionada.setTelefono(telefono);
+                personaSeleccionada.setPantalon(pantalon);
+                personaSeleccionada.setRemera(remera);
+                personaSeleccionada.setZapatillas(zapatillas);
                 personaSeleccionada.setObservaciones(observaciones);
                 personaSeleccionada.setFechaNacimientoDesdeMob(fechaNacimiento);
                 personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
