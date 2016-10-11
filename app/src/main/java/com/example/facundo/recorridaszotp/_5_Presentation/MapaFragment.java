@@ -13,9 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PersonaHandler;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
+import com.example.facundo.recorridaszotp._7_Interfaces.iPersonaHandler;
+import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -30,6 +35,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private MapFragment mapFragmentMapa = null;
     private boolean locationCargada = false;
+    private iFragmentChanger fragmentChanger;
+    private final iPersonaHandler personaHandler = getPersonaHandler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,16 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Visita visita = VisitaDataAccess.get().find(marker);
+                if (visita != null) {
+                    personaHandler.mostrarPersona(visita.getPersona(), fragmentChanger);
+                }
+            }
+        });
+
         googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location myLocation) {
@@ -108,15 +125,21 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    private iPersonaHandler getPersonaHandler() {
+        return new PersonaHandler();
+    }
+
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
+        fragmentChanger = (iFragmentChanger) activity;
         ((MainActivity)activity).getAppbar().setTitle(Utils.MAPA);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        fragmentChanger = null;
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 
