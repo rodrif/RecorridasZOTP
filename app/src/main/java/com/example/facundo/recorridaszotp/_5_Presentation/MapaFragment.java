@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -17,6 +18,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PersonaHan
 import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.example.facundo.recorridaszotp._7_Interfaces.iPersonaHandler;
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.List;
 
@@ -86,6 +89,30 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 Visita visita = VisitaDataAccess.get().find(marker);
                 if (visita != null) {
                     personaHandler.mostrarPersona(visita.getPersona(), fragmentChanger);
+                } else {
+                    Log.e(Utils.APPTAG, "Error en OnInfoWindowClickListener ");
+                }
+            }
+        });
+
+        googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
+            @Override
+            public void onInfoWindowLongClick(Marker marker) {
+                Visita visita = VisitaDataAccess.get().find(marker);
+                if (visita != null) {
+                    Persona persona = visita.getPersona();
+                    String textoACompartir = "Nombre: " + persona.getNombre() + "\n";
+                    textoACompartir += "Apellido: " + persona.getNombre() + "\n";
+                    textoACompartir += "Ubicación: http://maps.google.com/maps?&q=" +
+                            Double.toString(visita.getLatitud()) + "+" +
+                            Double.toString(visita.getLongitud());
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, textoACompartir);
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                } else {
+                    Log.e(Utils.APPTAG, "Error en OnInfoWindowLongClickListener ");
                 }
             }
         });
