@@ -358,28 +358,23 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     public void onMapReady(GoogleMap googleMap) {
         googleMap.clear();
         LatLng ubicacion = null;
-
         ZonaDrawer.draw(googleMap, this.sZona.getSelectedItem().toString());
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
             if (visita != null) {
                 if (visita.getUbicacion() != null) {
-                    ubicacion = (new LatLng(visita.getUbicacion().latitude,
-                            visita.getUbicacion().longitude));
-                    centrarMapa(googleMap, visita.getUbicacion());
+                    ubicacion = visita.getUbicacion();
                 }
             } else {
                 if (MainActivity.visitaSeleccionada != null) {
                     ubicacion = getDefaultUbicacion();
                     MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
-                    centrarMapa(googleMap, getDefaultUbicacion());
                 }
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
-            if (ubicacion != null) {
-                googleMap.addMarker(new MarkerOptions().position(ubicacion));
-                new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
-            }
+            centrarMapa(googleMap, ubicacion);
+            googleMap.addMarker(new MarkerOptions().position(ubicacion));
+            new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
             this.setMapListeners(googleMap, this.etUbicacion);
         }
 
