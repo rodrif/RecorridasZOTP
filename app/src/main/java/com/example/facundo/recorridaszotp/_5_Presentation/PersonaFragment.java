@@ -76,7 +76,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etUbicacion = null;
     private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
-    private Marker marker = null;
     private boolean locationCargada = false;
     private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
@@ -405,9 +404,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 if (!Config.getInstance().isEditing()) {
                     Geolocalizador geolocalizador = new Geolocalizador(etUbicacion, latLng, activity);
                     googleMap.clear();
-                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                            latLng.latitude, latLng.longitude)));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    googleMap.addMarker(new MarkerOptions().position(latLng));
+                    MainActivity.visitaSeleccionada.setUbicacion(latLng);
                     geolocalizador.execute();
                 }
             }
