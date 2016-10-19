@@ -377,7 +377,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
             if (ubicacion != null) {
-                marker = googleMap.addMarker(new MarkerOptions().position(ubicacion));
+                googleMap.addMarker(new MarkerOptions().position(ubicacion));
                 new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
             }
             this.setMapListeners(googleMap, this.etUbicacion);
