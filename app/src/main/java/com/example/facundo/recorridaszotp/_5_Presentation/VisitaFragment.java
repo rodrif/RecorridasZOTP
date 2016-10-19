@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
@@ -51,12 +52,12 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
+    private EditText etUbicacion = null;
     private ImageButton ibFecha = null;
     private ImageButton ibSpeak = null;
     private double latitud = Double.NaN;
     private double longitud = Double.NaN;
     private MapFragment mapFragmentVisita = null;
-    private Marker marker = null;
     private boolean locationCargada = false;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int RESULT_OK = -1;
@@ -99,6 +100,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
 
         etFecha = (EditText) vista.findViewById(R.id.ETFecha);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservacioneVisita);
+        etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeak);
         actualizar();
         ibSpeak.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +196,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         }
     }
 
-    private void setMapListeners(final GoogleMap googleMap) {
+    private void setMapListeners(final GoogleMap googleMap, final EditText etUbicacion) {
         try {
             googleMap.setMyLocationEnabled(true);
         } catch (SecurityException e) {
@@ -207,11 +209,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 if (!(Config.getInstance().isEditing()
                         && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA))) {
                     googleMap.clear();
-                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                            latLng.latitude, latLng.longitude)));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    googleMap.addMarker(new MarkerOptions().position(latLng));
+                    new Geolocalizador(etUbicacion, latLng, activity).execute();
+                    MainActivity.visitaSeleccionada.setUbicacion(latLng);
                     ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().getNombre());
-                    Log.v(Utils.APPTAG, "lat: " + marker.getPosition().toString().toString());
+                    Log.v(Utils.APPTAG, "lat: " + latLng.toString());
                 }
             }
         });
@@ -228,21 +230,20 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.clear();
-        this.setMapListeners(googleMap);
+        LatLng ubicacion = null;
         if (MainActivity.visitaSeleccionada != null) {
             if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
-                marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                        MainActivity.visitaSeleccionada.getUbicacion().latitude,
-                        MainActivity.visitaSeleccionada.getUbicacion().longitude)));
-                centrarMapa(MainActivity.visitaSeleccionada.getUbicacion());
+                ubicacion = MainActivity.visitaSeleccionada.getUbicacion();
             } else {
                 Log.d(Utils.APPTAG, "VisitaFragment::onMapReady" +
                         " MainActivity.visitaSeleccionada.getUbicacion() es null");
-                marker = googleMap.addMarker(new MarkerOptions().position(
-                            getDefaultUbicacion()));
-                MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                centrarMapa(getDefaultUbicacion());
+                ubicacion = getDefaultUbicacion();
+                MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
             }
+            centrarMapa(ubicacion);
+            googleMap.addMarker(new MarkerOptions().position(ubicacion));
+            new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
+            this.setMapListeners(googleMap, this.etUbicacion);
         } else {
 
         }
