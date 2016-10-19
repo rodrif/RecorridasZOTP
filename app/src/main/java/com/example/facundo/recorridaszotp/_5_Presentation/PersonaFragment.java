@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaPersonaListener;
@@ -72,6 +73,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etPantalon = null;
     private EditText etRemera = null;
     private EditText etZapatillas = null;
+    private EditText etUbicacion = null;
     private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
     private Marker marker = null;
@@ -127,6 +129,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
+        etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
 
@@ -332,6 +335,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etObservaciones.setEnabled(false);
             etDNI.setEnabled(false);
             etTelefono.setEnabled(false);
+            etUbicacion.setEnabled(false);
             sGrupoFamiliar.setEnabled(false);
             sZona.setEnabled(false);
             sRanchada.setEnabled(false);
@@ -343,6 +347,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etObservaciones.setEnabled(true);
             etDNI.setEnabled(true);
             etTelefono.setEnabled(true);
+            etUbicacion.setEnabled(true);
             sGrupoFamiliar.setEnabled(true);
             sZona.setEnabled(true);
             sRanchada.setEnabled(true);
@@ -353,26 +358,30 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.clear();
-        this.setMapListeners(googleMap);
+        LatLng ubicacion = null;
+
         ZonaDrawer.draw(googleMap, this.sZona.getSelectedItem().toString());
         if (MainActivity.personaSeleccionada != null) {
             Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
             if (visita != null) {
                 if (visita.getUbicacion() != null) {
-                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                            visita.getUbicacion().latitude,
-                            visita.getUbicacion().longitude)));
+                    ubicacion = (new LatLng(visita.getUbicacion().latitude,
+                            visita.getUbicacion().longitude));
                     centrarMapa(googleMap, visita.getUbicacion());
                 }
             } else {
-                 if(MainActivity.visitaSeleccionada != null) {
-                    marker = googleMap.addMarker(new MarkerOptions().position(
-                            getDefaultUbicacion()));
-                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                if (MainActivity.visitaSeleccionada != null) {
+                    ubicacion = getDefaultUbicacion();
+                    MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
                     centrarMapa(googleMap, getDefaultUbicacion());
                 }
                 Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
+            if (ubicacion != null) {
+                marker = googleMap.addMarker(new MarkerOptions().position(ubicacion));
+                new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
+            }
+            this.setMapListeners(googleMap, this.etUbicacion);
         }
 
         if (sZona.getOnItemSelectedListener() != null) {
@@ -383,7 +392,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         }
     }
 
-    private void setMapListeners(final GoogleMap googleMap) {
+    private void setMapListeners(final GoogleMap googleMap, final EditText etUbicacion) {
         try {
             googleMap.setMyLocationEnabled(true);
         } catch (SecurityException e) {
@@ -394,10 +403,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             @Override
             public void onMapClick(LatLng latLng) {
                 if (!Config.getInstance().isEditing()) {
+                    Geolocalizador geolocalizador = new Geolocalizador(etUbicacion, latLng, activity);
                     googleMap.clear();
                     marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
                             latLng.latitude, latLng.longitude)));
                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    geolocalizador.execute();
                 }
             }
         });
