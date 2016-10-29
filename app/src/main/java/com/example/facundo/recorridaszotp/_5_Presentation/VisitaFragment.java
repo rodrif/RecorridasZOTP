@@ -2,15 +2,11 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.speech.RecognizerIntent;
@@ -19,7 +15,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -27,6 +23,7 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
+import com.example.facundo.recorridaszotp._0_Infraestructure.GeolocalizadorInverso;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
@@ -34,29 +31,27 @@ import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
-import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class VisitaFragment extends Fragment implements OnMapReadyCallback, popUp {
+public class VisitaFragment extends Fragment implements OnMapReadyCallback, popUp, iMapFragment {
     private static View vista;
     private EditText etFecha = null;
     private EditText etObservaciones = null;
     private EditText etUbicacion = null;
     private ImageButton ibFecha = null;
     private ImageButton ibSpeak = null;
-    private double latitud = Double.NaN;
-    private double longitud = Double.NaN;
+    private Button bSearch = null;
+    private LatLng geocoderLatLng = null;
     private MapFragment mapFragmentVisita = null;
     private boolean locationCargada = false;
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -104,10 +99,16 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeak);
         actualizar();
         ibSpeak.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 promptSpeechInput();
+            }
+        });
+        bSearch = (Button) vista.findViewById(R.id.buttonSearch);
+        bSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchClick(etUbicacion.getText().toString());
             }
         });
         dialogoBorrar = new AlertDialog.Builder(getActivity());
@@ -166,22 +167,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
     public void actualizar() {
         if (etFecha != null) {
             if (MainActivity.visitaSeleccionada.getFechaString() != null)
@@ -232,7 +217,10 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
         googleMap.clear();
         LatLng ubicacion = null;
         if (MainActivity.visitaSeleccionada != null) {
-            if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
+            if (this.geocoderLatLng != null) {
+                ubicacion = this.geocoderLatLng;
+                this.geocoderLatLng = null;
+            } else if (MainActivity.visitaSeleccionada.getUbicacion() != null) {
                 ubicacion = MainActivity.visitaSeleccionada.getUbicacion();
             } else {
                 Log.d(Utils.APPTAG, "VisitaFragment::onMapReady" +
@@ -283,6 +271,11 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             etObservaciones.setEnabled(true);
             ibFecha.setEnabled(true);
         }
+    }
+
+    public void onSearchClick(String direccion) {
+        Log.d(Utils.APPTAG, "onSearchClick" + direccion);
+        new Geolocalizador(direccion, this.activity, this).execute();
     }
 
     /**
@@ -351,5 +344,15 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     @Override
     public String toString() {
         return Utils.FRAG_VISITA;
+    }
+
+    @Override
+    public void setLatLng(LatLng latLng) {
+        this.geocoderLatLng = latLng;
+    }
+
+    @Override
+    public MapFragment getMapFragment() {
+        return mapFragmentVisita;
     }
 }

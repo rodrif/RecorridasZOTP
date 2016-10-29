@@ -45,8 +45,13 @@ public class GeolocalizadorInverso extends AsyncTask<String, Void, List<Address>
     protected void onPostExecute(List<Address> addresses) {
         super.onPostExecute(addresses);
         if (this.textView != null) {
-            Address direccion = addresses.get(0);
-            this.textView.setText(direccion.getAddressLine(0) + ", " + direccion.getLocality());
+            if (addresses.isEmpty()) {
+                Log.e(Utils.APPTAG, "addresses is empty: " + (addresses.isEmpty() ? "true" : "false"));
+                this.textView.setText("");
+            }else {
+                Address direccion = addresses.get(0);
+                this.textView.setText(direccion.getAddressLine(0) + ", " + direccion.getLocality());
+            }
         }
     }
 }
