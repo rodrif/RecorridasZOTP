@@ -210,7 +210,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                         && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_VISITA))) {
                     googleMap.clear();
                     googleMap.addMarker(new MarkerOptions().position(latLng));
-                    new Geolocalizador(etUbicacion, latLng, activity).execute();
+                    new GeolocalizadorInverso(etUbicacion, latLng, activity).execute();
                     MainActivity.visitaSeleccionada.setUbicacion(latLng);
                     ZonaDrawer.draw(googleMap, MainActivity.visitaSeleccionada.getPersona().getZona().getNombre());
                     Log.v(Utils.APPTAG, "lat: " + latLng.toString());
@@ -242,7 +242,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             }
             centrarMapa(ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
-            new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
+            new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
             this.setMapListeners(googleMap, this.etUbicacion);
         } else {
 

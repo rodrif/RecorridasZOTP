@@ -6,7 +6,6 @@ import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
-import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
+import com.example.facundo.recorridaszotp._0_Infraestructure.GeolocalizadorInverso;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaPersonaListener;
@@ -47,9 +45,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -374,7 +370,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
             centrarMapa(googleMap, ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
-            new Geolocalizador(this.etUbicacion, ubicacion, activity).execute();
+            new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
             this.setMapListeners(googleMap, this.etUbicacion);
         }
 
@@ -397,11 +393,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             @Override
             public void onMapClick(LatLng latLng) {
                 if (!Config.getInstance().isEditing()) {
-                    Geolocalizador geolocalizador = new Geolocalizador(etUbicacion, latLng, activity);
+                    GeolocalizadorInverso geolocalizadorInverso = new GeolocalizadorInverso(etUbicacion, latLng, activity);
                     googleMap.clear();
                     googleMap.addMarker(new MarkerOptions().position(latLng));
                     MainActivity.visitaSeleccionada.setUbicacion(latLng);
-                    geolocalizador.execute();
+                    geolocalizadorInverso.execute();
                 }
             }
         });

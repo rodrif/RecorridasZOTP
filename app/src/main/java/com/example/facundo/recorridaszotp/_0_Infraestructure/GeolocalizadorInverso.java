@@ -17,13 +17,13 @@ import java.util.Locale;
 /**
  * Created by gonzalo on 17/10/16.
  */
-public class Geolocalizador extends AsyncTask<String, Void, List<Address>> {
+public class GeolocalizadorInverso extends AsyncTask<String, Void, List<Address>> {
 
     private TextView textView;
     private LatLng ubicacion;
     private Context context;
 
-    public Geolocalizador(TextView textView, LatLng ubicacion, Context context) {
+    public GeolocalizadorInverso(TextView textView, LatLng ubicacion, Context context) {
         this.textView = textView;
         this.ubicacion = ubicacion;
         this.context = context;
