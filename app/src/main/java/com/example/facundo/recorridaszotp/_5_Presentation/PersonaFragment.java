@@ -104,12 +104,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         } catch (InflateException e) {
 
         }
-        //Para compatibilidad
-        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
-        if (mapFragmentPersona == null) {
-            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
-        }
-        mapFragmentPersona.getMapAsync(this);
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +131,16 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
         etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
+        etUbicacion.setText("");
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
+
+        //Para compatibilidad
+        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        if (mapFragmentPersona == null) {
+            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        }
+        mapFragmentPersona.getMapAsync(this);
 
         ibSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -271,6 +273,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     public void actualizar() {
+        if (Config.getInstance().isEditing()) {
+            bSearch.setVisibility(View.GONE);
+            etUbicacion.setEnabled(false);
+        } else {
+            bSearch.setVisibility(View.VISIBLE);
+            etUbicacion.setEnabled(true);
+        }
         if (etNombre != null) {
             if (MainActivity.personaSeleccionada != null) {
                 if (MainActivity.personaSeleccionada.getNombre() != null)
@@ -333,6 +342,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 } else {
                     etTelefono.setVisibility(View.VISIBLE);
                 }
+
                 this.bloquearEdicion();
             }
         }
@@ -352,6 +362,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             sZona.setEnabled(false);
             sRanchada.setEnabled(false);
             bFechaNacimiento.setEnabled(false);
+            bSearch.setEnabled(false);
         } else {
             etFechaNacimiento.setEnabled(true);
             etNombre.setEnabled(true);
@@ -359,11 +370,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etObservaciones.setEnabled(true);
             etDNI.setEnabled(true);
             etTelefono.setEnabled(true);
-            etUbicacion.setEnabled(true);
             sGrupoFamiliar.setEnabled(true);
             sZona.setEnabled(true);
             sRanchada.setEnabled(true);
             bFechaNacimiento.setEnabled(true);
+            bSearch.setEnabled(true);
         }
     }
 
@@ -373,17 +384,22 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         LatLng ubicacion = null;
         ZonaDrawer.draw(googleMap, this.sZona.getSelectedItem().toString());
         if (MainActivity.personaSeleccionada != null) {
-            Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
-            if (visita != null) {
-                if (visita.getUbicacion() != null) {
-                    ubicacion = visita.getUbicacion();
-                }
+            if (this.geocoderLatLng != null) {
+                ubicacion = this.geocoderLatLng;
+                this.geocoderLatLng = null;
             } else {
-                if (MainActivity.visitaSeleccionada != null) {
-                    ubicacion = getDefaultUbicacion();
-                    MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
+                Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
+                if (visita != null) {
+                    if (visita.getUbicacion() != null) {
+                        ubicacion = visita.getUbicacion();
+                    }
+                } else {
+                    if (MainActivity.visitaSeleccionada != null) {
+                        ubicacion = getDefaultUbicacion();
+                        MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
+                    }
+                    Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
                 }
-                Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
             centrarMapa(googleMap, ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
