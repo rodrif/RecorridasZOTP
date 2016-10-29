@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
 import com.example.facundo.recorridaszotp._0_Infraestructure.GeolocalizadorInverso;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
@@ -40,6 +42,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
+import com.example.facundo.recorridaszotp._7_Interfaces.iMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -52,7 +55,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp {
+public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp, iMapFragment {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int RESULT_OK = -1;
     private static View vista;
@@ -63,6 +66,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etDNI;
     private EditText etTelefono;
     private ImageButton ibSpeak = null;
+    private Button bSearch = null;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
@@ -76,6 +80,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     private ArrayAdapter<String> adaptadorRanchada = null;
+    private LatLng geocoderLatLng = null;
     AlertDialog.Builder dialogoBorrar = null;
     MainActivity activity = null;
 
@@ -122,6 +127,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
+        bSearch = (Button) vista.findViewById(R.id.buttonSearch);
+        bSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchClick(etUbicacion.getText().toString());
+            }
+        });
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
         etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
@@ -226,6 +238,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         );
         return vista;
+    }
+
+    public void onSearchClick(String direccion) {
+        Log.d(Utils.APPTAG, "onSearchClick" + direccion);
+        new Geolocalizador(direccion, this.activity, this).execute();
     }
 
     private void showDataPicker() {
@@ -524,5 +541,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     public void setAdaptadorRanchada(ArrayAdapter<String> adaptadorRanchada) {
         this.adaptadorRanchada = adaptadorRanchada;
+    }
+
+    @Override
+    public void setLatLng(LatLng latLng) {
+        this.geocoderLatLng = latLng;
+    }
+
+    @Override
+    public MapFragment getMapFragment() {
+        return this.mapFragmentPersona;
     }
 }
