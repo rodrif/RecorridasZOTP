@@ -50,7 +50,8 @@ public class GeolocalizadorInverso extends AsyncTask<String, Void, List<Address>
                 this.textView.setText("");
             }else {
                 Address direccion = addresses.get(0);
-                this.textView.setText(direccion.getAddressLine(0) + ", " + direccion.getLocality());
+                String locality = direccion.getLocality() == null ? "" : (", " + direccion.getLocality());
+                this.textView.setText(direccion.getAddressLine(0) + locality);
             }
         }
     }
