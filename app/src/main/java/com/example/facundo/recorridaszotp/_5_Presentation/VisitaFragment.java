@@ -228,6 +228,7 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 ubicacion = getDefaultUbicacion();
                 MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
             }
+            locationCargada = false;
             centrarMapa(ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
             new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();

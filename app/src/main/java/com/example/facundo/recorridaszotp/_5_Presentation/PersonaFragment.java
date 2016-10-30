@@ -401,6 +401,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
                 }
             }
+            locationCargada = false;
             centrarMapa(googleMap, ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
             new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
