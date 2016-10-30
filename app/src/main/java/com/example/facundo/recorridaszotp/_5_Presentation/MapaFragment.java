@@ -137,6 +137,17 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
+        this.centrarMapa(getDefaultUbicacion(), googleMap);
+    }
+
+    private void centrarMapa(LatLng ubicacion, GoogleMap googleMap) {
+        googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
+    }
+
+    private LatLng getDefaultUbicacion() {
+        //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
+        return new LatLng(-34.6417109,-58.5651438);
     }
 
     private iPersonaHandler getPersonaHandler() {
