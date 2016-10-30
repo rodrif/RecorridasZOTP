@@ -201,13 +201,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 }
             }
         });
-
-        googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                return false;
-            }
-        });
     }
 
     @Override

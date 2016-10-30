@@ -433,13 +433,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
             }
         });
-
-        googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                return false;
-            }
-        });
     }
 
     private LatLng getDefaultUbicacion() {

@@ -37,7 +37,6 @@ import java.util.List;
 public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private MapFragment mapFragmentMapa = null;
-    private boolean locationCargada = false;
     private iFragmentChanger fragmentChanger;
     private final iPersonaHandler personaHandler = getPersonaHandler();
 
@@ -113,18 +112,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     startActivity(sendIntent);
                 } else {
                     Log.e(Utils.APPTAG, "Error en OnInfoWindowLongClickListener ");
-                }
-            }
-        });
-
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    mapFragmentMapa.getMap().animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
                 }
             }
         });
