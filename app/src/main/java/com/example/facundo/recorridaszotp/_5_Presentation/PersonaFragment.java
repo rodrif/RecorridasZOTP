@@ -76,7 +76,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etUbicacion = null;
     private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
-    private boolean locationCargada = false;
     private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     private ArrayAdapter<String> adaptadorRanchada = null;
@@ -401,7 +400,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
                 }
             }
-            locationCargada = false;
             centrarMapa(googleMap, ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
             new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
@@ -436,21 +434,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
         });
 
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
+        googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
-            public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    googleMap.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
-                }
-                centrarMapa(googleMap, myLocation);
+            public boolean onMyLocationButtonClick() {
+                return false;
             }
         });
     }
-
 
     private LatLng getDefaultUbicacion() {
     //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
@@ -458,20 +448,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     private void centrarMapa(GoogleMap googleMap, LatLng ubicacion) {
-        if (!locationCargada) {
-            googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        googleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
     }
 
     private void centrarMapa(GoogleMap googleMap,Location myLocation) {
-        if (!locationCargada) {
-            googleMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                            myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        googleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                myLocation.getLongitude()), Utils.ZOOM_STANDAR));
     }
 
     @Override

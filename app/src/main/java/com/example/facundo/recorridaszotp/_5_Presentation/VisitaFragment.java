@@ -53,7 +53,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     private Button bSearch = null;
     private LatLng geocoderLatLng = null;
     private MapFragment mapFragmentVisita = null;
-    private boolean locationCargada = false;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int RESULT_OK = -1;
     AlertDialog.Builder dialogoBorrar = null;
@@ -203,11 +202,10 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
             }
         });
 
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
+        googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
-            public void onMyLocationChange(Location myLocation) {
-                centrarMapa(myLocation);
+            public boolean onMyLocationButtonClick() {
+                return false;
             }
         });
     }
@@ -228,7 +226,6 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 ubicacion = getDefaultUbicacion();
                 MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
             }
-            locationCargada = false;
             centrarMapa(ubicacion);
             googleMap.addMarker(new MarkerOptions().position(ubicacion));
             new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
@@ -245,20 +242,14 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     }
 
     private void centrarMapa(LatLng ubicacion) {
-        if (!locationCargada) {
-            mapFragmentVisita.getMap().animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        mapFragmentVisita.getMap().animateCamera(
+            CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
     }
 
     private void centrarMapa(Location myLocation) {
-        if (!locationCargada) {
-            mapFragmentVisita.getMap().animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                            myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        mapFragmentVisita.getMap().animateCamera(
+            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                myLocation.getLongitude()), Utils.ZOOM_STANDAR));
     }
 
     private void bloquearEdicion() {
