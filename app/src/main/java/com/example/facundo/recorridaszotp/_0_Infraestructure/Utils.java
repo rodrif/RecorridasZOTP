@@ -10,8 +10,8 @@ import java.util.Locale;
 
 public final class Utils {
 
-    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
-  //  public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
+  //  public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
+    public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
   //  public static final String WEB = "https://serene-wave-43143-test.herokuapp.com";
   //  public static final String WEB = "https://stark-island-3497.herokuapp.com";
   //  public static final String WEB = "https://boiling-harbor-80530-prod.herokuapp.com"; //Produccion
@@ -93,6 +93,7 @@ public final class Utils {
     public static final String CODIGO_NOTIFICACION = "tipo";
     public static final String NOTIFICACION = "Notificación";
     public static final String PERSONA_ID = "persona_id";
+    public static final String AREA_ID = "area_id";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

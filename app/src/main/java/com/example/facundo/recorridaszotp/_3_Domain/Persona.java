@@ -26,6 +26,12 @@ public class Persona extends Model {
     private Zona zona;
     @Column(name = "FechaNacimiento")
     private String fechaNacimiento;
+    @Column(name = "Pantalon")
+    private String pantalon;
+    @Column(name = "Remera")
+    private String remera;
+    @Column(name = "Zapatillas")
+    private String zapatillas;
     @Column(name = "Observaciones")
     private String observaciones;
     @Column(name = "DNI")
@@ -75,6 +81,9 @@ public class Persona extends Model {
         this.estado = persona.getEstado();
         this.zona = persona.getZona();
         this.fechaNacimiento = persona.getFechaNacimiento();
+        this.pantalon = persona.getPantalon();
+        this.remera = persona.getRemera();
+        this.zapatillas = persona.getZapatillas();
         this.observaciones = persona.getObservaciones();
         this.DNI = persona.getDNI();
         this.telefono = persona.getTelefono();
@@ -156,6 +165,30 @@ public class Persona extends Model {
 
     public void setDNI(String DNI) {
         this.DNI = DNI;
+    }
+
+    public String getPantalon() {
+        return pantalon;
+    }
+
+    public void setPantalon(String pantalon) {
+        this.pantalon = pantalon;
+    }
+
+    public String getRemera() {
+        return remera;
+    }
+
+    public void setRemera(String remera) {
+        this.remera = remera;
+    }
+
+    public String getZapatillas() {
+        return zapatillas;
+    }
+
+    public void setZapatillas(String zapatillas) {
+        this.zapatillas = zapatillas;
     }
 
     public String getObservaciones() {

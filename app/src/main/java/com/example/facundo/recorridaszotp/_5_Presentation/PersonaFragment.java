@@ -6,7 +6,6 @@ import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,8 +15,8 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -25,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Geolocalizador;
+import com.example.facundo.recorridaszotp._0_Infraestructure.GeolocalizadorInverso;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaDrawer;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ZonaPersonaListener;
@@ -41,21 +42,20 @@ import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
+import com.example.facundo.recorridaszotp._7_Interfaces.iMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 
-public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp {
+public class PersonaFragment extends Fragment implements OnMapReadyCallback, popUp, iMapFragment {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int RESULT_OK = -1;
     private static View vista;
@@ -66,16 +66,20 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etDNI;
     private EditText etTelefono;
     private ImageButton ibSpeak = null;
+    private Button bSearch = null;
     private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
     private Spinner sRanchada = null;
+    private EditText etPantalon = null;
+    private EditText etRemera = null;
+    private EditText etZapatillas = null;
+    private EditText etUbicacion = null;
     private ImageButton bFechaNacimiento = null;
     private MapFragment mapFragmentPersona = null;
-    private Marker marker = null;
-    private boolean locationCargada = false;
     private ArrayAdapter<String> adaptadorFamilia = null;
     ArrayAdapter<String> adaptadorZona = null;
     private ArrayAdapter<String> adaptadorRanchada = null;
+    private LatLng geocoderLatLng = null;
     AlertDialog.Builder dialogoBorrar = null;
     MainActivity activity = null;
 
@@ -99,12 +103,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         } catch (InflateException e) {
 
         }
-        //Para compatibilidad
-        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
-        if (mapFragmentPersona == null) {
-            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
-        }
-        mapFragmentPersona.getMapAsync(this);
 
         ImageButton ib = (ImageButton) vista.findViewById(R.id.bFechaNacimiento);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +115,31 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etNombre = (EditText) vista.findViewById(R.id.ETNombre);
         etApellido = (EditText) vista.findViewById(R.id.ETApellido);
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        etPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
+        etRemera = (EditText) vista.findViewById(R.id.ETRemera);
+        etZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
+        bSearch = (Button) vista.findViewById(R.id.buttonSearch);
+        bSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchClick(etUbicacion.getText().toString());
+            }
+        });
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
+        etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
+        etUbicacion.setText("");
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
+
+        //Para compatibilidad
+        mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
+        if (mapFragmentPersona == null) {
+            mapFragmentPersona = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapPersona));
+        }
+        mapFragmentPersona.getMapAsync(this);
 
         ibSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -224,6 +241,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         return vista;
     }
 
+    public void onSearchClick(String direccion) {
+        Log.d(Utils.APPTAG, "onSearchClick" + direccion);
+        new Geolocalizador(direccion, this.activity, this).execute();
+    }
+
     private void showDataPicker() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), Utils.DATE_PICKER_PERSONA);
@@ -250,6 +272,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     public void actualizar() {
+        if (Config.getInstance().isEditing()) {
+            bSearch.setVisibility(View.GONE);
+            etUbicacion.setEnabled(false);
+        } else {
+            bSearch.setVisibility(View.VISIBLE);
+            etUbicacion.setEnabled(true);
+        }
         if (etNombre != null) {
             if (MainActivity.personaSeleccionada != null) {
                 if (MainActivity.personaSeleccionada.getNombre() != null)
@@ -271,6 +300,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etDNI.setText(MainActivity.personaSeleccionada.getDNI());
                 else
                     etDNI.setText("");
+
+                if (MainActivity.personaSeleccionada.getRemera() != null)
+                    etRemera.setText(MainActivity.personaSeleccionada.getRemera());
+                else
+                    etRemera.setText("");
+
+                if (MainActivity.personaSeleccionada.getPantalon() != null)
+                    etPantalon.setText(MainActivity.personaSeleccionada.getPantalon());
+                else
+                    etPantalon.setText("");
+
+                if (MainActivity.personaSeleccionada.getZapatillas() != null)
+                    etZapatillas.setText(MainActivity.personaSeleccionada.getZapatillas());
+                else
+                    etZapatillas.setText("");
 
                 if (MainActivity.personaSeleccionada.getZona() != null) {
                     sZona.setSelection(adaptadorZona.getPosition(
@@ -297,6 +341,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 } else {
                     etTelefono.setVisibility(View.VISIBLE);
                 }
+
                 this.bloquearEdicion();
             }
         }
@@ -311,10 +356,12 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etObservaciones.setEnabled(false);
             etDNI.setEnabled(false);
             etTelefono.setEnabled(false);
+            etUbicacion.setEnabled(false);
             sGrupoFamiliar.setEnabled(false);
             sZona.setEnabled(false);
             sRanchada.setEnabled(false);
             bFechaNacimiento.setEnabled(false);
+            bSearch.setEnabled(false);
         } else {
             etFechaNacimiento.setEnabled(true);
             etNombre.setEnabled(true);
@@ -326,32 +373,37 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             sZona.setEnabled(true);
             sRanchada.setEnabled(true);
             bFechaNacimiento.setEnabled(true);
+            bSearch.setEnabled(true);
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.clear();
-        this.setMapListeners(googleMap);
+        LatLng ubicacion = null;
         ZonaDrawer.draw(googleMap, this.sZona.getSelectedItem().toString());
         if (MainActivity.personaSeleccionada != null) {
-            Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
-            if (visita != null) {
-                if (visita.getUbicacion() != null) {
-                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                            visita.getUbicacion().latitude,
-                            visita.getUbicacion().longitude)));
-                    centrarMapa(googleMap, visita.getUbicacion());
-                }
+            if (this.geocoderLatLng != null) {
+                ubicacion = this.geocoderLatLng;
+                this.geocoderLatLng = null;
             } else {
-                 if(MainActivity.visitaSeleccionada != null) {
-                    marker = googleMap.addMarker(new MarkerOptions().position(
-                            getDefaultUbicacion()));
-                     MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
-                    centrarMapa(googleMap, getDefaultUbicacion());
+                Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
+                if (visita != null) {
+                    if (visita.getUbicacion() != null) {
+                        ubicacion = visita.getUbicacion();
+                    }
+                } else {
+                    if (MainActivity.visitaSeleccionada != null) {
+                        ubicacion = getDefaultUbicacion();
+                        MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
+                    }
+                    Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
                 }
-                Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
             }
+            centrarMapa(googleMap, ubicacion);
+            googleMap.addMarker(new MarkerOptions().position(ubicacion));
+            new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
+            this.setMapListeners(googleMap, this.etUbicacion);
         }
 
         if (sZona.getOnItemSelectedListener() != null) {
@@ -362,7 +414,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         }
     }
 
-    private void setMapListeners(final GoogleMap googleMap) {
+    private void setMapListeners(final GoogleMap googleMap, final EditText etUbicacion) {
         try {
             googleMap.setMyLocationEnabled(true);
         } catch (SecurityException e) {
@@ -373,29 +425,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             @Override
             public void onMapClick(LatLng latLng) {
                 if (!Config.getInstance().isEditing()) {
+                    GeolocalizadorInverso geolocalizadorInverso = new GeolocalizadorInverso(etUbicacion, latLng, activity);
                     googleMap.clear();
-                    marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(
-                            latLng.latitude, latLng.longitude)));
-                    MainActivity.visitaSeleccionada.setUbicacion(marker.getPosition());
+                    googleMap.addMarker(new MarkerOptions().position(latLng));
+                    MainActivity.visitaSeleccionada.setUbicacion(latLng);
+                    geolocalizadorInverso.execute();
                 }
-            }
-        });
-
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-            @Override
-            public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    googleMap.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
-                }
-                centrarMapa(googleMap, myLocation);
             }
         });
     }
-
 
     private LatLng getDefaultUbicacion() {
     //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
@@ -403,20 +441,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     private void centrarMapa(GoogleMap googleMap, LatLng ubicacion) {
-        if (!locationCargada) {
-            googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        googleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
     }
 
     private void centrarMapa(GoogleMap googleMap,Location myLocation) {
-        if (!locationCargada) {
-            googleMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                            myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-            locationCargada = true;
-        }
+        googleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
+                myLocation.getLongitude()), Utils.ZOOM_STANDAR));
     }
 
     @Override
@@ -503,5 +535,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     public void setAdaptadorRanchada(ArrayAdapter<String> adaptadorRanchada) {
         this.adaptadorRanchada = adaptadorRanchada;
+    }
+
+    @Override
+    public void setLatLng(LatLng latLng) {
+        this.geocoderLatLng = latLng;
+    }
+
+    @Override
+    public MapFragment getMapFragment() {
+        return this.mapFragmentPersona;
     }
 }

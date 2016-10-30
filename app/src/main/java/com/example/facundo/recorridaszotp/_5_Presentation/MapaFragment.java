@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -13,9 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PersonaHandler;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
+import com.example.facundo.recorridaszotp._7_Interfaces.iPersonaHandler;
+import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -23,13 +30,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.List;
 
 public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private static View vista;
     private MapFragment mapFragmentMapa = null;
-    private boolean locationCargada = false;
+    private iFragmentChanger fragmentChanger;
+    private final iPersonaHandler personaHandler = getPersonaHandler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,14 +82,36 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onMyLocationChange(Location myLocation) {
-                if (!locationCargada) {
-                    mapFragmentMapa.getMap().animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.getLatitude(),
-                                    myLocation.getLongitude()), Utils.ZOOM_STANDAR));
-                    locationCargada = true;
+            public void onInfoWindowClick(Marker marker) {
+                Visita visita = VisitaDataAccess.get().find(marker);
+                if (visita != null) {
+                    personaHandler.mostrarPersona(visita.getPersona(), fragmentChanger);
+                } else {
+                    Log.e(Utils.APPTAG, "Error en OnInfoWindowClickListener ");
+                }
+            }
+        });
+
+        googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
+            @Override
+            public void onInfoWindowLongClick(Marker marker) {
+                Visita visita = VisitaDataAccess.get().find(marker);
+                if (visita != null) {
+                    Persona persona = visita.getPersona();
+                    String textoACompartir = "Nombre: " + persona.getNombre() + "\n";
+                    textoACompartir += "Apellido: " + persona.getNombre() + "\n";
+                    textoACompartir += "Ubicación: http://maps.google.com/maps?&q=" +
+                            Double.toString(visita.getLatitud()) + "+" +
+                            Double.toString(visita.getLongitud());
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, textoACompartir);
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                } else {
+                    Log.e(Utils.APPTAG, "Error en OnInfoWindowLongClickListener ");
                 }
             }
         });
@@ -106,17 +137,34 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
+        this.centrarMapa(getDefaultUbicacion(), googleMap);
+    }
+
+    private void centrarMapa(LatLng ubicacion, GoogleMap googleMap) {
+        googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
+    }
+
+    private LatLng getDefaultUbicacion() {
+        //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
+        return new LatLng(-34.6417109,-58.5651438);
+    }
+
+    private iPersonaHandler getPersonaHandler() {
+        return new PersonaHandler();
     }
 
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
+        fragmentChanger = (iFragmentChanger) activity;
         ((MainActivity)activity).getAppbar().setTitle(Utils.MAPA);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        fragmentChanger = null;
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 
