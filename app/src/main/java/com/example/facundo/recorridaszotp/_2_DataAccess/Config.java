@@ -1,6 +1,11 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
+import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +16,6 @@ import java.util.Map;
 public class Config {
     private static Config instance = null;
     private int rol = -1;
-    private int area = -1;
     private int userWebId;
  //   private String userMail = "rodrif89@gmail.com"; 123456789
     private String userMail = "";
@@ -33,7 +37,6 @@ public class Config {
     static public Config getInstance() {
         if (instance == null) {
             instance = new Config();
-
         }
         return instance;
     }
@@ -135,11 +138,13 @@ public class Config {
     }
 
     public int getArea() {
-        return area;
+        return Configuracion.get("areaId") != null ?
+            Integer.valueOf(Configuracion.get("areaId")) :
+            -1;
     }
 
-    public void setArea(int area) {
-        this.area = area;
+    public void setArea(int areaId) {
+        Configuracion.guardar("areaId", Integer.toString(areaId));
     }
 
     public void logOut() {
@@ -147,7 +152,7 @@ public class Config {
         userMail = "";
         userPassword = "";
         rol = -1;
-        area = -1;
+        Configuracion.guardar("areaId", "-1");;
         isEditing = false;
     }
 }
