@@ -401,8 +401,10 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
             }
             centrarMapa(googleMap, ubicacion);
-            googleMap.addMarker(new MarkerOptions().position(ubicacion));
-            new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
+            if (ubicacion != null) {
+                googleMap.addMarker(new MarkerOptions().position(ubicacion));
+                new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
+            }
             this.setMapListeners(googleMap, this.etUbicacion);
         }
 
@@ -441,6 +443,9 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     private void centrarMapa(GoogleMap googleMap, LatLng ubicacion) {
+        if (ubicacion == null) {
+            ubicacion = getDefaultUbicacion();
+        }
         googleMap.animateCamera(
             CameraUpdateFactory.newLatLngZoom(ubicacion, Utils.ZOOM_STANDAR));
     }
