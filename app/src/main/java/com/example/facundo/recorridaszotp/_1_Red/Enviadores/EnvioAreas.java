@@ -39,6 +39,7 @@ public class EnvioAreas extends BasicEnvio<Area> {
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() +
                     " Envio Area respuestaJsonInvalida: " + ex.getMessage());
+            return;
         }
         ActiveAndroid.beginTransaction();
         try {

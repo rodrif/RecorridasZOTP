@@ -34,7 +34,7 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " Envio personas respuestaJsonInvalida: " + ex.getMessage());
-            // TODO: relanzar ex
+            return;
         }
 
         ActiveAndroid.beginTransaction();

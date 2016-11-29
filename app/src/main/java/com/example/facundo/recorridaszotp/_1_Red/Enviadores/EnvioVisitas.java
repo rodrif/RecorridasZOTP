@@ -37,6 +37,7 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, "Envio visitas respuestaJsonInvalida: " + ex.getMessage());
+            return;
         }
 
         ActiveAndroid.beginTransaction();

@@ -43,6 +43,7 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
             this.respuesta = new JSONObject(result);
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " respuestaJsonInvalida: " + ex.getMessage());
+            return;
         }
         ActiveAndroid.beginTransaction();
 
