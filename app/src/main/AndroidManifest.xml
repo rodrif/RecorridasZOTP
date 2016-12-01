@@ -87,7 +87,7 @@
         </service>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="620647f030c764520993d556a6cac5046245bd85" />
+            android:value="f63ae5dfd91c936e17cab2dd41e3944ffe7b1ce1" />
     </application>
 
 </manifest>
