@@ -69,4 +69,13 @@ public class ZonaDataAccess extends BasicDataAccess<Zona>{
         recepcionZonas.execute(Utils.WEB_RECIBIR_ZONAS);
     }
 
+    public List<Zona> getAllOKFiltradoPorArea() {
+        return new Select()
+                .from(Zona.class)
+                .orderBy("Nombre ASC")
+                .where("Area = ?", Config.getInstance().getArea())
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .execute();
+    }
+
 }

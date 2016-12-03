@@ -165,7 +165,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         //Zona
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
-        final List<Zona> lZonas = ZonaDataAccess.get().getAll();
+        final List<Zona> lZonas = ZonaDataAccess.get().getAllOKFiltradoPorArea();
         final List<String> zonasString = new ArrayList<String>();
         zonasString.add("Zona");
         for (Zona zona : lZonas) {
