@@ -149,20 +149,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
         });
 
-        //Grupo Familiar
-        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<Familia> lFamilias = FamiliaDataAccess.get().getAll();
-        final List<String> familiasString = new ArrayList<String>();
-        familiasString.add("Familia");
-        for (Familia familia : lFamilias) {
-            familiasString.add(familia.getNombre());
-        }
-        adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, familiasString);
-        adaptadorFamilia.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        sGrupoFamiliar.setAdapter(adaptadorFamilia);
-
         //Zona
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAllOKFiltradoPorArea();
@@ -176,6 +162,25 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         adaptadorZona.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
+        actualizarZona(); //Para actualizar sZona.getSelectedItem()
+
+        //Grupo Familiar
+        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
+        final List<Familia> lFamilias = FamiliaDataAccess.get().filtrarPorZona(
+                (String) sZona.getSelectedItem());
+        final List<String> familiasString = new ArrayList<String>();
+        familiasString.add("Familia");
+        if(lFamilias != null) {
+            for (Familia familia : lFamilias) {
+                familiasString.add(familia.getNombre());
+            }
+        }
+        adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, familiasString);
+        adaptadorFamilia.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        sGrupoFamiliar.setAdapter(adaptadorFamilia);
+
         //Ranchada
         Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
@@ -316,11 +321,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 else
                     etZapatillas.setText("");
 
-                if (MainActivity.personaSeleccionada.getZona() != null) {
-                    sZona.setSelection(adaptadorZona.getPosition(
-                            MainActivity.personaSeleccionada.getZona().getNombre()));
-                }
-
+                actualizarZona();
                 actualizarRanchada();
                 actualizarFamilia();
 
@@ -344,6 +345,13 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
                 this.bloquearEdicion();
             }
+        }
+    }
+
+    private void actualizarZona() {
+        if (MainActivity.personaSeleccionada.getZona() != null) {
+            sZona.setSelection(adaptadorZona.getPosition(
+                    MainActivity.personaSeleccionada.getZona().getNombre()));
         }
     }
 
