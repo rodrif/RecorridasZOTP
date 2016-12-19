@@ -28,6 +28,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaShare;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
@@ -44,17 +45,8 @@ import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.gcm.GcmPubSub;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.google.android.gms.plus.Plus;
-
 import io.fabric.sdk.android.Fabric;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
-    private static Menu menuGuardarPersona = null;
+    private static Menu menu = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,14 +152,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menuGuardarPersona = menu;
-        menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, false);
+        MainActivity.menu = menu;
+        MainActivity.menu.setGroupVisible(R.id.grupo_guardar_persona, false);
+        MainActivity.menu.setGroupVisible(R.id.grupo_compartir, false);
         return true;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menuGuardarPersona = menu;
+        MainActivity.menu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.menu_main, menu);
         //Ocultar el grupo
@@ -203,6 +196,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             case R.id.action_cancelar: //Cancelar
                 ((popUp) (getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
                 //this.onBackPressed();
+                return true;
+            case R.id.action_compartir: //compartir
+                if (personaSeleccionada != null) {
+                    new PersonaShare(personaSeleccionada).share(this);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -509,9 +507,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         editor.commit();
     }
 
-    public static void menuGuardar(boolean bool) {
-        if (menuGuardarPersona != null)
-            menuGuardarPersona.setGroupVisible(R.id.grupo_guardar_persona, bool);
+    public static void menuGuardar(boolean boolGuardar) {
+        menuGuardar(boolGuardar, false);
+    }
+
+    public static void menuGuardar(boolean boolGuardar, boolean boolCompartir) {
+        if (menu != null) {
+            menu.setGroupVisible(R.id.grupo_guardar_persona, boolGuardar);
+            menu.setGroupVisible(R.id.grupo_compartir, boolCompartir);
+        }
     }
 
     public static void clean() {

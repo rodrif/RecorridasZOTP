@@ -17,8 +17,6 @@ import com.example.facundo.recorridaszotp._5_Presentation.VisitaFragment;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.example.facundo.recorridaszotp._7_Interfaces.iVisitaHandler;
 
-import static com.example.facundo.recorridaszotp._5_Presentation.MainActivity.menuGuardar;
-
 /**
  * Created by gonzalo on 23/05/16.
  */
@@ -32,7 +30,7 @@ public class VisitaHandler implements iVisitaHandler {
            nuevaVisita.setUbicacion(ultimaVisita.getUbicacion());
        Config.getInstance().setIsEditing(false);
 
-       menuGuardar(true);
+       MainActivity.menuGuardar(true);
        MainActivity.visitaSeleccionada = nuevaVisita;
        VisitaFragment frag = new VisitaFragment();
        frag.actualizar();
@@ -44,7 +42,7 @@ public class VisitaHandler implements iVisitaHandler {
     @Override
     public void mostrarVisita(Visita visita, iFragmentChanger fragmentChanger) {
         Config.getInstance().setIsEditing(true);
-        menuGuardar(true);
+        MainActivity.menuGuardar(true);
         MainActivity.visitaSeleccionada = visita;
         VisitaFragment frag = new VisitaFragment();
         frag.actualizar();

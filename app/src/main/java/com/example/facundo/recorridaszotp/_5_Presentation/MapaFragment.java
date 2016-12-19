@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PersonaHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.VisitaHandler;
+import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaShare;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -99,17 +100,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onInfoWindowLongClick(Marker marker) {
                 Visita visita = VisitaDataAccess.get().find(marker);
                 if (visita != null) {
-                    Persona persona = visita.getPersona();
-                    String textoACompartir = "Nombre: " + persona.getNombre() + "\n";
-                    textoACompartir += "Apellido: " + persona.getNombre() + "\n";
-                    textoACompartir += "Ubicación: http://maps.google.com/maps?&q=" +
-                            Double.toString(visita.getLatitud()) + "+" +
-                            Double.toString(visita.getLongitud());
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, textoACompartir);
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
+                    PersonaShare personaShare = new PersonaShare(visita);
+                    personaShare.share(getActivity());
                 } else {
                     Log.e(Utils.APPTAG, "Error en OnInfoWindowLongClickListener ");
                 }
