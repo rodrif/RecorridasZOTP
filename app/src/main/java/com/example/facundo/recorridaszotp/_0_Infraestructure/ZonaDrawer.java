@@ -11,8 +11,16 @@ import com.google.android.gms.maps.model.PolygonOptions;
  * Created by gonzalo on 25/08/16.
  */
 public class ZonaDrawer {
+
+    private static int purpleStrokeColor = Color.parseColor("#3b1684");
+    private static int greenStrokeColor = Color.parseColor("#2aa31f");
+    private static int purpleFillColor = 0x274e1fad;
+    private static int greenFillColor = 0x2738db29;
+
     public static void draw(GoogleMap googleMap, String name) {
         PolygonOptions polygon = new PolygonOptions();
+        int strokeColor = purpleStrokeColor;
+        int fillColor = purpleFillColor;
         switch (name) {
             case "Ciudadela":
                 polygon.add(new LatLng(-34.627008, -58.565394),
@@ -25,6 +33,8 @@ public class ZonaDrawer {
                         new LatLng(-34.622607, -58.531062),
                         new LatLng(-34.654543, -58.529076)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Haedo":
                 polygon.add(new LatLng(-34.632693, -58.620531),
@@ -41,6 +51,8 @@ public class ZonaDrawer {
                         new LatLng(-34.634735, -58.621677),
                         new LatLng(-34.633918, -58.620779)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Liniers":
                 polygon.add(new LatLng(-34.634780, -58.530340),
@@ -51,6 +63,8 @@ public class ZonaDrawer {
                         new LatLng(-34.656943, -58.525715),
                         new LatLng(-34.654349, -58.529300)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Ramos":
                 polygon.add(new LatLng(-34.634662, -58.556171),
@@ -71,6 +85,8 @@ public class ZonaDrawer {
                         new LatLng(-34.637271, -58.561778),
                         new LatLng(-34.636468, -58.562065)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "San Justo":
                 polygon.add(new LatLng(-34.661794, -58.568635),
@@ -101,6 +117,8 @@ public class ZonaDrawer {
                         new LatLng(-34.672237, -58.578393),
                         new LatLng(-34.671473, -58.579342)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Tres de Febrero":
                 polygon.add(new LatLng(-34.547741, -58.617818),
@@ -118,6 +136,8 @@ public class ZonaDrawer {
                         new LatLng(-34.552201, -58.631084),
                         new LatLng(-34.548141, -58.625526)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Villa Luro":
                 polygon.add(new LatLng(-34.624277, -58.511616),
@@ -133,6 +153,8 @@ public class ZonaDrawer {
                         new LatLng(-34.634587, -58.508344),
                         new LatLng(-34.628447, -58.516348)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Villa Sarmiento":
                 polygon.add(new LatLng(-34.625980, -58.566816),
@@ -153,6 +175,8 @@ public class ZonaDrawer {
                         new LatLng(-34.629760, -58.571553),
                         new LatLng(-34.628803, -58.572239)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 1":
                 polygon.add(new LatLng(-34.61009197114083, -58.4060375526253),
@@ -161,6 +185,8 @@ public class ZonaDrawer {
                     new LatLng(-34.59953035404766, -58.400930626660944),
                     new LatLng(-34.59960100477833, -58.39299128797686)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 2":
                 polygon.add(new LatLng(-34.60919128361864, -58.39209006574786),
@@ -168,6 +194,8 @@ public class ZonaDrawer {
                         new LatLng(-34.599053460043805, -58.381962044507624),
                         new LatLng(-34.60837889041364, -58.38131831434405)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 3":
                 polygon.add(new LatLng(-34.60837889041364, -58.38131831434405),
@@ -175,12 +203,16 @@ public class ZonaDrawer {
                         new LatLng(-34.603009831126386, -58.37033198621905),
                         new LatLng(-34.60763713315387, -58.36990283277667)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 4":
                 polygon.add(new LatLng(-34.60837889041364, -58.38131831434405),
                         new LatLng(-34.60763713315387, -58.36990283277667),
                         new LatLng(-34.61229949727399, -58.369473679334284)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 5":
                 polygon.add(new LatLng(-34.60931490797466, -58.3921329810921),
@@ -188,6 +220,8 @@ public class ZonaDrawer {
                         new LatLng(-34.617650297021015, -58.38097499159014),
                         new LatLng(-34.61814474295427, -58.39174674299395)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 6":
                 polygon.add(new LatLng(-34.61012729202111, -58.406034870416306),
@@ -195,6 +229,8 @@ public class ZonaDrawer {
                         new LatLng(-34.61821537784721, -58.3917869761292),
                         new LatLng(-34.618815772009555, -58.40350286510625)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 7":
                 polygon.add(new LatLng(-34.59841759711242, -58.403803272515916),
@@ -203,6 +239,8 @@ public class ZonaDrawer {
                         new LatLng(-34.599618667451736, -58.39294569042363),
                         new LatLng(-34.59958334210143, -58.401099605828904)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 8":
                 polygon.add(new LatLng(-34.5958387697657, -58.39341775921025),
@@ -210,6 +248,8 @@ public class ZonaDrawer {
                         new LatLng(-34.599088785619486, -58.38178770092168),
                         new LatLng(-34.599618667451736, -58.39298860576787)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 9":
                 polygon.add(new LatLng(-34.595397181712066, -58.38200227764287),
@@ -219,6 +259,8 @@ public class ZonaDrawer {
                         new LatLng(-34.5983999341836, -58.37131635692754),
                         new LatLng(-34.5990711228334, -58.381830616265916)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 10":
                 polygon.add(new LatLng(-34.61305887269422, -58.381101055413865),
@@ -226,6 +268,8 @@ public class ZonaDrawer {
                         new LatLng(-34.62247101922263, -58.36841957119145),
                         new LatLng(-34.62278885919803, -58.380607528955125)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 11":
                 polygon.add(new LatLng(-34.602868535404085, -58.42415587452092),
@@ -238,6 +282,8 @@ public class ZonaDrawer {
                         new LatLng(-34.60857315907665, -58.42147366550603),
                         new LatLng(-34.6086438021143, -58.42467085865178)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 13":
                 polygon.add(new LatLng(-34.60200309386211, -58.43213812854924),
@@ -252,6 +298,8 @@ public class ZonaDrawer {
                         new LatLng(-34.604157849954085, -58.413298292428635),
                         new LatLng(-34.60316878852565, -58.42093722370305)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 14":
                 polygon.add(new LatLng(-34.58887906901956, -58.43837158229985),
@@ -266,6 +314,8 @@ public class ZonaDrawer {
                         new LatLng(-34.59771107703433, -58.423265381127976),
                         new LatLng(-34.59598007744638, -58.42747108486333)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 15":
                 polygon.add(new LatLng(-34.58744819534759, -58.39723722484746),
@@ -276,6 +326,8 @@ public class ZonaDrawer {
                         new LatLng(-34.59589176017437, -58.39337484386601),
                         new LatLng(-34.59546783595847, -58.39792387035527)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 17":
                 polygon.add(new LatLng(-34.611540114907235, -58.42114107158818),
@@ -285,6 +337,8 @@ public class ZonaDrawer {
                         new LatLng(-34.62065224483916, -58.412643833429),
                         new LatLng(-34.62111135669698, -58.41822282817998)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 19":
                 polygon.add(
@@ -293,6 +347,8 @@ public class ZonaDrawer {
                         new LatLng(-34.62697363866983, -58.42682735469975),
                         new LatLng(-34.62958681162728, -58.444508476525925)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 20":
                 polygon.add(new LatLng(-34.58518701140894, -58.41596977260747),
@@ -307,6 +363,8 @@ public class ZonaDrawer {
                         new LatLng(-34.59338351042959, -58.405069275170945),
                         new LatLng(-34.58903805346208, -58.410090370446824)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 21":
                 polygon.add(new LatLng(-34.61881577200902, -58.40352432277837),
@@ -315,6 +373,8 @@ public class ZonaDrawer {
                         new LatLng(-34.623654084074325, -58.39163677242436),
                         new LatLng(-34.625914220780444, -58.401807709008835)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 22":
                 polygon.add(new LatLng(-34.599071122832996, -58.38189498928227),
@@ -323,6 +383,8 @@ public class ZonaDrawer {
                         new LatLng(-34.602992169173774, -58.3702649309937),
                         new LatLng(-34.60366332071228, -58.38168041256108)
                 );
+                strokeColor = purpleStrokeColor;
+                fillColor = purpleFillColor;
                 break;
             case "Zona 23":
                 polygon.add(new LatLng(-34.62205605964442, -58.42784659412541),
@@ -335,6 +397,8 @@ public class ZonaDrawer {
                         new LatLng(-34.626858869051446, -58.41196791675725),
                         new LatLng(-34.62887172855814, -58.42638747242131)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 24":
                 polygon.add(new LatLng(-34.61135468327355, -58.46788661029973),
@@ -356,6 +420,8 @@ public class ZonaDrawer {
                         new LatLng(-34.61393302882114, -58.459475202829026),
                         new LatLng(-34.61573429120781, -58.464496298104905)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             case "Zona 27":
                 polygon.add(new LatLng(-34.59535302277691, -58.381583853036545),
@@ -364,13 +430,15 @@ public class ZonaDrawer {
                         new LatLng(-34.59277410028857, -58.37540404346623),
                         new LatLng(-34.59510573231004, -58.37763564136662)
                 );
+                strokeColor = greenStrokeColor;
+                fillColor = greenFillColor;
                 break;
             default:
                 return;
         }
-        polygon.strokeColor(Color.parseColor("#FF0000"))
+        polygon.strokeColor(strokeColor)
                 .strokeWidth(2)
-                .fillColor(0x27FF0000);
+                .fillColor(fillColor);
         googleMap.addPolygon(polygon);
     }
 
