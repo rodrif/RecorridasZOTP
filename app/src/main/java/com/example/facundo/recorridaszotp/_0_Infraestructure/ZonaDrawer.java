@@ -526,6 +526,9 @@ public class ZonaDrawer {
             case "Zona 21":
                 ubicacion = new LatLng(-34.62088180108582, -58.39172260311282);
                 break;
+            case "Zona 22":
+                ubicacion = new LatLng(-34.60103166914408, -58.37595121410527);
+                break;
             case "Zona 23":
                 ubicacion = new LatLng(-34.624130836784744, -58.41665641811526);
                 break;
