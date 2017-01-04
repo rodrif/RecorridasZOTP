@@ -210,7 +210,8 @@ public class ZonaDrawer {
             case "Zona 4":
                 polygon.add(new LatLng(-34.60837889041364, -58.38131831434405),
                         new LatLng(-34.60763713315387, -58.36990283277667),
-                        new LatLng(-34.61229949727399, -58.369473679334284)
+                        new LatLng(-34.61229949727399, -58.369473679334284),
+                        new LatLng(-34.61304121287975, -58.38106082227862)
                 );
                 strokeColor = purpleStrokeColor;
                 fillColor = purpleFillColor;
@@ -331,7 +332,8 @@ public class ZonaDrawer {
                 fillColor = greenFillColor;
                 break;
             case "Zona 17":
-                polygon.add(new LatLng(-34.611540114907235, -58.42114107158818),
+                polygon.add(new LatLng(-34.615142704441105, -58.42933790233769),
+                        new LatLng(-34.611540114907235, -58.42114107158818),
                         new LatLng(-34.615849076212314, -58.42011110332646),
                         new LatLng(-34.61468355956639, -58.40496198681035),
                         new LatLng(-34.61881577200948, -58.403545780450486),
