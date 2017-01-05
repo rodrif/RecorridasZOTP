@@ -30,8 +30,8 @@ android {
         applicationId "com.example.facundo.recorridaszotp"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 19
-        versionName "1.8.4"
+        versionCode 20
+        versionName "1.8.5"
     }
     buildTypes {
         release {
