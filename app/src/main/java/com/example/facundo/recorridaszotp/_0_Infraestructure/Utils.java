@@ -26,6 +26,8 @@ public final class Utils {
     public static final String WEB_RECIBIR_RANCHADAS = Utils.WEB + "/api/ranchadas/download";
     public static final String WEB_RECIBIR_FAMILIAS = Utils.WEB + "/api/familias/download";
     public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/api/people/download";
+    public static final String WEB_RECIBIR_PEDIDOS = Utils.WEB + "/api/pedidos/download";
+    public static final String WEB_ENVIAR_PEDIDOS = Utils.WEB + "/api/pedidos/upload";
     public static final String WEB_RECIBIR_VISITAS = Utils.WEB + "/api/visits/download";
     public static final String WEB_RECIBIR_REFERENTES = Utils.WEB + "/api/referentes/download";
     //Permisos
