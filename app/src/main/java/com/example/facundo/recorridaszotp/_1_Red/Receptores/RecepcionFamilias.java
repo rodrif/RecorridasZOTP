@@ -27,10 +27,4 @@ public class RecepcionFamilias extends BasicRecepcion<Familia> {
     public RecepcionFamilias(List<AsyncDelegate> listaDelegates) {
         super(FamiliaDataAccess.get(), FamiliaJsonUtils.get(), listaDelegates);
     }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        return datos;
-    }
 }

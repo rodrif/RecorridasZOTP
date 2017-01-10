@@ -28,10 +28,4 @@ public class RecepcionRanchadas extends BasicRecepcion<Ranchada> {
     public RecepcionRanchadas(List<AsyncDelegate> listaDelegates) {
         super(RanchadaDataAccess.get(), RanchadaJsonUtils.get(), listaDelegates);
     }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        return datos;
-    }
 }

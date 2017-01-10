@@ -28,11 +28,4 @@ public class RecepcionPersonas extends BasicRecepcion<Persona> {
     public RecepcionPersonas(List<AsyncDelegate> listaDelegates) {
         super(PersonaDataAccess.get(), PersonaJsonUtils.get(), listaDelegates);
     }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        return datos;
-    }
-
 }

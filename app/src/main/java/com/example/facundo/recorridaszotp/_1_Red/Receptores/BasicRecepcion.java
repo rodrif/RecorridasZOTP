@@ -11,6 +11,7 @@ import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by Facundo on 23/10/2015.
  */
-public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
+public class BasicRecepcion<T extends Model> extends EnvioPost {
     protected JSONObject respuesta;
     protected List<AsyncDelegate> delegates;
     private BasicJsonUtil<T> basicJsonUtil;
@@ -75,6 +76,11 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
     @Override
     protected String getUltimaFechaMod() {
         return Utils.UltFechaSincr + basicJsonUtil.getClase().getSimpleName();
+    }
+
+    @Override
+    protected JSONArray cargarJson() {
+        return new JSONArray();
     }
 
     public JSONObject getRespuesta() {
