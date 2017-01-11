@@ -14,6 +14,7 @@ import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -27,8 +28,8 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
     private BasicJsonUtil<T> basicJsonUtil;
     private BasicDataAccess<T> basicDataAccess;
 
-    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil, AsyncDelegate delegate) {
-        this(basicDataAccess, basicJsonUtil, delegate != null ? Arrays.asList(delegate) : null);
+    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
+        this(basicDataAccess, basicJsonUtil, null);
     }
 
     public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil, List<AsyncDelegate> delegates) {

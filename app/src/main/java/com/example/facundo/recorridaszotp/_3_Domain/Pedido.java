@@ -27,11 +27,14 @@ public class Pedido extends Model {
 
     public Pedido(int webId, Persona persona, String descripcion, Boolean completado, long fecha) {
         this.descripcion = descripcion;
-        this.ultMod = ultMod;
         this.fecha = fecha;
         this.completado = completado;
         this.persona = persona;
         this.webId = webId;
+    }
+
+    public Pedido(Persona persona) {
+        this(-1, persona, "", false, 0);
     }
 
     public void mergeFromWeb(Pedido pedido) throws Exception {
