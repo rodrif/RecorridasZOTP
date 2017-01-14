@@ -103,4 +103,8 @@ public class Pedido extends Model {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    public String toString() {
+        return "hola";
+    }
 }
