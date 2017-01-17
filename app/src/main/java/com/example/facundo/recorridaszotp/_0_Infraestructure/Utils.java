@@ -60,6 +60,7 @@ public final class Utils {
     public static final String FRAG_HOME = "Fragment Home";
     public static final String FRAG_VISITA = "Fragment Visita";
     public static final String FRAG_LOGIN = "Fragment Login";
+    public static final String FRAG_PEDIDOS = "Fragment Pedidos";
     public static final String FRAG_NOTIFICACION = "Fragment Notificacion";
     public static final String TITULO = "titulo";
     public static final String SUBTITULO = "subtitulo";
@@ -72,6 +73,7 @@ public final class Utils {
     public static final String LISTA_PERSONAS = "Lista Personas";
     public static final String ULTIMAS_VISITAS = "Ultimas Visitas";
     public static final String PERSONA = "Persona";
+    public static final String PEDIDOS = "Pedidos";
     public static final String VISITA = "Visita";
     public static final String MAPA = "Mapa";
     public static final String HOME = "Recorridas ZO";

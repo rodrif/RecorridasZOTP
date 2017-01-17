@@ -201,6 +201,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 if (personaSeleccionada != null) {
                     new PersonaShare(personaSeleccionada).share(this);
                 }
+            case R.id.action_pedidos: //pedidos
+                if (personaSeleccionada != null) {
+                    this.changeFragment(new ListaPedidos(), Utils.FRAG_PEDIDOS, true);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -508,13 +512,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public static void menuGuardar(boolean boolGuardar) {
-        menuGuardar(boolGuardar, false);
+        menuGuardar(boolGuardar, false, false);
     }
 
-    public static void menuGuardar(boolean boolGuardar, boolean boolCompartir) {
+    public static void menuGuardar(boolean boolGuardar, boolean boolCompartir, boolean boolPedidos) {
         if (menu != null) {
             menu.setGroupVisible(R.id.grupo_guardar_persona, boolGuardar);
             menu.setGroupVisible(R.id.grupo_compartir, boolCompartir);
+            menu.setGroupVisible(R.id.grupo_pedidos, boolPedidos);
         }
     }
 

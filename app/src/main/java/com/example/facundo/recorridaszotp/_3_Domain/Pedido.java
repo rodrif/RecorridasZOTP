@@ -25,6 +25,10 @@ public class Pedido extends Model {
 
     private String ultMod;
 
+    public Pedido() {
+        super();
+    }
+
     public Pedido(int webId, Persona persona, String descripcion, Boolean completado, long fecha) {
         this.descripcion = descripcion;
         this.fecha = fecha;
