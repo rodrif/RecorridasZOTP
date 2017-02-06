@@ -81,7 +81,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private ArrayAdapter<String> adaptadorRanchada = null;
     private LatLng geocoderLatLng = null;
     AlertDialog.Builder dialogoBorrar = null;
-    MainActivity activity = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,8 +219,8 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                             Sincronizador sinc = new Sincronizador(getActivity(), false);
                             sinc.execute();
                             MainActivity.clean();
-                            activity.onBackPressed();
-                            activity.onBackPressed();
+                            getActivity().onBackPressed();
+                            getActivity().onBackPressed();
                         } else {
                             Log.e(Utils.APPTAG, "Error al hacer borrado logico de personaId: " +
                                 MainActivity.personaSeleccionada.getId() +
@@ -249,7 +248,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     public void onSearchClick(String direccion) {
         Log.d(Utils.APPTAG, "onSearchClick" + direccion);
-        new Geolocalizador(direccion, this.activity, this).execute();
+        new Geolocalizador(direccion, getActivity(), this).execute();
     }
 
     private void showDataPicker() {
@@ -412,7 +411,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             centrarMapa(googleMap, ubicacion);
             if (ubicacion != null) {
                 googleMap.addMarker(new MarkerOptions().position(ubicacion));
-                new GeolocalizadorInverso(this.etUbicacion, ubicacion, activity).execute();
+                new GeolocalizadorInverso(this.etUbicacion, ubicacion, getActivity()).execute();
             }
             this.setMapListeners(googleMap, this.etUbicacion);
         }
@@ -436,7 +435,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             @Override
             public void onMapClick(LatLng latLng) {
                 if (!Config.getInstance().isEditing()) {
-                    GeolocalizadorInverso geolocalizadorInverso = new GeolocalizadorInverso(etUbicacion, latLng, activity);
+                    GeolocalizadorInverso geolocalizadorInverso = new GeolocalizadorInverso(etUbicacion, latLng, getActivity());
                     googleMap.clear();
                     googleMap.addMarker(new MarkerOptions().position(latLng));
                     MainActivity.visitaSeleccionada.setUbicacion(latLng);
@@ -466,12 +465,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     }
 
     @Override
-    public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
-        super.onAttach(activity);
-        this.activity = (MainActivity) activity;
-    }
-
-    @Override
     public void onDetach() {
         //Para que no se llame al iniciar el fragment
         sZona.setOnItemSelectedListener(null);
@@ -484,7 +477,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             if (dialogoBorrar != null)
                 dialogoBorrar.show();
         } else {
-            Toast unToast = Toast.makeText(this.activity, "No tiene permisos para borrar a esta persona", Toast.LENGTH_SHORT);
+            Toast unToast = Toast.makeText(getActivity(), "No tiene permisos para borrar a esta persona", Toast.LENGTH_SHORT);
             unToast.show();
         }
     }
