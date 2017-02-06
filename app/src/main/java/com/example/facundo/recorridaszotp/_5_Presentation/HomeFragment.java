@@ -35,6 +35,8 @@ public class HomeFragment extends Fragment {
                 MainActivity.mGoogleApiClient.connect();
             }
         });*/
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+        MainActivity.menuGuardar(false);
         return v;
     }
 
