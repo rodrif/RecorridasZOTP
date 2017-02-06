@@ -21,7 +21,6 @@ import com.example.facundo.recorridaszotp._7_Interfaces.iPersonaHandler;
 public class PersonaHandler implements iPersonaHandler {
     @Override
     public void mostrarPersona(Persona persona, iFragmentChanger fragmentChanger) {
-        MainActivity.menuGuardar(true, true, true);
         MainActivity.personaSeleccionada = persona;
         Config.getInstance().setIsEditing(true);
         MainActivity.visitaSeleccionada = VisitaDataAccess.get().findUltimaVisita(persona);

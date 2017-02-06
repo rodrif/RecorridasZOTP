@@ -243,6 +243,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 }
 
         );
+        this.setMenu();
         return vista;
     }
 
@@ -467,7 +468,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        ((MainActivity) activity).getAppbar().setTitle(Utils.PERSONA);
         this.activity = (MainActivity) activity;
     }
 
@@ -476,7 +476,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         //Para que no se llame al iniciar el fragment
         sZona.setOnItemSelectedListener(null);
         super.onDetach();
-        ((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 
     @Override
@@ -488,6 +487,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             Toast unToast = Toast.makeText(this.activity, "No tiene permisos para borrar a esta persona", Toast.LENGTH_SHORT);
             unToast.show();
         }
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.PERSONA);
+        MainActivity.menuGuardar(true, true, true);
     }
 
     /**
