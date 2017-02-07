@@ -46,6 +46,7 @@ public class ListaPedidos extends Fragment {
             }
         });*/ //TODO Para despues, ver/editar pedido particular
 
+        this.setMenu();
         return vista;
     }
 
@@ -59,13 +60,17 @@ public class ListaPedidos extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         fragmentChanger = (iFragmentChanger) activity;
-        ((MainActivity) activity).getAppbar().setTitle(Utils.PEDIDOS);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         fragmentChanger = null;
-        //((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
     }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.PEDIDOS);
+        MainActivity.menuGuardar(false);
+    }
+
 }
