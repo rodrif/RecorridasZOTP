@@ -28,6 +28,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PedidoHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaShare;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             case R.id.action_pedidos: //pedidos
                 if (personaSeleccionada != null) {
-                    this.changeFragment(new ListaPedidos(), Utils.FRAG_PEDIDOS, true);
+                    new PedidoHandler().listarPedidos(personaSeleccionada.getId(), this);
                 }
                 return true;
         }

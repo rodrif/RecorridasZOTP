@@ -50,4 +50,13 @@ public class PedidoDataAccess extends BasicDataAccess<Pedido> {
         }
         return resultado;
     }
+
+    public List<Pedido> getAllOKOrderFecha(long personaId) {
+        return new Select()
+                .from(Pedido.class)
+                .orderBy("Fecha DESC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .where("Persona = ?", personaId)
+                .execute();
+    }
 }

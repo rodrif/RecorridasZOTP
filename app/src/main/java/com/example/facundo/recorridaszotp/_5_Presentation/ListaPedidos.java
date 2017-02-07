@@ -51,9 +51,7 @@ public class ListaPedidos extends Fragment {
     }
 
     private List<Pedido> getPedidos(long personaId) {
-       /* listaPedidos = personaId == -1 ? PedidoDataAccess.get().getAllOKPorAreaOrderFecha()
-                : PedidoDataAccess.get().getAllOKOrderFecha(personaId);*/ // TODO mostrar pedidos de uno solo
-        return PedidoDataAccess.get().getAllOK();
+        return PedidoDataAccess.get().getAllOKOrderFecha(personaId);
     }
 
     @Override
