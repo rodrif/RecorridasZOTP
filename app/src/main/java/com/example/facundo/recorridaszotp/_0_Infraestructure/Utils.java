@@ -10,8 +10,8 @@ import java.util.Locale;
 
 public final class Utils {
 
-    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
-  //  public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
+  //  public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
+    public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
   //  public static final String WEB = "https://serene-wave-43143-test.herokuapp.com";
   //  public static final String WEB = "https://stark-island-3497.herokuapp.com";
   //  public static final String WEB = "https://boiling-harbor-80530-prod.herokuapp.com"; //Produccion
