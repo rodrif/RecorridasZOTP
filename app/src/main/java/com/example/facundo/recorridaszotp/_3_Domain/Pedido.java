@@ -8,6 +8,11 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 @Table(name = "Pedidos")
 public class Pedido extends Model {
     @Column(name = "WebId")
@@ -110,5 +115,14 @@ public class Pedido extends Model {
 
     public String toString() {
         return "hola";
+    } //FIXME
+
+    public String getFechaString() {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(getFecha());
+
+        Date date = cal.getTime();
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        return formateador.format(date);
     }
 }

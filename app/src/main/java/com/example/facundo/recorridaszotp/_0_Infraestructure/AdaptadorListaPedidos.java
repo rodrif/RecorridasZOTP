@@ -34,10 +34,11 @@ public class AdaptadorListaPedidos extends ArrayAdapter<Pedido> {
         }
 
         TextView lDescripcion = (TextView) item.findViewById(R.id.lDescripcionPedido);
-
+        TextView lFecha = (TextView) item.findViewById(R.id.lFechaPedido);
 
         Pedido pedido = listaPedidos.get(position);
         lDescripcion.setText(pedido.getDescripcion());
+        lFecha.setText(pedido.getFechaString());
 
         // TextView lIdWeb = (TextView) item.findViewById(R.id.lIdWebVisita);
         //  lIdWeb.setText(Integer.toString(listaVisitas.get(position).getWebId()));
