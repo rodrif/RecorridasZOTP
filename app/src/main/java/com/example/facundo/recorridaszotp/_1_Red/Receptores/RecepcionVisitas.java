@@ -30,10 +30,4 @@ public class RecepcionVisitas extends BasicRecepcion<Visita> {
     public RecepcionVisitas(List<AsyncDelegate> delegate) {
         super(VisitaDataAccess.get(), VisitaJsonUtils.get(), delegate);
     }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        return datos;
-    }
 }

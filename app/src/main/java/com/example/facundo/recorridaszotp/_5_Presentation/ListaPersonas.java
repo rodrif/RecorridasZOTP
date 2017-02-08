@@ -74,7 +74,7 @@ public class ListaPersonas extends Fragment {
                     popup.show();//showing popup menu
             }
         });
-
+        this.setMenu();
         return vista;
     }
 
@@ -94,13 +94,15 @@ public class ListaPersonas extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         fragmentChanger = (iFragmentChanger) activity;
-        ((MainActivity)activity).getAppbar().setTitle(Utils.LISTA_PERSONAS);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         fragmentChanger = null;
-        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.LISTA_PERSONAS);
     }
 }

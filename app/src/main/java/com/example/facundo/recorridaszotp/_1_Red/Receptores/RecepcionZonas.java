@@ -29,10 +29,4 @@ public class RecepcionZonas extends BasicRecepcion<Zona> {
     public RecepcionZonas(List<AsyncDelegate> listaDelegates) {
         super(ZonaDataAccess.get(), ZonaJsonUtils.get(), listaDelegates);
     }
-
-    @Override
-    protected JSONArray cargarJson() {
-        JSONArray datos = new JSONArray();
-        return datos;
-    }
 }

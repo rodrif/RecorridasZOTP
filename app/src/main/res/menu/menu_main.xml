@@ -11,6 +11,14 @@
             app:showAsAction="always" />
     </group>
 
+    <group android:id="@+id/grupo_pedidos">
+        <item android:id="@+id/action_pedidos"
+            android:title="Pedidos"
+            android:icon="@drawable/ic_action_user"
+            android:orderInCategory="100"
+            app:showAsAction="always" />
+    </group>
+
     <group android:id="@+id/grupo_guardar_persona">
         <item android:id="@+id/action_guardar"
             android:title="Guardar"

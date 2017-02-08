@@ -11,8 +11,10 @@ import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -20,14 +22,14 @@ import java.util.List;
 /**
  * Created by Facundo on 23/10/2015.
  */
-public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
+public class BasicRecepcion<T extends Model> extends EnvioPost {
     protected JSONObject respuesta;
     protected List<AsyncDelegate> delegates;
     private BasicJsonUtil<T> basicJsonUtil;
     private BasicDataAccess<T> basicDataAccess;
 
-    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil, AsyncDelegate delegate) {
-        this(basicDataAccess, basicJsonUtil, delegate != null ? Arrays.asList(delegate) : null);
+    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
+        this(basicDataAccess, basicJsonUtil, null);
     }
 
     public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil, List<AsyncDelegate> delegates) {
@@ -75,6 +77,11 @@ public abstract class BasicRecepcion<T extends Model> extends EnvioPost {
     @Override
     protected String getUltimaFechaMod() {
         return Utils.UltFechaSincr + basicJsonUtil.getClase().getSimpleName();
+    }
+
+    @Override
+    protected JSONArray cargarJson() {
+        return new JSONArray();
     }
 
     public JSONObject getRespuesta() {

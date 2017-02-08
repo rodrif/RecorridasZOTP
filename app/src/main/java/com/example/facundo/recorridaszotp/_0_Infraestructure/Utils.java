@@ -26,6 +26,8 @@ public final class Utils {
     public static final String WEB_RECIBIR_RANCHADAS = Utils.WEB + "/api/ranchadas/download";
     public static final String WEB_RECIBIR_FAMILIAS = Utils.WEB + "/api/familias/download";
     public static final String WEB_RECIBIR_PERSONAS = Utils.WEB + "/api/people/download";
+    public static final String WEB_RECIBIR_PEDIDOS = Utils.WEB + "/api/pedidos/download";
+    public static final String WEB_ENVIAR_PEDIDOS = Utils.WEB + "/api/pedidos/upload";
     public static final String WEB_RECIBIR_VISITAS = Utils.WEB + "/api/visits/download";
     public static final String WEB_RECIBIR_REFERENTES = Utils.WEB + "/api/referentes/download";
     //Permisos
@@ -58,6 +60,7 @@ public final class Utils {
     public static final String FRAG_HOME = "Fragment Home";
     public static final String FRAG_VISITA = "Fragment Visita";
     public static final String FRAG_LOGIN = "Fragment Login";
+    public static final String FRAG_PEDIDOS = "Fragment Pedidos";
     public static final String FRAG_NOTIFICACION = "Fragment Notificacion";
     public static final String TITULO = "titulo";
     public static final String SUBTITULO = "subtitulo";
@@ -70,6 +73,7 @@ public final class Utils {
     public static final String LISTA_PERSONAS = "Lista Personas";
     public static final String ULTIMAS_VISITAS = "Ultimas Visitas";
     public static final String PERSONA = "Persona";
+    public static final String PEDIDOS = "Pedidos";
     public static final String VISITA = "Visita";
     public static final String MAPA = "Mapa";
     public static final String HOME = "Recorridas ZO";
