@@ -48,6 +48,8 @@ import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import io.fabric.sdk.android.Fabric;
+
+import java.security.spec.ECField;
 import java.util.ArrayList;
 
 
@@ -372,6 +374,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+            if (position == 0) {
+                navDrawerLayout.closeDrawers();
+                return;
+            }
             boolean fragmentTransaction = false;
             Fragment fragment = null;
             String tag = "";
