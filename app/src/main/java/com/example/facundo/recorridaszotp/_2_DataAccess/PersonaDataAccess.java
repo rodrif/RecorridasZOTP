@@ -97,6 +97,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
 
     public void deleteLogico(Persona persona) {
         VisitaDataAccess.get().deleteLogico(persona);
+        PedidoDataAccess.get().deleteLogico(persona);
         persona.setEstado(Utils.EST_BORRADO);
         persona.save();
     }

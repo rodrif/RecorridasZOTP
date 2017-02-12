@@ -61,6 +61,25 @@ public class PedidoDataAccess extends BasicDataAccess<Pedido> {
                 .execute();
     }
 
+    public List<Pedido> findTodosPedidos(Persona persona) {
+        if (persona.getId() != null)
+            return new Select()
+                    .from(Pedido.class)
+                    .where("Persona = ?", persona.getId())
+                    .where("Estado != ?", Utils.EST_BORRADO)
+                    .orderBy("Fecha DESC")
+                    .execute();
+        else
+            return null;
+    }
+
+    public void deleteLogico(Persona persona) {
+        List<Pedido> listaPedidos = PedidoDataAccess.get().findTodosPedidos(persona);
+        for (Pedido unPedido : listaPedidos) {
+            PedidoDataAccess.get().deleteLogico(unPedido);
+        }
+    }
+
     public void deleteLogico(Pedido pedido) {
         pedido.setEstado(Utils.EST_BORRADO);
         pedido.save();
