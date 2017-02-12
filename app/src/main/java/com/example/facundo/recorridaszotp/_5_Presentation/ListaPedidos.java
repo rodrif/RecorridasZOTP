@@ -53,7 +53,7 @@ public class ListaPedidos extends Fragment {
     }
 
     private List<Pedido> getPedidos(long personaId) {
-        return PedidoDataAccess.get().getAllOKOrderFecha(personaId);
+        return PedidoDataAccess.get().getAllOKOrderFechaSinCompletar(personaId);
     }
 
     @Override

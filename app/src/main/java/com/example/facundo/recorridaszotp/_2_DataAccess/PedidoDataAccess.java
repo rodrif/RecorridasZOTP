@@ -61,6 +61,16 @@ public class PedidoDataAccess extends BasicDataAccess<Pedido> {
                 .execute();
     }
 
+    public List<Pedido> getAllOKOrderFechaSinCompletar(long personaId) {
+        return new Select()
+                .from(Pedido.class)
+                .orderBy("Fecha DESC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .where("Persona = ?", personaId)
+                .where("Completado = ?", false)
+                .execute();
+    }
+
     public List<Pedido> findTodosPedidos(Persona persona) {
         if (persona.getId() != null)
             return new Select()
