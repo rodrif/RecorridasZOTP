@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         case Utils.FRAG_VISITA:
                             GuardarVisitaClickFormulario();
                             return true;
+                        case Utils.FRAG_PEDIDO:
+                            GuardarPedidoClickFormulario();
+                            return true;
                     }
                 }
             case R.id.action_cancelar: //Cancelar
@@ -211,6 +214,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void GuardarPedidoClickFormulario() {
+        Log.d(Utils.APPTAG, "GuardarPedidoClickFormulario");
+        PedidoFragment pedidoFragment = (PedidoFragment)getFragmentManager().findFragmentById(R.id.content_frame);
+        pedidoFragment.savePedido();
     }
 
     public void GuardarVisitaClickFormulario() {

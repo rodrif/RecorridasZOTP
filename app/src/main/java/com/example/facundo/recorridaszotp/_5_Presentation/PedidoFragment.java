@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
 
 public class PedidoFragment extends Fragment {
@@ -53,6 +55,7 @@ public class PedidoFragment extends Fragment {
         });
         etDescripcion = (EditText) vista.findViewById(R.id.ETDescripcionPedido);
         chCompletado = (CheckBox) vista.findViewById(R.id.CHCompletadoPedido);
+        MainActivity.menuGuardar(true);
         this.actualizar();
         return vista;
     }
@@ -65,7 +68,7 @@ public class PedidoFragment extends Fragment {
         if (this.pedido != null) {
             this.etFecha.setText(this.pedido.getFechaString());
             this.etDescripcion.setText(this.pedido.getDescripcion());
-            this.chCompletado.setPressed(this.pedido.getCompletado());
+            this.chCompletado.setChecked(this.pedido.getCompletado());
         }
     }
 
@@ -77,5 +80,25 @@ public class PedidoFragment extends Fragment {
     private void showDataPicker() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), Utils.DATE_PICKER_PEDIDO);
+    }
+
+    public void savePedido() {
+        View vista = getFragmentManager().findFragmentById(R.id.content_frame).getView();
+        EditText ETFecha = (EditText) vista.findViewById(R.id.ETFechaPedido);
+        EditText ETDescripcion = (EditText) vista.findViewById(R.id.ETDescripcionPedido);
+        CheckBox CHCompletado = (CheckBox) vista.findViewById(R.id.CHCompletadoPedido);
+        String fecha = ETFecha.getText().toString();
+        String descripcion = ETDescripcion.getText().toString();
+        boolean completado = CHCompletado.isChecked();
+        this.pedido.setFecha(fecha);
+        this.pedido.setDescripcion(descripcion);
+        this.pedido.setCompletado(completado);
+        this.pedido.setEstado(Utils.EST_MODIFICADO);
+        this.pedido.save();
+        Sincronizador sinc = new Sincronizador(getActivity(), false);
+        sinc.execute();
+        Toast unToast = Toast.makeText(getActivity(), "Pedido guardado", Toast.LENGTH_SHORT);
+        unToast.show();
+        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
     }
 }

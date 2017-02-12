@@ -51,36 +51,21 @@ public class PedidoJsonUtils extends BasicJsonUtil<Pedido> {
 
     @Override
     public JSONObject toJsonObject(Pedido pedido) throws Exception {
-        //FIXME en pedidoJsonUtils
-
         try {
            JSONObject jsonObj = new JSONObject();
-   /*          jsonObj.put("android_id", persona.getId());
-            jsonObj.put("web_id", persona.getWebId());
-            jsonObj.put("nombre", persona.getNombre());
-            jsonObj.put("apellido", persona.getApellido());
-            jsonObj.put("estado", persona.getEstado());
-            if (persona.getZona() != null) { // por si esta borrado
-                jsonObj.put("web_zone_id", persona.getZona().getWebId());
-            }
-            jsonObj.put("fecha_nacimiento", persona.getFechaNacimiento());
-            jsonObj.put("descripcion", persona.getObservaciones());
-            jsonObj.put("dni", persona.getDNI());
-            jsonObj.put("telefono", persona.getTelefono());
-            jsonObj.put("remera", persona.getRemera());
-            jsonObj.put("pantalon", persona.getPantalon());
-            jsonObj.put("zapatillas", persona.getZapatillas());
-            if (persona.getFamilia() != null) {
-                jsonObj.put("web_familia_id", persona.getFamilia().getWebId());
-            }
-            if (persona.getRanchada() != null) {
-                jsonObj.put("web_ranchada_id", persona.getRanchada().getWebId());
-            }*/
-
+            jsonObj.put("android_id", pedido.getId());
+            jsonObj.put("web_id", pedido.getWebId());
+            jsonObj.put("estado", pedido.getEstado());
+            jsonObj.put("descripcion", pedido.getDescripcion());
+            jsonObj.put("completado", pedido.getCompletado());
+            jsonObj.put("fecha", pedido.getFecha());
+            Persona persona = pedido.getPersona();
+            if (persona != null)
+                jsonObj.put("web_person_id", persona.getWebId());
             return jsonObj;
 
         } catch (Exception ex) {
-            Log.e(Utils.APPTAG, "Fallo al crear PersonaJSON");
+            Log.e(Utils.APPTAG, "Fallo al crear PedidoJSON");
             throw ex;
         }
     }

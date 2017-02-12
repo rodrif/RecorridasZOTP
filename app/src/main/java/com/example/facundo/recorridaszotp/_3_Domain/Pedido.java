@@ -8,6 +8,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.GregorianCalendar;
 public class Pedido extends Model {
     @Column(name = "WebId")
     private int webId = -1; // -1 si es una persona no guardada en la BDWeb
-    @Column(name = "Persona")
+    @Column(name = "Persona", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private Persona persona;
     @Column(name = "Descripcion")
     private String descripcion;
@@ -124,5 +125,17 @@ public class Pedido extends Model {
         Date date = cal.getTime();
         SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
         return formateador.format(date);
+    }
+
+    public void setFecha(String fecha) {
+        Calendar cal = new GregorianCalendar();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = dateFormat.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.fecha = date.getTime();
     }
 }
