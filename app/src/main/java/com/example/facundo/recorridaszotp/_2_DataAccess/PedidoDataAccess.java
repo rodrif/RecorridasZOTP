@@ -4,6 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import java.util.List;
 
@@ -58,5 +59,10 @@ public class PedidoDataAccess extends BasicDataAccess<Pedido> {
                 .where("Estado != ?", Utils.EST_BORRADO)
                 .where("Persona = ?", personaId)
                 .execute();
+    }
+
+    public void deleteLogico(Pedido pedido) {
+        pedido.setEstado(Utils.EST_BORRADO);
+        pedido.save();
     }
 }

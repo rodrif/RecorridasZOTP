@@ -1,9 +1,12 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +19,20 @@ import android.widget.Toast;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
+import com.example.facundo.recorridaszotp._2_DataAccess.PedidoDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._3_Domain.Roles;
 
-public class PedidoFragment extends Fragment {
+public class PedidoFragment extends Fragment implements popUp {
     private static View vista;
     private Pedido pedido;
     private EditText etFecha = null;
     private ImageButton ibFecha = null;
     private EditText etDescripcion = null;
     private CheckBox chCompletado = null;
+    AlertDialog.Builder dialogoBorrar = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,37 @@ public class PedidoFragment extends Fragment {
         chCompletado = (CheckBox) vista.findViewById(R.id.CHCompletadoPedido);
         MainActivity.menuGuardar(true);
         this.actualizar();
+        dialogoBorrar = new AlertDialog.Builder(getActivity());
+        dialogoBorrar.setTitle("Importante");
+        dialogoBorrar.setMessage("¿ Seguro quiere eliminar ?");
+        dialogoBorrar.setCancelable(false);
+        dialogoBorrar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                // cancelar();
+            }
+        });
+        dialogoBorrar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                if (pedido.getWebId() != -1) {
+                    PedidoDataAccess.get().deleteLogico(pedido);
+                    if (pedido.getEstado() == Utils.EST_BORRADO) {
+                        Toast.makeText(getActivity(),
+                                "Se elimino el pedido a " + pedido.getPersona().getNombre()
+                                        + " exitosamente", Toast.LENGTH_SHORT).show();
+                        Sincronizador sinc = new Sincronizador(getActivity(), false);
+                        sinc.execute();
+                        getActivity().onBackPressed();
+                    } else {
+                        Log.e(Utils.APPTAG, "Error al hacer borrado logico de pedidoId: " +
+                                pedido.getId() +
+                                "en PedidoFragment::PositiveButton::onClick");
+                    }
+                } else {
+                    Toast.makeText(getActivity(),
+                            "No se puede borrar un pedido no creado", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return vista;
     }
 
@@ -100,5 +138,12 @@ public class PedidoFragment extends Fragment {
         Toast unToast = Toast.makeText(getActivity(), "Pedido guardado", Toast.LENGTH_SHORT);
         unToast.show();
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
+    }
+
+    @Override
+    public void popUp() {
+       if (dialogoBorrar != null) {
+           dialogoBorrar.show();
+       }
     }
 }
