@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 if (personaSeleccionada != null) {
                     new PersonaShare(personaSeleccionada).share(this);
                 }
+                return true;
             case R.id.action_pedidos: //pedidos
                 if (personaSeleccionada != null) {
                     new PedidoHandler().listarPedidos(personaSeleccionada.getId(), this);
