@@ -207,6 +207,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     new PedidoHandler().listarPedidos(personaSeleccionada.getId(), this);
                 }
                 break;
+            case R.id.action_crear_pedido: //crear pedido
+                if (personaSeleccionada != null) {
+                    new PedidoHandler().crearPedido(personaSeleccionada, this);
+                }
+                break;
         }
         return true;
     }

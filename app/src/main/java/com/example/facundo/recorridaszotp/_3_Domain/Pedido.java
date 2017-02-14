@@ -44,7 +44,7 @@ public class Pedido extends Model {
     }
 
     public Pedido(Persona persona) {
-        this(-1, persona, "", false, 0);
+        this(-1, persona, "", false, new Date().getTime());
     }
 
     public void mergeFromWeb(Pedido pedido) throws Exception {

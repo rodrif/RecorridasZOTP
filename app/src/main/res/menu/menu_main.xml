@@ -17,6 +17,11 @@
             android:icon="@drawable/ic_action_user"
             android:orderInCategory="101"
             app:showAsAction="always" />
+        <item android:id="@+id/action_crear_pedido"
+            android:title="Crear pedido"
+            android:icon="@drawable/ic_action_user"
+            android:orderInCategory="101"
+            app:showAsAction="never" />
     </group>
 
     <group android:id="@+id/grupo_guardar_persona">

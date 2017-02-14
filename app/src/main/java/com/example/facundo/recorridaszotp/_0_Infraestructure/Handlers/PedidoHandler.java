@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._5_Presentation.ListaPedidos;
 import com.example.facundo.recorridaszotp._5_Presentation.PedidoFragment;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
@@ -26,5 +27,10 @@ public class PedidoHandler {
         PedidoFragment frag = new PedidoFragment();
         frag.setPedido(pedido);
         fragmentChanger.changeFragment(frag, Utils.FRAG_PEDIDO, true);
+    }
+
+    public void crearPedido(Persona persona, iFragmentChanger fragmentChanger) {
+        Pedido pedido = new Pedido(persona);
+        this.mostrarPedido(pedido, fragmentChanger);
     }
 }
