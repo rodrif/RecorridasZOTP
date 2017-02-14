@@ -65,6 +65,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             mapFragmentMapa = (MapFragment) (getFragmentManager().findFragmentById(R.id.mapMapa));
         }
         mapFragmentMapa.getMapAsync(this);
+        this.setMenu();
         return vista;
     }
 
@@ -150,7 +151,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         fragmentChanger = (iFragmentChanger) activity;
-        ((MainActivity)activity).getAppbar().setTitle(Utils.MAPA);
     }
 
     @Override
@@ -158,6 +158,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         super.onDetach();
         fragmentChanger = null;
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.MAPA);
+        MainActivity.menuGuardar(false);
     }
 
     @Override

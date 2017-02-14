@@ -16,10 +16,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertFalse;
@@ -51,7 +48,7 @@ public class BorrarPersona {
                 .perform(click());
         onData(instanceOf(MenuItem.class)).atPosition(2).perform(click());
 
-        onView(withId(R.id.action_cancelar)).perform(click());
+        onView(withId(R.id.action_borrar)).perform(click());
         onView(withId(16908313)).perform(click());
 
         assertTrue("Incorrecta borrado de persona1", PersonaDataAccess.get().hayConEstadoBorrado());

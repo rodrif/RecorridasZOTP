@@ -26,7 +26,6 @@ import java.util.List;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -64,7 +63,7 @@ public class BorrarVisita {
                 .atPosition(1)
                 .perform(click());
 
-        onView(withId(R.id.action_cancelar)).perform(click());
+        onView(withId(R.id.action_borrar)).perform(click());
         onView(withId(16908313)).perform(click());
 
         Persona juanb = new Select()

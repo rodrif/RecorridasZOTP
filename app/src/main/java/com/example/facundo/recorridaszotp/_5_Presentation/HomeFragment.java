@@ -14,13 +14,6 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.google.android.gms.common.SignInButton;
 
 public class HomeFragment extends Fragment {
-    private SignInButton signInButton;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
