@@ -61,12 +61,14 @@ public final class Utils {
     public static final String FRAG_VISITA = "Fragment Visita";
     public static final String FRAG_LOGIN = "Fragment Login";
     public static final String FRAG_PEDIDOS = "Fragment Pedidos";
+    public static final String FRAG_PEDIDO = "Fragment Pedido";
     public static final String FRAG_NOTIFICACION = "Fragment Notificacion";
     public static final String TITULO = "titulo";
     public static final String SUBTITULO = "subtitulo";
     public static final String DESCRIPCION = "descripcion";
     public static final String DATE_PICKER_VISITA = "Date Picker Visita";
     public static final String DATE_PICKER_PERSONA = "Date Picker Persona";
+    public static final String DATE_PICKER_PEDIDO = "Date Picker Pedido";
     public static final int MAX_VISITAS = 20;
     public static final float ZOOM_STANDAR = 15.0f;
     public static final float ZOOM_ZONA = 13.0f;

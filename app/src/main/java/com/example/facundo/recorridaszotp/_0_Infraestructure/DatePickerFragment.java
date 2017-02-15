@@ -14,6 +14,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.facundo.recorridaszotp.R;
+import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._5_Presentation.PedidoFragment;
 import com.example.facundo.recorridaszotp._5_Presentation.PersonaFragment;
 import com.example.facundo.recorridaszotp._5_Presentation.VisitaFragment;
 
@@ -52,6 +54,12 @@ public class DatePickerFragment extends DialogFragment
                     PersonaFragment pF = (PersonaFragment) fm.findFragmentByTag(Utils.FRAG_PERSONA);
                     if (pF != null) {
                         pF.cargarFecha(dayOfMonth, monthOfYear + 1, year);
+                    }
+                    break;
+                case Utils.DATE_PICKER_PEDIDO:
+                    PedidoFragment pedidoFragment = (PedidoFragment) fm.findFragmentByTag(Utils.FRAG_PEDIDO);
+                    if (pedidoFragment != null) {
+                        pedidoFragment.cargarFecha(dayOfMonth, monthOfYear + 1, year);
                     }
                     break;
             }

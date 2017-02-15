@@ -4,6 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._3_Domain.Persona;
 
 import java.util.List;
 
@@ -58,5 +59,39 @@ public class PedidoDataAccess extends BasicDataAccess<Pedido> {
                 .where("Estado != ?", Utils.EST_BORRADO)
                 .where("Persona = ?", personaId)
                 .execute();
+    }
+
+    public List<Pedido> getAllOKOrderFechaSinCompletar(long personaId) {
+        return new Select()
+                .from(Pedido.class)
+                .orderBy("Fecha DESC")
+                .where("Estado != ?", Utils.EST_BORRADO)
+                .where("Persona = ?", personaId)
+                .where("Completado = ?", false)
+                .execute();
+    }
+
+    public List<Pedido> findTodosPedidos(Persona persona) {
+        if (persona.getId() != null)
+            return new Select()
+                    .from(Pedido.class)
+                    .where("Persona = ?", persona.getId())
+                    .where("Estado != ?", Utils.EST_BORRADO)
+                    .orderBy("Fecha DESC")
+                    .execute();
+        else
+            return null;
+    }
+
+    public void deleteLogico(Persona persona) {
+        List<Pedido> listaPedidos = PedidoDataAccess.get().findTodosPedidos(persona);
+        for (Pedido unPedido : listaPedidos) {
+            PedidoDataAccess.get().deleteLogico(unPedido);
+        }
+    }
+
+    public void deleteLogico(Pedido pedido) {
+        pedido.setEstado(Utils.EST_BORRADO);
+        pedido.save();
     }
 }

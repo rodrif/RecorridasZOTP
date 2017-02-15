@@ -9,6 +9,7 @@ import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PedidoJso
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioAreas;
+import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioPedidos;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioPersonas;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioVisitas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.BasicRecepcion;
@@ -70,8 +71,8 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
         new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_PERSONAS);
         new RecepcionVisitas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_VISITAS);
         new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_VISITAS);
-        new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PEDIDOS);
-     //   new EnvioPedidos(PedidosDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIAR_PEDIDOS);
+        new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
+        new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIAR_PEDIDOS);
     }
 
     @Override

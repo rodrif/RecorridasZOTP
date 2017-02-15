@@ -1,11 +1,7 @@
 package com.example.facundo.recorridaszotp._0_Infraestructure.Handlers;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-
-import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;

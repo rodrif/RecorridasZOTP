@@ -104,5 +104,6 @@ public class ListaPersonas extends Fragment {
 
     private void setMenu() {
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.LISTA_PERSONAS);
+        MainActivity.menuGuardar(false);
     }
 }

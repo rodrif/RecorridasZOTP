@@ -51,7 +51,7 @@ public class ListaVisitas extends Fragment {
                 visitaHandler.mostrarVisita(listaVisitas.get(position), fragmentChanger);
             }
         });
-
+        this.setMenu();
         return vista;
     }
 
@@ -68,7 +68,6 @@ public class ListaVisitas extends Fragment {
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
         fragmentChanger = (iFragmentChanger) activity;
-        ((MainActivity) activity).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
     }
 
     @Override
@@ -76,5 +75,10 @@ public class ListaVisitas extends Fragment {
         super.onDetach();
         fragmentChanger = null;
         ((MainActivity) getActivity()).getAppbar().setTitle(Utils.HOME);
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.ULTIMAS_VISITAS);
+        MainActivity.menuGuardar(false);
     }
 }

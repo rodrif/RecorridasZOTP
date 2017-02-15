@@ -6,10 +6,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPedidos;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PedidoHandler;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.PedidoDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
@@ -39,19 +41,19 @@ public class ListaPedidos extends Fragment {
                 new AdaptadorListaPedidos(getActivity().getApplicationContext(), this.listaPedidos);
         ListView lViewPedidos = (ListView) vista.findViewById(R.id.lista_pedidos);
         lViewPedidos.setAdapter(adaptador);
-       /* lViewPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lViewPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                pedidoHandler.mostrarPedido(listaPedidos.get(position), fragmentChanger);
+                new PedidoHandler().mostrarPedido(listaPedidos.get(position), fragmentChanger);
             }
-        });*/ //TODO Para despues, ver/editar pedido particular
+        });
 
         this.setMenu();
         return vista;
     }
 
     private List<Pedido> getPedidos(long personaId) {
-        return PedidoDataAccess.get().getAllOKOrderFecha(personaId);
+        return PedidoDataAccess.get().getAllOKOrderFechaSinCompletar(personaId);
     }
 
     @Override

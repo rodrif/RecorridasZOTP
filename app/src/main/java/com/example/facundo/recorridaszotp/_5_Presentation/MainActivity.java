@@ -49,7 +49,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import io.fabric.sdk.android.Fabric;
 
-import java.security.spec.ECField;
 import java.util.ArrayList;
 
 
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         navItms.add(new ItemLista("Salir", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
-
         if(Config.getInstance().isLoginOk()) {
             enableSideMenu();
             this.replaceFragment(new HomeFragment(),false, null);
@@ -131,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             this.replaceFragment(new LoginFragment(), false, null);
         }
-
         // Build GoogleApiClient with access to basic profile
       /*  mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -156,8 +153,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MainActivity.menu = menu;
-        MainActivity.menu.setGroupVisible(R.id.grupo_guardar_persona, false);
-        MainActivity.menu.setGroupVisible(R.id.grupo_compartir, false);
         return true;
     }
 
@@ -165,8 +160,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public boolean onCreateOptionsMenu(Menu menu) {
         MainActivity.menu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-        //Ocultar el grupo
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         menuGuardar(false);
         return true;
     }
@@ -176,10 +170,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
                 navDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+                break;
             case R.id.action_guardar: //Guardar
                 //Busco que fragment se esta usando actualmente
                 FragmentManager fm = getFragmentManager();
@@ -194,23 +189,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         case Utils.FRAG_VISITA:
                             GuardarVisitaClickFormulario();
                             return true;
+                        case Utils.FRAG_PEDIDO:
+                            GuardarPedidoClickFormulario();
+                            return true;
                     }
                 }
-            case R.id.action_cancelar: //Cancelar
+            case R.id.action_borrar: //Borrar
                 ((popUp) (getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
-                //this.onBackPressed();
-                return true;
+                break;
             case R.id.action_compartir: //compartir
                 if (personaSeleccionada != null) {
                     new PersonaShare(personaSeleccionada).share(this);
                 }
+                break;
             case R.id.action_pedidos: //pedidos
                 if (personaSeleccionada != null) {
                     new PedidoHandler().listarPedidos(personaSeleccionada.getId(), this);
                 }
-                return true;
+                break;
+            case R.id.action_crear_pedido: //crear pedido
+                if (personaSeleccionada != null) {
+                    new PedidoHandler().crearPedido(personaSeleccionada, this);
+                }
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    public void GuardarPedidoClickFormulario() {
+        Log.d(Utils.APPTAG, "GuardarPedidoClickFormulario");
+        PedidoFragment pedidoFragment = (PedidoFragment)getFragmentManager().findFragmentById(R.id.content_frame);
+        pedidoFragment.savePedido();
     }
 
     public void GuardarVisitaClickFormulario() {
@@ -244,7 +253,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             unToast.show();
         }
 
-        menuGuardar(false);
         getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
         getFragmentManager().popBackStack();
         clean();
@@ -341,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onBackPressed() {
-        menuGuardar(false);
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -394,14 +401,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //FIXME refactor de replaceFragment
             switch (position) {
                 case 1: //Personas
-                    menuGuardar(false);
                     fragment = new ListaPersonas();
                     fragmentTransaction = true;
                     tag = Utils.LISTA_PERSONAS;
                     break;
                 case 2: //Crear Persona
                     if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
-                        menuGuardar(true);
                         personaSeleccionada = new Persona();
                         visitaSeleccionada = new Visita(personaSeleccionada);
                         fragment = new PersonaFragment();
@@ -414,19 +419,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     }
                     break;
                 case 3: //Ultimas Visitas
-                    menuGuardar(false);
                     fragment = new ListaVisitas();
                     fragmentTransaction = true;
                     tag = Utils.FRAG_VISITA;
                     break;
                 case 4: //Mapa
-                    menuGuardar(false);
                     fragment = new MapaFragment();
                     fragmentTransaction = true;
                     tag = Utils.FRAG_MAPA;
                     break;
                 case 5: //Salir
-                    menuGuardar(false);
                     fragment = new LoginFragment();
                     fragmentTransaction = true;
                     tag = Utils.FRAG_LOGIN; //TODO refactor
@@ -461,8 +463,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
       //  ObtenerToken obtenerToken;
         Toast.makeText(this,
                 "onConnected", Toast.LENGTH_SHORT).show();
-    //    this.email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
     }
 
     @Override

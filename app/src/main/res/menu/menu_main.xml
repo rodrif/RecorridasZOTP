@@ -8,28 +8,33 @@
             android:title="Compartir"
             android:icon="@drawable/ic_share_white_24dp"
             android:orderInCategory="100"
-            app:showAsAction="always" />
+            app:showAsAction="never" />
     </group>
 
     <group android:id="@+id/grupo_pedidos">
         <item android:id="@+id/action_pedidos"
             android:title="Pedidos"
-            android:icon="@drawable/ic_action_user"
-            android:orderInCategory="100"
+            android:icon="@drawable/ic_assignment_white_24dp"
+            android:orderInCategory="101"
             app:showAsAction="always" />
+        <item android:id="@+id/action_crear_pedido"
+            android:title="Crear pedido"
+            android:icon="@drawable/ic_assignment_white_24dp"
+            android:orderInCategory="101"
+            app:showAsAction="never" />
     </group>
 
     <group android:id="@+id/grupo_guardar_persona">
         <item android:id="@+id/action_guardar"
             android:title="Guardar"
-            android:icon="@drawable/ic_done_white_36dp"
-            android:orderInCategory="100"
+            android:icon="@drawable/ic_save_white_24dp"
+            android:orderInCategory="102"
             app:showAsAction="always" />
 
-        <item android:id="@+id/action_cancelar"
-            android:title="Cancelar"
-            android:icon="@drawable/ic_clear_white_36dp"
-            android:orderInCategory="100"
-            app:showAsAction="always" />
+        <item android:id="@+id/action_borrar"
+            android:title="Borrar"
+            android:icon="@drawable/ic_delete_forever_white_24dp"
+            android:orderInCategory="103"
+            app:showAsAction="never" />
     </group>
 </menu>
