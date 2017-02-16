@@ -484,7 +484,11 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
     private void setMenu() {
         ((MainActivity)getActivity()).getAppbar().setTitle(Utils.PERSONA);
-        MainActivity.menuGuardar(true, true, true);
+        if (MainActivity.personaSeleccionada.getWebId() != -1) {
+            MainActivity.menuGuardar(true, true, true);
+        } else {
+            MainActivity.menuGuardar(true);
+        }
     }
 
     /**
