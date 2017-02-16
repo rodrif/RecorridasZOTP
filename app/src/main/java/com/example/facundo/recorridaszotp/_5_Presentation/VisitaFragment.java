@@ -142,7 +142,13 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
                 }
             }
         });
+        this.setMenu();
         return vista;
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.VISITA);
+        MainActivity.menuGuardar(true, false, true);
     }
 
     private void showDataPicker() {
@@ -303,14 +309,12 @@ public class VisitaFragment extends Fragment implements OnMapReadyCallback, popU
     @Override
     public void onAttach(Activity activity) { //No anda el onAttach(Context context) can API < 23
         super.onAttach(activity);
-        ((MainActivity)activity).getAppbar().setTitle(Utils.VISITA);
         this.activity = (MainActivity)activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.HOME);
     }
 
     @Override

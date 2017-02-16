@@ -203,14 +203,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 break;
             case R.id.action_pedidos: //pedidos
+                long personaId = -1;
                 if (personaSeleccionada != null) {
-                    new PedidoHandler().listarPedidos(personaSeleccionada.getId(), this);
+                    personaId = personaSeleccionada.getId();
+                } else {
+                    personaId = visitaSeleccionada.getPersona().getId();
                 }
+                new PedidoHandler().listarPedidos(personaId, this);
                 break;
             case R.id.action_crear_pedido: //crear pedido
+                Persona persona = null;
                 if (personaSeleccionada != null) {
-                    new PedidoHandler().crearPedido(personaSeleccionada, this);
+                    persona = personaSeleccionada;
+                } else {
+                    persona = visitaSeleccionada.getPersona();
                 }
+                new PedidoHandler().crearPedido(persona, this);
                 break;
         }
         return true;

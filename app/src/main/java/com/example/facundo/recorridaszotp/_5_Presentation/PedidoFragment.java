@@ -95,7 +95,13 @@ public class PedidoFragment extends Fragment implements popUp {
                 }
             }
         });
+        this.setMenu();
         return vista;
+    }
+
+    private void setMenu() {
+        ((MainActivity)getActivity()).getAppbar().setTitle(Utils.PEDIDO);
+        MainActivity.menuGuardar(true);
     }
 
     public void setPedido(Pedido pedido) {
