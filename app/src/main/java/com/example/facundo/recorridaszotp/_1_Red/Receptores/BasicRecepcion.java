@@ -48,7 +48,7 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
                 MainActivity.versionError = true;
                 return;
             }
-        } catch (JSONException ex) {
+        } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " respuestaJsonInvalida: " + ex.getMessage());
             return;
         }
