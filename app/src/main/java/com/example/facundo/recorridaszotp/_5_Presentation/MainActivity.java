@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Config.getInstance().setUserMail(settings.getString(Utils.USER_EMAIL, ""));
         Config.getInstance().setUserPassword(settings.getString(Utils.USER_PASSWORD, ""));
         Config.getInstance().setRol(settings.getInt(Utils.USER_ROL_ID, -1));
-
+        //No hace falta el area ya que el area se guarda en la tabla Configuracion
         setContentView(R.layout.activity_main);
         appbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
