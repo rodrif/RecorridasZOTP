@@ -10,12 +10,12 @@ import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
+import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +27,7 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
     protected List<AsyncDelegate> delegates;
     private BasicJsonUtil<T> basicJsonUtil;
     private BasicDataAccess<T> basicDataAccess;
+    private boolean versionError = false;
 
     public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
         this(basicDataAccess, basicJsonUtil, null);
@@ -43,7 +44,11 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
         Log.d(Utils.APPTAG, this.getClass().getSimpleName() + " onPostExecute: " + result);
         try {
             this.respuesta = new JSONObject(result);
-        } catch (Exception ex) {
+            if (this.respuesta.has("errores")) {
+                MainActivity.versionError = true;
+                return;
+            }
+        } catch (JSONException ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " respuestaJsonInvalida: " + ex.getMessage());
             return;
         }

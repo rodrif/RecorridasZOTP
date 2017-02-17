@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     AdaptadorListaMenu navAdapter;
     public static Persona personaSeleccionada = null;
     public static Visita visitaSeleccionada = null;
+    public static boolean versionError = false;
     private static Menu menu = null;
 
     @Override
