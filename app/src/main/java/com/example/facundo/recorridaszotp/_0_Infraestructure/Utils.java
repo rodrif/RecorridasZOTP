@@ -76,6 +76,7 @@ public final class Utils {
     public static final String ULTIMAS_VISITAS = "Ultimas Visitas";
     public static final String PERSONA = "Persona";
     public static final String PEDIDOS = "Pedidos";
+    public static final String PEDIDO = "Pedido";
     public static final String VISITA = "Visita";
     public static final String MAPA = "Mapa";
     public static final String HOME = "Recorridas ZO";
@@ -100,6 +101,7 @@ public final class Utils {
     public static final String NOTIFICACION = "Notificación";
     public static final String PERSONA_ID = "persona_id";
     public static final String AREA_ID = "area_id";
+    public static final String VERSION = "14";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));

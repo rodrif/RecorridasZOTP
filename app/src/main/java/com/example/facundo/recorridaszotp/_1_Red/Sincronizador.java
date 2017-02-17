@@ -24,6 +24,7 @@ import com.example.facundo.recorridaszotp._2_DataAccess.PedidoDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
+import com.example.facundo.recorridaszotp._5_Presentation.ExceptionHandler;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
 /**
@@ -63,16 +64,8 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
             progressDialog.setProgress(0);
             progressDialog.show();
         }
-        new RecepcionAreas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_AREAS);
-        new RecepcionZonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_ZONAS);
-        new RecepcionRanchadas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_RANCHADAS);
-        new RecepcionFamilias().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_FAMILIAS);
-        new RecepcionPersonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PERSONAS);
-        new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_PERSONAS);
-        new RecepcionVisitas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_VISITAS);
-        new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_VISITAS);
-        new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
-        new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIAR_PEDIDOS);
+        RecepcionAreas recepcionAreas = new RecepcionAreas();
+        recepcionAreas.executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_AREAS);
     }
 
     @Override
@@ -83,6 +76,20 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
 
     @Override
     protected void onPostExecute(Void result) {
+        if (MainActivity.versionError == true) {
+            ExceptionHandler.makeExceptionVersionAlert(activity);
+        } else {
+            new RecepcionZonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_ZONAS);
+            new RecepcionRanchadas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_RANCHADAS);
+            new RecepcionFamilias().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_FAMILIAS);
+            new RecepcionPersonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PERSONAS);
+            new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_PERSONAS);
+            new RecepcionVisitas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_VISITAS);
+            new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_VISITAS);
+            new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
+            new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIAR_PEDIDOS);
+
+        }
         if (delegate != null) {
             try {
                 delegate.ejecutar("");

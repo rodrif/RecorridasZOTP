@@ -112,6 +112,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             String ultFechaSincronizacion = Configuracion.get(getUltimaFechaMod());
 
             String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
+            query += String.format("&version=%s", URLEncoder.encode(Utils.VERSION, charset));
             if (ultFechaSincronizacion != null) {
                 query += String.format("&fecha=%s", URLEncoder.encode(ultFechaSincronizacion, charset));
             }
