@@ -1,11 +1,13 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
+import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -113,13 +115,18 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
     }
 
     public List<Persona> getAllOKPorArea() {
+        Area area = new Select()
+                .from(Area.class)
+                .where("WebId = ?", Config.getInstance().getArea())
+                .executeSingle();
+
         return new Select()
                 .from(Persona.class)
                 .innerJoin(Zona.class)
                 .on("Zona = Zonas.Id")
                 .orderBy("Zonas.Nombre ASC, Personas.Nombre ASC")
                 .where("Personas.Estado != ?", Utils.EST_BORRADO)
-                .where("Area = ?", Config.getInstance().getArea())
+                .where("Area = ?", area.getId())
                 .execute();
     }
 }
