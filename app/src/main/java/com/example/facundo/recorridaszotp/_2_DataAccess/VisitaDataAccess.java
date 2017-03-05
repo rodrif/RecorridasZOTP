@@ -9,6 +9,7 @@ import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarVisitas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
+import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -133,6 +134,11 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     }
 
     public List<Visita> getAllOKPorAreaOrderFecha() {
+        Area area = new Select()
+                .from(Area.class)
+                .where("WebId = ?", Config.getInstance().getArea())
+                .executeSingle();
+
         return new Select()
                 .from(Visita.class)
                 .innerJoin(Persona.class)
@@ -141,7 +147,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .on("Zona = Zonas.Id")
                 .orderBy("Fecha DESC")
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
-                .where("Area = ?", Config.getInstance().getArea())
+                .where("Area = ?", area.getId())
                 .execute();
     }
 

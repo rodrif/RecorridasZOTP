@@ -5,6 +5,7 @@ import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionZonas;
+import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
 
 import java.util.List;
@@ -70,10 +71,15 @@ public class ZonaDataAccess extends BasicDataAccess<Zona>{
     }
 
     public List<Zona> getAllOKFiltradoPorArea() {
+        Area area = new Select()
+                .from(Area.class)
+                .where("WebId = ?", Config.getInstance().getArea())
+                .executeSingle();
+
         return new Select()
                 .from(Zona.class)
                 .orderBy("Nombre ASC")
-                .where("Area = ?", Config.getInstance().getArea())
+                .where("Area = ?", area.getId())
                 .where("Estado != ?", Utils.EST_BORRADO)
                 .execute();
     }
