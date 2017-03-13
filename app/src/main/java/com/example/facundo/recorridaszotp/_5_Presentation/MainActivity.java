@@ -401,12 +401,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
             clean();
             //Borra todos los fragments al hacer click en menu lateral
-            FragmentManager fm = getFragmentManager();
-            int cantidad = fm.getBackStackEntryCount();
-            if (cantidad > 0) {
-                fm.popBackStack(fm.getBackStackEntryAt(cantidad - 1).getId(),
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
+            clearAllFragments();
 
             //FIXME refactor de replaceFragment
             switch (position) {
