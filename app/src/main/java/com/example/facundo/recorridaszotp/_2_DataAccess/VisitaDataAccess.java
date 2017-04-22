@@ -1,12 +1,10 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
+import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarPersonas;
 import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarVisitas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
@@ -86,11 +84,13 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
             return null;
     }
 
-    public List<Visita> findUltimasVisita() { //TODO Limitar cantidad de ultimas visitas en el mapa
-        return new Select()
-                .from(Visita.class)
-                .where("Estado != ?", Utils.EST_BORRADO)
-                .execute();
+    public List<Visita> findUltimasVisita() {
+        List<Visita> resultado = SQLiteUtils.rawQuery(Visita.class,
+                "SELECT * FROM Visitas " +
+                        "WHERE Estado != ? " +
+                        "GROUP BY Persona " +
+                        "HAVING Fecha >= MAX(Fecha)", new String[] {"3"});
+        return resultado;
     }
 
     public Visita find(Marker marker) {

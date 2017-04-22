@@ -44,7 +44,7 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
         if (personaJson.optString("apellido") != "null") {
             persona.setApellido(personaJson.optString("apellido"));
         }
-        persona.setEstado(personaJson.optInt("estado"));
+        persona.setEstado(personaJson.optInt("state_id"));
         persona.setZonaByWebId(personaJson.optInt("web_zone_id"));
         if (personaJson.optString("fecha_nacimiento") != "null") {
             persona.setFechaNacimiento(personaJson.optString("fecha_nacimiento"));
