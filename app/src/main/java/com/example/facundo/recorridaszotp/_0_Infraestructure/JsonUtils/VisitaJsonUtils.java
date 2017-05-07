@@ -66,6 +66,7 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
             jsonObj.put("fecha", visita.getFecha());
             jsonObj.put("estado", visita.getEstado());
             jsonObj.put("web_id", visita.getWebId());
+            jsonObj.put("direccion", visita.getDireccion());
             Persona persona = visita.getPersona();
             if (persona != null)
                 jsonObj.put("web_person_id", persona.getWebId());

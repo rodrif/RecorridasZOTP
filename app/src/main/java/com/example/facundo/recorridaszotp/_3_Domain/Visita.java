@@ -37,6 +37,8 @@ public class Visita extends Model {
     private double latitud = Double.NaN;
     @Column(name = "Longitud")
     private double longitud = Double.NaN;
+    @Column(name = "Direccion")
+    private String direccion = "";
 
     //private LatLng ubicacion;
 
@@ -154,6 +156,15 @@ public class Visita extends Model {
             return new LatLng(getLatitud(), getLongitud());
         else
             return null;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+
     }
 
     public String getFechaString() {

@@ -241,11 +241,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
         EditText eTObservaciones = (EditText) getFragmentManager()
                 .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETObservacioneVisita);
+        EditText etDireccion = (EditText) getFragmentManager()
+                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETUbicacion);
 
         if (visitaSeleccionada != null) {
             visitaSeleccionada.setFecha(eTFecha.getText().toString());
             visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
             visitaSeleccionada.setEstado(Utils.EST_MODIFICADO);
+            visitaSeleccionada.setDireccion(etDireccion.getText().toString());
             VisitaDataAccess.get().save(visitaSeleccionada);
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
