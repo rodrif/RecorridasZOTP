@@ -39,7 +39,7 @@ public abstract class BasicEnvio<T> extends EnvioPost {
         JSONArray datos = new JSONArray();
         try {
             for (T t : this.ts) {
-                datos.put(new JSONObject(basicJsonUtil.toJSonAEnviar(t)));
+                datos.put(basicJsonUtil.toJsonObject(t));
             }
         } catch (JSONException ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " JSONException: " + ex.getMessage());

@@ -14,8 +14,6 @@ public abstract class   BasicJsonUtil<T> {
 
     public abstract Class getClase();
 
-    public abstract String toJSonAEnviar(T t) throws Exception;
-
     public abstract T fromJsonObject(JSONObject tJson) throws Exception;
 
     public abstract JSONObject toJsonObject(T t) throws Exception;

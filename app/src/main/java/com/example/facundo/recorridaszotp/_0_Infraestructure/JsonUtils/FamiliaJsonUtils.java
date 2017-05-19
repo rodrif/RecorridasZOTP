@@ -24,11 +24,6 @@ public class FamiliaJsonUtils extends BasicJsonUtil<Familia> {
     }
 
     @Override
-    public String toJSonAEnviar(Familia familia) {
-        return null;
-    }
-
-    @Override
     public Familia fromJsonObject(JSONObject familiaJson) throws Exception {
         Familia familia = new Familia();
         familia.setWebId(familiaJson.optInt("web_id"));

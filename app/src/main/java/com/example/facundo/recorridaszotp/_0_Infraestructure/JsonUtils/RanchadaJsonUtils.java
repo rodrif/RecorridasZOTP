@@ -25,11 +25,6 @@ public class RanchadaJsonUtils extends BasicJsonUtil<Ranchada> {
     }
 
     @Override
-    public String toJSonAEnviar(Ranchada ranchada) {
-        return null;
-    }
-
-    @Override
     public Ranchada fromJsonObject(JSONObject ranchadaJson) throws Exception {
         Ranchada ranchada = new Ranchada();
         ranchada.setWebId(ranchadaJson.optInt("web_id"));

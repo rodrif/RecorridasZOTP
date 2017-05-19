@@ -25,23 +25,6 @@ public class AreaJsonUtils extends BasicJsonUtil<Area> {
     }
 
     @Override
-    public String toJSonAEnviar(Area area) {
-        try {
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.put("android_id", area.getId());
-            jsonObj.put("nombre", area.getNombre());
-            jsonObj.put("estado", area.getEstado());
-            jsonObj.put("web_id", area.getWebId());
-
-            return jsonObj.toString();
-
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public Area fromJsonObject(JSONObject areaJson) throws Exception {
         Area area = new Area();
         area.setNombre(areaJson.optString("nombre"));
@@ -54,7 +37,7 @@ public class AreaJsonUtils extends BasicJsonUtil<Area> {
     public JSONObject toJsonObject(Area area) {
         try {
             JSONObject jsonObj = new JSONObject();
-            //jsonObj.put("id", this.getId());
+            jsonObj.put("android_id", area.getId());
             jsonObj.put("nombre", area.getNombre());
             jsonObj.put("estado", area.getEstado());
             jsonObj.put("web_id", area.getWebId());

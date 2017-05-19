@@ -24,11 +24,6 @@ public class ZonaJsonUtils extends BasicJsonUtil<Zona> {
     }
 
     @Override
-    public String toJSonAEnviar(Zona zona) {
-        return null;
-    }
-
-    @Override
     public Zona fromJsonObject(JSONObject zonaJson) throws Exception {
         Zona zona = new Zona();
         zona.setWebId(zonaJson.optInt("web_id"));

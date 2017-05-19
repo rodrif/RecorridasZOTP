@@ -30,12 +30,6 @@ public class VisitaJsonUtils extends BasicJsonUtil<Visita> {
     }
 
     @Override
-    public String toJSonAEnviar(Visita visita) throws JSONException {
-        String aEnviar = toJsonObject(visita).toString();
-        return aEnviar;
-    }
-
-    @Override
     public Visita fromJsonObject(JSONObject visitaJson) throws Exception {
         Visita visita = new Visita();
         if (visitaJson.optInt("web_id") != -1) {

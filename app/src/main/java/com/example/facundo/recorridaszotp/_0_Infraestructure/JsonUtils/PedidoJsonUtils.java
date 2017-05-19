@@ -30,12 +30,6 @@ public class PedidoJsonUtils extends BasicJsonUtil<Pedido> {
     }
 
     @Override
-    public String toJSonAEnviar(Pedido pedido) throws Exception {
-        String aEnviar = toJsonObject(pedido).toString();
-        return aEnviar;
-    }
-
-    @Override
     public Pedido fromJsonObject(JSONObject pedidoJson) throws Exception {
         if (pedidoJson.optInt("web_id") == -1) {
             throw new ExcepcionNoActualizoDB();

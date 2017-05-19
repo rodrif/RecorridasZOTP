@@ -27,12 +27,6 @@ public class PersonaJsonUtils extends BasicJsonUtil<Persona> {
     }
 
     @Override
-    public String toJSonAEnviar(Persona persona) throws Exception {
-        String aEnviar = toJsonObject(persona).toString();
-        return aEnviar;
-    }
-
-    @Override
     public Persona fromJsonObject(JSONObject personaJson) throws Exception {
         Persona persona = new Persona();
         if (personaJson.optInt("web_id") != -1) {
