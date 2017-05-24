@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
@@ -81,6 +80,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private ArrayAdapter<String> adaptadorRanchada = null;
     private LatLng geocoderLatLng = null;
     AlertDialog.Builder dialogoBorrar = null;
+    private List<View> viewDatos = new ArrayList<View>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,13 +112,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         });
 
         etNombre = (EditText) vista.findViewById(R.id.ETNombre);
+        viewDatos.add(etNombre);
         etApellido = (EditText) vista.findViewById(R.id.ETApellido);
+        viewDatos.add(etApellido);
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        viewDatos.add(etFechaNacimiento);
         etPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
+        viewDatos.add(etPantalon);
         etRemera = (EditText) vista.findViewById(R.id.ETRemera);
+        viewDatos.add(etRemera);
         etZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
+        viewDatos.add(etZapatillas);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
+        viewDatos.add(etObservaciones);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
+        viewDatos.add(ibSpeak);
         bSearch = (Button) vista.findViewById(R.id.buttonSearch);
         bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,11 +135,15 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
         });
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
+        viewDatos.add(etDNI);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
+        viewDatos.add(etTelefono);
         etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
+        viewDatos.add(etUbicacion);
         etUbicacion.setText("");
         sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
+        viewDatos.add(bFechaNacimiento);
 
         //Para compatibilidad
         mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
@@ -336,16 +348,23 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 } else {
                     etTelefono.setText("");
                 }
-
-                if (!Roles.getInstance().hasPermission(Utils.PUEDE_VER_TELEFONO_PERSONA)) {
-                    etTelefono.setVisibility(View.GONE);
-                } else {
-                    etTelefono.setVisibility(View.VISIBLE);
-                }
-
+                this.permitirDatosPersonales(Roles.getInstance().hasPermission(Utils.PUEDE_VER_DATOS_PERSONALES));
                 this.bloquearEdicion();
             }
         }
+    }
+
+    private void permitirDatosPersonales(boolean permitirDatosPersonales) {
+        int visibilidad = View.GONE;
+        if (permitirDatosPersonales) {
+            visibilidad = View.VISIBLE;
+        }
+        for (View vista : viewDatos) {
+            vista.setVisibility(visibilidad);
+        }
+        etNombre.setVisibility(View.VISIBLE);
+        etApellido.setVisibility(View.VISIBLE);
+        etUbicacion.setVisibility(View.VISIBLE);
     }
 
     private void actualizarZona() {
