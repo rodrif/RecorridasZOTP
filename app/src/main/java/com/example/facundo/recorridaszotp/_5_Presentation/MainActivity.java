@@ -285,9 +285,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         EditText ETPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
         EditText ETRemera = (EditText) vista.findViewById(R.id.ETRemera);
         EditText ETZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
-        Spinner sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
         Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
-        Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
 
         String nombre = ETnombre.getText().toString();
         String apellido = ETapellido.getText().toString();
@@ -298,9 +296,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         String zapatillas = ETZapatillas.getText().toString();
         String observaciones = ETobservaciones.getText().toString();
         String fechaNacimiento = ETfechaNacimiento.getText().toString();
-        String grupoFamiliar = (String) sGrupoFamiliar.getSelectedItem();
         String zona = (String) sZona.getSelectedItem();
-        String ranchada = (String) sRanchada.getSelectedItem();
 
 
         if (!nombre.equals("") && !zona.equals("Zona")) {
@@ -314,9 +310,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 personaSeleccionada.setZapatillas(zapatillas);
                 personaSeleccionada.setObservaciones(observaciones);
                 personaSeleccionada.setFechaNacimientoDesdeMob(fechaNacimiento);
-                personaSeleccionada.setGrupoFamiliar(grupoFamiliar);
                 personaSeleccionada.setZona(zona);
-                personaSeleccionada.setRanchada(ranchada);
                 personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
                 PersonaDataAccess.get().save(personaSeleccionada);
                 if (visitaSeleccionada != null) {

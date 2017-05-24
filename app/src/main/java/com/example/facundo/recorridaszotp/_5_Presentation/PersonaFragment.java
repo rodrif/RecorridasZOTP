@@ -66,9 +66,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etTelefono;
     private ImageButton ibSpeak = null;
     private Button bSearch = null;
-    private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
-    private Spinner sRanchada = null;
     private EditText etPantalon = null;
     private EditText etRemera = null;
     private EditText etZapatillas = null;
@@ -141,7 +139,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
         viewDatos.add(etUbicacion);
         etUbicacion.setText("");
-        sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
         viewDatos.add(bFechaNacimiento);
 
@@ -174,43 +171,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
         actualizarZona(); //Para actualizar sZona.getSelectedItem()
-
-        //Grupo Familiar
-        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<Familia> lFamilias = FamiliaDataAccess.get().filtrarPorZona(
-                (String) sZona.getSelectedItem());
-        final List<String> familiasString = new ArrayList<String>();
-        familiasString.add("Familia");
-        if(lFamilias != null) {
-            for (Familia familia : lFamilias) {
-                familiasString.add(familia.getNombre());
-            }
-        }
-        adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, familiasString);
-        adaptadorFamilia.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        sGrupoFamiliar.setAdapter(adaptadorFamilia);
-
-        //Ranchada
-        Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
-
-        final List<Ranchada> lRanchada = RanchadaDataAccess.get().filtrarPorZona(
-                (String) sZona.getSelectedItem());
-        final List<String> ranchadasString = new ArrayList<String>();
-        ranchadasString.add("Ranchada");
-        for (Ranchada ranchada : lRanchada) {
-            ranchadasString.add(ranchada.getNombre());
-        }
-
-        adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, ranchadasString);
-        adaptadorRanchada.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        sRanchada.setAdapter(adaptadorRanchada);
-
         actualizar();
-
         dialogoBorrar = new AlertDialog.Builder(
 
                 getActivity()
@@ -273,21 +234,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
-    public void actualizarRanchada() {
-        if (MainActivity.personaSeleccionada.getRanchada() != null) {
-            String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
-            int pos = adaptadorRanchada.getPosition(nombreRanchada);
-            sRanchada.setSelection(pos);
-        }
-    }
-
-    public void actualizarFamilia() {
-        if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
-            sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
-                    MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
-        }
-    }
-
     public void actualizar() {
         if (Config.getInstance().isEditing()) {
             bSearch.setVisibility(View.GONE);
@@ -332,11 +278,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etZapatillas.setText(MainActivity.personaSeleccionada.getZapatillas());
                 else
                     etZapatillas.setText("");
-
                 actualizarZona();
-                actualizarRanchada();
-                actualizarFamilia();
-
                 if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
                     etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimientoMostrar());
                 } else {
@@ -384,9 +326,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etDNI.setEnabled(false);
             etTelefono.setEnabled(false);
             etUbicacion.setEnabled(false);
-            sGrupoFamiliar.setEnabled(false);
             sZona.setEnabled(false);
-            sRanchada.setEnabled(false);
             bFechaNacimiento.setEnabled(false);
             bSearch.setEnabled(false);
         } else {
@@ -396,9 +336,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             etObservaciones.setEnabled(true);
             etDNI.setEnabled(true);
             etTelefono.setEnabled(true);
-            sGrupoFamiliar.setEnabled(true);
             sZona.setEnabled(true);
-            sRanchada.setEnabled(true);
             bFechaNacimiento.setEnabled(true);
             bSearch.setEnabled(true);
         }
