@@ -37,7 +37,7 @@ public final class Utils {
     public static final String PUEDE_CREAR_VISITA = "puedeCrearVisita";
     public static final String PUEDE_EDITAR_VISITA = "puedeEditarVisita";
     public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
-    public static final String PUEDE_VER_TELEFONO_PERSONA = "puedeVerTelefono";
+    public static final String PUEDE_VER_DATOS_PERSONALES = "puedeVerDatosPersonales";
     ////////////////////////////////////////////////////////////////////////
     public static final int INVALID_TOKEN = 401;
     public static final int LOGIN_OK_CODE = 200;
