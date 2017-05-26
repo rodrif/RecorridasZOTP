@@ -159,6 +159,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         //Zona
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        viewDatos.add(sZona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAllOKFiltradoPorArea();
         final List<String> zonasString = new ArrayList<String>();
         zonasString.add("Zona");
@@ -290,55 +291,31 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 } else {
                     etTelefono.setText("");
                 }
-                this.permitirDatosPersonales(Roles.getInstance().hasPermission(Utils.PUEDE_VER_DATOS_PERSONALES));
-                this.bloquearEdicion();
+                this.aplicarPermisos();
             }
         }
     }
 
-    private void permitirDatosPersonales(boolean permitirDatosPersonales) {
-        int visibilidad = View.GONE;
-        if (permitirDatosPersonales) {
-            visibilidad = View.VISIBLE;
-        }
+    private void aplicarPermisos() {
+        boolean editable = !Config.getInstance().isEditing()
+                || Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_PERSONA);
+        int visibilidad = Roles.getInstance().hasPermission(Utils.PUEDE_VER_DATOS_PERSONALES) || editable
+                ? View.VISIBLE
+                : View.GONE;
         for (View vista : viewDatos) {
             vista.setVisibility(visibilidad);
+            vista.setEnabled(editable);
         }
         etNombre.setVisibility(View.VISIBLE);
         etApellido.setVisibility(View.VISIBLE);
         etUbicacion.setVisibility(View.VISIBLE);
+        sZona.setVisibility(View.VISIBLE);
     }
 
     private void actualizarZona() {
         if (MainActivity.personaSeleccionada.getZona() != null) {
             sZona.setSelection(adaptadorZona.getPosition(
                     MainActivity.personaSeleccionada.getZona().getNombre()));
-        }
-    }
-
-    private void bloquearEdicion() {
-        if (Config.getInstance().isEditing()
-                && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_PERSONA)) {
-            etFechaNacimiento.setEnabled(false);
-            etNombre.setEnabled(false);
-            etApellido.setEnabled(false);
-            etObservaciones.setEnabled(false);
-            etDNI.setEnabled(false);
-            etTelefono.setEnabled(false);
-            etUbicacion.setEnabled(false);
-            sZona.setEnabled(false);
-            bFechaNacimiento.setEnabled(false);
-            bSearch.setEnabled(false);
-        } else {
-            etFechaNacimiento.setEnabled(true);
-            etNombre.setEnabled(true);
-            etApellido.setEnabled(true);
-            etObservaciones.setEnabled(true);
-            etDNI.setEnabled(true);
-            etTelefono.setEnabled(true);
-            sZona.setEnabled(true);
-            bFechaNacimiento.setEnabled(true);
-            bSearch.setEnabled(true);
         }
     }
 
