@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
@@ -67,9 +66,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private EditText etTelefono;
     private ImageButton ibSpeak = null;
     private Button bSearch = null;
-    private Spinner sGrupoFamiliar = null;
     private Spinner sZona = null;
-    private Spinner sRanchada = null;
     private EditText etPantalon = null;
     private EditText etRemera = null;
     private EditText etZapatillas = null;
@@ -81,6 +78,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
     private ArrayAdapter<String> adaptadorRanchada = null;
     private LatLng geocoderLatLng = null;
     AlertDialog.Builder dialogoBorrar = null;
+    private List<View> viewDatos = new ArrayList<View>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,13 +110,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         });
 
         etNombre = (EditText) vista.findViewById(R.id.ETNombre);
+        viewDatos.add(etNombre);
         etApellido = (EditText) vista.findViewById(R.id.ETApellido);
+        viewDatos.add(etApellido);
         etFechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
+        viewDatos.add(etFechaNacimiento);
         etPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
+        viewDatos.add(etPantalon);
         etRemera = (EditText) vista.findViewById(R.id.ETRemera);
+        viewDatos.add(etRemera);
         etZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
+        viewDatos.add(etZapatillas);
         etObservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
+        viewDatos.add(etObservaciones);
         ibSpeak = (ImageButton) vista.findViewById(R.id.buttonSpeakPerson);
+        viewDatos.add(ibSpeak);
         bSearch = (Button) vista.findViewById(R.id.buttonSearch);
         bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,11 +133,14 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
             }
         });
         etDNI = (EditText) vista.findViewById(R.id.ETDni);
+        viewDatos.add(etDNI);
         etTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
+        viewDatos.add(etTelefono);
         etUbicacion = (EditText) vista.findViewById(R.id.ETUbicacion);
+        viewDatos.add(etUbicacion);
         etUbicacion.setText("");
-        sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
         bFechaNacimiento = (ImageButton)vista.findViewById(R.id.bFechaNacimiento);
+        viewDatos.add(bFechaNacimiento);
 
         //Para compatibilidad
         mapFragmentPersona = (MapFragment) (getChildFragmentManager().findFragmentById(R.id.mapPersona));
@@ -150,6 +159,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
 
         //Zona
         sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
+        viewDatos.add(sZona);
         final List<Zona> lZonas = ZonaDataAccess.get().getAllOKFiltradoPorArea();
         final List<String> zonasString = new ArrayList<String>();
         zonasString.add("Zona");
@@ -162,43 +172,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 android.R.layout.simple_spinner_dropdown_item);
         sZona.setAdapter(adaptadorZona);
         actualizarZona(); //Para actualizar sZona.getSelectedItem()
-
-        //Grupo Familiar
-        sGrupoFamiliar = (Spinner) vista.findViewById(R.id.spinner_grupo_familiar);
-        final List<Familia> lFamilias = FamiliaDataAccess.get().filtrarPorZona(
-                (String) sZona.getSelectedItem());
-        final List<String> familiasString = new ArrayList<String>();
-        familiasString.add("Familia");
-        if(lFamilias != null) {
-            for (Familia familia : lFamilias) {
-                familiasString.add(familia.getNombre());
-            }
-        }
-        adaptadorFamilia = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, familiasString);
-        adaptadorFamilia.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        sGrupoFamiliar.setAdapter(adaptadorFamilia);
-
-        //Ranchada
-        Spinner sRanchada = (Spinner) vista.findViewById(R.id.spinner_ranchada);
-
-        final List<Ranchada> lRanchada = RanchadaDataAccess.get().filtrarPorZona(
-                (String) sZona.getSelectedItem());
-        final List<String> ranchadasString = new ArrayList<String>();
-        ranchadasString.add("Ranchada");
-        for (Ranchada ranchada : lRanchada) {
-            ranchadasString.add(ranchada.getNombre());
-        }
-
-        adaptadorRanchada = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, ranchadasString);
-        adaptadorRanchada.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
-        sRanchada.setAdapter(adaptadorRanchada);
-
         actualizar();
-
         dialogoBorrar = new AlertDialog.Builder(
 
                 getActivity()
@@ -261,21 +235,6 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 Integer.toString(month) + "/" + Integer.toString(year));
     }
 
-    public void actualizarRanchada() {
-        if (MainActivity.personaSeleccionada.getRanchada() != null) {
-            String nombreRanchada = MainActivity.personaSeleccionada.getRanchada().getNombre();
-            int pos = adaptadorRanchada.getPosition(nombreRanchada);
-            sRanchada.setSelection(pos);
-        }
-    }
-
-    public void actualizarFamilia() {
-        if (MainActivity.personaSeleccionada.getGrupoFamiliar() != null) {
-            sGrupoFamiliar.setSelection(adaptadorFamilia.getPosition(
-                    MainActivity.personaSeleccionada.getGrupoFamiliar().getNombre()));
-        }
-    }
-
     public void actualizar() {
         if (Config.getInstance().isEditing()) {
             bSearch.setVisibility(View.GONE);
@@ -320,11 +279,7 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                     etZapatillas.setText(MainActivity.personaSeleccionada.getZapatillas());
                 else
                     etZapatillas.setText("");
-
                 actualizarZona();
-                actualizarRanchada();
-                actualizarFamilia();
-
                 if (MainActivity.personaSeleccionada.getFechaNacimiento() != null) {
                     etFechaNacimiento.setText(MainActivity.personaSeleccionada.getFechaNacimientoMostrar());
                 } else {
@@ -336,52 +291,31 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
                 } else {
                     etTelefono.setText("");
                 }
-
-                if (!Roles.getInstance().hasPermission(Utils.PUEDE_VER_TELEFONO_PERSONA)) {
-                    etTelefono.setVisibility(View.GONE);
-                } else {
-                    etTelefono.setVisibility(View.VISIBLE);
-                }
-
-                this.bloquearEdicion();
+                this.aplicarPermisos();
             }
         }
+    }
+
+    private void aplicarPermisos() {
+        boolean editable = !Config.getInstance().isEditing()
+                || Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_PERSONA);
+        int visibilidad = Roles.getInstance().hasPermission(Utils.PUEDE_VER_DATOS_PERSONALES) || editable
+                ? View.VISIBLE
+                : View.GONE;
+        for (View vista : viewDatos) {
+            vista.setVisibility(visibilidad);
+            vista.setEnabled(editable);
+        }
+        etNombre.setVisibility(View.VISIBLE);
+        etApellido.setVisibility(View.VISIBLE);
+        etUbicacion.setVisibility(View.VISIBLE);
+        sZona.setVisibility(View.VISIBLE);
     }
 
     private void actualizarZona() {
         if (MainActivity.personaSeleccionada.getZona() != null) {
             sZona.setSelection(adaptadorZona.getPosition(
                     MainActivity.personaSeleccionada.getZona().getNombre()));
-        }
-    }
-
-    private void bloquearEdicion() {
-        if (Config.getInstance().isEditing()
-                && !Roles.getInstance().hasPermission(Utils.PUEDE_EDITAR_PERSONA)) {
-            etFechaNacimiento.setEnabled(false);
-            etNombre.setEnabled(false);
-            etApellido.setEnabled(false);
-            etObservaciones.setEnabled(false);
-            etDNI.setEnabled(false);
-            etTelefono.setEnabled(false);
-            etUbicacion.setEnabled(false);
-            sGrupoFamiliar.setEnabled(false);
-            sZona.setEnabled(false);
-            sRanchada.setEnabled(false);
-            bFechaNacimiento.setEnabled(false);
-            bSearch.setEnabled(false);
-        } else {
-            etFechaNacimiento.setEnabled(true);
-            etNombre.setEnabled(true);
-            etApellido.setEnabled(true);
-            etObservaciones.setEnabled(true);
-            etDNI.setEnabled(true);
-            etTelefono.setEnabled(true);
-            sGrupoFamiliar.setEnabled(true);
-            sZona.setEnabled(true);
-            sRanchada.setEnabled(true);
-            bFechaNacimiento.setEnabled(true);
-            bSearch.setEnabled(true);
         }
     }
 

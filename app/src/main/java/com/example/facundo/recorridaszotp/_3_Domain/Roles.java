@@ -28,17 +28,17 @@ public class Roles {
         //Admin
         permisos.put(Utils.ROL_ADMIN, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
-                + Utils.PUEDE_VER_TELEFONO_PERSONA);
+                + Utils.PUEDE_VER_DATOS_PERSONALES);
 
         //Referente:
         permisos.put(Utils.ROL_REFERENTE, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
-                + Utils.PUEDE_VER_TELEFONO_PERSONA);
+                + Utils.PUEDE_VER_DATOS_PERSONALES);
 
         //Coordinador:
         permisos.put(Utils.ROL_COORDINADOR, Utils.PUEDE_CREAR_PERSONA + Utils.PUEDE_EDITAR_PERSONA + Utils.PUEDE_BORRAR_PERSONA
                 + Utils.PUEDE_CREAR_VISITA + Utils.PUEDE_EDITAR_VISITA + Utils.PUEDE_BORRAR_VISITA
-                + Utils.PUEDE_VER_TELEFONO_PERSONA);
+                + Utils.PUEDE_VER_DATOS_PERSONALES);
 
         //Voluntario:
         permisos.put(Utils.ROL_VOLUNTARIO, Utils.PUEDE_CREAR_PERSONA
