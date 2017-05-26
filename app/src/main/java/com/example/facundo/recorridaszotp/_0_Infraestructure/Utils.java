@@ -10,13 +10,8 @@ import java.util.Locale;
 
 public final class Utils {
 
-  //  public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
-    public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
-  //  public static final String WEB = "https://serene-wave-43143-test.herokuapp.com";
-  //  public static final String WEB = "https://stark-island-3497.herokuapp.com";
-  //  public static final String WEB = "https://boiling-harbor-80530-prod.herokuapp.com"; //Produccion
-  //  public static final String WEB = "https://stark-island-3497.herokuapp.com";
-  //  public static final String WEB = "http://dry-refuge-37552.herokuapp.com";
+    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
+ //   public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
     public static final String WEB_LOGIN = Utils.WEB +"/api/auth/sign_in";
     public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
@@ -101,7 +96,7 @@ public final class Utils {
     public static final String NOTIFICACION = "Notificación";
     public static final String PERSONA_ID = "persona_id";
     public static final String AREA_ID = "area_id";
-    public static final String VERSION = "10";
+    public static final String VERSION = "31";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
@@ -119,33 +114,4 @@ public final class Utils {
         Date date = new Date(dateLong);
         return dateFormat.format(date);
     }
-
-    //No usadas hasta el momento
-//    public static final String WEB_BORRAR = Utils.WEB + ".atwebpages.com/borrar.php";
-//    public static final String WEB_BORRAR_DB = Utils.WEB + ".atwebpages.com/borrartodo.php";
-//    public static final String WEB_ACTUALIZAR = Utils.WEB + ".atwebpages.com/actualizar.php";
-//    public static final String WEB_CARGAR_PERSONAS_PRUEBA = Utils.WEB + ".atwebpages.com/inicializar.php";
-//    public static final String[] camposBD = new String[]{"id", "nombre",
-//            "apellido", "direccion", "zona", "descripcion", "latitud",
-//            "longitud", "ultMod", "estado"};
-//    public static final String TPersonas = "Personas";
-//    public static final String FECHA_CERO = "0000-00-00T00:00:00-0000";
-//    public static final int ZOOM_CERCA = 15;
-//    public static final int ZOOM_LEJOS = 10;
-//    public static final int MENU_MAPA_SINCRONIZAR = 1;
-//    public static final int MENU_MAPA_REFRESCAR_PANTALLA = 2;
-//    public static final int MENU_MAPA_BORRARDBLOCAL = 3;
-//    public static final int MENU_MAPA_SUBIRALSERVER = 4;
-//    public static final String KEY_LATITUD = "com.recorridaszo.recorridaszo.KEY_LATITUD";
-//    public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";
-//    public final static int REQ_CODE_FORMULARIO = 9000;
-//    public static final double PRECISION = 0.0000000000002;
-//    public static final int CANTIDAD_INTENTOS_UBICACION = 5;
-//
-//    public static String getDateTime() {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat(
-//                "yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
-//        Date date = new Date();
-//        return dateFormat.format(date);
-//    }
 }
