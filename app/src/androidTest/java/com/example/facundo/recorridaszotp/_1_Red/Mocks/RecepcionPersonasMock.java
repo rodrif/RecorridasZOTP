@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._1_Red.Mocks;
 
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 
 import org.json.JSONObject;
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class RecepcionPersonasMock extends RecepcionPersonas {
 
-    public RecepcionPersonasMock(List<AsyncDelegate> delegates, JSONObject respuesta) {
+   /* public RecepcionPersonasMock(List<AsyncDelegate> delegates, JSONObject respuesta) {
         this.delegates = delegates;
         this.respuesta = respuesta;
     }
@@ -20,6 +19,6 @@ public class RecepcionPersonasMock extends RecepcionPersonas {
     @Override
     protected String doInBackground(String... params) {
         return this.getRespuesta().toString();
-    }
+    }*/
 
 }

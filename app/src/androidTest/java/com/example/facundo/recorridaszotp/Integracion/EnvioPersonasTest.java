@@ -4,7 +4,6 @@ import android.test.AndroidTestCase;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioPersonas;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Facundo on 08/08/2015.
  */
-public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate {
+public class EnvioPersonasTest extends AndroidTestCase {
     private CountDownLatch signal;
 
     @Override
@@ -56,10 +55,5 @@ public class EnvioPersonasTest extends AndroidTestCase implements AsyncDelegate 
         assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona1.getId().toString())).getId(), persona1.getId());
         assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona2.getId().toString())).getId(), persona2.getId());
         assertEquals("mal guardado en la bd, envio personas", PersonaDataAccess.get().findByWebId(datos.optInt(persona3.getId().toString())).getId(), persona3.getId());
-    }
-
-    @Override
-    public void ejecutar(String result) {
-        signal.countDown();
     }
 }

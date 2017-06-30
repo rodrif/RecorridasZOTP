@@ -5,7 +5,6 @@ import android.test.AndroidTestCase;
 import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DBUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -17,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PersonaDataAccessTest extends AndroidTestCase {
 
-    @Override
+ /*   @Override
     protected void setUp() throws Exception {
         super.setUp();
         ActiveAndroid.initialize(getContext());
@@ -63,10 +62,10 @@ public class PersonaDataAccessTest extends AndroidTestCase {
     }
 
     public void testBorradoLogico() throws Exception {
-    /*Se borran todas las visitas de una persona y la persona*/
+    //Se borran todas las visitas de una persona y la persona
         Persona unaPersona = PersonaDataAccess.get().findByWebId(1000);
         PersonaDataAccess.get().deleteLogico(unaPersona);
 
         assertEquals("No se borro la persona en forma logica", Utils.EST_BORRADO, unaPersona.getEstado());
-    }
+    }*/
 }
