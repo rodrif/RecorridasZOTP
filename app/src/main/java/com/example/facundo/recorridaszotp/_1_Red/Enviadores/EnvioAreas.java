@@ -6,7 +6,6 @@ import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.AreaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.BasicJsonUtil;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
 
@@ -18,16 +17,9 @@ import java.util.List;
  * Created by Gonzalo on 05/01/2016.
  */
 public class EnvioAreas extends BasicEnvio<Area> {
-    private AsyncDelegate delegate;
 
     public EnvioAreas(List<Area> areas) {
-        super(AreaJsonUtils.get(), null);
-        this.delegate = null;
-    }
-
-    public EnvioAreas(List<Area> areas, AsyncDelegate delegate) {
         super(AreaJsonUtils.get(), areas);
-        this.delegate = delegate;
     }
 
 

@@ -5,7 +5,6 @@ import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import org.json.JSONObject;
@@ -15,15 +14,9 @@ import java.util.List;
  * Created by Facundo on 08/08/2015.
  */
 public class EnvioPersonas extends BasicEnvio<Persona> {
-    private AsyncDelegate delegate;
 
     public EnvioPersonas(List<Persona> personas) {
-        this(personas, null);
-    }
-
-    public EnvioPersonas(List<Persona> personas, AsyncDelegate delegate) {
         super(PersonaJsonUtils.get(), personas);
-        this.delegate = delegate;
     }
 
     @Override
