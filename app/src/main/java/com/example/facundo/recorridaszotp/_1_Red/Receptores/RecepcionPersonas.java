@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._1_Red.Receptores;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PersonaJsonUtils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.BasicRecepcion;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -18,14 +17,6 @@ import java.util.List;
 public class RecepcionPersonas extends BasicRecepcion<Persona> {
 
     public RecepcionPersonas() {
-        this(new ArrayList<AsyncDelegate>());
-    }
-
-    public RecepcionPersonas(AsyncDelegate delegate) {
-        this(delegate != null ? Arrays.asList(delegate) : null);
-    }
-
-    public RecepcionPersonas(List<AsyncDelegate> listaDelegates) {
-        super(PersonaDataAccess.get(), PersonaJsonUtils.get(), listaDelegates);
+        super(PersonaDataAccess.get(), PersonaJsonUtils.get());
     }
 }

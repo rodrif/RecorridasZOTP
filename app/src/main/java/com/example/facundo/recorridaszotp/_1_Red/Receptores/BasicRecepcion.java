@@ -6,7 +6,6 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.BasicJsonUtil;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.EnvioPost;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
@@ -24,19 +23,13 @@ import java.util.List;
  */
 public class BasicRecepcion<T extends Model> extends EnvioPost {
     protected JSONObject respuesta;
-    protected List<AsyncDelegate> delegates;
     private BasicJsonUtil<T> basicJsonUtil;
     private BasicDataAccess<T> basicDataAccess;
     private boolean versionError = false;
 
     public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
-        this(basicDataAccess, basicJsonUtil, null);
-    }
-
-    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil, List<AsyncDelegate> delegates) {
         this.basicDataAccess = basicDataAccess;
         this.basicJsonUtil = basicJsonUtil;
-        this.delegates = delegates;
     }
 
     @Override
@@ -63,15 +56,6 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
 
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
-
-            if (delegates != null) {
-                AsyncDelegate unAsyncDelegate = null;
-                for (Iterator<AsyncDelegate> it = this.delegates.iterator(); it.hasNext(); ) {
-                    unAsyncDelegate = it.next();
-                    unAsyncDelegate.ejecutar(this.respuesta.toString());
-                }
-            }
-
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " ErrorRecibir: " + ex.getMessage());
         } finally {

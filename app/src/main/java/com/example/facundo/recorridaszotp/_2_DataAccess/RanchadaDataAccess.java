@@ -3,7 +3,6 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionRanchadas;
 import com.example.facundo.recorridaszotp._3_Domain.Familia;
 import com.example.facundo.recorridaszotp._3_Domain.Ranchada;
@@ -85,10 +84,5 @@ public class RanchadaDataAccess extends BasicDataAccess<Ranchada> {
         }
 
         return listaRanchadas;
-    }
-
-    public void sincronizar (AsyncDelegate delegate){
-        RecepcionRanchadas recepcionRanchadas = new RecepcionRanchadas(delegate);
-        recepcionRanchadas.execute(Utils.WEB_RECIBIR_RANCHADAS);
     }
 }

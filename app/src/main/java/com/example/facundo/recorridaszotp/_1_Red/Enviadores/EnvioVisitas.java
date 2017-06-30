@@ -6,7 +6,6 @@ import com.activeandroid.ActiveAndroid;
 import com.example.facundo.recorridaszotp._0_Infraestructure.ExcepcionNoActualizoDB;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.VisitaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
 import com.example.facundo.recorridaszotp._3_Domain.Configuracion;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 
@@ -18,15 +17,9 @@ import java.util.List;
  * Created by Facundo on 17/10/2015.
  */
 public class EnvioVisitas extends BasicEnvio<Visita> {
-    private AsyncDelegate delegate;
 
     public EnvioVisitas(List<Visita> visitas) {
-        this(visitas, null);
-    }
-
-    public EnvioVisitas(List<Visita> visitas, AsyncDelegate delegate) {
         super(VisitaJsonUtils.get(), visitas);
-        this.delegate = delegate;
     }
 
     @Override
@@ -58,9 +51,6 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
             }
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
-            if (this.delegate != null) {
-                delegate.ejecutar(this.respuesta.toString());
-            }
         } catch (ExcepcionNoActualizoDB excepcionNoActualizoDB) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB Visitas: "
                     + excepcionNoActualizoDB.getMessage());

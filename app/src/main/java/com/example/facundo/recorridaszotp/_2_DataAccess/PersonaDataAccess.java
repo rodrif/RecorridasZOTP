@@ -67,12 +67,6 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
         return resultado;
     }
 
-    public void sincronizar(AsyncDelegate delegate) {
-        AsyncDelegate delegateEnviarPersonas = new DelegateEnviarPersonas(delegate);
-        RecepcionPersonas recepcionPersonas = new RecepcionPersonas(delegateEnviarPersonas);
-        recepcionPersonas.execute(Utils.WEB_RECIBIR_PERSONAS);
-    }
-
     public boolean hayConEstadoModificado() {
         List<Persona> lista = new Select()
                 .from(Persona.class)

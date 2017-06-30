@@ -4,8 +4,6 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.AsyncDelegate;
-import com.example.facundo.recorridaszotp._1_Red.Delegates.DelegateEnviarVisitas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -158,12 +156,6 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .where("Estado != ?", Utils.EST_BORRADO)
                 .where("Persona = ?", personaId)
                 .execute();
-    }
-
-    public void sincronizar(AsyncDelegate delegate) {
-        AsyncDelegate delegateEnviarVisitas = new DelegateEnviarVisitas(delegate);
-        RecepcionVisitas recepcionVisitas = new RecepcionVisitas(delegateEnviarVisitas);
-        recepcionVisitas.execute(Utils.WEB_RECIBIR_VISITAS);
     }
 
     public boolean hayConEstadoModificado() {
