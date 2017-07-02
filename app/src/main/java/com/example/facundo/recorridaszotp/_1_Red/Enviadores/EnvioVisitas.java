@@ -51,9 +51,6 @@ public class EnvioVisitas extends BasicEnvio<Visita> {
             }
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
-        } catch (ExcepcionNoActualizoDB excepcionNoActualizoDB) {
-            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB Visitas: "
-                    + excepcionNoActualizoDB.getMessage());
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, "falloEnviarVisitas: " + ex.getMessage());
         } finally {

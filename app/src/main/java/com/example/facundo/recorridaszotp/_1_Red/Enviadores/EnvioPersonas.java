@@ -49,9 +49,6 @@ public class EnvioPersonas extends BasicEnvio<Persona> {
             }
             Configuracion.guardar(getUltimaFechaMod(), this.respuesta.getString("fecha").toString());
             ActiveAndroid.setTransactionSuccessful();
-        } catch (ExcepcionNoActualizoDB excepcionNoActualizoDB) {
-            Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " fallo No Actualizo DB Personas: "
-                    + excepcionNoActualizoDB.getMessage());
         } catch (Exception ex) {
             Log.e(Utils.APPTAG, this.getClass().getSimpleName() + " falloEnviarPersonas: " + ex.getMessage());
         } finally {

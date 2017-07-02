@@ -10,8 +10,9 @@ import java.util.Locale;
 
 public final class Utils {
 
-    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
+//    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
  //   public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
+    public static final String WEB = "https://stark-island-3497.herokuapp.com/";
     public static final String WEB_LOGIN = Utils.WEB +"/api/auth/sign_in";
     public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
