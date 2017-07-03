@@ -40,13 +40,12 @@ import javax.net.ssl.TrustManagerFactory;
 /**
  * Created by Facundo on 08/08/2015.
  */
-public abstract class EnvioPost extends AsyncTask<String, Void, String> {
+public abstract class EnvioPost {
 
     protected abstract JSONArray cargarJson() throws Exception;
     protected abstract String getUltimaFechaMod();
 
-    @Override
-    protected String doInBackground(String... params) {
+    public void execute(String webUrl) {
         String charset = "UTF-8";
         URL url = null;
        // HttpURLConnection conn = null; // TODO Borrar
@@ -93,7 +92,7 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
         }*/
 ////////////////////////////////////////////////////////////////////////////////////////////
         try {
-            url = new URL(params[0]);
+            url = new URL(webUrl);
             //conn = (HttpURLConnection) url.openConnection();        //TODO Borrar
             conn = (HttpsURLConnection) url.openConnection();    //TODO Agregar
             conn.setRequestMethod("POST");
@@ -140,10 +139,9 @@ public abstract class EnvioPost extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             //TODO deberia lanzar exception
         }
-        return respuesta;
+        this.onPostExecute(respuesta);
     }
 
-    @Override
     protected void onPostExecute(String result) {
         if(result == Integer.toString(Utils.INVALID_TOKEN)){
             Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);

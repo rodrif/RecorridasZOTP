@@ -53,32 +53,30 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
             progressDialog.setProgress(0);
             progressDialog.show();
         }
-        RecepcionAreas recepcionAreas = new RecepcionAreas();
-        recepcionAreas.executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_AREAS);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        //FIXME: Hacer sincronizacion aca!!!!
+        RecepcionAreas recepcionAreas = new RecepcionAreas();
+        recepcionAreas.execute(Utils.WEB_RECIBIR_AREAS);
+        if (MainActivity.versionError == true) {
+            ExceptionHandler.makeExceptionVersionAlert(activity);
+        } else {
+            new RecepcionZonas().execute(Utils.WEB_RECIBIR_ZONAS);
+            new RecepcionRanchadas().execute(Utils.WEB_RECIBIR_RANCHADAS);
+            new RecepcionFamilias().execute(Utils.WEB_RECIBIR_FAMILIAS);
+            new RecepcionPersonas().execute(Utils.WEB_RECIBIR_PERSONAS);
+            new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_PERSONAS);
+            new RecepcionVisitas().execute(Utils.WEB_RECIBIR_VISITAS);
+            new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_VISITAS);
+            new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).execute(Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
+            new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIAR_PEDIDOS);
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        if (MainActivity.versionError == true) {
-            ExceptionHandler.makeExceptionVersionAlert(activity);
-        } else {
-            new RecepcionZonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_ZONAS);
-            new RecepcionRanchadas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_RANCHADAS);
-            new RecepcionFamilias().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_FAMILIAS);
-            new RecepcionPersonas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PERSONAS);
-            new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_PERSONAS);
-            new RecepcionVisitas().executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_VISITAS);
-            new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIO_VISITAS);
-            new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
-            new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).executeOnExecutor(SERIAL_EXECUTOR, Utils.WEB_ENVIAR_PEDIDOS);
-
-        }
         if (this.bloquearApp) {
             progressDialog.dismiss();
         }
