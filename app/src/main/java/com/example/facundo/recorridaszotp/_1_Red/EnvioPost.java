@@ -146,6 +146,7 @@ public abstract class EnvioPost {
         if(result == Integer.toString(Utils.INVALID_TOKEN)){
             Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
             if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
+                Log.v(Utils.APPTAG, "Obteniendo token");
                 new ObtenerToken(null).execute();
             }
             Config.getInstance().setNumIntento(0);
