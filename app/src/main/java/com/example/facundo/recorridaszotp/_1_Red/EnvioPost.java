@@ -120,7 +120,7 @@ public abstract class EnvioPost {
             output.write(query.getBytes(charset));
 
             if(conn.getResponseCode() == Utils.INVALID_TOKEN){
-                return Integer.toString(Utils.INVALID_TOKEN);
+                this.onPostExecute(Integer.toString(Utils.INVALID_TOKEN));
             }
 
             //Leo respuesta
