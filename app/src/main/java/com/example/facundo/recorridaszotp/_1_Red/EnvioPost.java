@@ -65,13 +65,9 @@ public abstract class EnvioPost {
     }
 
     protected void onPostExecute(String result) {
-        if(result == Integer.toString(Utils.INVALID_TOKEN)){
-            Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
-            if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
-                Log.e(Utils.APPTAG, "Invalid token...obteniendo token");
-                new ObtenerToken(null).execute();
-            }
-            Config.getInstance().setNumIntento(0);
+        if(result == Integer.toString(Utils.INVALID_TOKEN)) {
+            Log.e(Utils.APPTAG, "Invalid token...obteniendo token");
+            new ObtenerToken(null).execute();
         }
     };
 
