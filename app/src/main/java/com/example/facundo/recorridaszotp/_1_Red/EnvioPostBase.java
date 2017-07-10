@@ -1,3 +1,33 @@
+package com.example.facundo.recorridaszotp._1_Red;
+
+import android.util.Log;
+
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.text.DateFormat;
+import java.util.Date;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+
 public class EnvioPostBase {
 
     private String webUrl;
@@ -40,7 +70,7 @@ public class EnvioPostBase {
             output.write(this.query.getBytes(charset));
 
             if(conn.getResponseCode() == Utils.INVALID_TOKEN){
-                this.onPostExecute(Integer.toString(Utils.INVALID_TOKEN));
+                return Integer.toString(Utils.INVALID_TOKEN);
             }
 
             //Leo respuesta

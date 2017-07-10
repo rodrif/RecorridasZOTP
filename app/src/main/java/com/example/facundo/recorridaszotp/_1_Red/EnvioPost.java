@@ -46,23 +46,29 @@ public abstract class EnvioPost {
     protected abstract String getUltimaFechaMod();
 
     public void execute(String webUrl) {
+        String charset = "UTF-8";
         //Construimos el objeto cliente en formato JSON
-        JSONArray datos = this.cargarJson();
-        Log.d(Utils.APPTAG, "Se envio JSON: " + datos.toString());
-        String ultFechaSincronizacion = Configuracion.get(getUltimaFechaMod());
-        String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
-        query += String.format("&version=%s", URLEncoder.encode(Utils.VERSION, charset));
-        if (ultFechaSincronizacion != null) {
-            query += String.format("&fecha=%s", URLEncoder.encode(ultFechaSincronizacion, charset));
+        JSONArray datos = null;
+        try {
+            datos = this.cargarJson();
+            Log.d(Utils.APPTAG, "Se envio JSON: " + datos.toString());
+            String ultFechaSincronizacion = Configuracion.get(getUltimaFechaMod());
+            String query = String.format("datos=%s", URLEncoder.encode(datos.toString(), charset));
+            query += String.format("&version=%s", URLEncoder.encode(Utils.VERSION, charset));
+            if (ultFechaSincronizacion != null) {
+                query += String.format("&fecha=%s", URLEncoder.encode(ultFechaSincronizacion, charset));
+            }
+            this.onPostExecute(new EnvioPostBase(webUrl, query).execute());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        this.onPostExecute(new EnvioPostBase(webUrl, query).execute());
     }
 
     protected void onPostExecute(String result) {
         if(result == Integer.toString(Utils.INVALID_TOKEN)){
             Config.getInstance().setNumIntento(Config.getInstance().getNumIntento() + 1);
             if(Config.getInstance().getNumIntento() < Utils.MAX_INTENTOS){
-                Log.v(Utils.APPTAG, "Obteniendo token");
+                Log.e(Utils.APPTAG, "Invalid token...obteniendo token");
                 new ObtenerToken(null).execute();
             }
             Config.getInstance().setNumIntento(0);
