@@ -41,20 +41,13 @@ public class EnvioPostBase {
     public String execute() {
         String charset = "UTF-8";
         URL url = null;
-        HttpsURLConnection conn = null;
+        HttpURLConnection conn = null;
         InputStream inputStream = null;
         String respuesta = null;
-        CertificateFactory cf = null;
-        InputStream certificateInput = null;
-        Certificate certificate = null;
-        KeyStore keyStore = null;
-        TrustManagerFactory tmf = null;
-        String keyStoreType;
-        SSLContext context = null;
 
         try {
             url = new URL(this.webUrl);
-            conn = (HttpsURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true); // Triggers POST.
             conn.setRequestProperty("Accept-Charset", charset);

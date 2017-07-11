@@ -39,7 +39,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class ObtenerToken extends AsyncTask<Void, Void, String> {
     String charset = "UTF-8";
     URL url = null;
-    HttpsURLConnection conns = null;
+    HttpURLConnection conns = null;
     InputStream inputStream = null;
     String respuesta = null;
     private MainActivity activity = null;
@@ -66,7 +66,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         String token = "";
         try {
             url = new URL(Utils.WEB_LOGIN);
-            conns = (HttpsURLConnection) url.openConnection();
+            conns = (HttpURLConnection) url.openConnection();
             conns.setRequestMethod("POST");
             conns.setDoOutput(true); // Triggers POST.
             conns.setRequestProperty("Accept-Charset", charset);
