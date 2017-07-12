@@ -67,29 +67,19 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
         String token = "";
         try {
             String query = String.format(
-                "email=%s&password=%s",
-                URLEncoder.encode(Config.getInstance().getUserMail(), charset),
-                URLEncoder.encode(Config.getInstance().getUserPassword(), charset)
+                    "email=%s&password=%s",
+                    URLEncoder.encode(Config.getInstance().getUserMail(), charset),
+                    URLEncoder.encode(Config.getInstance().getUserPassword(), charset)
             );
-            respuesta = (new EnvioPostBase(Utils.WEB_LOGIN, query)).execute();
-            Config.getInstance().setAccessToken(conns.getHeaderField(Utils.ACCESS_TOKEN));
-            Config.getInstance().setClient(conns.getHeaderField(Utils.CLIENT));
-            Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
-            Config.getInstance().setUid(conns.getHeaderField(Utils.UID));
+            EnvioPostBase envioPostBase = new EnvioPostBase(Utils.WEB_LOGIN, query);
+            respuesta = envioPostBase.execute();
             Config.getInstance().setRol(this.getRolId(respuesta));
             Config.getInstance().setArea(this.getAreaId(respuesta));
             this.logUserCrashlytics(respuesta);
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
-            return Integer.toString(conns.getResponseCode());
+            return Integer.toString(envioPostBase.getLastReturnCode());
             //this.activity.setToken(token);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            Log.e(Utils.APPTAG, e.toString());
-            return "sinConexion";
         } catch (IOException e) {
-            e.printStackTrace();
-            Log.e(Utils.APPTAG, e.toString());
-        } catch (GoogleAuthException e) {
             e.printStackTrace();
             Log.e(Utils.APPTAG, e.toString());
         } catch (Exception e) {

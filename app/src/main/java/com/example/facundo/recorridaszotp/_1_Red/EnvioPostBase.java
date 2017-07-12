@@ -32,6 +32,7 @@ public class EnvioPostBase {
 
     private String webUrl;
     private String query;
+    private int lastReturnCode;
 
     public EnvioPostBase(String webUrl, String query) {
         this.webUrl = webUrl;
@@ -61,13 +62,14 @@ public class EnvioPostBase {
             //Envio datos
             OutputStream output = conn.getOutputStream();
             output.write(this.query.getBytes(charset));
+            this.lastReturnCode = conn.getResponseCode();
 
-            if(conn.getResponseCode() == Utils.INVALID_TOKEN){
+            if(this.lastReturnCode == Utils.INVALID_TOKEN){
                 return Integer.toString(Utils.INVALID_TOKEN);
             }
 
             //Leo respuesta
-            Log.v(Utils.APPTAG, "Response Code: " + conn.getResponseCode());
+            Log.v(Utils.APPTAG, "Response Code: " + this.lastReturnCode);
             inputStream = new BufferedInputStream(conn.getInputStream());
             if(conn.getHeaderField(Utils.ACCESS_TOKEN) != null)
                 Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
@@ -83,5 +85,9 @@ public class EnvioPostBase {
             //TODO deberia lanzar exception
         }
         return respuesta;
+    }
+
+    public int getLastReturnCode() {
+        return lastReturnCode;
     }
 }
