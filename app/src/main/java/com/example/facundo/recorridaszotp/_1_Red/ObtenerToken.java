@@ -78,7 +78,10 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             this.logUserCrashlytics(respuesta);
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             return Integer.toString(envioPostBase.getLastReturnCode());
-            //this.activity.setToken(token);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
+            return "sinConexion";
         } catch (IOException e) {
             e.printStackTrace();
             Log.e(Utils.APPTAG, e.toString());

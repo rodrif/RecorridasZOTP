@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -39,52 +40,43 @@ public class EnvioPostBase {
         this.query = query;
     }
 
-    public String execute() {
+    public String execute() throws Exception {
         String charset = "UTF-8";
         URL url = null;
         HttpURLConnection conn = null;
         InputStream inputStream = null;
-        String respuesta = null;
 
-        try {
-            url = new URL(this.webUrl);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true); // Triggers POST.
-            conn.setRequestProperty("Accept-Charset", charset);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
-            conn.setRequestProperty(Utils.ACCESS_TOKEN, Config.getInstance().getAccessToken());
-            conn.setRequestProperty(Utils.CLIENT, Config.getInstance().getClient());
-            conn.setRequestProperty(Utils.UID, Config.getInstance().getUid());
-            conn.setRequestProperty(Utils.TOKEN_TYPE, Config.getInstance().getTokenType());
-            conn.setRequestProperty(Utils.EXPIRY, Config.getInstance().getExpiry());
+        url = new URL(this.webUrl);
+        conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true); // Triggers POST.
+        conn.setRequestProperty("Accept-Charset", charset);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+        conn.setRequestProperty(Utils.ACCESS_TOKEN, Config.getInstance().getAccessToken());
+        conn.setRequestProperty(Utils.CLIENT, Config.getInstance().getClient());
+        conn.setRequestProperty(Utils.UID, Config.getInstance().getUid());
+        conn.setRequestProperty(Utils.TOKEN_TYPE, Config.getInstance().getTokenType());
+        conn.setRequestProperty(Utils.EXPIRY, Config.getInstance().getExpiry());
+        //Envio datos
+        OutputStream output = conn.getOutputStream();
+        output.write(this.query.getBytes(charset));
+        this.lastReturnCode = conn.getResponseCode();
 
-            //Envio datos
-            OutputStream output = conn.getOutputStream();
-            output.write(this.query.getBytes(charset));
-            this.lastReturnCode = conn.getResponseCode();
-
-            if(this.lastReturnCode == Utils.INVALID_TOKEN){
-                return Integer.toString(Utils.INVALID_TOKEN);
-            }
-
-            //Leo respuesta
-            Log.v(Utils.APPTAG, "Response Code: " + this.lastReturnCode);
-            inputStream = new BufferedInputStream(conn.getInputStream());
-            if(conn.getHeaderField(Utils.ACCESS_TOKEN) != null)
-                Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
-            if(conn.getHeaderField(Utils.CLIENT) != null)
-                Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
-            if(conn.getHeaderField(Utils.EXPIRY) != null)
-                Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
-            if(conn.getHeaderField(Utils.UID) != null)
-                Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
-            respuesta = Utils.toString(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //TODO deberia lanzar exception
+        if(this.lastReturnCode == Utils.INVALID_TOKEN){
+            return Integer.toString(Utils.INVALID_TOKEN);
         }
-        return respuesta;
+        //Leo respuesta
+        Log.v(Utils.APPTAG, "Response Code: " + this.lastReturnCode);
+        inputStream = new BufferedInputStream(conn.getInputStream());
+        if(conn.getHeaderField(Utils.ACCESS_TOKEN) != null)
+            Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
+        if(conn.getHeaderField(Utils.CLIENT) != null)
+            Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
+        if(conn.getHeaderField(Utils.EXPIRY) != null)
+            Config.getInstance().setExpiry(conn.getHeaderField(Utils.EXPIRY));
+        if(conn.getHeaderField(Utils.UID) != null)
+            Config.getInstance().setUid(conn.getHeaderField(Utils.UID));
+        return Utils.toString(inputStream);
     }
 
     public int getLastReturnCode() {
