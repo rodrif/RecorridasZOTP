@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -95,38 +96,43 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             return Integer.toString(conns.getResponseCode());
             //this.activity.setToken(token);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
+            return "sinConexion";
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         } catch (GoogleAuthException e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         }
-        return "";
+        return "-1";
     }
 
     @Override
     protected void onPostExecute(String result) {
+        Log.e(Utils.APPTAG, result);
         if (this.activity != null) {
             progressDialog.dismiss();
         }
         if (result.equalsIgnoreCase(Integer.toString(Utils.LOGIN_OK_CODE))) {
             if (this.activity != null) {
-                Answers.getInstance().logLogin(new LoginEvent()
-                        .putMethod("App Login")
-                        .putSuccess(true)
-                        .putCustomAttribute("Email", Config.getInstance().getUserMail()));
-
                 this.activity.loginOk();
                 new Sincronizador(activity).execute();
             }
         } else {
             if (this.activity != null) {
-                Answers.getInstance().logLogin(new LoginEvent()
-                        .putMethod("App Login")
-                        .putSuccess(false));
-                Toast.makeText(this.activity,
-                        "Usuario o contraseña invalida", Toast.LENGTH_SHORT).show();
+                String mensaje = "";
+                if(result == "sinConexion") {
+                    mensaje = "Sin conexión a internet";
+                } else {
+                    mensaje = "Usuario o contraseña invalida";
+                }
+                Toast.makeText(this.activity, mensaje, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -157,6 +163,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             return data.getInt("rol_id");
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         }
         return -1;
     }
@@ -169,6 +176,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             return data.getInt("area_id");
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         }
         return -1;
     }
