@@ -66,25 +66,12 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         String token = "";
         try {
-            url = new URL(Utils.WEB_LOGIN);
-            conns = (HttpURLConnection) url.openConnection();
-            conns.setRequestMethod("POST");
-            conns.setDoOutput(true); // Triggers POST.
-            conns.setRequestProperty("Accept-Charset", charset);
-            conns.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
-
-            String query = String.format("email=%s&password=%s",
-                    URLEncoder.encode(Config.getInstance().getUserMail(), charset),
-                    URLEncoder.encode(Config.getInstance().getUserPassword(), charset));
-
-            //Envio datos
-            OutputStream output = conns.getOutputStream();
-            output.write(query.getBytes(charset));
-
-            //Leo respuesta
-            Log.v(Utils.APPTAG, "Response Code: " + conns.getResponseCode());
-            inputStream = new BufferedInputStream(conns.getInputStream());
-            respuesta = Utils.toString(inputStream);
+            String query = String.format(
+                "email=%s&password=%s",
+                URLEncoder.encode(Config.getInstance().getUserMail(), charset),
+                URLEncoder.encode(Config.getInstance().getUserPassword(), charset)
+            );
+            respuesta = (new EnvioPostBase(Utils.WEB_LOGIN, query)).execute();
             Config.getInstance().setAccessToken(conns.getHeaderField(Utils.ACCESS_TOKEN));
             Config.getInstance().setClient(conns.getHeaderField(Utils.CLIENT));
             Config.getInstance().setExpiry(conns.getHeaderField(Utils.EXPIRY));
@@ -92,7 +79,6 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
             Config.getInstance().setRol(this.getRolId(respuesta));
             Config.getInstance().setArea(this.getAreaId(respuesta));
             this.logUserCrashlytics(respuesta);
-
             Log.v(Utils.APPTAG, "Respuesta Token: " + respuesta);
             return Integer.toString(conns.getResponseCode());
             //this.activity.setToken(token);
@@ -151,6 +137,7 @@ public class ObtenerToken extends AsyncTask<Void, Void, String> {
                     .getName(Integer.parseInt(datos.getString("area_id"))));
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(Utils.APPTAG, e.toString());
         }
     }
 
