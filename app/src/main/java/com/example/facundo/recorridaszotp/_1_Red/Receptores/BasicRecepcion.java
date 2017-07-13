@@ -27,7 +27,8 @@ public class BasicRecepcion<T extends Model> extends EnvioPost {
     private BasicDataAccess<T> basicDataAccess;
     private boolean versionError = false;
 
-    public BasicRecepcion(BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
+    public BasicRecepcion(String webUrl, BasicDataAccess<T> basicDataAccess, BasicJsonUtil<T> basicJsonUtil) {
+        super(webUrl);
         this.basicDataAccess = basicDataAccess;
         this.basicJsonUtil = basicJsonUtil;
     }

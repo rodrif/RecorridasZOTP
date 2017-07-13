@@ -19,6 +19,6 @@ import java.util.List;
 public class RecepcionVisitas extends BasicRecepcion<Visita> {
 
     public RecepcionVisitas() {
-        super(VisitaDataAccess.get(), VisitaJsonUtils.get());
+        super(Utils.WEB_RECIBIR_VISITAS, VisitaDataAccess.get(), VisitaJsonUtils.get());
     }
 }

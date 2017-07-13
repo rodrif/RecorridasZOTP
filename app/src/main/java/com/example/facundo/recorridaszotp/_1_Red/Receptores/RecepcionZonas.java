@@ -18,6 +18,6 @@ import java.util.List;
 public class RecepcionZonas extends BasicRecepcion<Zona> {
 
     public RecepcionZonas() {
-        super(ZonaDataAccess.get(), ZonaJsonUtils.get());
+        super(Utils.WEB_RECIBIR_ZONAS, ZonaDataAccess.get(), ZonaJsonUtils.get());
     }
 }

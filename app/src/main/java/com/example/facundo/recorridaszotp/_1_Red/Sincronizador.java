@@ -62,14 +62,14 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
         if (MainActivity.versionError == true) {
             ExceptionHandler.makeExceptionVersionAlert(activity);
         } else {
-            new RecepcionZonas().execute(Utils.WEB_RECIBIR_ZONAS);
-            new RecepcionRanchadas().execute(Utils.WEB_RECIBIR_RANCHADAS);
-            new RecepcionFamilias().execute(Utils.WEB_RECIBIR_FAMILIAS);
-            new RecepcionPersonas().execute(Utils.WEB_RECIBIR_PERSONAS);
+            new RecepcionZonas().execute();
+            //new RecepcionRanchadas().execute(Utils.WEB_RECIBIR_RANCHADAS); //FIXME Delete             
+            //new RecepcionFamilias().execute(Utils.WEB_RECIBIR_FAMILIAS);   //FIXME Delete
+            new RecepcionPersonas().execute();
             new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_PERSONAS);
-            new RecepcionVisitas().execute(Utils.WEB_RECIBIR_VISITAS);
+            new RecepcionVisitas().execute();
             new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_VISITAS);
-            new RecepcionPedidos().execute(Utils.WEB_RECIBIR_PEDIDOS);
+            new RecepcionPedidos().execute();
             new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIAR_PEDIDOS);
         }
         return null;

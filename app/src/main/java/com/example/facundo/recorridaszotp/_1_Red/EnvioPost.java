@@ -42,10 +42,15 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public abstract class EnvioPost {
 
+    private String webUrl;
     protected abstract JSONArray cargarJson() throws Exception;
     protected abstract String getUltimaFechaMod();
 
-    public void execute(String webUrl) {
+    public EnvioPost(String webUrl) {
+        this.webUrl = webUrl;
+    }
+
+    public void execute() {
         String charset = "UTF-8";
         //Construimos el objeto cliente en formato JSON
         JSONArray datos = null;
@@ -58,7 +63,7 @@ public abstract class EnvioPost {
             if (ultFechaSincronizacion != null) {
                 query += String.format("&fecha=%s", URLEncoder.encode(ultFechaSincronizacion, charset));
             }
-            this.onPostExecute(new EnvioPostBase(webUrl, query).execute());
+            this.onPostExecute(new EnvioPostBase(this.webUrl, query).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }

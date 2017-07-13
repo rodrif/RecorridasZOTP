@@ -17,6 +17,6 @@ import java.util.List;
 public class RecepcionPersonas extends BasicRecepcion<Persona> {
 
     public RecepcionPersonas() {
-        super(PersonaDataAccess.get(), PersonaJsonUtils.get());
+        super(Utils.WEB_RECIBIR_PERSONAS, PersonaDataAccess.get(), PersonaJsonUtils.get());
     }
 }
