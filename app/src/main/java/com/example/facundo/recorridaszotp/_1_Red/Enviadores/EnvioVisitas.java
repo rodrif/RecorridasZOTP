@@ -19,7 +19,7 @@ import java.util.List;
 public class EnvioVisitas extends BasicEnvio<Visita> {
 
     public EnvioVisitas(List<Visita> visitas) {
-        super(VisitaJsonUtils.get(), visitas);
+        super(Utils.WEB_ENVIO_VISITAS, VisitaJsonUtils.get(), visitas);
     }
 
     @Override

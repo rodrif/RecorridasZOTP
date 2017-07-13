@@ -20,7 +20,8 @@ public abstract class BasicEnvio<T> extends EnvioPost {
     private BasicJsonUtil<T> basicJsonUtil;
     protected List<T> ts;
 
-    public BasicEnvio(BasicJsonUtil<T> basicJsonUtil, List<T> ts) {
+    public BasicEnvio(String webUrl, BasicJsonUtil<T> basicJsonUtil, List<T> ts) {
+        super(webUrl);
         this.basicJsonUtil = basicJsonUtil;
         this.ts = ts;
     }

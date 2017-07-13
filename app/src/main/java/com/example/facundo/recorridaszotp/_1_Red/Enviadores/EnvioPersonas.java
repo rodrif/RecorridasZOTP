@@ -16,7 +16,7 @@ import java.util.List;
 public class EnvioPersonas extends BasicEnvio<Persona> {
 
     public EnvioPersonas(List<Persona> personas) {
-        super(PersonaJsonUtils.get(), personas);
+        super(Utils.WEB_ENVIO_PERSONAS, PersonaJsonUtils.get(), personas);
     }
 
     @Override

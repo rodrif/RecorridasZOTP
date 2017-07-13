@@ -20,7 +20,7 @@ import java.util.List;
 public class EnvioPedidos extends BasicEnvio<Pedido> {
 
     public EnvioPedidos(List<Pedido> pedidos) {
-        super(PedidoJsonUtils.get(), pedidos);
+        super(Utils.WEB_ENVIAR_PEDIDOS, PedidoJsonUtils.get(), pedidos);
     }
 
     @Override
