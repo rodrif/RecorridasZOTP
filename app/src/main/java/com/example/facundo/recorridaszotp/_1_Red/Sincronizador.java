@@ -69,7 +69,7 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
             new EnvioPersonas(PersonaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_PERSONAS);
             new RecepcionVisitas().execute(Utils.WEB_RECIBIR_VISITAS);
             new EnvioVisitas(VisitaDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIO_VISITAS);
-            new BasicRecepcion<Pedido>(PedidoDataAccess.get(), PedidoJsonUtils.get()).execute(Utils.WEB_RECIBIR_PEDIDOS); //FIXME se podria crear recepcion pedidos para que aparezca con ese nombre en el debug
+            new RecepcionPedidos().execute(Utils.WEB_RECIBIR_PEDIDOS);
             new EnvioPedidos(PedidoDataAccess.get().findASincronizar()).execute(Utils.WEB_ENVIAR_PEDIDOS);
         }
         return null;
