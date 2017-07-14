@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._1_Red.Receptores;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.AreaJsonUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.BasicJsonUtil;
+import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.BasicDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
@@ -18,6 +19,6 @@ import java.util.List;
 public class RecepcionAreas extends BasicRecepcion<Area> {
 
     public RecepcionAreas() {
-        super(AreaDataAccess.get(), AreaJsonUtils.get());
+        super(Utils.WEB_RECIBIR_AREAS, AreaDataAccess.get(), AreaJsonUtils.get());
     }
 }

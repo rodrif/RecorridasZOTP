@@ -3,26 +3,18 @@ package com.example.facundo.recorridaszotp._1_Red;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 
-import com.example.facundo.recorridaszotp._0_Infraestructure.JsonUtils.PedidoJsonUtils;
-import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioAreas;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioPedidos;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioPersonas;
 import com.example.facundo.recorridaszotp._1_Red.Enviadores.EnvioVisitas;
-import com.example.facundo.recorridaszotp._1_Red.Receptores.BasicRecepcion;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionAreas;
-import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionFamilias;
+import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPedidos;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
-import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionRanchadas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionZonas;
-import com.example.facundo.recorridaszotp._2_DataAccess.AreaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PedidoDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
-import com.example.facundo.recorridaszotp._3_Domain.Pedido;
 import com.example.facundo.recorridaszotp._5_Presentation.ExceptionHandler;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
@@ -57,8 +49,7 @@ public class Sincronizador extends AsyncTask<Void, Void, Void>{
 
     @Override
     protected Void doInBackground(Void... params) {
-        RecepcionAreas recepcionAreas = new RecepcionAreas();
-        recepcionAreas.execute(Utils.WEB_RECIBIR_AREAS);
+        new RecepcionAreas().execute();
         if (MainActivity.versionError == true) {
             ExceptionHandler.makeExceptionVersionAlert(activity);
         } else {
