@@ -552,16 +552,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void loginOk() {
-        this.enableSideMenu();
-        Config.getInstance().setLoginOk();
-        savePreferences();
-        // Start IntentService to register this application with GCM.
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment homeFragment = new HomeFragment();
-        ft.replace(R.id.content_frame, homeFragment, Utils.FRAG_HOME);
-        ft.commit();
+        if (Config.getInstance().getRol() == Utils.ROL_INVITADO) {
+            Log.e(Utils.APPTAG, "Rol invitado, sin acceso");
+            Toast.makeText(this, "Sin acceso, pida acceso al administrador", Toast.LENGTH_LONG).show();
+        } else {
+            this.enableSideMenu();
+            Config.getInstance().setLoginOk();
+            savePreferences();
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment homeFragment = new HomeFragment();
+            ft.replace(R.id.content_frame, homeFragment, Utils.FRAG_HOME);
+            ft.commit();
+        }
+
     }
 
     private void enableSideMenu() {
