@@ -87,7 +87,7 @@ public class ListaPersonas extends Fragment {
     }
 
     protected List<Persona> getPersonas() {
-        return PersonaDataAccess.get().getAllOKPorArea();
+        return PersonaDataAccess.get().getAllOKPorAreaYZona();
     }
 
     @Override

@@ -106,19 +106,21 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 .execute();
     }
 
-    public List<Persona> getAllOKPorArea() {
+    public List<Persona> getAllOKPorAreaYZona() {
         Area area = new Select()
                 .from(Area.class)
                 .where("WebId = ?", Config.getInstance().getArea())
                 .executeSingle();
 
-        return new Select()
+        Select select = new Select()
                 .from(Persona.class)
                 .innerJoin(Zona.class)
                 .on("Zona = Zonas.Id")
                 .orderBy("Zonas.Nombre ASC, Personas.Nombre ASC")
                 .where("Personas.Estado != ?", Utils.EST_BORRADO)
-                .where("Area = ?", area.getId())
-                .execute();
+                .where("Area = ?", area.getId());
+
+        select.where("Zonas.Id = ?", 2);
+        return select.execute();
     }
 }
