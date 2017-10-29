@@ -131,13 +131,13 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .execute();
     }
 
-    public List<Visita> getAllOKPorAreaOrderFecha() {
+    public List<Visita> getAllOKPorAreaYZonaOrderFecha() {
         Area area = new Select()
                 .from(Area.class)
                 .where("WebId = ?", Config.getInstance().getArea())
                 .executeSingle();
 
-        return new Select()
+        Select select = new Select()
                 .from(Visita.class)
                 .innerJoin(Persona.class)
                 .on("Persona = Personas.Id")
@@ -145,8 +145,10 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .on("Zona = Zonas.Id")
                 .orderBy("Fecha DESC")
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
-                .where("Area = ?", area.getId())
-                .execute();
+                .where("Area = ?", area.getId());
+
+        select.where("Zonas.Id = ?", 2);
+        return select.execute();
     }
 
     public List<Visita> getAllOKOrderFecha(long personaId) {
