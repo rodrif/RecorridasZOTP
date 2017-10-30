@@ -1,6 +1,7 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -137,7 +138,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .where("WebId = ?", Config.getInstance().getArea())
                 .executeSingle();
 
-        Select select = new Select()
+        From from = new Select()
                 .from(Visita.class)
                 .innerJoin(Persona.class)
                 .on("Persona = Personas.Id")
@@ -147,8 +148,8 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
-        select.where("Zonas.Id = ?", 2);
-        return select.execute();
+        from.where("Zonas.Id = ?", 2);
+        return from.execute();
     }
 
     public List<Visita> getAllOKOrderFecha(long personaId) {

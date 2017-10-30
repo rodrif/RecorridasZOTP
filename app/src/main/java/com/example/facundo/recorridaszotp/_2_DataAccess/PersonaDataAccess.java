@@ -2,6 +2,7 @@ package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -112,7 +113,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 .where("WebId = ?", Config.getInstance().getArea())
                 .executeSingle();
 
-        Select select = new Select()
+        From from = new Select()
                 .from(Persona.class)
                 .innerJoin(Zona.class)
                 .on("Zona = Zonas.Id")
@@ -120,7 +121,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 .where("Personas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
-        select.where("Zonas.Id = ?", 2);
-        return select.execute();
+        from.where("Zonas.Id = ?", 2);
+        return from.execute();
     }
 }
