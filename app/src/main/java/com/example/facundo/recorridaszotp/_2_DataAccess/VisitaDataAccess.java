@@ -7,6 +7,7 @@ import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
+import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -133,6 +134,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     }
 
     public List<Visita> getAllOKPorAreaYZonaOrderFecha() {
+        Filtros filtros = new Filtros().get();
         Area area = new Select()
                 .from(Area.class)
                 .where("WebId = ?", Config.getInstance().getArea())
@@ -148,7 +150,9 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
-        from.where("Zonas.Id = ?", 2);
+        if (filtros != null) {
+            from.where("Zonas.Id = ?", filtros.getZonaId());
+        }
         return from.execute();
     }
 

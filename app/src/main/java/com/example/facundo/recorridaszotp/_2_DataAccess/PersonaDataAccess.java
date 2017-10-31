@@ -7,6 +7,7 @@ import com.activeandroid.query.Select;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionPersonas;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
+import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -108,6 +109,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
     }
 
     public List<Persona> getAllOKPorAreaYZona() {
+        Filtros filtros = new Filtros().get();
         Area area = new Select()
                 .from(Area.class)
                 .where("WebId = ?", Config.getInstance().getArea())
@@ -121,7 +123,9 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 .where("Personas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
-        from.where("Zonas.Id = ?", 2);
+        if (filtros != null) {
+            from.where("Zonas.Id = ?", filtros.getZonaId());
+        }
         return from.execute();
     }
 }

@@ -13,7 +13,7 @@ public final class Utils {
 //    public static final String WEB =  "https://prod-recorridaszo.rhcloud.com/";
  //   public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
   //  public static final String WEB = "https://stark-island-3497.herokuapp.com/";
-    public static final String WEB = "http://recorridaszo.ddnsking.com";
+    public static final String WEB = "http://10.66.77.89";
     public static final String WEB_LOGIN = Utils.WEB +"/api/auth/sign_in";
     public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
@@ -100,7 +100,7 @@ public final class Utils {
     public static final String NOTIFICACION = "Notificación";
     public static final String PERSONA_ID = "persona_id";
     public static final String AREA_ID = "area_id";
-    public static final String VERSION = "32";
+    public static final String VERSION = "10";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
