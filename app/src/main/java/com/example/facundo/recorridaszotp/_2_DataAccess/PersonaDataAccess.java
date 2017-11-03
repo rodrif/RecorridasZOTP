@@ -123,7 +123,7 @@ public class PersonaDataAccess extends BasicDataAccess<Persona> {
                 .where("Personas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
-        if (filtros != null) {
+        if (filtros != null && filtros.getZonaId() != -1) {
             from.where("Zonas.Id = ?", filtros.getZonaId());
         }
         return from.execute();
