@@ -257,11 +257,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
             Answers.getInstance().logCustom(new CustomEvent("Visita Creada")
-                    .putCustomAttribute("Nombre", visitaSeleccionada.getPersona().getNombre())
-                    .putCustomAttribute("Apellido", visitaSeleccionada.getPersona().getApellido())
-                    .putCustomAttribute("Zona", visitaSeleccionada.getPersona().getZona().getNombre())
-                    .putCustomAttribute("Fecha", visitaSeleccionada.getFechaString())
-                    .putCustomAttribute("Descripcion", visitaSeleccionada.getDescripcion()));
+                    .putCustomAttribute("Area", Config.getInstance().getArea())
+                    .putCustomAttribute("User", Config.getInstance().getUserMail()));
             Sincronizador sinc = new Sincronizador(this, false);
             sinc.execute();
         } else {
@@ -334,9 +331,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 unToast.show();
                 Answers.getInstance().logCustom(new CustomEvent("Persona Creada")
-                        .putCustomAttribute("Nombre", personaSeleccionada.getNombre())
-                        .putCustomAttribute("Apellido", personaSeleccionada.getApellido())
-                        .putCustomAttribute("Zona", personaSeleccionada.getZona().getNombre()));
+                        .putCustomAttribute("Area", Config.getInstance().getArea())
+                        .putCustomAttribute("User", Config.getInstance().getUserMail()));
                 Sincronizador sinc = new Sincronizador(this, false);
                 sinc.execute();
                 menuGuardar(false);
