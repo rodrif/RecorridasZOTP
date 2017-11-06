@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
-            Answers.getInstance().logCustom(new CustomEvent("Visita Creada")
+            Answers.getInstance().logCustom(new CustomEvent("Visita guardada")
                     .putCustomAttribute("Area", Config.getInstance().getArea())
                     .putCustomAttribute("User", Config.getInstance().getUserMail()));
             Sincronizador sinc = new Sincronizador(this, false);
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     unToast.setText("Se grabo: " + p.getNombre());
                 }
                 unToast.show();
-                Answers.getInstance().logCustom(new CustomEvent("Persona Creada")
+                Answers.getInstance().logCustom(new CustomEvent("Persona guardada")
                         .putCustomAttribute("Area", Config.getInstance().getArea())
                         .putCustomAttribute("User", Config.getInstance().getUserMail()));
                 Sincronizador sinc = new Sincronizador(this, false);
