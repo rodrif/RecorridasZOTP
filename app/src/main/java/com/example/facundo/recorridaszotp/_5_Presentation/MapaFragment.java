@@ -140,7 +140,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     private LatLng getDefaultUbicacion() {
         //FIXME getDefaultUbicacion() se podria obtener del Area o Zona
-        return new LatLng(-34.6417109,-58.5651438);
+        return new LatLng(-34.5803526,-58.4360354);
     }
 
     private iPersonaHandler getPersonaHandler() {
