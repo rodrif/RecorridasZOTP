@@ -1,11 +1,13 @@
 package com.example.facundo.recorridaszotp._2_DataAccess;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
+import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.VisitaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
@@ -131,13 +133,14 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .execute();
     }
 
-    public List<Visita> getAllOKPorAreaOrderFecha() {
+    public List<Visita> getAllOKPorAreaYZonaOrderFecha() {
+        Filtros filtros = new Filtros().get();
         Area area = new Select()
                 .from(Area.class)
                 .where("WebId = ?", Config.getInstance().getArea())
                 .executeSingle();
 
-        return new Select()
+        From from = new Select()
                 .from(Visita.class)
                 .innerJoin(Persona.class)
                 .on("Persona = Personas.Id")
@@ -145,8 +148,12 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .on("Zona = Zonas.Id")
                 .orderBy("Fecha DESC")
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
-                .where("Area = ?", area.getId())
-                .execute();
+                .where("Area = ?", area.getId());
+
+        if (filtros != null && filtros.getZonaId() != -1) {
+            from.where("Zonas.Id = ?", filtros.getZonaId());
+        }
+        return from.execute();
     }
 
     public List<Visita> getAllOKOrderFecha(long personaId) {

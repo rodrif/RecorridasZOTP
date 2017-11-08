@@ -2,7 +2,6 @@ package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaPersonas;
@@ -87,7 +85,7 @@ public class ListaPersonas extends Fragment {
     }
 
     protected List<Persona> getPersonas() {
-        return PersonaDataAccess.get().getAllOKPorArea();
+        return PersonaDataAccess.get().getAllOKPorAreaYZona();
     }
 
     @Override

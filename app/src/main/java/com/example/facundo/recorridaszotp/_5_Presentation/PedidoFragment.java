@@ -16,11 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.DatePickerFragment;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
+import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PedidoDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Pedido;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
@@ -139,6 +142,10 @@ public class PedidoFragment extends Fragment implements popUp {
         this.pedido.setCompletado(completado);
         this.pedido.setEstado(Utils.EST_MODIFICADO);
         this.pedido.save();
+        Answers.getInstance().logCustom(new CustomEvent("Pedido guardado")
+                .putCustomAttribute("Area", Config.getInstance().getArea())
+                .putCustomAttribute("User", Config.getInstance().getUserMail())
+                .putCustomAttribute("Estado del pedido", String.valueOf(completado)));
         Sincronizador sinc = new Sincronizador(getActivity(), false);
         sinc.execute();
         Toast unToast = Toast.makeText(getActivity(), "Pedido guardado", Toast.LENGTH_SHORT);

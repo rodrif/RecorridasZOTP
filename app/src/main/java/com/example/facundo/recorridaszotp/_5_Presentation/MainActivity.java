@@ -1,7 +1,6 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -40,11 +39,14 @@ import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
+import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
+import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
+import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
         navItms.add(new ItemLista("Ultimas Visitas", R.drawable.ic_directions_walk_white_36dp));
         navItms.add(new ItemLista("Mapa", R.drawable.ic_map_white_36dp));
+        navItms.add(new ItemLista("Filtros", R.drawable.ic_filter_list_white_36dp));
         navItms.add(new ItemLista("Salir", R.drawable.ic_highlight_off_white_36dp));
         navAdapter = new AdaptadorListaMenu(this, navItms);
         navList.setAdapter(navAdapter);
@@ -253,12 +256,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
-            Answers.getInstance().logCustom(new CustomEvent("Visita Creada")
-                    .putCustomAttribute("Nombre", visitaSeleccionada.getPersona().getNombre())
-                    .putCustomAttribute("Apellido", visitaSeleccionada.getPersona().getApellido())
-                    .putCustomAttribute("Zona", visitaSeleccionada.getPersona().getZona().getNombre())
-                    .putCustomAttribute("Fecha", visitaSeleccionada.getFechaString())
-                    .putCustomAttribute("Descripcion", visitaSeleccionada.getDescripcion()));
+            Answers.getInstance().logCustom(new CustomEvent("Visita guardada")
+                    .putCustomAttribute("Area", Config.getInstance().getArea())
+                    .putCustomAttribute("User", Config.getInstance().getUserMail()));
             Sincronizador sinc = new Sincronizador(this, false);
             sinc.execute();
         } else {
@@ -330,10 +330,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     unToast.setText("Se grabo: " + p.getNombre());
                 }
                 unToast.show();
-                Answers.getInstance().logCustom(new CustomEvent("Persona Creada")
-                        .putCustomAttribute("Nombre", personaSeleccionada.getNombre())
-                        .putCustomAttribute("Apellido", personaSeleccionada.getApellido())
-                        .putCustomAttribute("Zona", personaSeleccionada.getZona().getNombre()));
+                Answers.getInstance().logCustom(new CustomEvent("Persona guardada")
+                        .putCustomAttribute("Area", Config.getInstance().getArea())
+                        .putCustomAttribute("User", Config.getInstance().getUserMail()));
                 Sincronizador sinc = new Sincronizador(this, false);
                 sinc.execute();
                 menuGuardar(false);
@@ -371,13 +370,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         ft.replace(R.id.content_frame, frag, fragLabel);
         ft.commit();
     }
-
-/*    public void signInClick(View v) {
-        Toast.makeText(this,
-                "Click en Sign in", Toast.LENGTH_SHORT).show();
-        mGoogleApiClient.connect();
-        Log.d("RZO", "Apretó SignIn");
-    }*/
 
     private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
         private Activity activity = null;
@@ -430,7 +422,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     fragmentTransaction = true;
                     tag = Utils.FRAG_MAPA;
                     break;
-                case 5: //Salir
+                case 5: //Filtros
+                    fragment = new FiltrosFragment();
+                    fragmentTransaction = true;
+                    tag = Utils.FRAG_FILTROS;
+                    break;
+                case 6: //Salir
                     fragment = new LoginFragment();
                     fragmentTransaction = true;
                     tag = Utils.FRAG_LOGIN; //TODO refactor
@@ -549,6 +546,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Config.getInstance().setUserMail(ETEmail.getText().toString());
         Config.getInstance().setUserPassword(ETPassword.getText().toString());
         new ObtenerToken(this).execute();
+    }
+
+    public void onFiltroSave(View view) {
+        View vista = getFragmentManager().findFragmentById(R.id.content_frame).getView();
+        Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_filtroZona);
+        long zonaId = -1;
+        if (sZona.getSelectedItemId() != 0) {
+            String zonaString = (String) sZona.getSelectedItem();
+            Zona unaZona = ZonaDataAccess.get().find(zonaString);
+            zonaId = unaZona.getId();
+        }
+        Filtros filtros = Filtros.get();
+        filtros.setZonaId(zonaId);
+        filtros.save();
+        clearAllFragments();
     }
 
     public void loginOk() {

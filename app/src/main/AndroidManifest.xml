@@ -32,7 +32,8 @@
             android:value="com.example.facundo.recorridaszotp._3_Domain.Persona, com.example.facundo.recorridaszotp._3_Domain.Visita,
              com.example.facundo.recorridaszotp._3_Domain.Configuracion, com.example.facundo.recorridaszotp._3_Domain.Zona,
              com.example.facundo.recorridaszotp._3_Domain.Ranchada, com.example.facundo.recorridaszotp._3_Domain.Familia,
-             com.example.facundo.recorridaszotp._3_Domain.Area, com.example.facundo.recorridaszotp._3_Domain.Pedido"/>
+             com.example.facundo.recorridaszotp._3_Domain.Area, com.example.facundo.recorridaszotp._3_Domain.Pedido,
+             com.example.facundo.recorridaszotp._3_Domain.Filtros"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

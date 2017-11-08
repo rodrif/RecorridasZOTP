@@ -14,7 +14,8 @@ public final class Utils {
  //   public static final String WEB = "https://dev-recorridaszo.rhcloud.com/";
   //  public static final String WEB = "https://stark-island-3497.herokuapp.com/";
     //public static final String WEB = "http://recorridaszo.ddnsking.com";
-    public static final String WEB = "http://31.220.58.188";
+   // public static final String WEB = "http://31.220.58.188";
+    public static final String WEB = "http://recorridaszo.fundacionsi.org.ar";
     public static final String WEB_LOGIN = Utils.WEB +"/api/auth/sign_in";
     public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
@@ -36,6 +37,8 @@ public final class Utils {
     public static final String PUEDE_EDITAR_VISITA = "puedeEditarVisita";
     public static final String PUEDE_BORRAR_VISITA = "puedeBorrarVisita";
     public static final String PUEDE_VER_DATOS_PERSONALES = "puedeVerDatosPersonales";
+    public static final String PUEDE_VER_ESTADOS = "puedeVerEstados";
+    public static final String PUEDE_VER_SECTORES = "puedeVerSectores";
     ////////////////////////////////////////////////////////////////////////
     public static final int INVALID_TOKEN = 401;
     public static final int LOGIN_OK_CODE = 200;
@@ -61,6 +64,7 @@ public final class Utils {
     public static final String FRAG_PEDIDOS = "Fragment Pedidos";
     public static final String FRAG_PEDIDO = "Fragment Pedido";
     public static final String FRAG_NOTIFICACION = "Fragment Notificacion";
+    public static final String FRAG_FILTROS = "Fragment Filtros";
     public static final String TITULO = "titulo";
     public static final String SUBTITULO = "subtitulo";
     public static final String DESCRIPCION = "descripcion";
@@ -77,7 +81,7 @@ public final class Utils {
     public static final String PEDIDO = "Pedido";
     public static final String VISITA = "Visita";
     public static final String MAPA = "Mapa";
-    public static final String HOME = "Recorridas ZO";
+    public static final String HOME = "Recorridas";
     public static final String PREFS_NAME = "Mis Preferencias";
     public static final String USER_EMAIL = "User Email";
     public static final String USER_PASSWORD = "User Password";
@@ -97,9 +101,11 @@ public final class Utils {
     public static final String ROL_INVITADO_STRING = "invitado";
     public static final String CODIGO_NOTIFICACION = "tipo";
     public static final String NOTIFICACION = "Notificación";
+    public static final String FILTROS = "Filtros";
     public static final String PERSONA_ID = "persona_id";
     public static final String AREA_ID = "area_id";
-    public static final String VERSION = "33";
+    public static final String VERSION = "35";
+
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
