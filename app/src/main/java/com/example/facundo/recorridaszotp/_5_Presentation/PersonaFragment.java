@@ -324,31 +324,21 @@ public class PersonaFragment extends Fragment implements OnMapReadyCallback, pop
         googleMap.clear();
         LatLng ubicacion = null;
         ZonaDrawer.draw(googleMap, this.sZona.getSelectedItem().toString());
-        if (MainActivity.personaSeleccionada != null) {
-            if (this.geocoderLatLng != null) {
-                ubicacion = this.geocoderLatLng;
-                this.geocoderLatLng = null;
-            } else {
-                Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
-                if (visita != null) {
-                    if (visita.getUbicacion() != null) {
-                        ubicacion = visita.getUbicacion();
-                    }
-                } else {
-                    if (MainActivity.visitaSeleccionada != null) {
-                        ubicacion = getDefaultUbicacion();
-                        MainActivity.visitaSeleccionada.setUbicacion(ubicacion);
-                    }
-                    Log.d(Utils.APPTAG, "PersonaFragment::onMapReady ultimaVisita es null");
-                }
+        if (this.geocoderLatLng != null) {
+            ubicacion = this.geocoderLatLng;
+            this.geocoderLatLng = null;
+        } else {
+            Visita visita = VisitaDataAccess.get().findUltimaVisita(MainActivity.personaSeleccionada);
+            if (visita != null && visita.getUbicacion() != null) {
+                ubicacion = visita.getUbicacion();
             }
-            centrarMapa(googleMap, ubicacion);
-            if (ubicacion != null) {
-                googleMap.addMarker(new MarkerOptions().position(ubicacion));
-                new GeolocalizadorInverso(this.etUbicacion, ubicacion, getActivity()).execute();
-            }
-            this.setMapListeners(googleMap, this.etUbicacion);
         }
+        centrarMapa(googleMap, ubicacion);
+        if (ubicacion != null) {
+            googleMap.addMarker(new MarkerOptions().position(ubicacion));
+            new GeolocalizadorInverso(this.etUbicacion, ubicacion, getActivity()).execute();
+        }
+        this.setMapListeners(googleMap, this.etUbicacion);
 
         if (sZona.getOnItemSelectedListener() != null) {
             ZonaDrawer.centrarEnZona(googleMap, sZona.getSelectedItem().toString());
