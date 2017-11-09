@@ -166,57 +166,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                navDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-            case R.id.action_guardar: //Guardar
-                //Busco que fragment se esta usando actualmente
-                FragmentManager fm = getFragmentManager();
-                int cant = fm.getBackStackEntryCount();
-                FragmentManager.BackStackEntry bse = fm.getBackStackEntryAt(cant - 1);
-                String tag = bse.getName();
-                if (tag != null) {
-                    switch (tag) {
-                        case Utils.FRAG_PERSONA:
-                            GuardarPersonaClickFormulario();
-                            return true;
-                        case Utils.FRAG_VISITA:
-                            GuardarVisitaClickFormulario();
-                            return true;
-                        case Utils.FRAG_PEDIDO:
-                            GuardarPedidoClickFormulario();
-                            return true;
-                    }
-                }
-            case R.id.action_borrar: //Borrar
-                ((popUp) (getFragmentManager().findFragmentById(R.id.content_frame))).popUp();
-                break;
-            case R.id.action_compartir: //compartir
-                if (personaSeleccionada != null) {
-                    new PersonaShare(personaSeleccionada).share(this);
-                }
-                break;
-            case R.id.action_pedidos: //pedidos
-                long personaId = -1;
-                if (personaSeleccionada != null) {
-                    personaId = personaSeleccionada.getId();
-                } else {
-                    personaId = visitaSeleccionada.getPersona().getId();
-                }
-                new PedidoHandler().listarPedidos(personaId, this);
-                break;
-            case R.id.action_crear_pedido: //crear pedido
-                Persona persona = null;
-                if (personaSeleccionada != null) {
-                    persona = personaSeleccionada;
-                } else {
-                    persona = visitaSeleccionada.getPersona();
-                }
-                new PedidoHandler().crearPedido(persona, this);
-                break;
-        }
-        return true;
+        return MenuSuperior.seleccionar(item, this);
     }
 
     public void GuardarPedidoClickFormulario() {
