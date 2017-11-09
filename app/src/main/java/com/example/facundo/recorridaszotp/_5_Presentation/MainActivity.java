@@ -1,6 +1,5 @@
 package com.example.facundo.recorridaszotp._5_Presentation;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -18,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -44,9 +42,10 @@ import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
 import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
-import com.example.facundo.recorridaszotp._3_Domain.Roles;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
+import com.example.facundo.recorridaszotp._5_Presentation.UISaver.PersonaSaver;
+import com.example.facundo.recorridaszotp._5_Presentation.UISaver.VisitaSaver;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -58,7 +57,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         iFragmentChanger {
-    //  MapsFragment.InterfaceMapa
 
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
@@ -109,8 +107,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         View header = getLayoutInflater().inflate(R.layout.header, null);
         //Establecemos header
         navList.addHeaderView(header);
-        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
-
+        navList.setOnItemClickListener(new AdaptadorMenuLateral(this));
         navItms = new ArrayList<ItemLista>();
         navItms.add(new ItemLista("Personas", R.drawable.ic_people_white_36dp));
         navItms.add(new ItemLista("Nueva Persona", R.drawable.ic_person_add_white_24dp));
@@ -134,13 +131,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             this.replaceFragment(new LoginFragment(), false, null);
         }
-        // Build GoogleApiClient with access to basic profile
-      /*  mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApiIfAvailable(Plus.API)
-                .addScope(new Scope(Scopes.PROFILE))
-                .build();*/
     }
 
     private void replaceFragment(Fragment fragment, boolean addToBackStack, Bundle bundle) {
@@ -237,120 +227,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public void GuardarVisitaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarVisitaClickFormulario");
-
-        //Obtengo fecha y observaciones de la visita
-        //La ubicacion se carga desde MapsFragment
-        EditText eTFecha = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETFecha);
-        EditText eTObservaciones = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETObservacioneVisita);
-        EditText etDireccion = (EditText) getFragmentManager()
-                .findFragmentById(R.id.content_frame).getView().findViewById(R.id.ETUbicacion);
-
-        if (visitaSeleccionada != null) {
-            visitaSeleccionada.setFecha(eTFecha.getText().toString());
-            visitaSeleccionada.setDescripcion(eTObservaciones.getText().toString());
-            visitaSeleccionada.setEstado(Utils.EST_MODIFICADO);
-            visitaSeleccionada.setDireccion(etDireccion.getText().toString());
-            VisitaDataAccess.get().save(visitaSeleccionada);
-            Toast unToast = Toast.makeText(this, "Visita a " + visitaSeleccionada.getPersona().getNombre()
-                    + " guardada", Toast.LENGTH_SHORT);
-            unToast.show();
-            Answers.getInstance().logCustom(new CustomEvent("Visita guardada")
-                    .putCustomAttribute("Area", Config.getInstance().getArea())
-                    .putCustomAttribute("User", Config.getInstance().getUserMail()));
-            Sincronizador sinc = new Sincronizador(this, false);
-            sinc.execute();
-        } else {
-            Toast unToast = Toast.makeText(this, "Visita sin persona asociada", Toast.LENGTH_SHORT);
-            unToast.show();
-        }
-
-        getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
-        getFragmentManager().popBackStack();
-        clean();
+        VisitaSaver.save(this);
     }
 
     public void GuardarPersonaClickFormulario() {
         Log.d(Utils.APPTAG, "GuardarPersonaClickFormulario");
-
-        View vista = getFragmentManager().findFragmentById(R.id.content_frame).getView();
-
-        EditText ETnombre = (EditText) vista.findViewById(R.id.ETNombre);
-        EditText ETapellido = (EditText) vista.findViewById(R.id.ETApellido);
-        EditText ETfechaNacimiento = (EditText) vista.findViewById(R.id.ETFechaNacimiento);
-        EditText ETobservaciones = (EditText) vista.findViewById(R.id.ETObservaciones);
-        EditText ETdni = (EditText) vista.findViewById(R.id.ETDni);
-        EditText ETTelefono = (EditText) vista.findViewById(R.id.ETTelefono);
-        EditText ETPantalon = (EditText) vista.findViewById(R.id.ETPantalon);
-        EditText ETRemera = (EditText) vista.findViewById(R.id.ETRemera);
-        EditText ETZapatillas = (EditText) vista.findViewById(R.id.ETZapatillas);
-        Spinner sZona = (Spinner) vista.findViewById(R.id.spinner_zona);
-
-        String nombre = ETnombre.getText().toString();
-        String apellido = ETapellido.getText().toString();
-        String dni = ETdni.getText().toString();
-        String telefono = ETTelefono.getText().toString();
-        String pantalon = ETPantalon.getText().toString();
-        String remera = ETRemera.getText().toString();
-        String zapatillas = ETZapatillas.getText().toString();
-        String observaciones = ETobservaciones.getText().toString();
-        String fechaNacimiento = ETfechaNacimiento.getText().toString();
-        String zona = (String) sZona.getSelectedItem();
-
-
-        if (!nombre.equals("") && !zona.equals("Zona")) {
-            if (personaSeleccionada != null) {// si habia persona seleccionada
-                personaSeleccionada.setNombre(nombre);
-                personaSeleccionada.setApellido(apellido);
-                personaSeleccionada.setDNI(dni);
-                personaSeleccionada.setTelefono(telefono);
-                personaSeleccionada.setPantalon(pantalon);
-                personaSeleccionada.setRemera(remera);
-                personaSeleccionada.setZapatillas(zapatillas);
-                personaSeleccionada.setObservaciones(observaciones);
-                personaSeleccionada.setFechaNacimientoDesdeMob(fechaNacimiento);
-                personaSeleccionada.setZona(zona);
-                personaSeleccionada.setEstado(Utils.EST_MODIFICADO);
-                PersonaDataAccess.get().save(personaSeleccionada);
-                if (visitaSeleccionada != null) {
-                    visitaSeleccionada.setDescripcion("Primera Visita");
-                    VisitaDataAccess.get().save(visitaSeleccionada);
-                }
-
-                //Chequea creación correcta
-                PersonaQuery query = new PersonaQuery();
-                query.nombre = nombre;
-
-                Persona p = PersonaDataAccess.get().find(query);
-                Toast unToast = Toast.makeText(this, " ", Toast.LENGTH_SHORT);
-                if (p == null) {
-                    unToast.setText("Error al grabar");
-                } else {
-                    unToast.setText("Se grabo: " + p.getNombre());
-                }
-                unToast.show();
-                Answers.getInstance().logCustom(new CustomEvent("Persona guardada")
-                        .putCustomAttribute("Area", Config.getInstance().getArea())
-                        .putCustomAttribute("User", Config.getInstance().getUserMail()));
-                Sincronizador sinc = new Sincronizador(this, false);
-                sinc.execute();
-                menuGuardar(false);
-                getFragmentManager().popBackStack(); //Si se guarda vuelve al fragment anterior
-                getFragmentManager().popBackStack();
-                clean();
-            }
-        } else {
-            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-            if (nombre.equals("")) {
-                ETnombre.requestFocus();
-                ETnombre.startAnimation(shake);
-                ETnombre.setError("El nombre es obligatorio");
-            } else {
-                sZona.requestFocus();
-                sZona.startAnimation(shake);
-            }
-        }
+        PersonaSaver.save(this);
     }
 
     @Override
@@ -369,92 +251,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         ft.replace(R.id.content_frame, frag, fragLabel);
         ft.commit();
-    }
-
-    private class AdaptadorOnItemClickListener implements AdapterView.OnItemClickListener {
-        private Activity activity = null;
-
-        public AdaptadorOnItemClickListener(Activity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-            if (position == 0) {
-                navDrawerLayout.closeDrawers();
-                return;
-            }
-            boolean fragmentTransaction = false;
-            Fragment fragment = null;
-            String tag = "";
-
-            clean();
-            //Borra todos los fragments al hacer click en menu lateral
-            clearAllFragments();
-
-            //FIXME refactor de replaceFragment
-            switch (position) {
-                case 1: //Personas
-                    fragment = new ListaPersonas();
-                    fragmentTransaction = true;
-                    tag = Utils.LISTA_PERSONAS;
-                    break;
-                case 2: //Crear Persona
-                    if (Roles.getInstance().hasPermission(Utils.PUEDE_CREAR_PERSONA)) {
-                        personaSeleccionada = new Persona();
-                        visitaSeleccionada = new Visita(personaSeleccionada);
-                        fragment = new PersonaFragment();
-                        Config.getInstance().setIsEditing(false);
-                        fragmentTransaction = true;
-                        tag = Utils.FRAG_PERSONA;
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                  "No tiene permisos para crear personas", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case 3: //Ultimas Visitas
-                    fragment = new ListaVisitas();
-                    fragmentTransaction = true;
-                    tag = Utils.FRAG_VISITA;
-                    break;
-                case 4: //Mapa
-                    fragment = new MapaFragment();
-                    fragmentTransaction = true;
-                    tag = Utils.FRAG_MAPA;
-                    break;
-                case 5: //Filtros
-                    fragment = new FiltrosFragment();
-                    fragmentTransaction = true;
-                    tag = Utils.FRAG_FILTROS;
-                    break;
-                case 6: //Salir
-                    fragment = new LoginFragment();
-                    fragmentTransaction = true;
-                    tag = Utils.FRAG_LOGIN; //TODO refactor
-                    Config.getInstance().logOut();
-                    // Unsuscribe for notifications
-                    Intent intent = new Intent(this.activity, RegistrationIntentService.class);
-                    startService(intent);
-                    clearAllFragments();
-                    disableSideMenu();
-                    Toast.makeText(getApplicationContext(),
-                            "Saliendo...", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-
-            Sincronizador sinc = new Sincronizador(this.activity, false);
-            sinc.execute();
-
-            if (fragmentTransaction) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (tag != Utils.FRAG_LOGIN) {
-                    ft.addToBackStack(tag);
-                }
-                ft.replace(R.id.content_frame, fragment, tag);
-                ft.commit();
-            }
-            navDrawerLayout.closeDrawers();
-        }
     }
 
     @Override
@@ -582,20 +378,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    public DrawerLayout getNavDrawerLayout() {
+        return navDrawerLayout;
+    }
+
     private void enableSideMenu() {
         navList = (ListView) findViewById(R.id.nav_list);
-        navList.setOnItemClickListener(new AdaptadorOnItemClickListener(this));
+        navList.setOnItemClickListener(new AdaptadorMenuLateral(this));
         navList.setEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void disableSideMenu() {
+    public void disableSideMenu() {
         navList = (ListView) findViewById(R.id.nav_list);
         navList.setEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
-    private void clearAllFragments() {
+    public void clearAllFragments() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
