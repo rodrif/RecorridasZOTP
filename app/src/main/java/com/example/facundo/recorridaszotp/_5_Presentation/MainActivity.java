@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,63 +13,32 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
-import com.example.facundo.recorridaszotp._0_Infraestructure.Handlers.PedidoHandler;
-import com.example.facundo.recorridaszotp._0_Infraestructure.PersonaShare;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.AdaptadorListaMenu;
-import com.example.facundo.recorridaszotp._0_Infraestructure.popUp;
 import com.example.facundo.recorridaszotp._1_Red.ObtenerToken;
-import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
-import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
-import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.ZonaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.ItemLista;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
-import com.example.facundo.recorridaszotp._3_Domain.Query.PersonaQuery;
 import com.example.facundo.recorridaszotp._3_Domain.Visita;
 import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.PersonaSaver;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.VisitaSaver;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import io.fabric.sdk.android.Fabric;
-
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        iFragmentChanger {
+public class MainActivity extends AppCompatActivity implements iFragmentChanger {
 
-    /* Request code used to invoke sign in user interactions. */
-    private static final int RC_SIGN_IN = 0;
-
-    /* Client used to interact with Google APIs. */
-    public static GoogleApiClient mGoogleApiClient;
-
-    /* Is there a ConnectionResult resolution in progress? */
-    private boolean mIsResolving = false;
-
-    /* Should we automatically resolve ConnectionResults when possible? */
-    private boolean mShouldResolve = true;
-
-    //private String token;
-    //private String email;
     private DrawerLayout navDrawerLayout;
     private ListView navList;
     private Toolbar appbar;
@@ -201,41 +168,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         ft.replace(R.id.content_frame, frag, fragLabel);
         ft.commit();
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-      //  ObtenerToken obtenerToken;
-        Toast.makeText(this,
-                "onConnected", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Toast.makeText(this,
-                "onConnectedSuspended", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Toast.makeText(this,
-                "onConnectionFailed" + connectionResult, Toast.LENGTH_SHORT).show();
-        Log.d("RZO", "onConnectionFailed:" + connectionResult);
-
-        if (!mIsResolving && mShouldResolve) {
-            if (connectionResult.hasResolution()) {
-                try {
-                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
-                    mIsResolving = true;
-                } catch (IntentSender.SendIntentException e) {
-                    Toast.makeText(this,
-                            "Could not resolve ConnectionResult" + e, Toast.LENGTH_SHORT).show();
-                    Log.e("RZO", "Could not resolve ConnectionResult.", e);
-                    mIsResolving = false;
-                    mGoogleApiClient.connect();
-                }
-            }
-        }
     }
 
     @Override
