@@ -5,7 +5,6 @@ import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
-import com.example.facundo.recorridaszotp._1_Red.Receptores.RecepcionVisitas;
 import com.example.facundo.recorridaszotp._3_Domain.Area;
 import com.example.facundo.recorridaszotp._3_Domain.Filtros;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -146,7 +145,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
                 .on("Persona = Personas.Id")
                 .innerJoin(Zona.class)
                 .on("Zona = Zonas.Id")
-                .orderBy("Fecha DESC")
+                .orderBy("Fecha DESC, Visitas.Id DESC")
                 .where("Visitas.Estado != ?", Utils.EST_BORRADO)
                 .where("Area = ?", area.getId());
 
@@ -159,7 +158,7 @@ public class VisitaDataAccess extends BasicDataAccess<Visita> {
     public List<Visita> getAllOKOrderFecha(long personaId) {
         return new Select()
                 .from(Visita.class)
-                .orderBy("Fecha DESC")
+                .orderBy("Fecha DESC, id DESC")
                 .where("Estado != ?", Utils.EST_BORRADO)
                 .where("Persona = ?", personaId)
                 .execute();
