@@ -170,14 +170,19 @@ public class Visita extends Model {
     public String getFechaString() {
         Calendar cal = new GregorianCalendar();
         cal.setTimeInMillis(getFecha());
-
         Date date = cal.getTime();
         SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
         return formateador.format(date);
     }
 
     private void setFechaActual() {
-        fecha = new Date().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        this.fecha = cal.getTime().getTime();
     }
 
     public String toString() {

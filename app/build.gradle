@@ -25,13 +25,13 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "com.example.facundo.recorridaszotp"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 36
-        versionName "2.0.4"
+        versionCode 37
+        versionName "2.1.0"
     }
     buildTypes {
         release {
