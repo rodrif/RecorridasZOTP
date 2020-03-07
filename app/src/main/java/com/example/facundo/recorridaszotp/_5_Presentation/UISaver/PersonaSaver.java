@@ -7,12 +7,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
-import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.PersonaDataAccess;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._3_Domain.Persona;
@@ -82,9 +79,6 @@ public class PersonaSaver {
                     unToast.setText("Se grabo: " + p.getNombre());
                 }
                 unToast.show();
-                Answers.getInstance().logCustom(new CustomEvent("Persona guardada")
-                        .putCustomAttribute("Area", Config.getInstance().getArea())
-                        .putCustomAttribute("User", Config.getInstance().getUserMail()));
                 Sincronizador sinc = new Sincronizador(activity, false);
                 sinc.execute();
                 activity.menuGuardar(false);

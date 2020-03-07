@@ -3,12 +3,9 @@ package com.example.facundo.recorridaszotp._5_Presentation.UISaver;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._1_Red.Sincronizador;
-import com.example.facundo.recorridaszotp._2_DataAccess.Config;
 import com.example.facundo.recorridaszotp._2_DataAccess.VisitaDataAccess;
 import com.example.facundo.recorridaszotp._5_Presentation.MainActivity;
 
@@ -37,9 +34,6 @@ public class VisitaSaver {
             Toast unToast = Toast.makeText(activity, "Visita a " + activity.visitaSeleccionada.getPersona().getNombre()
                     + " guardada", Toast.LENGTH_SHORT);
             unToast.show();
-            Answers.getInstance().logCustom(new CustomEvent("Visita guardada")
-                    .putCustomAttribute("Area", Config.getInstance().getArea())
-                    .putCustomAttribute("User", Config.getInstance().getUserMail()));
             Sincronizador sinc = new Sincronizador(activity, false);
             sinc.execute();
         }

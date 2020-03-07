@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.crashlytics.android.Crashlytics;
 import com.example.facundo.recorridaszotp.R;
 import com.example.facundo.recorridaszotp._1_Red.Notificaciones.RegistrationIntentService;
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
@@ -33,7 +32,6 @@ import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.PersonaSaver;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.VisitaSaver;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
-import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 
 
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements iFragmentChanger 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
         Config.getInstance().setIsLoginOk(settings.getBoolean(Utils.USER_IS_LOGIN, false));
