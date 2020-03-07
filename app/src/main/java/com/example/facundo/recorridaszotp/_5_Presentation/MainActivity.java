@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements iFragmentChanger 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Restore preferences
-        this.backupDatabase();
+        // this.backupDatabase();
         SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
         Config.getInstance().setIsLoginOk(settings.getBoolean(Utils.USER_IS_LOGIN, false));
         Config.getInstance().setUserMail(settings.getString(Utils.USER_EMAIL, ""));
