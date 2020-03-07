@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,13 @@ import com.example.facundo.recorridaszotp._3_Domain.Zona;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.PersonaSaver;
 import com.example.facundo.recorridaszotp._5_Presentation.UISaver.VisitaSaver;
 import com.example.facundo.recorridaszotp._7_Interfaces.iFragmentChanger;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements iFragmentChanger {
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements iFragmentChanger 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Restore preferences
+        this.backupDatabase();
         SharedPreferences settings = getSharedPreferences(Utils.PREFS_NAME, MODE_PRIVATE);
         Config.getInstance().setIsLoginOk(settings.getBoolean(Utils.USER_IS_LOGIN, false));
         Config.getInstance().setUserMail(settings.getString(Utils.USER_EMAIL, ""));
@@ -94,6 +102,38 @@ public class MainActivity extends AppCompatActivity implements iFragmentChanger 
             }
         } else {
             this.replaceFragment(new LoginFragment(), false, null);
+        }
+    }
+
+    public void backupDatabase(){
+
+        try {
+            File sd = this.getApplicationContext().getExternalFilesDir(null);
+            File data = Environment.getDataDirectory();
+            String packageName  = "com.example.facundo.recorridaszotp";
+            String sourceDBName = "Prueba.db";
+            String targetDBName = "recorridasZOBU";
+
+            if (sd.canWrite()) {
+                Date now = new Date();
+                String currentDBPath = "data/" + packageName + "/databases/" + sourceDBName;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+                String backupDBPath = targetDBName + dateFormat.format(now) + ".db";
+
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                Log.i("backup","backupDB=" + backupDB.getAbsolutePath());
+                Log.i("backup","sourceDB=" + currentDB.getAbsolutePath());
+
+                FileChannel src = new FileInputStream(currentDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+            }
+        } catch (Exception e) {
+            Log.e("Backup", e.toString());
         }
     }
 
