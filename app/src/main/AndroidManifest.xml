@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.facundo.recorridaszotp" >
 
-    <uses-sdk android:minSdkVersion="11" />
+    <uses-sdk android:minSdkVersion="20" />
 
     <uses-permission android:name="permission_name" />
     <uses-permission android:name="android.permission.INTERNET" />
