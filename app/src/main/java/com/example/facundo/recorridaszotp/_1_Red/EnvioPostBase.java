@@ -68,8 +68,10 @@ public class EnvioPostBase {
         //Leo respuesta
         Log.v(Utils.APPTAG, "Response Code: " + this.lastReturnCode);
         inputStream = new BufferedInputStream(conn.getInputStream());
-        if(conn.getHeaderField(Utils.ACCESS_TOKEN) != null)
-            Config.getInstance().setAccessToken(conn.getHeaderField(Utils.ACCESS_TOKEN));
+        String tokenString = conn.getHeaderField(Utils.ACCESS_TOKEN);
+        if(!tokenString.isEmpty()) {
+            Config.getInstance().setAccessToken(tokenString);
+        }
         if(conn.getHeaderField(Utils.CLIENT) != null)
             Config.getInstance().setClient(conn.getHeaderField(Utils.CLIENT));
         if(conn.getHeaderField(Utils.EXPIRY) != null)
