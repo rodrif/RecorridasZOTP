@@ -105,7 +105,7 @@ public final class Utils {
     public static final String FILTROS = "Filtros";
     public static final String PERSONA_ID = "persona_id";
     public static final String AREA_ID = "area_id";
-    public static final String VERSION = "51";
+    public static final String VERSION = "52";
 
     public static String toString(InputStream inputStream) throws Exception {
         BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
