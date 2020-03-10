@@ -1,9 +1,12 @@
 package com.example.facundo.recorridaszotp._1_Red;
 
+import android.net.SSLCertificateSocketFactory;
 import android.util.Log;
 
 import com.example.facundo.recorridaszotp._0_Infraestructure.Utils;
 import com.example.facundo.recorridaszotp._2_DataAccess.Config;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -43,11 +46,11 @@ public class EnvioPostBase {
     public String execute() throws Exception {
         String charset = "UTF-8";
         URL url = null;
-        HttpURLConnection conn = null;
+        HttpsURLConnection conn = null;
         InputStream inputStream = null;
 
         url = new URL(this.webUrl);
-        conn = (HttpURLConnection) url.openConnection();
+        conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true); // Triggers POST.
         conn.setRequestProperty("Accept-Charset", charset);
@@ -57,6 +60,8 @@ public class EnvioPostBase {
         conn.setRequestProperty(Utils.UID, Config.getInstance().getUid());
         conn.setRequestProperty(Utils.TOKEN_TYPE, Config.getInstance().getTokenType());
         conn.setRequestProperty(Utils.EXPIRY, Config.getInstance().getExpiry());
+        conn.setSSLSocketFactory(SSLCertificateSocketFactory.getInsecure(0, null));
+        conn.setHostnameVerifier(new AllowAllHostnameVerifier());
         //Envio datos
         OutputStream output = conn.getOutputStream();
         output.write(this.query.getBytes(charset));

@@ -16,7 +16,7 @@ public final class Utils {
     //public static final String WEB = "http://recorridaszo.ddnsking.com";
    // public static final String WEB = "http://31.220.58.188";
    // public static final String WEB = "http://recorridaszo.fundacionsi.org.ar";
-    public static final String WEB = "http://recorridaszo.ddns.net";
+    public static final String WEB = "https://recorridaszo.ddns.net";
     public static final String WEB_LOGIN = Utils.WEB +"/api/auth/sign_in";
     public static final String WEB_ENVIO_PERSONAS = Utils.WEB + "/api/people/upload";
     public static final String WEB_ENVIO_AREA = Utils.WEB + "/api/areas/upload";
