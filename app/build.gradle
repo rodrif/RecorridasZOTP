@@ -8,12 +8,12 @@ android {
         config {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
-            storeFile file('/home/gonzalo/Git/RecorridasZOTP/debug.keystore')
+            storeFile file('../debug.keystore')
             storePassword 'android'
         }
     }
     compileSdkVersion 23
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.3'
     defaultConfig {
         applicationId "com.example.facundo.recorridaszotp"
         minSdkVersion 17
